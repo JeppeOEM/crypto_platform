@@ -6,14 +6,7 @@ class Backtest:
 
     def run(self, df):
         df['datetime'] = pd.to_datetime(df.index, unit='ms')
-        # df['buy_name'] = df['buy_name1112221'].copy()
-        # df['buy_name1112221'] = df['buy_name']
-        # df['sell_name'] = df['sell_nam22221322'].copy()
-        # df['sell_nam22221322'] = df['sell_name']
-        # np.random.seed(42)
-        # random_values = np.random.choice([-1, 1], size=len(df))
-        # df['buy_name'] = random_values
-        # df['sell_name'] = random_values
+
         df_signal_buy = self.filter_signals(df, "buy_")
         df_signal_sell = self.filter_signals(df, "sell_")
 
@@ -40,15 +33,18 @@ class Backtest:
         test_cond2 = df.loc[:, 'cond2'].values
         test_groups = self.groups_from_conditions(test_cond1, test_cond2)
         df['groups'] = test_groups
-        # df.to_csv('data/groups.csv')
+
+        # sums the PNL pr trade
         dfgroup = df.groupby(["groups"], as_index=False)[
-            "change"].sum()
-        print("SUUUUUUUM")
-        print(dfgroup['change'].sum())
-        dfgroup = dfgroup['change'].sum()
-        return dfgroup
-    # print(self.dfgroup['change'].sum())
-    # print(self.dfgroup['change'].sum())
+            "pnl"].sum()
+
+        dfgroup['cum_pnl'] = dfgroup['pnl'].cumsum()
+        dfgroup["max_cum_pnl"] = dfgroup["cum_pnl"].cummax()
+        dfgroup["drawdown"] = dfgroup["max_cum_pnl"] - dfgroup["cum_pnl"]
+
+        return dfgroup["pnl"].sum(), dfgroup["drawdown"].max()
+    # print(self.dfgroup['pnl'].sum())
+    # print(self.dfgroup['pnl'].sum())
 
     def filter_signals(self, df, column_prefix):
         selected_columns = [
@@ -60,9 +56,11 @@ class Backtest:
     def analyse(self, df):
         df.reset_index(drop=True, inplace=True)
         df.dropna(inplace=True)
-        # df['change'] = 10 for sake for simplicity this is more logical to test
-        df['change'] = df.close.pct_change()
-        print("change")
+        # df['pnl'] = 10 for sake for simplicity this is more logical to test'
+        print("DATAFRAAAAAAAAAAAAAAAAAAAAAAAAAAAME")
+        print(df.head(10))
+        df['pnl'] = df.close.pct_change()
+        print("pnl")
         df['cond1'] = np.where(df['open_trade'] == 1, 1, 0)
         print("cond!")
         df['cond2'] = np.where(df['close_trade'] == 1, 1, 0)

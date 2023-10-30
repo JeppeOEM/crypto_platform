@@ -36,8 +36,10 @@ class Condition:
 
     def make_condition(self, signal_name, side, *args):
         total_conditions = []
+        test = len(args)
+        print(test)
         for i in range(len(args)):  # Adjust the range as needed
-
+            print(i)
             if i % 4 == 1:
                 # print(f"{i} is the first iteration.{args[i]['ind']}")
                 total_conditions.append(args[i]['ind'])
