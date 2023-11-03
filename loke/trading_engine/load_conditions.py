@@ -1,4 +1,4 @@
-from trading_engine.Condition import Condition
+from loke.trading_engine.Condition import Condition
 
 
 def load_conditions(df, selected_conds_buy, selected_conds_sell):

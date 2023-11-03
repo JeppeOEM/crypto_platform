@@ -7,11 +7,11 @@ from flask import Flask, request, jsonify
 from flask_caching import Cache
 import pandas as pd
 import pickle
-from trading_engine.Strategy import Strategy
-from trading_engine.Condition import Condition
-from trading_engine.Backtest import Backtest
-from trading_engine.load_conditions import load_conditions
-from trading_engine.call_optimizer import call_optimizer
+from loke.trading_engine.Strategy import Strategy
+from loke.trading_engine.Condition import Condition
+from loke.trading_engine.Backtest import Backtest
+from loke.trading_engine.load_conditions import load_conditions
+from loke.trading_engine.call_optimizer import call_optimizer
 
 
 def create_app(test_config=None):
@@ -46,6 +46,10 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
 
     @app.route('/init_strategy', methods=['POST'])
     def init_strategy():
@@ -115,9 +119,4 @@ def create_app(test_config=None):
         columns = s.column_dict()
         resp = {"message": f'{columns}'}
         return resp
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
     return app

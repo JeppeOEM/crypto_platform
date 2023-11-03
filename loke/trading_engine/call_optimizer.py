@@ -1,4 +1,4 @@
-from trading_engine.Optimizer import Nsga2
+from loke.trading_engine.Optimizer import Nsga2
 
 
 def call_optimizer(df, strategy, pop_size, generations):

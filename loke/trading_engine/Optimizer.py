@@ -1,14 +1,14 @@
 import random
 import typing
 import copy
-from models.models import BacktestResult
-from trading_engine.optimize_backtest import optimize_backtest
-from functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
+from loke.models.models import BacktestResult
+from loke.trading_engine.optimize_backtest import optimize_backtest
+from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
 # import strategies.obv
 # import strategies.ichimoku
 # import strategies.support_resistance
 
-from database.Hdf5 import Hdf5Client
+from loke.database.Hdf5 import Hdf5Client
 
 
 class Nsga2:

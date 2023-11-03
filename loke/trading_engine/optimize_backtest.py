@@ -1,5 +1,5 @@
-from trading_engine.load_conditions import load_conditions
-from trading_engine.Backtest import Backtest
+from loke.trading_engine.load_conditions import load_conditions
+from loke.trading_engine.Backtest import Backtest
 
 
 def optimize_backtest(df, val, val2):
