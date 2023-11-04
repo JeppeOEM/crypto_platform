@@ -2,8 +2,7 @@ pandas
 numpy
 flask
 Flask-Caching
-pickle
+
 h5py
 pandas_ta
 Flask-SQLAlchemy
-sqlite3

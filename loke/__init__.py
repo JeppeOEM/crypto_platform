@@ -1,5 +1,5 @@
 import os
-
+import pandas_ta as ta
 from flask import Flask
 from flask_caching import Cache
 
@@ -13,7 +13,8 @@ from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.load_conditions import load_conditions
 from loke.trading_engine.call_optimizer import call_optimizer
 from loke.database import db
-from loke.blueprints.test import my_blueprint
+from loke.blueprints.test import test
+# from loke.blueprints.init_strategy import bp
 
 
 def create_app(test_config=None):
@@ -48,9 +49,8 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    app.register_blueprint(my_blueprint)
-
+    app.register_blueprint(test)
+    # app.register_blueprint(bp)
 
     @app.route('/init_strategy', methods=['POST'])
     def init_strategy():
@@ -70,6 +70,24 @@ def create_app(test_config=None):
             {"kind": "macd", "fast": 8, "slow": 21}
         ])
         df = s.create_strategy()
+        df = df.head(1000)
+        df.ta.strategy()
+        # Or the string "all"
+        df.ta.strategy("all")
+        # Or the ta.AllStrategy
+        df.ta.strategy(ta.AllStrategy)
+
+        # Use verbose if you want to make sure it is running.
+        df.ta.strategy(verbose=True)
+
+        # Use timed if you want to see how long it takes to run.
+        df.ta.strategy(timed=True)
+
+        # Choose the number of cores to use. Default is all available cores.
+        # For no multiprocessing, set this value to 0.
+        df.ta.cores = 0
+
+        print(df.columns)
         columns = s.column_dict()
         df_bytes = pickle.dumps(df)
         cache.set('df_cache_key', df_bytes)
