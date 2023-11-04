@@ -49,10 +49,8 @@ class Condition:
                     total_conditions.append(args[i]['or_and'])
                 except:
                     continue
-                    print(args[i])
 
-
-        #create string to pass to eval
+        # create string to pass to eval
         expression_parts = []
         for i, value in enumerate(total_conditions):
             if i % 4 == 0:
@@ -60,8 +58,9 @@ class Condition:
             else:
                 expression_parts.append(str(value))
         expression = " ".join(expression_parts)
-        
+
         print(expression)
+        # evaluate
         self.df[f'{side}_{signal_name}'] = np.where(
             pd.eval(expression, target=self.df), 1, -1)
         self.df[f'{side}_{signal_name}'] = self.df[f'{side}_{signal_name}'].shift(

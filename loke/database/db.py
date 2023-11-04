@@ -10,6 +10,7 @@ def get_db():
             current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
+        # return rows that behave like dicts. This allows accessing the columns by name.
         g.db.row_factory = sqlite3.Row
 
     return g.db
@@ -21,17 +22,23 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('schema.sql') as f:
+    with current_app.open_resource('database/trading.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
+# functions need to be registered with the application instance;
+
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
 
-#creates command line argument   
+# creates command line argument = flask --app flaskr init-db
+
+
 @click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables."""

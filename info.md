@@ -1,4 +1,6 @@
-flask --app app run --debug
+flask --app loke run --debug
+init database:
+flask --app loke init-db
 
     conds = [{"cond": "<"}, {"cond": ">"}, {
         "cond": "=="}, {"cond": "and"}, {"cond": "or"}]

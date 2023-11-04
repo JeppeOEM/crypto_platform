@@ -12,6 +12,8 @@ from loke.trading_engine.Condition import Condition
 from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.load_conditions import load_conditions
 from loke.trading_engine.call_optimizer import call_optimizer
+from loke.database import db
+from loke.blueprints.test import my_blueprint
 
 
 def create_app(test_config=None):
@@ -47,9 +49,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    app.register_blueprint(my_blueprint)
+
 
     @app.route('/init_strategy', methods=['POST'])
     def init_strategy():
@@ -119,4 +120,7 @@ def create_app(test_config=None):
         columns = s.column_dict()
         resp = {"message": f'{columns}'}
         return resp
+
+    db.init_app(app)
+
     return app
