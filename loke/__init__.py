@@ -15,6 +15,8 @@ from loke.trading_engine.call_optimizer import call_optimizer
 from loke.database import db
 from loke.blueprints.test import test
 # from loke.blueprints.init_strategy import bp
+from loke.trading_engine.indicators.momentum.Rsi import Rsi
+from loke.trading_engine.indicators.momentum.Ao import Ao
 
 
 def create_app(test_config=None):
@@ -61,37 +63,31 @@ def create_app(test_config=None):
         symbol = data['symbol']
         name = data['name']
         description = data['description']
+
+        rsi = Rsi(20, 50, 0)
+        ao = Ao(15, 15, 0)
+        print(Rsi.__doc__)
+
+        print(f"{rsi.type_dict()}")
+
         s = Strategy(exchange, init_candles, symbol, name, description)
         s.addIndicators([
-            {"kind": "rsi", "length": 15},
+            # {"kind": "rsi", "length": 15, "scalar": 40},
+            rsi.get(),
+            ao.get(),
             {"kind": "ema", "length": 8},
             {"kind": "ema", "length": 21},
             {"kind": "bbands", "length": 20},
             {"kind": "macd", "fast": 8, "slow": 21}
         ])
         df = s.create_strategy()
-        df = df.head(1000)
-        df.ta.strategy()
-        # Or the string "all"
-        df.ta.strategy("all")
-        # Or the ta.AllStrategy
-        df.ta.strategy(ta.AllStrategy)
-
-        # Use verbose if you want to make sure it is running.
-        df.ta.strategy(verbose=True)
-
-        # Use timed if you want to see how long it takes to run.
-        df.ta.strategy(timed=True)
-
-        # Choose the number of cores to use. Default is all available cores.
-        # For no multiprocessing, set this value to 0.
-        df.ta.cores = 0
-
+        df = df.head(215)
+        df.to_json("lol.json", orient='records', compression='infer')
         print(df.columns)
         columns = s.column_dict()
         df_bytes = pickle.dumps(df)
         cache.set('df_cache_key', df_bytes)
-        resp = {"message": f'{columns}'}
+        resp = {"message": f'{df}'}
         return resp
 
     @app.route('/load_conditions', methods=['POST'])

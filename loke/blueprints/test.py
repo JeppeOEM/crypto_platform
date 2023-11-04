@@ -1,5 +1,7 @@
 from flask import Blueprint
 from loke.database.db import get_db, close_db
+import pandas as pd
+import pandas_ta as ta
 
 test = Blueprint('my_blueprint', __name__)
 
@@ -16,5 +18,8 @@ def my_route_function():
                 (indicator_name,))
 
     db.commit()
+    df = pd.DataFrame()
+
+    lol = help(df.ta)
     print(cur)
     return 'This is a route in my blueprint!'

@@ -1,0 +1,570 @@
+class AnalysisIndicators(BasePandasObject)
+ |  AnalysisIndicators(pandas_obj)
+ |
+ |  This Pandas Extension is named 'ta' for Technical Analysis. In other words,   
+ |  it is a Numerical Time Series Feature Generator where the Time Series data    
+ |  is biased towards Financial Market data; typical data includes columns        
+ |  named :"open", "high", "low", "close", "volume".
+ |
+ |  This TA Library hopefully allows you to apply familiar and unique Technical   
+ |  Analysis Indicators easily with the DataFrame Extension named 'ta'. Even      
+ |  though 'ta' is a Pandas DataFrame Extension, you can still call Technical     
+ |  Analysis indicators individually if you are more comfortable with that        
+ |  approach or it allows you to easily and automatically apply the indicators    
+ |  with the strategy method. See: help(ta.strategy).
+ |
+ |  By default, the 'ta' extension uses lower case column names: open, high,     
+ |  low, close, and volume. You can override the defaults by providing the it's  
+ |  replacement name when calling the indicator. For example, to call the        
+ |  indicator hl2().
+ |
+ |  With 'default' columns: open, high, low, close, and volume.
+ |  >>> df.ta.hl2()
+ |  >>> df.ta(kind="hl2")
+ |
+ |  With DataFrame columns: Open, High, Low, Close, and Volume.
+ |  >>> df.ta.hl2(high="High", low="Low")
+ |  >>> df.ta(kind="hl2", high="High", low="Low")
+ |
+ |  If you do not want to use a DataFrame Extension, just call it normally.      
+ |  >>> sma10 = ta.sma(df["Close"]) # Default length=10
+ |  >>> sma50 = ta.sma(df["Close"], length=50)
+ |  >>> ichimoku, span = ta.ichimoku(df["High"], df["Low"], df["Close"])
+ |
+ |  Args:
+ |      kind (str, optional): Default: None. Kind is the 'name' of the indicator.
+ |          It converts kind to lowercase before calling.
+ |      timed (bool, optional): Default: False. Curious about the execution      
+ |          speed?
+ |      kwargs: Extension specific modifiers.
+ |          append (bool, optional): Default: False. When True, it appends the   
+ |          resultant column(s) to the DataFrame.
+ |
+ |  Returns:
+ |      Most Indicators will return a Pandas Series. Others like MACD, BBANDS,   
+ |      KC, et al will return a Pandas DataFrame. Ichimoku on the other hand     
+ |      will return two DataFrames, the Ichimoku DataFrame for the known period  
+ |      and a Span DataFrame for the future of the Span values.
+ |
+ |  Let's get started!
+ |  
+ |  1. Loading the 'ta' module:
+ |  >>> import pandas as pd
+ |  >>> import ta as ta
+ |
+ |  2. Load some data:
+ |  >>> df = pd.read_csv("AAPL.csv", index_col="date", parse_dates=True)
+ |
+ |  3. Help!
+ |  3a. General Help:
+ |  >>> help(df.ta)
+ |  >>> df.ta()
+ |  3b. Indicator Help:
+ |  >>> help(ta.apo)
+ |  3c. Indicator Extension Help:
+ |  >>> help(df.ta.apo)
+ |
+ |  4. Ways of calling an indicator.
+ |  4a. Standard: Calling just the APO indicator without "ta" DataFrame extension. |  >>> ta.apo(df["close"])
+ |  4b. DataFrame Extension: Calling just the APO indicator with "ta" DataFrame extension.
+ |  >>> df.ta.apo()
+ |  4c. DataFrame Extension (kind): Calling APO using 'kind'
+ |  >>> df.ta(kind="apo")
+ |  4d. Strategy:
+ |  >>> df.ta.strategy("All") # Default
+ |  >>> df.ta.strategy(ta.Strategy("My Strat", ta=[{"kind": "apo"}])) # Custom   
+ |
+ |  5. Working with kwargs
+ |  5a. Append the result to the working df.
+ |  >>> df.ta.apo(append=True)
+ |  5b. Timing an indicator.
+ |  >>> apo = df.ta(kind="apo", timed=True)
+ |  >>> print(apo.timed)
+ |
+ |  Method resolution order:
+ |      AnalysisIndicators
+ |      BasePandasObject
+ |      pandas.core.base.PandasObject
+ |      pandas.core.accessor.DirNamesMixin
+ |      builtins.object
+ |
+ |  Methods defined here:
+ |
+ |  __call__(self, kind: str = None, timed: bool = False, version: bool = False, **kwargs)
+ |      Call self as a function.
+ |
+ |  __init__(self, pandas_obj)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |
+ |  aberration(self, length=None, atr_length=None, offset=None, **kwargs)        
+ |      # Volatility
+ |
+ |  above(self, asint=True, offset=None, **kwargs)
+ |      # Utility
+ |
+ |  above_value(self, value=None, asint=True, offset=None, **kwargs)
+ |
+ |  accbands(self, length=None, c=None, mamode=None, offset=None, **kwargs)      
+ |
+ |  ad(self, open_=None, signed=True, offset=None, **kwargs)
+ |      # Volume
+ |
+ |  adosc(self, open_=None, fast=None, slow=None, signed=True, offset=None, **kwargs)
+ |
+ |  adx(self, length=None, lensig=None, mamode=None, scalar=None, drift=None, offset=None, **kwargs)
+ |      # Trend
+ |
+ |  alma(self, length=None, sigma=None, distribution_offset=None, offset=None, **kwargs)
+ |      # Overlap
+ |
+ |  amat(self, fast=None, slow=None, mamode=None, lookback=None, offset=None, **kwargs)
+ |
+ |  ao(self, fast=None, slow=None, offset=None, **kwargs)
+ |      # Momentum
+ |
+ |  aobv(self, fast=None, slow=None, mamode=None, max_lookback=None, min_lookback=None, offset=None, **kwargs)
+ |
+ |  apo(self, fast=None, slow=None, mamode=None, offset=None, **kwargs)
+ |
+ |  aroon(self, length=None, scalar=None, offset=None, **kwargs)
+ |
+ |  atr(self, length=None, mamode=None, offset=None, **kwargs)
+ |
+ |  bbands(self, length=None, std=None, mamode=None, offset=None, **kwargs)      
+ |
+ |  below(self, asint=True, offset=None, **kwargs)
+ |
+ |  below_value(self, value=None, asint=True, offset=None, **kwargs)
+ |
+ |  bias(self, length=None, mamode=None, offset=None, **kwargs)
+ |
+ |  bop(self, percentage=False, offset=None, **kwargs)
+ |
+ |  brar(self, length=None, scalar=None, drift=None, offset=None, **kwargs)      
+ |
+ |  cci(self, length=None, c=None, offset=None, **kwargs)
+ |
+ |  cdl_pattern(self, name='all', offset=None, **kwargs)
+ |      # Public DataFrame Methods: Indicators and Utilities
+ |      # Candles
+ |
+ |  cdl_z(self, full=None, offset=None, **kwargs)
+ |
+ |  cfo(self, length=None, offset=None, **kwargs)
+ |
+ |  cg(self, length=None, offset=None, **kwargs)
+ |
+ |  chop(self, length=None, atr_length=None, scalar=None, drift=None, offset=None, **kwargs)
+ |
+ |  cksp(self, p=None, x=None, q=None, mamode=None, offset=None, **kwargs)       
+ |
+ |  cmf(self, open_=None, length=None, offset=None, **kwargs)
+ |
+ |  cmo(self, length=None, scalar=None, drift=None, offset=None, **kwargs)       
+ |
+ |  constants(self, append: bool, values: list)
+ |      Constants
+ |
+ |      Add or remove constants to the DataFrame easily with Numpy's arrays or   
+ |      lists. Useful when you need easily accessible horizontal lines for       
+ |      charting.
+ |
+ |      Add constant '1' to the DataFrame
+ |      >>> df.ta.constants(True, [1])
+ |      Remove constant '1' to the DataFrame
+ |      >>> df.ta.constants(False, [1])
+ |
+ |      Adding constants for charting
+ |      >>> import numpy as np
+ |      >>> chart_lines = np.append(np.arange(-4, 5, 1), np.arange(-100, 110, 10)) |      >>> df.ta.constants(True, chart_lines)
+ |      Removing some constants from the DataFrame
+ |      >>> df.ta.constants(False, np.array([-60, -40, 40, 60]))
+ |
+ |      Args:
+ |          append (bool): If True, appends a Numpy range of constants to the    
+ |              working DataFrame.  If False, it removes the constant range from 
+ |              the working DataFrame. Default: None.
+ |
+ |      Returns:
+ |          Returns the appended constants
+ |          Returns nothing to the user.  Either adds or removes constant ranges 
+ |          from the working DataFrame.
+ |
+ |  coppock(self, length=None, fast=None, slow=None, offset=None, **kwargs)      
+ |
+ |  cross(self, above=True, asint=True, offset=None, **kwargs)
+ |
+ |  cross_value(self, value=None, above=True, asint=True, offset=None, **kwargs) 
+ |
+ |  cti(self, length=None, offset=None, **kwargs)
+ |
+ |  decay(self, length=None, mode=None, offset=None, **kwargs)
+ |
+ |  decreasing(self, length=None, strict=None, asint=None, offset=None, **kwargs)
+ |
+ |  dema(self, length=None, offset=None, **kwargs)
+ |
+ |  dm(self, drift=None, offset=None, mamode=None, **kwargs)
+ |
+ |  donchian(self, lower_length=None, upper_length=None, offset=None, **kwargs)  
+ |
+ |  dpo(self, length=None, centered=True, offset=None, **kwargs)
+ |
+ |  ebsw(self, close=None, length=None, bars=None, offset=None, **kwargs)        
+ |      # Cycles
+ |
+ |  efi(self, length=None, mamode=None, offset=None, drift=None, **kwargs)       
+ |
+ |  ema(self, length=None, offset=None, **kwargs)
+ |
+ |  entropy(self, length=None, base=None, offset=None, **kwargs)
+ |      # Statistics
+ |
+ |  eom(self, length=None, divisor=None, offset=None, drift=None, **kwargs)      
+ |
+ |  er(self, length=None, drift=None, offset=None, **kwargs)
+ |
+ |  eri(self, length=None, offset=None, **kwargs)
+ |
+ |  fisher(self, length=None, signal=None, offset=None, **kwargs)
+ |
+ |  fwma(self, length=None, offset=None, **kwargs)
+ |
+ |  ha(self, offset=None, **kwargs)
+ |
+ |  hilo(self, high_length=None, low_length=None, mamode=None, offset=None, **kwargs)
+ |
+ |  hl2(self, offset=None, **kwargs)
+ |
+ |  hlc3(self, offset=None, **kwargs)
+ |
+ |  hma(self, length=None, offset=None, **kwargs)
+ |
+ |  hwc(self, na=None, nb=None, nc=None, nd=None, scalar=None, offset=None, **kwargs)
+ |
+ |  hwma(self, na=None, nb=None, nc=None, offset=None, **kwargs)
+ |
+ |  ichimoku(self, tenkan=None, kijun=None, senkou=None, include_chikou=True, offset=None, **kwargs)
+ |
+ |  increasing(self, length=None, strict=None, asint=None, offset=None, **kwargs)
+ |
+ |  indicators(self, **kwargs)
+ |      List of Indicators
+ |
+ |      kwargs:
+ |          as_list (bool, optional): When True, it returns a list of the        
+ |              indicators. Default: False.
+ |          exclude (list, optional): The passed in list will be excluded        
+ |              from the indicators list. Default: None.
+ |
+ |      Returns:
+ |          Prints the list of indicators. If as_list=True, then a list.
+ |
+ |  inertia(self, length=None, rvi_length=None, scalar=None, refined=None, thirds=None, mamode=None, drift=None, offset=None, **kwargs)
+ |
+ |  jma(self, length=None, phase=None, offset=None, **kwargs)
+ |
+ |  kama(self, length=None, fast=None, slow=None, offset=None, **kwargs)
+ |
+ |  kc(self, length=None, scalar=None, mamode=None, offset=None, **kwargs)       
+ |
+ |  kdj(self, length=None, signal=None, offset=None, **kwargs)
+ |
+ |  kst(self, roc1=None, roc2=None, roc3=None, roc4=None, sma1=None, sma2=None, sma3=None, sma4=None, signal=None, offset=None, **kwargs)
+ |
+ |  kurtosis(self, length=None, offset=None, **kwargs)
+ |
+ |  kvo(self, fast=None, slow=None, length_sig=None, mamode=None, offset=None, drift=None, **kwargs)
+ |
+ |  linreg(self, length=None, offset=None, adjust=None, **kwargs)
+ |
+ |  log_return(self, length=None, cumulative=False, percent=False, offset=None, **kwargs)
+ |      # Performance
+ |
+ |  long_run(self, fast=None, slow=None, length=None, offset=None, **kwargs)     
+ |
+ |  macd(self, fast=None, slow=None, signal=None, offset=None, **kwargs)
+ |
+ |  mad(self, length=None, offset=None, **kwargs)
+ |
+ |  massi(self, fast=None, slow=None, offset=None, **kwargs)
+ |
+ |  mcgd(self, length=None, offset=None, **kwargs)
+ |
+ |  median(self, length=None, offset=None, **kwargs)
+ |
+ |  mfi(self, length=None, drift=None, offset=None, **kwargs)
+ |
+ |  midpoint(self, length=None, offset=None, **kwargs)
+ |
+ |  midprice(self, length=None, offset=None, **kwargs)
+ |
+ |  mom(self, length=None, offset=None, **kwargs)
+ |
+ |  natr(self, length=None, mamode=None, scalar=None, offset=None, **kwargs)     
+ |
+ |  nvi(self, length=None, initial=None, signed=True, offset=None, **kwargs)     
+ |
+ |  obv(self, offset=None, **kwargs)
+ |
+ |  ohlc4(self, offset=None, **kwargs)
+ |
+ |  pdist(self, drift=None, offset=None, **kwargs)
+ |
+ |  percent_return(self, length=None, cumulative=False, percent=False, offset=None, **kwargs)
+ |
+ |  pgo(self, length=None, offset=None, **kwargs)
+ |
+ |  ppo(self, fast=None, slow=None, scalar=None, mamode=None, offset=None, **kwarg
+s)
+ |
+ |  psar(self, af0=None, af=None, max_af=None, offset=None, **kwargs)
+ |
+ |  psl(self, open_=None, length=None, scalar=None, drift=None, offset=None, **kwargs)
+ |  
+ |  pvi(self, length=None, initial=None, signed=True, offset=None, **kwargs)     
+ |
+ |  pvo(self, fast=None, slow=None, signal=None, scalar=None, offset=None, **kwargs)
+ |
+ |  pvol(self, volume=None, offset=None, **kwargs)
+ |
+ |  pvr(self, **kwargs)
+ |
+ |  pvt(self, offset=None, **kwargs)
+ |
+ |  pwma(self, length=None, offset=None, **kwargs)
+ |
+ |  qqe(self, length=None, smooth=None, factor=None, mamode=None, offset=None, **kwargs)
+ |
+ |  qstick(self, length=None, offset=None, **kwargs)
+ |
+ |  quantile(self, length=None, q=None, offset=None, **kwargs)
+ |
+ |  rma(self, length=None, offset=None, **kwargs)
+ |
+ |  roc(self, length=None, offset=None, **kwargs)
+ |
+ |  rsi(self, length=None, scalar=None, drift=None, offset=None, **kwargs)       
+ |
+ |  rsx(self, length=None, drift=None, offset=None, **kwargs)
+ |
+ |  rvgi(self, length=None, swma_length=None, offset=None, **kwargs)
+ |
+ |  rvi(self, length=None, scalar=None, refined=None, thirds=None, mamode=None, drift=None, offset=None, **kwargs)
+ |
+ |  short_run(self, fast=None, slow=None, length=None, offset=None, **kwargs)    
+ |
+ |  sinwma(self, length=None, offset=None, **kwargs)
+ |
+ |  skew(self, length=None, offset=None, **kwargs)
+ |
+ |  slope(self, length=None, offset=None, **kwargs)
+ |
+ |  sma(self, length=None, offset=None, **kwargs)
+ |
+ |  smi(self, fast=None, slow=None, signal=None, scalar=None, offset=None, **kwargs)
+ |
+ |  squeeze(self, bb_length=None, bb_std=None, kc_length=None, kc_scalar=None, mom_length=None, mom_smooth=None, use_tr=None, mamode=None, offset=None, **kwargs)  
+ |
+ |  squeeze_pro(self, bb_length=None, bb_std=None, kc_length=None, kc_scalar_wide=None, kc_scalar_normal=None, kc_scalar_narrow=None, mom_length=None, mom_smooth=None, use_tr=None, mamode=None, offset=None, **kwargs)
+ |
+ |  ssf(self, length=None, poles=None, offset=None, **kwargs)
+ |
+ |  stc(self, ma1=None, ma2=None, osc=None, tclength=None, fast=None, slow=None, factor=None, offset=None, **kwargs)
+ |
+ |  stdev(self, length=None, offset=None, **kwargs)
+ |
+ |  stoch(self, fast_k=None, slow_k=None, slow_d=None, mamode=None, offset=None, **kwargs)
+ |
+ |  stochrsi(self, length=None, rsi_length=None, k=None, d=None, mamode=None, offset=None, **kwargs)
+ |
+ |  strategy(self, *args, **kwargs)
+ |      Strategy Method
+ |
+ |      An experimental method that by default runs all applicable indicators.   
+ |      Future implementations will allow more specific indicator generation     
+ |      with possibly as json, yaml config file or an sqlite3 table.
+ |
+ |
+ |      Kwargs:
+ |          chunksize (bool): Adjust the chunksize for the Multiprocessing Pool. 
+ |              Default: Number of cores of the OS
+ |          exclude (list): List of indicator names to exclude. Some are
+ |              excluded by default for various reasons; they require additional 
+ |              sources, performance (td_seq), not a ohlcv chart (vp) etc.       
+ |          name (str): Select all indicators or indicators by
+ |              Category such as: "candles", "cycles", "momentum", "overlap",    
+ |              "performance", "statistics", "trend", "volatility", "volume", or 
+ |              "all". Default: "all"
+ |          ordered (bool): Whether to run "all" in order. Default: True
+ |          timed (bool): Show the process time of the strategy().
+ |              Default: False
+ |          verbose (bool): Provide some additional insight on the progress of   
+ |              the strategy() execution. Default: False
+ |
+ |  supertrend(self, period=None, multiplier=None, mamode=None, drift=None, offset=None, **kwargs)
+ |
+ |  swma(self, length=None, offset=None, **kwargs)
+ |
+ |  t3(self, length=None, a=None, offset=None, **kwargs)
+ |
+ |  td_seq(self, asint=None, offset=None, show_all=None, **kwargs)
+ |
+ |  tema(self, length=None, offset=None, **kwargs)
+ |
+ |  thermo(self, long=None, short=None, length=None, mamode=None, drift=None, offset=None, **kwargs)
+ |
+ |  ticker(self, ticker: str, **kwargs)
+ |      ticker
+ |
+ |      This method downloads Historical Data if the package yfinance is installed.
+ |      Additionally it can run a ta.Strategy; Builtin or Custom. It returns a   
+ |      DataFrame if there the DataFrame is not empty, otherwise it exits. For   
+ |      additional yfinance arguments, use help(ta.yf).
+ |
+ |      Historical Data
+ |      >>> df = df.ta.ticker("aapl")
+ |      More specifically
+ |      >>> df = df.ta.ticker("aapl", period="max", interval="1d", kind=None)    
+ |
+ |      Changing the period of Historical Data
+ |      Period is used instead of start/end
+ |      >>> df = df.ta.ticker("aapl", period="1y")
+ |
+ |      Changing the period and interval of Historical Data
+ |      Retrieves the past year in weeks
+ |      >>> df = df.ta.ticker("aapl", period="1y", interval="1wk")
+ |      Retrieves the past month in hours
+ |      >>> df = df.ta.ticker("aapl", period="1mo", interval="1h")
+ |
+ |      Show everything
+ |      >>> df = df.ta.ticker("aapl", kind="all")
+ |
+ |      Args:
+ |          ticker (str): Any string for a ticker you would use with yfinance.   
+ |              Default: "SPY"
+ |      Kwargs:
+ |          kind (str): Options see above. Default: "history"
+ |          ds (str): Data Source to use. Default: "yahoo"
+ |          strategy (str | ta.Strategy): Which strategy to apply after
+ |              downloading chart history. Default: None
+ |
+ |          See help(ta.yf) for additional kwargs
+ |
+ |      Returns:
+ |          Exits if the DataFrame is empty or None
+ |          Otherwise it returns a DataFrame
+ |
+ |  tos_stdevall(self, length=None, stds=None, offset=None, **kwargs)
+ |
+ |  trima(self, length=None, offset=None, **kwargs)
+ |
+ |  trix(self, length=None, signal=None, scalar=None, drift=None, offset=None, **kwargs)
+ |
+ |  true_range(self, drift=None, offset=None, **kwargs)
+ |
+ |  tsi(self, fast=None, slow=None, drift=None, mamode=None, offset=None, **kwargs)
+ |
+ |  tsignals(self, trend=None, asbool=None, trend_reset=None, trend_offset=None, offset=None, **kwargs)
+ |
+ |  ttm_trend(self, length=None, offset=None, **kwargs)
+ |
+ |  ui(self, length=None, scalar=None, offset=None, **kwargs)
+ |
+ |  uo(self, fast=None, medium=None, slow=None, fast_w=None, medium_w=None, slow_w=None, drift=None, offset=None, **kwargs)
+ |
+ |  variance(self, length=None, offset=None, **kwargs)
+ |
+ |  vhf(self, length=None, drift=None, offset=None, **kwargs)
+ |
+ |  vidya(self, length=None, offset=None, **kwargs)
+ |
+ |  vortex(self, drift=None, offset=None, **kwargs)
+ |
+ |  vp(self, width=None, percent=None, **kwargs)
+ |
+ |  vwap(self, anchor=None, offset=None, **kwargs)
+ |
+ |  vwma(self, volume=None, length=None, offset=None, **kwargs)
+ |
+ |  wcp(self, offset=None, **kwargs)
+ |
+ |  willr(self, length=None, percentage=True, offset=None, **kwargs)
+ |
+ |  wma(self, length=None, offset=None, **kwargs)
+ |
+ |  xsignals(self, signal=None, xa=None, xb=None, above=None, long=None, asbool=None, trend_reset=None, trend_offset=None, offset=None, **kwargs)
+ |
+ |  zlma(self, length=None, mamode=None, offset=None, **kwargs)
+ |
+ |  zscore(self, length=None, std=None, offset=None, **kwargs)
+ |
+ |  ----------------------------------------------------------------------       
+ |  Readonly properties defined here:
+ |
+ |  categories
+ |      Returns the categories.
+ |
+ |  datetime_ordered
+ |      Returns True if the index is a datetime and ordered.
+ |
+ |  last_run
+ |      Returns the time when the DataFrame was last run.
+ |
+ |  reverse
+ |      Reverses the DataFrame. Simply: df.iloc[::-1]
+ |
+ |  to_utc
+ |      Sets the DataFrame index to UTC format
+ |
+ |  version
+ |      Returns the version.
+ |
+ |  ----------------------------------------------------------------------       
+ |  Data descriptors defined here:
+ |
+ |  adjusted
+ |      property: df.ta.adjusted
+ |
+ |  cores
+ |      Returns the categories.
+ |
+ |  exchange
+ |      Returns the current Exchange. Default: "NYSE".
+ |
+ |  time_range
+ |      Returns the time ranges of the DataFrame as a float. Default is in "years". help(ta.toal_time)
+ |
+ |  ----------------------------------------------------------------------       
+ |  Data and other attributes defined here:
+ |
+ |  __annotations__ = {}
+ |
+ |  ----------------------------------------------------------------------       
+ |  Methods inherited from pandas.core.base.PandasObject:
+ |
+ |  __repr__(self) -> 'str'
+ |      Return a string representation for a particular object.
+ |
+ |  __sizeof__(self) -> 'int'
+ |      Generates the total memory usage for an object that returns
+ |      either a value or Series of values
+ |
+ |  ----------------------------------------------------------------------       
+ |  Methods inherited from pandas.core.accessor.DirNamesMixin:
+ |
+ |  __dir__(self) -> 'list[str]'
+ |      Provide method name lookup and completion.
+ |
+ |      Notes
+ |      -----
+ |      Only provide 'public' methods.
+ |
+ |  ----------------------------------------------------------------------       
+ |  Data descriptors inherited from pandas.core.accessor.DirNamesMixin:
+ |
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |
+ |  __weakref__
+ |      list of weak references to the object (if defined)
