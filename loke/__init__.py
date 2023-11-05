@@ -58,6 +58,7 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)   
+    #index points to blog index as it no prefix is defined for the blueprint
     app.add_url_rule('/', endpoint='index')
 
     @app.route("/")
