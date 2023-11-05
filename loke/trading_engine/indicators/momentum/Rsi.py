@@ -1,4 +1,3 @@
-from .get_types import get_types
 
 
 class Rsi:

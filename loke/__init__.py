@@ -14,9 +14,13 @@ from loke.trading_engine.load_conditions import load_conditions
 from loke.trading_engine.call_optimizer import call_optimizer
 from loke.database import db
 from loke.blueprints.test import test
-# from loke.blueprints.init_strategy import bp
 from loke.trading_engine.indicators.momentum.Rsi import Rsi
 from loke.trading_engine.indicators.momentum.Ao import Ao
+from loke.blueprints.simple_page import simple_page
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+    render_template, flash
+from . import auth
+from . import blog
 
 
 def create_app(test_config=None):
@@ -51,8 +55,18 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    app.register_blueprint(test)
-    # app.register_blueprint(bp)
+
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)   
+    app.add_url_rule('/', endpoint='index')
+
+    @app.route("/")
+    def index():
+        return render_template("loke/templates/index.html")
+
+    @app.route('/t')
+    def hello():
+        return render_template("loke/templates/index.html")
 
     @app.route('/init_strategy', methods=['POST'])
     def init_strategy():

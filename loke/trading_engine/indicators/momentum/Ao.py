@@ -1,5 +1,7 @@
 
 
+class Ao:
+
     """Awesome Oscillator (AO)
 
     The Awesome Oscillator is an indicator used to measure a security's momentum.
@@ -31,7 +33,6 @@
         pd.Series: New feature generated.
     """
 
-class Ao:
     def __init__(self, fast, slow, offset):
         self.fast = fast
         self.slow = slow
@@ -57,4 +58,3 @@ class Ao:
             "slow": "int",
             "offset": "int",
         }
-
