@@ -2,7 +2,34 @@
 
 class Ao:
 
-    """Awesome Oscillator (AO)
+    def __init__(self):
+        self.fast = None
+        self.slow = None
+        self.offset = None
+
+    def get(self):
+        return {
+            "kind": self.__class__.__name__.lower(),
+            "fast": self.fast,
+            "slow": self.slow,
+            "offset": self.offset
+        }
+
+    def set(self, fast, slow, offset):
+        self.fast = fast
+        self.slow = slow
+        self.offset = offset
+
+    def type_dict(self):
+        return {
+            "kind": self.__class__.__name__.lower(),
+            "fast": "int",
+            "slow": "int",
+            "offset": "int",
+        }
+
+    def __repr__(self):
+        description = """Awesome Oscillator (AO)
 
     The Awesome Oscillator is an indicator used to measure a security's momentum.
     AO is generally used to affirm trends or to anticipate possible reversals.
@@ -32,29 +59,4 @@ class Ao:
     Returns:
         pd.Series: New feature generated.
     """
-
-    def __init__(self, fast, slow, offset):
-        self.fast = fast
-        self.slow = slow
-        self.offset = offset
-
-    def get(self):
-        return {
-            "kind": self.__class__.__name__.lower(),
-            "fast": self.fast,
-            "slow": self.slow,
-            "offset": self.offset
-        }
-
-    def update(self, fast, slow, offset):
-        self.fast = fast
-        self.slow = slow
-        self.offset = offset
-
-    def type_dict(self):
-        return {
-            "kind": self.__class__.__name__.lower(),
-            "fast": "int",
-            "slow": "int",
-            "offset": "int",
-        }
+        return description

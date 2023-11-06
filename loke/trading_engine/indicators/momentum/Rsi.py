@@ -1,7 +1,44 @@
 
 
 class Rsi:
-    """Relative Strength Index (RSI)
+
+
+    def __init__(self):
+        self.length = None
+        self.scalar = None
+        self.talib = None
+        self.offset = None
+
+    def get(self):
+        return {
+            "kind": self.__class__.__name__.lower(),
+            "length": self.length,
+            "scalar": self.scalar,
+            "talib": self.talib,
+            "offset": self.offset,
+        }
+
+    def update(self, length, scalar, offset, talib=False):
+        self.length = length
+        self.scalar = scalar
+        self.talib = talib
+        self.offset = offset
+
+    def type_dict(self):
+        return {
+            "kind": self.__class__.__name__.lower(),
+            "length": "int",
+            "scalar": "float",
+            "talib": "bool",
+            "offset": "int",
+        }
+    
+
+    
+    
+    
+    def __repr__(self):
+        description = """Relative Strength Index (RSI)
 
     The Relative Strength Index is popular momentum oscillator used to measure the
     velocity as well as the magnitude of directional price movements.
@@ -40,33 +77,4 @@ class Rsi:
     Returns:
         pd.Series: New feature generated.
     """
-
-    def __init__(self, length, scalar, offset, talib=False):
-        self.length = length
-        self.scalar = scalar
-        self.talib = talib
-        self.offset = offset
-
-    def get(self):
-        return {
-            "kind": self.__class__.__name__.lower(),
-            "length": self.length,
-            "scalar": self.scalar,
-            "talib": self.talib,
-            "offset": self.offset,
-        }
-
-    def update(self, length, scalar, offset, talib):
-        self.length = length
-        self.scalar = scalar
-        self.talib = talib
-        self.offset = offset
-
-    def type_dict(self):
-        return {
-            "kind": self.__class__.__name__.lower(),
-            "length": "int",
-            "scalar": "float",
-            "talib": "bool",
-            "offset": "int",
-        }
+        return description

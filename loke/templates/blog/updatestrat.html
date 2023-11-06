@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Edit "{{ strategy['strategy_name'] }}"{% endblock %}</h1>
+{% endblock %} {% block content %}
+<form method="post">
+  <label for="title">Title</label>
+  <input
+    name="strategy_name"
+    id="strategy_name"
+    value="{{ request.form['strategy_name'] or strategy['strategy_name'] }}"
+    required />
+  <label for="expression">expression</label>
+  <textarea name="expression" id="expression">{{ request.form['expression'] or strategy['expression'] }}</textarea>
+  <input type="submit" value="Save" />
+</form>
+<hr />
+<form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
+  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
+</form>
+{% endblock %}

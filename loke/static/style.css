@@ -110,3 +110,21 @@ input[type="submit"] {
   align-self: start;
   min-width: 10em;
 }
+
+.indicator_input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+.indicator_input input {
+  max-width: 35px;
+}
+.list_flex {
+  display: flex;
+  flex-direction: column;
+}
