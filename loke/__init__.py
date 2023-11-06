@@ -16,7 +16,6 @@ from loke.database import db
 from loke.blueprints.test import test
 from loke.trading_engine.indicators.momentum.Rsi import Rsi
 from loke.trading_engine.indicators.momentum.Ao import Ao
-from loke.blueprints.simple_page import simple_page
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from . import auth
@@ -57,8 +56,9 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(auth.bp)
-    app.register_blueprint(blog.bp)   
-    #index points to blog index as it no prefix is defined for the blueprint
+    app.register_blueprint(blog.bp)
+
+    # index points to blog index as it no prefix is defined for the blueprint
     app.add_url_rule('/', endpoint='index')
 
     @app.route("/")

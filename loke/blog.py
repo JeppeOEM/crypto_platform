@@ -21,9 +21,9 @@ def index():
         ' ORDER BY created DESC'
     ).fetchall()
 
-    indicators = db.execute('SELECT * FROM indicators').fetchall()
+    strategies = db.execute('SELECT * FROM strategies').fetchall()
 
-    return render_template('blog/index.html', posts=posts, indicators=indicators)
+    return render_template('blog/index.html', posts=posts, strategies=strategies)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -52,6 +52,33 @@ def create():
     return render_template('blog/create.html')
 
 
+@bp.route('/createstrat', methods=('GET', 'POST'))
+@login_required
+def createstrat():
+    if request.method == 'POST':
+        strategy_name = request.form['strategy_name']
+        expression = request.form['expression']
+        exchange = request.form['expression']
+        error = None
+
+        if not strategy_name:
+            error = 'strategy_name is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO strategies (strategy_name, expression, fk_user_id, fk_exchange_id)'
+                ' VALUES (?, ?, ?)',
+                (strategy_name, expression, g.user['id'], exchange)
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/createstrat.html')
+
+
 def get_post(id, check_author=True):
     post = get_db().execute(
         'SELECT p.id, title, body, created, author_id, username'
@@ -68,7 +95,52 @@ def get_post(id, check_author=True):
 
     return post
 
+
+def get_strategy(id, check_author=True):
+    strategy = get_db().execute(
+        'SELECT s.id, strategy_name, created, expression, username'
+        ' FROM strategy s JOIN user u ON s.author_id = u.id'
+        ' WHERE s.id = ?',
+        (id,)
+    ).fetchone()
+
+    if strategy is None:
+        abort(404, f"strategy id {id} doesn't exist.")
+
+    if check_author and strategy['fk_user_id'] != g.user['id']:
+        abort(403)
+
+    return strategy
+
 # converts to int automatically
+
+
+@bp.route('/<int:id>/stratupdate', methods=('GET', 'POST'))
+@login_required
+def stratupdate(id):
+    strategy = get_strategy(id)
+
+    if request.method == 'POST':
+        strategy_name = request.form['strategy_name']
+        expression = request.form['expression']
+        error = None
+
+        if not strategy_name:
+            error = 'strategy_name is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE post SET strategy_name = ?, expression = ?'
+                ' WHERE id = ?',
+                (strategy_name, expression, id)
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('blog/updatestrat.html', strategy=strategy)
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))

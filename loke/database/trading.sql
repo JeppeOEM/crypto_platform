@@ -26,10 +26,12 @@ CREATE TABLE exchanges (
 CREATE TABLE strategies (
     strategy_id INTEGER PRIMARY KEY AUTOINCREMENT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fk_user_id INTEGER NOT NULL,
     strategy_name TEXT NOT NULL,
     fk_exchange_id INTEGER,
     expression TEXT NOT NULL,
-    FOREIGN KEY (fk_exchange_id) REFERENCES exchanges(exchange_id)
+    FOREIGN KEY (fk_exchange_id) REFERENCES exchanges(exchange_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
 -- Create the 'indicators' table
 CREATE TABLE indicators (
