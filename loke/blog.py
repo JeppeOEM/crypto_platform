@@ -57,22 +57,6 @@ def index():
 
 
 
-@bp.route('/add_indicator', methods=('POST',))
-@login_required
-def add_indicator():
-    data = request.get_json()  # Parse JSON data from the request body
-    indicator = data.get('indicator')  # Get the 'indicator' value
-    db = get_db()
-    cur = db.execute('SELECT COUNT(*) FROM strategies')
-    num_strategies = cur.fetchone()[0]
-    num_strategies+=1
-    db.execute(
-                'INSERT INTO strategy_indicators (strategy_id, indicator_id)'
-                ' VALUES (?, ?, ?, ?)',
-                (strategy_name, expression, g.user['id'], exchange)
-            )
-    db.commit()      
-    return redirect(url_for('blog.index'))
 
 @bp.route('/createstrat', methods=('GET', 'POST'))
 @login_required
