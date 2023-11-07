@@ -47,7 +47,7 @@
 {% for dict_item in parent_list %}
     {% for key, value in dict_item.items() %}
         {% if key == "kind" %} 
-        <button onclick="sendIndicator('{{ value }}')" >{{value}}</button>
+        <button onclick="loadIndicator('{{ value }}')" >{{value}}</button>
         {% endif %}
     {% endfor %} 
 {% endfor %}

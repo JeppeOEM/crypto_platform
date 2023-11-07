@@ -2,36 +2,46 @@ function showValue(value) {
   alert("The value is: " + value);
 }
 
-function sendIndicator(indicator) {
-  // Define the URL of your Flask endpoint
-  const endpointUrl = "/add_indicator";
-
-  // Create a data object to send as the POST request body
+async function loadIndicator(indicatorValue, category) {
+  // Create a new input field element
   const data = {
-    indicator: indicator,
+    indicator: indicatorValue,
+    category: category,
   };
 
-  // Make a POST request to the Flask endpoint
-  fetch(endpointUrl, {
+  let inputField = document.createElement("input");
+  inputField.type = "text"; // You can change this to the desired input type
+  inputField.setAttribute("name", indicatorValue);
+  console.log("HEEEEEEEEEYAAAAAAAAAAA");
+  console.log(data, category);
+
+  ind_props = await postJsonString(data, "/add_indicator");
+  console.log("indi", ind_props);
+  // Get the container for new inputs
+  var container = document.getElementById("input-container");
+
+  // Append the newly created input field to the container
+  container.appendChild(inputField);
+}
+
+async function postJsonString(data, endpoint) {
+  // Define the URL of your Flask endpoint
+
+  // Create a data object to send as the POST request body
+
+  let response = await fetch(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error("Request failed");
-      }
-    })
-    .then((responseData) => {
-      // Handle the response from the Flask endpoint, if needed
-      console.log("Response from Flask:", responseData);
-    })
-    .catch((error) => {
-      // Handle any errors that occur during the request
-      console.error("Error:", error);
-    });
+  });
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.text();
+
+  return responseData;
 }

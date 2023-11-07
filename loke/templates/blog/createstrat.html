@@ -11,11 +11,14 @@
   <input type="number" id="exchange" name="exchange" min="0" max="100" />
   <input type="submit" value="Save" />
 </form>
+
+<button onclick="showValue('ddddd')">TEST</button>
 {% for dict_item in indicators %}
     {% for key, value in dict_item.items() %}
         {% if key == "kind" %} 
-        <button onclick="sendIndicator('{{ value }}')" >{{value}}</button>
+        <button onclick="loadIndicator('{{ value }}','momentum')" >{{value}}</button>
         {% endif %}
     {% endfor %} 
 {% endfor %}
+<div id="input-container"></div>
 {% endblock %}

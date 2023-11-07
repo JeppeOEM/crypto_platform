@@ -15,6 +15,25 @@ import os
 bp = Blueprint('blog', __name__)
 
 
+@bp.route('/add_indicator', methods=('POST', 'GET'))
+@login_required
+def add_indicator():
+    if request.method == 'POST':
+        data = request.get_json()  # Get the JSON data from the request
+        indicator = data.get('indicator')  # Extract the 'indicator' value
+        category = data.get('category')
+        indicator = indicator.capitalize()
+        module_path = f"loke.trading_engine.indicators.{category}.{indicator}"
+        module = importlib.import_module(f"{module_path}")
+        Obj = getattr(module, f"{indicator}")
+        obj = Obj()
+        indicator = obj.type_dict()
+        return indicator
+
+    if request.method == 'GET':
+        return "got it"
+
+
 def get_indicators():
 
     indicators = []
@@ -56,6 +75,22 @@ def index():
     return render_template('blog/index.html', posts=posts, strategies=strategies, parent_list=parent_list)
 
 
+# @bp.route('/add_indicator', methods=('POST',))
+# @login_required
+# def add_indicator():
+#     data = request.get_json()  # Parse JSON data from the request body
+#     indicator = data.get('indicator')  # Get the 'indicator' value
+#     db = get_db()
+#     cur = db.execute('SELECT COUNT(*) FROM strategies')
+#     num_strategies = cur.fetchone()[0]
+#     num_strategies += 1
+#     db.execute(
+#         'INSERT INTO strategy_indicators (strategy_id, indicator_id)'
+#         ' VALUES (?, ?, ?, ?)',
+#         (strategy_name, expression, g.user['id'], exchange)
+#     )
+#     db.commit()
+#     return redirect(url_for('blog.index'))
 
 
 @bp.route('/createstrat', methods=('GET', 'POST'))
@@ -74,7 +109,7 @@ def createstrat():
             flash(error)
         else:
             db = get_db()
-            
+
             db.execute(
                 'INSERT INTO strategies (strategy_name, expression, fk_user_id, fk_exchange_id)'
                 ' VALUES (?, ?, ?, ?)',
@@ -83,13 +118,13 @@ def createstrat():
             db.commit()
             return redirect(url_for('blog.index'))
             cur = db.execute('SELECT COUNT(*) FROM strategies')
-    
-    if request.method == 'GET':
-  
-        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
-        'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
 
-    return render_template('blog/createstrat.html',indicators=indicators, num_strategies=num_strategies)
+    if request.method == 'GET':
+        ndicators = get_indicators
+        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
+            'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
+
+    return render_template('blog/createstrat.html', indicators=indicators)
 
 
 def get_strategy(id, check_user=True):

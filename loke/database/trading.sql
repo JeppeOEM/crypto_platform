@@ -46,3 +46,17 @@ CREATE TABLE strategy_indicators (
     FOREIGN KEY (strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (indicator_id) REFERENCES indicators(indicator_id)
 );
+CREATE TABLE sell_conditions (
+    fk_user_id INT,
+    fk_strategy_id INT,
+    sell_eval VARCHAR(255),
+    FOREIGN KEY (fk_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TABLE buy_conditions (
+    fk_user_id INT,
+    fk_strategy_id INT,
+    buy_eval VARCHAR(255),
+    FOREIGN KEY (fk_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
