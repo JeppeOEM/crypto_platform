@@ -12,11 +12,12 @@ async function loadIndicator(indicatorValue, category) {
   let inputField = document.createElement("input");
   inputField.type = "text"; // You can change this to the desired input type
   inputField.setAttribute("name", indicatorValue);
-  console.log("HEEEEEEEEEYAAAAAAAAAAA");
+  console.log("Load Indicator");
   console.log(data, category);
 
   ind_props = await postJsonString(data, "/add_indicator");
-  console.log("indi", ind_props);
+  console.log("after postJsonString", ind_props);
+
   // Get the container for new inputs
   var container = document.getElementById("input-container");
 
@@ -26,10 +27,11 @@ async function loadIndicator(indicatorValue, category) {
   createInputs(ind_props);
 }
 
-function createInputs(jsonData) {
-  const name_indicator = jsonData.kind;
-  const newJsonData = { ...jsonData };
-  delete newJsonData.kind;
+function createInputs(data) {
+  console.log(data);
+  const name_indicator = data[0][1];
+  data = data.slice(1);
+  console.log(name_indicator);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
   const field = document.createElement("fieldset");
@@ -38,10 +40,11 @@ function createInputs(jsonData) {
   formContainer.appendChild(form);
   form.appendChild(field);
   field.appendChild(legend);
-
-  for (const key in newJsonData) {
-    const value = newJsonData[key];
-    createInput(key, value);
+  console.log((length = data.length));
+  for (let i = 0; i < length; i++) {
+    console.log(i);
+    console.log(data[i]);
+    createInput(data[i][0], data[i][1]);
   }
 
   const submitButton = document.createElement("input");
@@ -71,11 +74,12 @@ function createInputs(jsonData) {
   }
 }
 
+async function postIt() {
+  ind_props = await postJsonString(data, "/add_indicator");
+  console.log("after postJsonString", ind_props);
+}
+
 async function postJsonString(data, endpoint) {
-  // Define the URL of your Flask endpoint
-
-  // Create a data object to send as the POST request body
-
   let response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -89,6 +93,5 @@ async function postJsonString(data, endpoint) {
   }
 
   const responseData = await response.json();
-
   return responseData;
 }

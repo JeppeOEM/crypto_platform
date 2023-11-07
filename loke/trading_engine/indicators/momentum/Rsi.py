@@ -2,7 +2,6 @@
 
 class Rsi:
 
-
     def __init__(self):
         self.length = None
         self.scalar = None
@@ -25,18 +24,14 @@ class Rsi:
         self.offset = offset
 
     def type_dict(self):
-        return {
-            "kind": self.__class__.__name__.lower(),
-            "length": "int",
-            "scalar": "float",
-            "talib": "bool",
-            "offset": "int",
-        }
-    
+        return [
+            ("kind", self.__class__.__name__.lower()),
+            ("length", "int"),
+            ("scalar", "float"),
+            ("talib", "bool"),
+            ("drift", "int"),
+            ("offset", "int")]
 
-    
-    
-    
     def __repr__(self):
         description = """Relative Strength Index (RSI)
 

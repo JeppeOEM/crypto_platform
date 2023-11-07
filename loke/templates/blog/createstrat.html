@@ -1,12 +1,12 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}New Post{% endblock %}</h1>
+<h1>{% block title %}New Strategy{% endblock %}</h1>
 {% endblock %} {% block content %}
 <form method="post">
   <label for="title">Title</label>
   <!-- name must match form['strategy_name'] -->
   <input name="strategy_name" id="title" value="{{ request.form['strategy_name'] }}" required />
   <label for="body">Body</label>
-  <textarea name="expression" id="body">{{ request.form['expression'] }}</textarea>
+  <textarea name="info" id="info">{{ request.form['info'] }}</textarea>
   <label for="exchange">Exchange:</label>
   <input type="number" id="exchange" name="exchange" min="0" max="100" />
   <input type="submit" value="Save" />

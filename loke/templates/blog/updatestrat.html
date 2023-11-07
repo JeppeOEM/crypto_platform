@@ -8,8 +8,8 @@
     id="strategy_name"
     value="{{ request.form['strategy_name'] or strategy['strategy_name'] }}"
     required />
-  <label for="expression">expression</label>
-  <textarea name="expression" id="expression">{{ request.form['expression'] or strategy['expression'] }}</textarea>
+  <label for="info">info</label>
+  <textarea name="info" id="info">{{ request.form['info'] or strategy['info'] }}</textarea>
   <input type="submit" value="Save" />
 </form>
 <hr />

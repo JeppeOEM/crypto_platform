@@ -29,7 +29,8 @@ CREATE TABLE strategies (
     fk_user_id INTEGER NOT NULL,
     strategy_name TEXT NOT NULL,
     fk_exchange_id INTEGER,
-    expression TEXT NOT NULL,
+    info TEXT,
+    expression TEXT,
     FOREIGN KEY (fk_exchange_id) REFERENCES exchanges(exchange_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
