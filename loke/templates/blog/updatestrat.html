@@ -13,6 +13,15 @@
   <input type="submit" value="Save" />
 </form>
 <hr />
+{% for dict_item in indicators %}
+    {% for key, value in dict_item.items() %}
+        {% if key == "kind" %} 
+        <button onclick="loadIndicator('{{ value }}','momentum')" >{{value}}</button>
+        {% endif %}
+    {% endfor %} 
+{% endfor %}
+<div id="input-container"></div>
+<div class="form-container" id="form-container"></div>
 <form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
   <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
 </form>

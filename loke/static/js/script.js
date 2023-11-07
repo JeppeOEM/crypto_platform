@@ -30,6 +30,7 @@ async function loadIndicator(indicatorValue, category) {
 function createInputs(data) {
   console.log(data);
   const name_indicator = data[0][1];
+  //remove name
   data = data.slice(1);
   console.log(name_indicator);
   const formContainer = document.getElementById("form-container");
@@ -40,8 +41,20 @@ function createInputs(data) {
   formContainer.appendChild(form);
   form.appendChild(field);
   field.appendChild(legend);
-  console.log((length = data.length));
-  for (let i = 0; i < length; i++) {
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    //FormData object will be populated with the form's current keys/values
+    //using the name property of each element
+    //for the keys and their submitted value for the values.
+    const formData = new FormData(form);
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    console.log("Form Data as JSON:", JSON.stringify(formDataObject));
+  });
+  for (let i = 0; i < data.length; i++) {
     console.log(i);
     console.log(data[i]);
     createInput(data[i][0], data[i][1]);
@@ -72,11 +85,6 @@ function createInputs(data) {
       field.appendChild(checkbox);
     }
   }
-}
-
-async function postIt() {
-  ind_props = await postJsonString(data, "/add_indicator");
-  console.log("after postJsonString", ind_props);
 }
 
 async function postJsonString(data, endpoint) {
