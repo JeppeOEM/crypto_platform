@@ -20,6 +20,14 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from . import auth
 from . import blog
+from . import cache_import
+from flask_caching import Cache
+
+cache = Cache()
+
+
+def register_extensions(app):
+    cache.init_app(app)
 
 
 def create_app(test_config=None):
@@ -29,7 +37,7 @@ def create_app(test_config=None):
     # relative to the instance folder(the current flask package).
 
     app = Flask(__name__, instance_relative_config=True)
-
+    register_extensions(app)
     app.config.from_mapping(
         # should be overridden with a random value when deploying.
         SECRET_KEY='dev',
@@ -38,7 +46,7 @@ def create_app(test_config=None):
         CACHE_DEFAULT_TIMEOUT=300
 
     )
-    cache = Cache(app)
+    # cache = Cache(app)
 
 # tell Flask to use the above defined config
 
@@ -108,8 +116,10 @@ def create_app(test_config=None):
         data = request.get_json()
         selected_conds_buy = data['conds_buy']
         selected_conds_sell = data['conds_sell']
-        df_bytes = cache.get('df_cache_key')
-        df = pickle.loads(df_bytes)
+        df = pd.read_pickle("df.pkl")
+        # df_bytes = cache.get('df_cache_key')
+        # df = pickle.loads(df_bytes)
+
         df = load_conditions(df, selected_conds_buy, selected_conds_sell)
         df_bytes = pickle.dumps(df)
         cache.set('df_cache_key', df_bytes)

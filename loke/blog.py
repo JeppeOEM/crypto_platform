@@ -10,9 +10,8 @@ import os
 import json
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.indicators.momentum.Ao import Ao
-
 from loke.trading_engine.indicators.momentum.Rsi import Rsi
-
+import pickle
 # DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('blog.index') will both work,
@@ -229,11 +228,30 @@ def update_chart(id):
     return jsonify({'content': new_content})
 
 
-@bp.route('/init_strategy', methods=['POST', 'GET'])
-def init_strategy():
+@bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
+def init_strategy(id):
     if request.method == "POST":
+        print(id)
+        db = get_db()
+        indicators = db.execute(
+            'SELECT settings FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+        total_indicators = []
+
+        for row in indicators:
+            try:
+                # row 0 = settings
+                data_dict = json.loads(row[0])
+                for key, value in data_dict.items():
+                    if key != "kind":
+                        data_dict[key] = int(value) if value.isdigit(
+                        ) else float(value) if "." in value else value
+                total_indicators.append(data_dict)
+                print(type(data_dict))
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON: {e}")
+
+        print(total_indicators)
         data = request.get_json()
-        strategy_id = data['strategy_id']
         exchange = data['exchange']
         init_candles = ['init_candles']
         symbol = data['symbol']
@@ -248,21 +266,17 @@ def init_strategy():
         print(f"{rsi.type_dict()}")
 
         s = Strategy(exchange, init_candles, symbol, name, description)
-        s.addIndicators([
-            # {"kind": "rsi", "length": 15, "scalar": 40},
-            rsi.get(),
-            ao.get(),
-            {"kind": "ema", "length": 8},
-            {"kind": "ema", "length": 21},
-            {"kind": "bbands", "length": 20},
-            {"kind": "macd", "fast": 8, "slow": 21}
-        ])
+        s.addIndicators(total_indicators)
         df = s.create_strategy()
         df = df.head(215)
         df.to_json("lol.json", orient='records', compression='infer')
         print(df.columns)
-        columns = s.column_dict()
+        print(df.head(10))
+        #DataFrame.to_hdf upgrade to hdf5 
+        df.to_pickle("df.pkl")
+
         # df_bytes = pickle.dumps(df)
         # cache.set('df_cache_key', df_bytes)
+        # print(df.head(50))
         resp = {"message": f'{df}'}
         return jsonify(resp)

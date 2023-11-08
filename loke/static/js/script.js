@@ -85,10 +85,8 @@ function createInputs(data) {
       form_arr.push([key, value]);
     });
     //strategy_id = document.querySelector("#strategy_id");
-    postJsonGetData(data, endpoint);
     await postJsonGetStatus(form_arr, `convert_indicator`);
-    await update_chart("update_chart");
-
+    await update_chart("init_strategy");
 
     console.log("Form Data as JSON:", JSON.stringify(form_arr));
   }
