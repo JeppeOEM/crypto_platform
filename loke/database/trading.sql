@@ -41,11 +41,13 @@ CREATE TABLE indicators (
 );
 -- Create the junction table 'strategy_indicators'
 CREATE TABLE strategy_indicators (
-    strategy_id INT,
-    indicator_id INT,
-    PRIMARY KEY (strategy_id, indicator_id),
-    FOREIGN KEY (strategy_id) REFERENCES strategies(strategy_id),
-    FOREIGN KEY (indicator_id) REFERENCES indicators(indicator_id)
+    fk_strategy_id INT,
+    fk_user_id INTEGER NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    indicator_name VARCHAR(55) NOT NULL,
+    settings VARCHAR(255) NOT NULL,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
 CREATE TABLE sell_conditions (
     fk_user_id INT,

@@ -144,3 +144,12 @@ h3 {
 .form-container .submitButton {
   margin-left: auto;
 }
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  margin-bottom: 0;
+}

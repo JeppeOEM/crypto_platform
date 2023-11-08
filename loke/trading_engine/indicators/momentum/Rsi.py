@@ -17,7 +17,7 @@ class Rsi:
             "offset": self.offset,
         }
 
-    def update(self, length, scalar, offset, talib=False):
+    def set(self, length, scalar, offset, talib=False):
         self.length = length
         self.scalar = scalar
         self.talib = talib

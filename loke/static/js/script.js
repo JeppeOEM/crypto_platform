@@ -15,8 +15,8 @@ async function loadIndicator(indicatorValue, category) {
   console.log("Load Indicator");
   console.log(data, category);
 
-  ind_props = await postJsonString(data, "/add_indicator");
-  console.log("after postJsonString", ind_props);
+  ind_props = await postJsonGetData(data, "/add_indicator");
+  console.log("after postJsonGetData", ind_props);
 
   // Get the container for new inputs
   var container = document.getElementById("input-container");
@@ -41,19 +41,9 @@ function createInputs(data) {
   formContainer.appendChild(form);
   form.appendChild(field);
   field.appendChild(legend);
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    //FormData object will be populated with the form's current keys/values
-    //using the name property of each element
-    //for the keys and their submitted value for the values.
-    const formData = new FormData(form);
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
 
-    console.log("Form Data as JSON:", JSON.stringify(formDataObject));
-  });
+  form.addEventListener("submit", gogo);
+  //form.customParam = form;
   for (let i = 0; i < data.length; i++) {
     console.log(i);
     console.log(data[i]);
@@ -85,16 +75,35 @@ function createInputs(data) {
       field.appendChild(checkbox);
     }
   }
+
+  async function gogo(event) {
+    event.preventDefault();
+    // let formdata = event.currentTarget.customParam;
+    const formData = new FormData(form);
+    form_arr = [["kind", legend.innerText]];
+    formData.forEach((value, key) => {
+      form_arr.push([key, value]);
+    });
+    //strategy_id = document.querySelector("#strategy_id");
+    postJsonGetData(data, endpoint);
+    await postJsonGetStatus(form_arr, `convert_indicator`);
+    await update_chart("update_chart");
+
+
+    console.log("Form Data as JSON:", JSON.stringify(form_arr));
+  }
 }
 
-async function postJsonString(data, endpoint) {
-  let response = await fetch(endpoint, {
+async function postJsonGetData(data, endpoint) {
+  console.log(endpoint);
+  const options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
+  };
+  let response = await fetch(endpoint, options);
 
   if (!response.ok) {
     throw new Error("Request failed");
@@ -102,4 +111,53 @@ async function postJsonString(data, endpoint) {
 
   const responseData = await response.json();
   return responseData;
+}
+
+async function postJsonGetStatus(data, endpoint) {
+  // Create an options object for the fetch request
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  // Make the POST request using the fetch API
+  let reponse = await fetch(endpoint, options);
+  console.log(reponse);
+  if (!reponse.ok) {
+    throw new Error("Request failed");
+  } else {
+    console.log(reponse.status);
+  }
+}
+
+async function update_chart(endpoint) {
+  try {
+    const data = {
+      exchange: "binance",
+      init_candles: 100,
+      symbol: "BTCUSDT",
+      name: "test",
+      description: "description",
+    };
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      document.getElementById("content-div").textContent = responseData.content;
+    } else {
+      console.error("Error:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }

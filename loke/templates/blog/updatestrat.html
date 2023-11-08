@@ -1,8 +1,13 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}Edit "{{ strategy['strategy_name'] }}"{% endblock %}</h1>
+<div class="flex-vertical">
+  <p>Id:<span id="strategy_id"> {{strategy['strategy_id']}}</span></p>
+  <h1>{% block title %}Edit "{{ strategy['strategy_name'] }}"
+
+</div>
+{% endblock %}</h1>
 {% endblock %} {% block content %}
 <form method="post">
-  <label for="title">Title</label>
+  <label for="title"> Title</label>
   <input
     name="strategy_name"
     id="strategy_name"
@@ -13,6 +18,7 @@
   <input type="submit" value="Save" />
 </form>
 <hr />
+
 {% for dict_item in indicators %}
     {% for key, value in dict_item.items() %}
         {% if key == "kind" %} 
@@ -25,4 +31,16 @@
 <form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
   <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
 </form>
+<form class="preventDefault" action="/custom_endpoint" method="post">
+    <input type="submit" value="Call Custom Endpoint">
+</form>
+    <div id="content-div">
+        Initial content
+    </div>
+
+    <button id="update-button">Update Div</button>
+
+    <script>
+
+    </script>
 {% endblock %}
