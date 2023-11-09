@@ -250,42 +250,68 @@ function show_string(array_objs) {
 }
 
 async function backtest() {
-  // let conditions_copy = conditions;
-  // let conditions_sell_copy = conditions_sell;
-  // conditions_copy[0].splice(0, 0, "buy first");
-  // conditions_sell_copy[0].splice(0, 0, "sell first");
-  // data.conds_buy = [conditions_copy];
-  // data.conds_sell = [conditions_sell_copy];
-  data.conds_buy = [
+  let conditions_copy = [
     [
-      "buy first",
       {
-        ind: "RSI_14",
+        ind: "open",
       },
       {
         cond: "<",
       },
       {
-        val: 33,
+        val: 11,
       },
     ],
   ];
-  data.conds_sell = [
+  let conditions_sell_copy = [
     [
-      [
-        "sell first",
-        {
-          ind: "open",
-        },
-        {
-          cond: "<",
-        },
-        {
-          val: 1,
-        },
-      ],
+      {
+        ind: "AO_14_14",
+      },
+      {
+        cond: "<",
+      },
+      {
+        val: 11,
+      },
     ],
   ];
+  // let conditions_copy = conditions;
+  // let conditions_sell_copy = conditions_sell;
+  // conditions_copy[0].splice(0, 0, "buy first");
+  // conditions_sell_copy[0].splice(0, 0, "sell first");
+  data.conds_buy = conditions_copy;
+  data.conds_sell = conditions_sell_copy;
+  console.log(data.conds_buy);
+
+  // data.conds_buy = [
+  //   [
+  //     "bu",
+  //     {
+  //       ind: "RSI_14",
+  //     },
+  //     {
+  //       cond: "<",
+  //     },
+  //     {
+  //       val: 33,
+  //     },
+  //   ],
+  // ];
+  // data.conds_sell = [
+  //   [
+  //     "se",
+  //     {
+  //       ind: "RSI_14",
+  //     },
+  //     {
+  //       cond: ">",
+  //     },
+  //     {
+  //       val: 70,
+  //     },
+  //   ],
+  // ];
   console.log(data.conds_buy);
   console.log(data.conds_sell);
   let response = await postJsonGetData(data, "/backtest");

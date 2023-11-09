@@ -72,21 +72,7 @@ def create_app(test_config=None):
     def index():
         return render_template("loke/templates/index.html")
 
-    @app.route('/load_conditions', methods=['POST'])
-    def strategy():
-        data = request.get_json()
-        selected_conds_buy = data['conds_buy']
-        selected_conds_sell = data['conds_sell']
-        df = pd.read_pickle("df.pkl")
-        # df_bytes = cache.get('df_cache_key')
-        # df = pickle.loads(df_bytes)
 
-        df = load_conditions(df, selected_conds_buy, selected_conds_sell)
-        df_bytes = pickle.dumps(df)
-        cache.set('df_cache_key', df_bytes)
-        json_string = {"message": 'something'}
-        # print(df.head(3))
-        return json_string
 
     @app.route('/backtest2', methods=['GET'])
     def backtest():
@@ -159,3 +145,18 @@ def create_app(test_config=None):
     #         cache.set('df_cache_key', df_bytes)
     #         resp = {"message": f'{df}'}
     #         return resp
+    # @app.route('/load_conditions', methods=['POST'])
+    # def strategy():
+    #     data = request.get_json()
+    #     selected_conds_buy = data['conds_buy']
+    #     selected_conds_sell = data['conds_sell']
+    #     df = pd.read_pickle("df.pkl")
+    #     # df_bytes = cache.get('df_cache_key')
+    #     # df = pickle.loads(df_bytes)
+
+    #     df = load_conditions(df, selected_conds_buy, selected_conds_sell)
+    #     df_bytes = pickle.dumps(df)
+    #     cache.set('df_cache_key', df_bytes)
+    #     json_string = {"message": 'something'}
+    #     # print(df.head(3))
+    #     return json_string

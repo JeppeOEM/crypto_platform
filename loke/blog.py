@@ -277,7 +277,9 @@ def backtest():
     data = request.get_json()
     name = data['name']
     selected_conds_buy = data['conds_buy']
+    selected_conds_buy[0].insert(0, "nameBBB")
     selected_conds_sell = data['conds_sell']
+    selected_conds_sell[0].insert(0, "nameSSS")
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
 
     df = load_conditions(df, selected_conds_buy, selected_conds_sell)
