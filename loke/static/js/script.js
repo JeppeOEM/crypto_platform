@@ -175,6 +175,7 @@ async function update_chart(endpoint) {
       console.log(responseData);
       build_buttons(responseData, "conditions", "button", "indicator_cond");
       build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+      build_buttons(["or", "&"], "compare", "button", "or_and_cond");
     } else {
       console.error("Error:", response.statusText);
     }
@@ -198,8 +199,11 @@ function build_buttons(array, element_id, element, class_name) {
     button.addEventListener("click", function (event) {
       let text = event.target.innerText;
       console.log(text);
-
-      cond.push({ cond: event.target.innerText });
+      if (class_name == "indicator_cond") {
+        cond.push({ ind: event.target.innerText });
+      } else {
+        cond.push({ cond: event.target.innerText });
+      }
       document.getElementById("cond").textContent = `${show_string(cond)}`;
     });
   });
@@ -207,13 +211,13 @@ function build_buttons(array, element_id, element, class_name) {
 
 function value_cond() {
   let value_cond = document.getElementById("value_cond").value;
-  cond.push({ val: value_cond });
+  cond.push({ val: parseFloat(value_cond) });
   document.getElementById("cond").textContent = `${show_string(cond)}`;
 }
 
 function save_cond_buy() {
   //indicators
-  conditions.push({ ind: cond });
+  conditions.push(cond);
   cond = [];
   document.getElementById("cond").textContent = `${show_string(cond)}`;
   document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
@@ -221,7 +225,7 @@ function save_cond_buy() {
 
 function save_cond_sell() {
   //indicators
-  conditions_sell.push({ ind: cond });
+  conditions_sell.push(cond);
   cond = [];
   document.getElementById("cond").textContent = `${show_string(cond_sell)}`;
   document.getElementById("saved_conds_sell").textContent = `${show_string(conditions_sell)}`;
@@ -246,14 +250,42 @@ function show_string(array_objs) {
 }
 
 async function backtest() {
-  let conditions_copy = conditions;
-  let conditions_sell_copy = conditions_sell;
-  cond_first = conditions_copy.indexOf(conditions_copy[0]);
-  cond_first_sell = conditions_sell_copy.indexOf(conditions_sell_copy[0]);
-  conditions_copy.splice(cond_first, 0, "empty first");
-  conditions_sell_copy.splice(cond_first_sell, 0, "empty first");
-  data.conds_buy = [conditions_copy];
-  data.conds_sell = [conditions_sell_copy];
+  // let conditions_copy = conditions;
+  // let conditions_sell_copy = conditions_sell;
+  // conditions_copy[0].splice(0, 0, "buy first");
+  // conditions_sell_copy[0].splice(0, 0, "sell first");
+  // data.conds_buy = [conditions_copy];
+  // data.conds_sell = [conditions_sell_copy];
+  data.conds_buy = [
+    [
+      "buy first",
+      {
+        ind: "RSI_14",
+      },
+      {
+        cond: "<",
+      },
+      {
+        val: 33,
+      },
+    ],
+  ];
+  data.conds_sell = [
+    [
+      [
+        "sell first",
+        {
+          ind: "open",
+        },
+        {
+          cond: "<",
+        },
+        {
+          val: 1,
+        },
+      ],
+    ],
+  ];
   console.log(data.conds_buy);
   console.log(data.conds_sell);
   let response = await postJsonGetData(data, "/backtest");

@@ -263,7 +263,7 @@ def init_strategy(id):
         s = Strategy(exchange, init_candles, symbol, name, description)
         s.addIndicators(total_indicators)
         df = s.create_strategy()
-        df = df.head(215)
+        df = df.head(1215)
         df.to_json("lol.json", orient='records', compression='infer')
         print("DF COLS")
         print(df.columns)
@@ -290,4 +290,3 @@ def backtest():
     result = bt.run(df)
     json_string = {"message": f'{result}'}
     return json_string
-
