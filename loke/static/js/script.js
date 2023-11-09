@@ -1,3 +1,30 @@
+class Condition {
+  constructor(cond) {
+    this.setCondition(cond);
+  }
+  getCondition() {
+    return this.cond;
+  }
+  setCondition(newCond) {
+    newCond = newCond.trim();
+    if (newCond === "") {
+      throw "Cond cant be empty";
+    }
+    this.name = newCond;
+  }
+}
+const data = {
+  exchange: "binance",
+  init_candles: 100,
+  symbol: "BTCUSDT",
+  name: "test",
+  description: "description",
+};
+
+let conditions = [];
+let conditions_sell = [];
+let cond = [];
+let cond_sell = [];
 function showValue(value) {
   alert("The value is: " + value);
 }
@@ -62,6 +89,7 @@ function createInputs(data) {
       label.innerText = key;
       const input = document.createElement("input");
       input.type = "text";
+      input.value = "14";
       input.name = key;
       field.appendChild(label);
       field.appendChild(input);
@@ -133,14 +161,6 @@ async function postJsonGetStatus(data, endpoint) {
 
 async function update_chart(endpoint) {
   try {
-    const data = {
-      exchange: "binance",
-      init_candles: 100,
-      symbol: "BTCUSDT",
-      name: "test",
-      description: "description",
-    };
-
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -150,12 +170,92 @@ async function update_chart(endpoint) {
     });
 
     if (response.ok) {
+      console.log("response ok");
       const responseData = await response.json();
-      document.getElementById("content-div").textContent = responseData.content;
+      console.log(responseData);
+      build_buttons(responseData, "conditions", "button", "indicator_cond");
+      build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
     } else {
       console.error("Error:", response.statusText);
     }
   } catch (error) {
     console.error("Error:", error);
   }
+}
+
+function build_buttons(array, element_id, element, class_name) {
+  let container = document.getElementById(element_id);
+  for (let i = 0; i < array.length; i++) {
+    let button = document.createElement(element);
+    button.innerText = array[i];
+    button.classList.add(class_name);
+    container.appendChild(button);
+  }
+
+  const buttons = container.querySelectorAll(`.${class_name}`);
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      let text = event.target.innerText;
+      console.log(text);
+
+      cond.push({ cond: event.target.innerText });
+      document.getElementById("cond").textContent = `${show_string(cond)}`;
+    });
+  });
+}
+
+function value_cond() {
+  let value_cond = document.getElementById("value_cond").value;
+  cond.push({ val: value_cond });
+  document.getElementById("cond").textContent = `${show_string(cond)}`;
+}
+
+function save_cond_buy() {
+  //indicators
+  conditions.push({ ind: cond });
+  cond = [];
+  document.getElementById("cond").textContent = `${show_string(cond)}`;
+  document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
+}
+
+function save_cond_sell() {
+  //indicators
+  conditions_sell.push({ ind: cond });
+  cond = [];
+  document.getElementById("cond").textContent = `${show_string(cond_sell)}`;
+  document.getElementById("saved_conds_sell").textContent = `${show_string(conditions_sell)}`;
+}
+
+function del_last() {
+  cond.pop();
+  document.getElementById("cond").textContent = `${show_string(cond)}`;
+}
+
+function show_string(array_objs) {
+  console.log(cond);
+  console.log(conditions);
+  console.log(conditions_sell);
+  let arr_strings = [];
+  for (let i = 0; i < array_objs.length; i++)
+    for (const [key, value] of Object.entries(array_objs[i])) {
+      console.log(`${key}: ${value}`);
+      arr_strings.push(value);
+    }
+  return arr_strings;
+}
+
+async function backtest() {
+  let conditions_copy = conditions;
+  let conditions_sell_copy = conditions_sell;
+  cond_first = conditions_copy.indexOf(conditions_copy[0]);
+  cond_first_sell = conditions_sell_copy.indexOf(conditions_sell_copy[0]);
+  conditions_copy.splice(cond_first, 0, "empty first");
+  conditions_sell_copy.splice(cond_first_sell, 0, "empty first");
+  data.conds_buy = [conditions_copy];
+  data.conds_sell = [conditions_sell_copy];
+  console.log(data.conds_buy);
+  console.log(data.conds_sell);
+  let response = await postJsonGetData(data, "/backtest");
+  console.log(response);
 }

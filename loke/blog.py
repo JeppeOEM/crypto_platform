@@ -8,10 +8,13 @@ from loke.database.db import get_db
 import importlib
 import os
 import json
+from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.indicators.momentum.Ao import Ao
 from loke.trading_engine.indicators.momentum.Rsi import Rsi
+from loke.trading_engine.load_conditions import load_conditions
 import pickle
+import pandas as pd
 # DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('blog.index') will both work,
@@ -257,26 +260,34 @@ def init_strategy(id):
         symbol = data['symbol']
         name = data['name']
         description = data['description']
-
-        rsi = Rsi()
-        rsi.set(20, 50, 0)
-        ao = Ao()
-        ao.set(15, 15, 0)
-
-        print(f"{rsi.type_dict()}")
-
         s = Strategy(exchange, init_candles, symbol, name, description)
         s.addIndicators(total_indicators)
         df = s.create_strategy()
         df = df.head(215)
         df.to_json("lol.json", orient='records', compression='infer')
+        print("DF COLS")
         print(df.columns)
-        print(df.head(10))
-        #DataFrame.to_hdf upgrade to hdf5 
-        df.to_pickle("df.pkl")
+        df.to_pickle(f"data/pickles/{name}.pkl")
+        cols = df.columns.to_list()
+        return jsonify(cols)
 
-        # df_bytes = pickle.dumps(df)
-        # cache.set('df_cache_key', df_bytes)
-        # print(df.head(50))
-        resp = {"message": f'{df}'}
-        return jsonify(resp)
+
+@bp.route('/backtest', methods=['POST'])
+def backtest():
+    data = request.get_json()
+    name = data['name']
+    selected_conds_buy = data['conds_buy']
+    selected_conds_sell = data['conds_sell']
+    df = pd.read_pickle(f"data/pickles/{name}.pkl")
+
+    df = load_conditions(df, selected_conds_buy, selected_conds_sell)
+    # df_bytes = pickle.dumps(df)
+    # cache.set('df_cache_key', df_bytes)
+    df.to_pickle(f"data/pickles/{name}.pkl")
+
+    print("BACK HIT")
+    bt = Backtest()
+    result = bt.run(df)
+    json_string = {"message": f'{result}'}
+    return json_string
+
