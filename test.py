@@ -1,11 +1,45 @@
+import os
+
+from flask import Flask
+from loke.database import db
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+    render_template, flash
+from . import auth
+from . import blog
 
 
-@bp.route('/add_indicator', methods=('POST', 'GET'))
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_mapping(
+        # should be overridden with a random value when deploying.
+        SECRET_KEY='dev',
+        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        CACHE_TYPE="SimpleCache",
+        CACHE_DEFAULT_TIMEOUT=300
+    )
 
-def add_indicator():
-    if request.method == 'POST':
-        indicator = {'kind': 'ao', 'fast': 'int',
-                     'slow': 'int', 'offset': 'int'}
-        indicator = jsonify(indicator)
-        print(indicator)
-        return indicator
+    if test_config is None:
+        # load the instance config, if it exists, when not testing
+        app.config.from_pyfile('config.py', silent=True)
+    else:
+        # load the test config if passed in
+        app.config.from_mapping(test_config)
+    # ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(blog.bp)
+
+    # index points to blog index as it no prefix is defined for the blueprint
+    app.add_url_rule('/', endpoint='index')
+
+    @app.route("/")
+    def index():
+        return render_template("loke/templates/index.html")
+
+    db.init_app(app)
+
+    return app
