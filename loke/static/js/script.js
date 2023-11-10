@@ -45,6 +45,12 @@ async function build_page() {
   }
   build_indicator_inputs(indicatordata.indicators);
   build_buttons(["or", "&"], "compare", "button", "or_and_cond");
+  build_conditions();
+}
+
+async function build_conditions() {
+  let result = await postJsonGetData(data, "condition", "GET");
+  console.log(result);
 }
 
 function build_indicator_inputs(data) {
@@ -164,9 +170,10 @@ async function update_chart(endpoint) {
   }
 }
 
-async function postJsonGetData(data, endpoint) {
+
+async function postJsonGetData(data, endpoint, method = "POST") {
   const options = {
-    method: "POST",
+    method: method,
     headers: {
       "Content-Type": "application/json",
     },
@@ -182,10 +189,10 @@ async function postJsonGetData(data, endpoint) {
   return responseData;
 }
 
-async function postJsonGetStatus(data, endpoint) {
+async function postJsonGetStatus(data, endpoint, method = "POST") {
   // Create an options object for the fetch request
   const options = {
-    method: "POST",
+    method: method,
     headers: {
       "Content-Type": "application/json",
     },
@@ -193,12 +200,13 @@ async function postJsonGetStatus(data, endpoint) {
   };
 
   // Make the POST request using the fetch API
-  let reponse = await fetch(endpoint, options);
+  let response = await fetch(endpoint, options);
 
-  if (!reponse.ok) {
+  if (!response.ok) {
     throw new Error("Request failed");
   } else {
-    console.log(reponse.status);
+    console.log(response.status);
+    return response;
   }
 }
 
@@ -259,25 +267,46 @@ function value_cond() {
   document.getElementById("cond").textContent = `${show_string(cond)}`;
 }
 
-function save_cond_buy() {
+async function save_cond_buy() {
   //indicators
   conditions.push(cond);
   cond = [];
   document.getElementById("cond").textContent = `${show_string(cond)}`;
   document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
+  data.buy_cond = JSON.stringify(conditions);
+  data.side = "buy";
+  let response = await postJsonGetStatus(data, "condition");
+  console.log(response);
+  let build_conds = await build_conditions();
+  document.getElementById("sell_cond").textContent = `${build_conds}`;
 }
 
-function save_cond_sell() {
+async function save_cond_sell() {
   //indicators
   conditions_sell.push(cond);
   cond = [];
   document.getElementById("cond").textContent = `${show_string(cond_sell)}`;
   document.getElementById("saved_conds_sell").textContent = `${show_string(conditions_sell)}`;
+  data.buy_cond = JSON.stringify(conditions_sell);
+  data.side = "buy";
+  let response = await postJsonGetStatus(data, "condition");
+  console.log(response);
+  let build_conds = await build_conditions();
+  document.getElementById("buy_cond").textContent = `${build_conds}`;
 }
 
 function del_last() {
   cond.pop();
   document.getElementById("cond").textContent = `${show_string(cond)}`;
+}
+
+function del_last_sell_cond() {
+  conditions_sell.pop();
+  document.getElementById("conditions_sell").textContent = `${show_string(cond)}`;
+}
+function del_last_buy_cond() {
+  conditions.pop();
+  document.getElementById("conditions").textContent = `${show_string(cond)}`;
 }
 
 function show_string(array_objs) {
@@ -286,7 +315,7 @@ function show_string(array_objs) {
     for (const [key, value] of Object.entries(array_objs[i])) {
       arr_strings.push(value);
     }
-  return arr_strings;
+  return JSON.stringify(arr_strings);
 }
 
 async function optimize() {
@@ -304,6 +333,7 @@ async function backtest() {
   data.conds_sell = conditions_sell_copy;
 
   let response = await postJsonGetData(data, "backtest");
+  document.getElementById("cond").textContent = JSON.stringify(response.message);
 }
 async function input_params(key, value, value, field) {
   if (value != "bool") {

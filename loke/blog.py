@@ -305,9 +305,9 @@ def backtest(id):
     data = request.get_json()
     name = data['name']
     selected_conds_buy = data['conds_buy']
-    selected_conds_buy[0].insert(0, "nameBBB")
+    selected_conds_buy[0].insert(0, "b")
     selected_conds_sell = data['conds_sell']
-    selected_conds_sell[0].insert(0, "nameSSS")
+    selected_conds_sell[0].insert(0, "s")
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
 
     df = load_conditions(df, selected_conds_buy, selected_conds_sell)
@@ -342,6 +342,72 @@ def optimize(id):
     columns = s.column_dict()
     resp = {"message": f'{columns}'}
     return resp
+
+
+@bp.route('/<int:id>/condition', methods=['POST', 'GET'])
+def condition(id):
+    if request.method == 'POST':
+        data = request.get_json()
+        db = get_db()
+        if data['side'] == "buy":
+            print(data['buy_cond'])
+            existing_indicator = db.execute(
+                'SELECT 1 FROM buy_conditions '
+                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND buy_eval = ?',
+                (id, g.user['id'], data['buy_cond'])
+            ).fetchone()
+
+            if existing_indicator:
+                return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
+
+            try:
+                # Insert the indicator if it doesn't exist
+                db.execute(
+                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval) VALUES (?, ?, ?)',
+                    (id, g.user['id'], data['buy_cond'])
+                )
+                db.commit()
+                return jsonify({'message': 'condition saved to database'})
+            except Exception as e:
+                # Handle database-related errors
+                return jsonify({'error': str(e)}), 500
+
+        if data['side'] == "sell":
+
+            existing_indicator = db.execute(
+                'SELECT 1 FROM sell_conditions '
+                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND sell_eval = ? AND indicator_name = ?',
+                (id, g.user['id'], data['sell_cond'])
+            ).fetchone()
+
+            if existing_indicator:
+                return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
+
+            try:
+                # Insert the indicator if it doesn't exist
+                db.execute(
+                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
+                    (id, g.user['id'], data['sell_cond'])
+                )
+                db.commit()
+                return jsonify({'message': 'condition saved to database'})
+            except Exception as e:
+                # Handle database-related errors
+                return jsonify({'error': str(e)}), 500
+    if request.method == 'GET':
+        buy_conds = db.execute(
+            'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
+            (id, g.user['id'], data['sell_cond'])
+        ).fetchall()
+        sell_conds = db.execute(
+            'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
+            (id, g.user['id'], data['sell_cond'])
+        ).fetchall()
+        result_dict = {
+            'buy_conds': buy_conds,
+            'sell_conds': sell_conds
+        }
+        return jsonify(result_dict)
 
 
 @bp.route('/<int:id>/load_page', methods=['POST'])

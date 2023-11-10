@@ -43,7 +43,8 @@
     <div id="cond">
     </div>
     <button onclick="del_last()">Del</button>
-    
+    <button onclick="del_last_sell_cond()">Del sell condition</button>
+    <button onclick="del_last_buy_cond()">Del buy condition</button>
 
     <button id="update-button">Update Div</button>
     <!-- insert indicator btn's -->
@@ -57,4 +58,7 @@
      <button onclick="save_cond_buy()" id="save_cond_buy">Save condition buy</button>
      <button onclick="save_cond_sell()" id="save_cond_sell">Save condition sell</button>
      <button onclick="backtest()" id="backtest">Save backtest</button>
+     <span id="backtest_result"></span>
+     <span id="sell_conds"></span>
+     <span id="buy_conds"></span>
 {% endblock %}
