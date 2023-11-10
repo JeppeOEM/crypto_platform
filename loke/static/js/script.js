@@ -53,6 +53,9 @@ function build_indicator_inputs(data) {
 
     for (let key in indicator) {
       if (indicator.hasOwnProperty(key)) {
+        if (key === "talib") {
+          continue;
+        }
         if (key === "offset") {
           indicator[key] = parseInt(indicator[key]);
         } else if (key != "kind") {
@@ -65,20 +68,34 @@ function build_indicator_inputs(data) {
   console.log(indicators);
 
   for (let i = 0; i < indicators.length; i++) {
-    loadIndicator([], "momentum", false);
+    loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
   }
 }
 
-async function loadIndicator(indicatorValue, category, default_values = true) {
+async function loadIndicator(indicatorValue, category, values = undefined) {
   // Create a new input field element
   const data = {
     indicator: indicatorValue,
     category: category,
   };
-
+  console.log(values);
+  let output = [];
   let indi_data = await postJsonGetData(data, "/add_indicator");
-  console.log("ind", indi_data);
-  console.log("after postJsonGetindi_data", indi_data);
+  if (values) {
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        const value = values[key];
+        if (typeof value === "number") {
+          output.push([key, "float", value]);
+        }
+        if (typeof value === "string") {
+          output.push([key, value]);
+        }
+      }
+    }
+    //asign default values
+    indi_data = output;
+  }
 
   const name_indicator = indi_data[0][1];
   //remove name of indicator
@@ -278,36 +295,11 @@ async function optimize() {
 }
 
 async function backtest() {
-  let conditions_copy = [
-    [
-      {
-        ind: "open",
-      },
-      {
-        cond: "<",
-      },
-      {
-        val: 11,
-      },
-    ],
-  ];
-  let conditions_sell_copy = [
-    [
-      {
-        ind: "AO_14_14",
-      },
-      {
-        cond: "<",
-      },
-      {
-        val: 11,
-      },
-    ],
-  ];
-  // let conditions_copy = conditions;
-  // let conditions_sell_copy = conditions_sell;
-  // conditions_copy[0].splice(0, 0, "buy first");
-  // conditions_sell_copy[0].splice(0, 0, "sell first");
+  // let conditions_copy = [[{ ind: "AO_14_14" }, { cond: ">" }, { val: 50 }]];
+  // let conditions_sell_copy = [[{ ind: "AO_14_14" }, { cond: "<" }, { val: 11 }]];
+  let conditions_copy = conditions;
+  let conditions_sell_copy = conditions_sell;
+
   data.conds_buy = conditions_copy;
   data.conds_sell = conditions_sell_copy;
 
@@ -329,7 +321,8 @@ async function input_params(key, value, value, field) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.name = key;
-    checkbox.value = value;
+    // checkbox.value = value;
+    checkbox.value = false;
     field.appendChild(label2);
     field.appendChild(checkbox);
   }

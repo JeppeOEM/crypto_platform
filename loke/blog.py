@@ -168,14 +168,34 @@ def convert_indicator(strategy_id):
         print(indicator)
         json_dict = json.dumps(indicator)
         db = get_db()
-        db.execute('INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, indicator_name, settings) VALUES (?,?,?,?)',
-                   (strategy_id, g.user['id'], indicator['kind'], json_dict))
-        db.commit()
+        # SELECT 1 means it wont return the found row but 1, as we dont need the row
+        # Check if the indicator with the given settings already exists
+        print("THIS BOY", )
 
-        return jsonify({'message': 'Response from convert'})
+        existing_indicator = db.execute(
+            'SELECT 1 FROM strategy_indicators '
+            'WHERE fk_strategy_id = ? AND fk_user_id = ? AND settings = ? AND indicator_name = ?',
+            (strategy_id, g.user['id'], json_dict, indicator['kind'])
+        ).fetchone()
 
+        if existing_indicator:
+            return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
+
+        try:
+            # Insert the indicator if it doesn't exist
+            db.execute(
+                'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name) VALUES (?, ?, ?, ?)',
+                (strategy_id, g.user['id'], json_dict, indicator['kind'])
+            )
+            db.commit()
+            return jsonify({'message': 'Indicator successfully inserted'})
+        except Exception as e:
+            # Handle database-related errors
+            return jsonify({'error': str(e)}), 500
 
 # converts to int automatically
+
+
 @bp.route('/<int:id>/stratupdate', methods=('GET', 'POST'))
 @login_required
 def stratupdate(id):
