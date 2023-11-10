@@ -72,39 +72,6 @@ def create_app(test_config=None):
     def index():
         return render_template("loke/templates/index.html")
 
-
-
-    @app.route('/backtest2', methods=['GET'])
-    def backtest():
-        df_bytes = cache.get('df_cache_key')
-        df = pickle.loads(df_bytes)
-        print("BACK HIT")
-        bt = Backtest()
-        result = bt.run(df)
-        json_string = {"message": f'{result}'}
-        return json_string
-
-    @app.route('/optimize', methods=['POST'])
-    def optimize():
-        data = request.get_json()
-        # data = request.data
-        exchange = data['exchange']
-        init_candles = ['init_candles']
-        symbol = data['symbol']
-        name = data['name']
-        description = data['description']
-        s = Strategy(exchange, init_candles, symbol, name, description)
-        s.addIndicators([
-            {"kind": "rsi", "length": 15},
-        ])
-
-        df = s.create_strategy()
-        call_optimizer(df, "dynamic", 10, 10)
-
-        columns = s.column_dict()
-        resp = {"message": f'{columns}'}
-        return resp
-
     db.init_app(app)
 
     return app
@@ -159,4 +126,14 @@ def create_app(test_config=None):
     #     cache.set('df_cache_key', df_bytes)
     #     json_string = {"message": 'something'}
     #     # print(df.head(3))
+    #     return json_string
+
+    # @app.route('/backtest2', methods=['GET'])
+    # def backtest():
+    #     df_bytes = cache.get('df_cache_key')
+    #     df = pickle.loads(df_bytes)
+    #     print("BACK HIT")
+    #     bt = Backtest()
+    #     result = bt.run(df)
+    #     json_string = {"message": f'{result}'}
     #     return json_string

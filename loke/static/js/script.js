@@ -72,8 +72,6 @@ function createInputs(data) {
   form.addEventListener("submit", gogo);
   //form.customParam = form;
   for (let i = 0; i < data.length; i++) {
-    console.log(i);
-    console.log(data[i]);
     createInput(data[i][0], data[i][1]);
   }
 
@@ -115,8 +113,6 @@ function createInputs(data) {
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
     await update_chart("init_strategy");
-
-    console.log("Form Data as JSON:", JSON.stringify(form_arr));
   }
 }
 
@@ -170,7 +166,6 @@ async function update_chart(endpoint) {
     });
 
     if (response.ok) {
-      console.log("response ok");
       const responseData = await response.json();
       console.log(responseData);
       build_buttons(responseData, "conditions", "button", "indicator_cond");
@@ -198,7 +193,6 @@ function build_buttons(array, element_id, element, class_name) {
   buttons.forEach(function (button) {
     button.addEventListener("click", function (event) {
       let text = event.target.innerText;
-      console.log(text);
       if (class_name == "indicator_cond") {
         cond.push({ ind: event.target.innerText });
       } else {
@@ -237,16 +231,17 @@ function del_last() {
 }
 
 function show_string(array_objs) {
-  console.log(cond);
-  console.log(conditions);
-  console.log(conditions_sell);
   let arr_strings = [];
   for (let i = 0; i < array_objs.length; i++)
     for (const [key, value] of Object.entries(array_objs[i])) {
-      console.log(`${key}: ${value}`);
       arr_strings.push(value);
     }
   return arr_strings;
+}
+
+async function optimize() {
+  let response = await postJsonGetData(data, "/optimize");
+  console.log(response);
 }
 
 async function backtest() {
@@ -282,38 +277,6 @@ async function backtest() {
   // conditions_sell_copy[0].splice(0, 0, "sell first");
   data.conds_buy = conditions_copy;
   data.conds_sell = conditions_sell_copy;
-  console.log(data.conds_buy);
 
-  // data.conds_buy = [
-  //   [
-  //     "bu",
-  //     {
-  //       ind: "RSI_14",
-  //     },
-  //     {
-  //       cond: "<",
-  //     },
-  //     {
-  //       val: 33,
-  //     },
-  //   ],
-  // ];
-  // data.conds_sell = [
-  //   [
-  //     "se",
-  //     {
-  //       ind: "RSI_14",
-  //     },
-  //     {
-  //       cond: ">",
-  //     },
-  //     {
-  //       val: 70,
-  //     },
-  //   ],
-  // ];
-  console.log(data.conds_buy);
-  console.log(data.conds_sell);
-  let response = await postJsonGetData(data, "/backtest");
-  console.log(response);
+  let response = await postJsonGetData(data, "backtest");
 }

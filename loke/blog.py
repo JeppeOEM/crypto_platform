@@ -10,6 +10,7 @@ import os
 import json
 from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
+from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.indicators.momentum.Ao import Ao
 from loke.trading_engine.indicators.momentum.Rsi import Rsi
 from loke.trading_engine.load_conditions import load_conditions
@@ -264,16 +265,20 @@ def init_strategy(id):
         s.addIndicators(total_indicators)
         df = s.create_strategy()
         df = df.head(1215)
-        df.to_json("lol.json", orient='records', compression='infer')
-        print("DF COLS")
-        print(df.columns)
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
         return jsonify(cols)
 
 
-@bp.route('/backtest', methods=['POST'])
-def backtest():
+# def insert_condition(cond):
+#     db = get_db()
+#     db.execute('INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, indicator_name, settings) VALUES (?,?,?,?)',
+#                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
+
+
+@bp.route('/<int:id>/backtest', methods=['POST'])
+def backtest(id):
+    print(id)
     data = request.get_json()
     name = data['name']
     selected_conds_buy = data['conds_buy']
@@ -292,3 +297,25 @@ def backtest():
     result = bt.run(df)
     json_string = {"message": f'{result}'}
     return json_string
+
+
+@bp.route('/<int:id>/optimize', methods=['POST'])
+def optimize(id):
+    data = request.get_json()
+    # data = request.data
+    exchange = data['exchange']
+    init_candles = ['init_candles']
+    symbol = data['symbol']
+    name = data['name']
+    description = data['description']
+    s = Strategy(exchange, init_candles, symbol, name, description)
+    s.addIndicators([
+        {"kind": "rsi", "length": 15},
+    ])
+
+    df = s.create_strategy()
+    call_optimizer(df, "dynamic", 10, 10)
+
+    columns = s.column_dict()
+    resp = {"message": f'{columns}'}
+    return resp

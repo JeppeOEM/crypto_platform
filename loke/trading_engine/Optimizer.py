@@ -141,6 +141,9 @@ class Nsga2:
                 params["initial_acc"], params["max_acc"])
             params["acc_increment"] = min(
                 params["acc_increment"], params["max_acc"] - params["initial_acc"])
+        elif self.strategy != "psar":
+            print("free pass")
+            pass
 
         return params
 
