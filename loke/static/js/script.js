@@ -48,19 +48,11 @@ async function loadIndicator(indicatorValue, category) {
     category: category,
   };
 
-  let inputField = document.createElement("input");
-  inputField.type = "text"; // You can change this to the desired input type
-  inputField.setAttribute("name", indicatorValue);
-  console.log("Load Indicator");
-  console.log(data, category);
-
   ind_props = await postJsonGetData(data, "/add_indicator");
   console.log("after postJsonGetData", ind_props);
 
-  // Get the container for new inputs
-  var container = document.getElementById("input-container");
-  // Append the newly created input field to the container
-  container.appendChild(inputField);
+  // var container = document.getElementById("input-container");
+
   create_form(ind_props);
 }
 
@@ -98,7 +90,7 @@ function create_form(data) {
   submitButton.id = "submitIndicator";
   submitButton.value = "Submit";
   field.appendChild(submitButton);
-  f.setField(field);
+
   async function gogo(event) {
     event.preventDefault();
     // let formdata = event.currentTarget.customParam;
@@ -136,7 +128,6 @@ async function update_chart(endpoint) {
       indicator = JSON.parse(indicator);
       console.log(indicator);
       for (let key in indicator) {
-        // Check if the property exists in the object (not in the prototype chain)
         if (indicator.hasOwnProperty(key)) {
           if (key === "offset") {
             indicator[key] = parseInt(indicator[key]);
@@ -150,7 +141,7 @@ async function update_chart(endpoint) {
 
     console.log(indicators);
     for (let i = 0; i < indicators.length; i++) {
-      input_params(indicators[i][0], indicators[i][1]);
+      loadIndicator("rsi", "momentum");
     }
   }
 }
@@ -323,7 +314,7 @@ async function backtest() {
 
   let response = await postJsonGetData(data, "backtest");
 }
-function input_params(key, value, field) {
+async function input_params(key, value, field) {
   console.log("field", field);
   if (value != "bool") {
     const label = document.createElement("label");
