@@ -21,7 +21,10 @@ class Ao:
         self.offset = offset
 
     def type_dict(self):
-        return [("kind", self.__class__.__name__.lower()), ("fast", "int"), ("slow", "int"), ("offset", "int"),]
+        return [("kind", self.__class__.__name__.lower()), ("fast", "int", 5), ("slow", "int", 34), ("offset", "int", 0),]
+
+    def default_values(self):
+        return [("kind", self.__class__.__name__.lower()), ("fast", 5), ("slow", 34), ("offset", 0),]
 
     def __repr__(self):
         description = """Awesome Oscillator (AO)

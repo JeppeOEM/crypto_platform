@@ -35,41 +35,54 @@ document.addEventListener("DOMContentLoaded", function () {
   build_page();
 });
 
-function build_page() {
-  update_chart("init_strategy");
-  build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+async function build_page() {
+  indicatordata = await update_chart("init_strategy");
+  console.log(indicatordata.indicators);
+  try {
+    build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  } catch (error) {
+    console.log(error);
+  }
+  build_indicator_inputs(indicatordata.indicators);
   build_buttons(["or", "&"], "compare", "button", "or_and_cond");
 }
 
-async function loadIndicator(indicatorValue, category) {
+function build_indicator_inputs(data) {
+  indicators = data.map((indicator) => {
+    indicator = JSON.parse(indicator);
+
+    for (let key in indicator) {
+      if (indicator.hasOwnProperty(key)) {
+        if (key === "offset") {
+          indicator[key] = parseInt(indicator[key]);
+        } else if (key != "kind") {
+          indicator[key] = parseFloat(indicator[key]);
+        }
+      }
+    }
+    return indicator;
+  });
+  console.log(indicators);
+
+  for (let i = 0; i < indicators.length; i++) {
+    loadIndicator([], "momentum", false);
+  }
+}
+
+async function loadIndicator(indicatorValue, category, default_values = true) {
   // Create a new input field element
   const data = {
     indicator: indicatorValue,
     category: category,
   };
 
-  ind_props = await postJsonGetData(data, "/add_indicator");
-  console.log("after postJsonGetData", ind_props);
+  let indi_data = await postJsonGetData(data, "/add_indicator");
+  console.log("ind", indi_data);
+  console.log("after postJsonGetindi_data", indi_data);
 
-  // var container = document.getElementById("input-container");
-
-  create_form(ind_props);
-}
-
-// function init_indicators(indicators) {
-
-//   for (let i = 0; i < indicators.length; i ++){
-
-//   }
-
-// }
-
-function create_form(data) {
-  console.log(data);
-  const name_indicator = data[0][1];
+  const name_indicator = indi_data[0][1];
   //remove name of indicator
-  data = data.slice(1);
-  console.log(name_indicator);
+  indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
   var field = document.createElement("fieldset");
@@ -81,8 +94,8 @@ function create_form(data) {
 
   form.addEventListener("submit", gogo);
   //form.customParam = form;
-  for (let i = 0; i < data.length; i++) {
-    input_params(data[i][0], data[i][1], field);
+  for (let i = 0; i < indi_data.length; i++) {
+    input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
   }
 
   const submitButton = document.createElement("input");
@@ -102,9 +115,19 @@ function create_form(data) {
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
     await update_chart("init_strategy");
-    await postJsonGetData(data, "");
   }
+
+  // var container = document.getElementById("input-container");
 }
+
+// function init_indicators(indicators) {
+
+//   for (let i = 0; i < indicators.length; i ++){
+
+//   }
+
+// }
+
 async function update_chart(endpoint) {
   try {
     const response = await fetch(endpoint, {
@@ -118,36 +141,13 @@ async function update_chart(endpoint) {
     const responseData = await response.json();
     remove_buttons("indicator_cond");
     build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
-    build_indicator_inputs(responseData.indicators);
+    return responseData;
   } catch (error) {
     console.error("Error:", error);
-  }
-
-  function build_indicator_inputs(data) {
-    indicators = data.map((indicator) => {
-      indicator = JSON.parse(indicator);
-      console.log(indicator);
-      for (let key in indicator) {
-        if (indicator.hasOwnProperty(key)) {
-          if (key === "offset") {
-            indicator[key] = parseInt(indicator[key]);
-          } else if (key != "kind") {
-            indicator[key] = parseFloat(indicator[key]);
-          }
-        }
-      }
-      return indicator;
-    });
-
-    console.log(indicators);
-    for (let i = 0; i < indicators.length; i++) {
-      loadIndicator("rsi", "momentum");
-    }
   }
 }
 
 async function postJsonGetData(data, endpoint) {
-  console.log(endpoint);
   const options = {
     method: "POST",
     headers: {
@@ -177,7 +177,7 @@ async function postJsonGetStatus(data, endpoint) {
 
   // Make the POST request using the fetch API
   let reponse = await fetch(endpoint, options);
-  console.log(reponse);
+
   if (!reponse.ok) {
     throw new Error("Request failed");
   } else {
@@ -197,7 +197,6 @@ async function strategy_indicators(endpoint) {
 
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
     } else {
       console.error("Error:", response.statusText);
     }
@@ -314,15 +313,14 @@ async function backtest() {
 
   let response = await postJsonGetData(data, "backtest");
 }
-async function input_params(key, value, field) {
-  console.log("field", field);
+async function input_params(key, value, value, field) {
   if (value != "bool") {
     const label = document.createElement("label");
     label.innerText = key;
     const input = document.createElement("input");
     input.type = "text";
-    input.value = "14";
     input.name = key;
+    input.value = value;
     field.appendChild(label);
     field.appendChild(input);
   } else {
@@ -331,6 +329,7 @@ async function input_params(key, value, field) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.name = key;
+    checkbox.value = value;
     field.appendChild(label2);
     field.appendChild(checkbox);
   }

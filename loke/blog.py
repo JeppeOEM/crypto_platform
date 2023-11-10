@@ -182,8 +182,7 @@ def stratupdate(id):
     strategy = get_strategy(id)
     print("Strategy Data:", strategy)
     if request.method == 'POST':
-        print("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
-        print(strategy_name)
+
         strategy_name = request.form['strategy_name']
         info = request.form['info']
         error = None

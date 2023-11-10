@@ -26,11 +26,11 @@ class Rsi:
     def type_dict(self):
         return [
             ("kind", self.__class__.__name__.lower()),
-            ("length", "int"),
-            ("scalar", "float"),
-            ("talib", "bool"),
-            ("drift", "int"),
-            ("offset", "int")]
+            ("length", "int", 14),
+            ("scalar", "float", 100),
+            ("talib", "bool", False),
+            ("drift", "int", 1),
+            ("offset", "int", 0)]
 
     def __repr__(self):
         description = """Relative Strength Index (RSI)
