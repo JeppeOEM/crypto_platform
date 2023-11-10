@@ -1,18 +1,18 @@
-class Condition {
-  constructor(cond) {
-    this.setCondition(cond);
+class Field {
+  constructor(field) {
+    this.setField(field);
   }
-  getCondition() {
-    return this.cond;
+  getField() {
+    return this.field;
   }
-  setCondition(newCond) {
-    newCond = newCond.trim();
-    if (newCond === "") {
-      throw "Cond cant be empty";
-    }
-    this.name = newCond;
+  setField(newfield) {
+    this.field = newfield;
+  }
+  addToField(element) {
+    this.field.appendChild(element);
   }
 }
+
 const data = {
   exchange: "binance",
   init_candles: 100,
@@ -25,8 +25,20 @@ let conditions = [];
 let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
+
 function showValue(value) {
   alert("The value is: " + value);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Your code here
+  build_page();
+});
+
+function build_page() {
+  update_chart("init_strategy");
+  build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  build_buttons(["or", "&"], "compare", "button", "or_and_cond");
 }
 
 async function loadIndicator(indicatorValue, category) {
@@ -47,22 +59,28 @@ async function loadIndicator(indicatorValue, category) {
 
   // Get the container for new inputs
   var container = document.getElementById("input-container");
-
   // Append the newly created input field to the container
   container.appendChild(inputField);
-
-  createInputs(ind_props);
+  create_form(ind_props);
 }
 
-function createInputs(data) {
+// function init_indicators(indicators) {
+
+//   for (let i = 0; i < indicators.length; i ++){
+
+//   }
+
+// }
+
+function create_form(data) {
   console.log(data);
   const name_indicator = data[0][1];
-  //remove name
+  //remove name of indicator
   data = data.slice(1);
   console.log(name_indicator);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
-  const field = document.createElement("fieldset");
+  var field = document.createElement("fieldset");
   const legend = document.createElement("legend");
   legend.textContent = name_indicator;
   formContainer.appendChild(form);
@@ -72,36 +90,15 @@ function createInputs(data) {
   form.addEventListener("submit", gogo);
   //form.customParam = form;
   for (let i = 0; i < data.length; i++) {
-    createInput(data[i][0], data[i][1]);
+    input_params(data[i][0], data[i][1], field);
   }
 
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
-  submitButton.id = "submitButton";
+  submitButton.id = "submitIndicator";
   submitButton.value = "Submit";
   field.appendChild(submitButton);
-
-  function createInput(key, value) {
-    if (value != "bool") {
-      const label = document.createElement("label");
-      label.innerText = key;
-      const input = document.createElement("input");
-      input.type = "text";
-      input.value = "14";
-      input.name = key;
-      field.appendChild(label);
-      field.appendChild(input);
-    } else {
-      const label2 = document.createElement("label");
-      label2.innerText = key;
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.name = key;
-      field.appendChild(label2);
-      field.appendChild(checkbox);
-    }
-  }
-
+  f.setField(field);
   async function gogo(event) {
     event.preventDefault();
     // let formdata = event.currentTarget.customParam;
@@ -113,6 +110,48 @@ function createInputs(data) {
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
     await update_chart("init_strategy");
+    await postJsonGetData(data, "");
+  }
+}
+async function update_chart(endpoint) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+    remove_buttons("indicator_cond");
+    build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
+    build_indicator_inputs(responseData.indicators);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+
+  function build_indicator_inputs(data) {
+    indicators = data.map((indicator) => {
+      indicator = JSON.parse(indicator);
+      console.log(indicator);
+      for (let key in indicator) {
+        // Check if the property exists in the object (not in the prototype chain)
+        if (indicator.hasOwnProperty(key)) {
+          if (key === "offset") {
+            indicator[key] = parseInt(indicator[key]);
+          } else if (key != "kind") {
+            indicator[key] = parseFloat(indicator[key]);
+          }
+        }
+      }
+      return indicator;
+    });
+
+    console.log(indicators);
+    for (let i = 0; i < indicators.length; i++) {
+      input_params(indicators[i][0], indicators[i][1]);
+    }
   }
 }
 
@@ -155,7 +194,7 @@ async function postJsonGetStatus(data, endpoint) {
   }
 }
 
-async function update_chart(endpoint) {
+async function strategy_indicators(endpoint) {
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -168,9 +207,6 @@ async function update_chart(endpoint) {
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
-      build_buttons(responseData, "conditions", "button", "indicator_cond");
-      build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
-      build_buttons(["or", "&"], "compare", "button", "or_and_cond");
     } else {
       console.error("Error:", response.statusText);
     }
@@ -179,6 +215,13 @@ async function update_chart(endpoint) {
   }
 }
 
+function remove_buttons(class_name) {
+  let buttons = document.querySelectorAll(`.${class_name}`);
+
+  buttons.forEach(function (button) {
+    button.parentNode.removeChild(button);
+  });
+}
 function build_buttons(array, element_id, element, class_name) {
   let container = document.getElementById(element_id);
   for (let i = 0; i < array.length; i++) {
@@ -279,4 +322,25 @@ async function backtest() {
   data.conds_sell = conditions_sell_copy;
 
   let response = await postJsonGetData(data, "backtest");
+}
+function input_params(key, value, field) {
+  console.log("field", field);
+  if (value != "bool") {
+    const label = document.createElement("label");
+    label.innerText = key;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = "14";
+    input.name = key;
+    field.appendChild(label);
+    field.appendChild(input);
+  } else {
+    const label2 = document.createElement("label");
+    label2.innerText = key;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = key;
+    field.appendChild(label2);
+    field.appendChild(checkbox);
+  }
 }

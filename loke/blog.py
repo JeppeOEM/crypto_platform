@@ -172,7 +172,7 @@ def convert_indicator(strategy_id):
                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
         db.commit()
 
-        return jsonify({'message': 'Response from conver'})
+        return jsonify({'message': 'Response from convert'})
 
 
 # converts to int automatically
@@ -182,6 +182,8 @@ def stratupdate(id):
     strategy = get_strategy(id)
     print("Strategy Data:", strategy)
     if request.method == 'POST':
+        print("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
+        print(strategy_name)
         strategy_name = request.form['strategy_name']
         info = request.form['info']
         error = None
@@ -241,20 +243,19 @@ def init_strategy(id):
             'SELECT settings FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
 
+        # remove kind: name
         for row in indicators:
             try:
                 # row 0 = settings
                 data_dict = json.loads(row[0])
                 for key, value in data_dict.items():
+                    print(key, value)
                     if key != "kind":
                         data_dict[key] = int(value) if value.isdigit(
                         ) else float(value) if "." in value else value
                 total_indicators.append(data_dict)
-                print(type(data_dict))
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e}")
-
-        print(total_indicators)
         data = request.get_json()
         exchange = data['exchange']
         init_candles = ['init_candles']
@@ -267,7 +268,10 @@ def init_strategy(id):
         df = df.head(1215)
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
-        return jsonify(cols)
+        # keep kind: name to populate inputs
+        indicators_inputs = [row[0] for row in indicators]
+        print(indicators)
+        return jsonify({"cols": cols, "indicators": indicators_inputs})
 
 
 # def insert_condition(cond):
@@ -319,3 +323,8 @@ def optimize(id):
     columns = s.column_dict()
     resp = {"message": f'{columns}'}
     return resp
+
+
+@bp.route('/<int:id>/load_page', methods=['POST'])
+def load_page(id):
+    data = request.get_json()
