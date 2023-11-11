@@ -310,34 +310,32 @@ def optimizer_params(id):
     params = data['optimizer_params']
     params_class = data['params_class']
 
-    def insert_opti(param):
-        name = param[0]
-        operator = param[1]
-        data_type = param[2]
-        opti_min = param[3]
-        opti_max = param[4]
-
-        db.execute('INSERT INTO {table} (fk_strategy_id, fk_user_id, optimization_name,'
-                   'data_type, class, operator, optimization_min, optimization_max) '
-                   'VALUES (?,?,?,?,?,?,?)')
-        (id, g.user['id'], name, data_type,
-         params_class, operator, opti_min, opti_max)
-
-    def insert_all_opti(params):
-        try:
-            for param in params:
-                side = param[5]
-                if side == "BUY":
-                    insert_opti(param, "buy_optimization")
-
-                else:
-                    insert_opti(param, "buy_optimization")
-            db.commit()
-            return jsonify({'message': 'optimization saved to database'})
-        except Exception as e:
-            db.rollback()
-            return jsonify({'error': str(e)}), 500
-    return insert_all_opti(params)
+    try:
+        for param in params:
+            name = param[0]
+            operator = param[1]
+            data_type = param[2]
+            opti_min = param[3]
+            opti_max = param[4]
+            side = param[5]
+            if side == "BUY":
+                db.execute('INSERT INTO buy_optimization (fk_strategy_id, fk_user_id, optimization_name,'
+                           'data_type, class, operator, optimization_min, optimization_max) '
+                           'VALUES (?,?,?,?,?,?)')
+                (id, g.user['id'], name, data_type,
+                 params_class, operator, opti_min, opti_max)
+            else:
+                db.execute('INSERT INTO sell_optimization (fk_strategy_id, fk_user_id, optimization_name,'
+                           'data_type, class, operator, optimization_min, optimization_max) '
+                           'VALUES (?,?,?,?,?,?)')
+                (id, g.user['id'], name, data_type,
+                 params_class, operator, opti_min, opti_max)
+        db.commit()
+        return jsonify({'message': 'optimization saved to database'})
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return jsonify({'error': str(e)}), 500
 
 
 @bp.route('/<int:id>/optimize', methods=['POST'])

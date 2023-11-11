@@ -76,10 +76,26 @@ CREATE TABLE backtest (
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
 CREATE TABLE sell_optimization (
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT,
     optimization_name VARCHAR(55) NOT NULL,
     class VARCHAR(55) NOT NULL,
     operator VARCHAR(2) NOT NULL,
     data_type VARCHAR(5) NOT NULL,
     optimization_min FLOAT NOT NULL,
-    optimization_max FLOAT NOT NULL
+    optimization_max FLOAT NOT NULL,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id)
+);
+CREATE TABLE buy_optimization (
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT,
+    optimization_name VARCHAR(55) NOT NULL,
+    class VARCHAR(55) NOT NULL,
+    operator VARCHAR(2) NOT NULL,
+    data_type VARCHAR(5) NOT NULL,
+    optimization_min FLOAT NOT NULL,
+    optimization_max FLOAT NOT NULL,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
