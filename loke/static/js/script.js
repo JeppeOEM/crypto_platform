@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function build_page() {
   indicatordata = await update_chart("init_strategy");
-  console.log(indicatordata.indicators);
   try {
     build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   } catch (error) {
@@ -49,8 +48,23 @@ async function build_page() {
 }
 
 async function build_conditions() {
-  let result = await postJsonGetData(data, "condition", "GET");
-  console.log(result);
+  const { sell_conds, buy_conds } = await getJson("load_conditions");
+  console.log(sell_conds);
+  console.log(buy_conds);
+  insert_frontend(sell_conds, "sell_conds");
+  insert_frontend(buy_conds, "buy_conds");
+
+  function insert_frontend(cond, element) {
+    // Reference to the ul element
+    const myList = document.getElementById(element);
+
+    // Loop through the array and insert list items
+    for (let i = 0; i < cond.length; i++) {
+      const listItem = document.createElement("li");
+      listItem.textContent = cond[i];
+      myList.appendChild(listItem);
+    }
+  }
 }
 
 function build_indicator_inputs(data) {
@@ -71,7 +85,6 @@ function build_indicator_inputs(data) {
     }
     return indicator;
   });
-  console.log(indicators);
 
   for (let i = 0; i < indicators.length; i++) {
     loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
@@ -170,6 +183,23 @@ async function update_chart(endpoint) {
   }
 }
 
+async function getJson(endpoint) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  console.log(responseData, "DDDDDDDD");
+  return responseData;
+}
 
 async function postJsonGetData(data, endpoint, method = "POST") {
   const options = {
@@ -278,7 +308,7 @@ async function save_cond_buy() {
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
   let build_conds = await build_conditions();
-  document.getElementById("sell_cond").textContent = `${build_conds}`;
+  document.getElementById("buy_cond2").textContent = `${build_conds}`;
 }
 
 async function save_cond_sell() {
@@ -292,7 +322,7 @@ async function save_cond_sell() {
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
   let build_conds = await build_conditions();
-  document.getElementById("buy_cond").textContent = `${build_conds}`;
+  document.getElementById("sell_cond2").textContent = `${build_conds}`;
 }
 
 function del_last() {
@@ -357,3 +387,24 @@ async function input_params(key, value, value, field) {
     field.appendChild(checkbox);
   }
 }
+
+// async function getJson(endpoint) {
+//   try {
+//     // Make a GET request to the Flask app
+//     const response = await fetch(endpoint);
+
+//     // Check if the request was successful
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+
+//     // Parse the JSON in the response
+//     const data = await response.json();
+//     // Use the JSON data
+//     console.log(data);
+//     return data;
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Fetch error:", error);
+//   }
+// }

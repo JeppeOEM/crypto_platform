@@ -346,9 +346,9 @@ def optimize(id):
 
 @bp.route('/<int:id>/condition', methods=['POST', 'GET'])
 def condition(id):
+    db = get_db()
+    data = request.get_json()
     if request.method == 'POST':
-        data = request.get_json()
-        db = get_db()
         if data['side'] == "buy":
             print(data['buy_cond'])
             existing_indicator = db.execute(
@@ -394,22 +394,34 @@ def condition(id):
             except Exception as e:
                 # Handle database-related errors
                 return jsonify({'error': str(e)}), 500
-    if request.method == 'GET':
-        buy_conds = db.execute(
-            'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
-            (id, g.user['id'], data['sell_cond'])
-        ).fetchall()
-        sell_conds = db.execute(
-            'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
-            (id, g.user['id'], data['sell_cond'])
-        ).fetchall()
-        result_dict = {
-            'buy_conds': buy_conds,
-            'sell_conds': sell_conds
-        }
-        return jsonify(result_dict)
 
 
-@bp.route('/<int:id>/load_page', methods=['POST'])
-def load_page(id):
-    data = request.get_json()
+@bp.route('/<int:id>/load_conditions', methods=['POST'])
+def load_conditions(id):
+    db = get_db()
+    buy_conds = db.execute(
+        'SELECT buy_eval FROM buy_conditions '
+        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
+        (g.user['id'], id)
+    ).fetchall()
+
+    sell_conds = db.execute(
+        'SELECT * FROM sell_conditions '
+        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
+        (g.user['id'], id)
+    ).fetchall()
+    buy_conds = []
+    sell_conds = [row[0] for row in sell_conds]
+    buy_conds = [row[0] for row in buy_conds]
+    print(sell_conds, "SELL")
+    result_dict = {
+        'buy_conds': buy_conds,
+        'sell_conds': sell_conds
+    }
+    # result_dict = {
+    #     'buy_conds': "buy_conds",
+    #     'sell_conds': "sell_conds"
+    # }
+    print("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAT")
+    print(result_dict)
+    return jsonify(result_dict)
