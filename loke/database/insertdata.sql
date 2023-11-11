@@ -12,3 +12,4 @@ INSERT INTO strategies (
         fk_exchange_id
     )
 VALUES (1, 1, "test", 1);
+

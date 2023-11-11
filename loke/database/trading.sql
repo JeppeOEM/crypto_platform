@@ -49,6 +49,7 @@ CREATE TABLE strategy_indicators (
 );
 CREATE INDEX idx_indicator_name ON strategy_indicators(indicator_name);
 CREATE TABLE sell_conditions (
+    sell_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     fk_strategy_id INT NOT NULL,
@@ -58,6 +59,7 @@ CREATE TABLE sell_conditions (
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
 CREATE TABLE buy_conditions (
+    buy_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -67,6 +69,7 @@ CREATE TABLE buy_conditions (
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
 CREATE TABLE backtest (
+    backtest_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -76,6 +79,7 @@ CREATE TABLE backtest (
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
 CREATE TABLE sell_optimization (
+    sell_optimization_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT,
     optimization_name VARCHAR(55) NOT NULL,
@@ -88,6 +92,7 @@ CREATE TABLE sell_optimization (
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
 CREATE TABLE buy_optimization (
+    buy_optimization_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT,
     optimization_name VARCHAR(55) NOT NULL,

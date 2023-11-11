@@ -312,26 +312,34 @@ def optimizer_params(id):
 
     try:
         for param in params:
-            name = param[0]
-            operator = param[1]
-            data_type = param[2]
-            opti_min = param[3]
-            opti_max = param[4]
-            side = param[5]
-            if side == "BUY":
-                db.execute('INSERT INTO buy_optimization (fk_strategy_id, fk_user_id, optimization_name,'
-                           'data_type, class, operator, optimization_min, optimization_max) '
-                           'VALUES (?,?,?,?,?,?)')
-                (id, g.user['id'], name, data_type,
-                 params_class, operator, opti_min, opti_max)
+            name, operator, data_type, opti_min, opti_max, side = param
+
+            # Check if a row with the same values already exists
+            table_name = 'buy_optimization' if side == 'BUY' else 'sell_optimization'
+            existing_row = db.execute(
+                'SELECT 1 FROM {} '
+                'WHERE fk_strategy_id = ? AND optimization_name = ? AND operator = ? AND '
+                'data_type = ? AND class = ? AND optimization_min = ? AND optimization_max = ?'
+                .format(table_name),
+                (id, name, operator, data_type, params_class, opti_min, opti_max)
+            ).fetchone()
+
+            if existing_row:
+                # Row already exists, handle accordingly (e.g., skip or update)
+                print("Row with the same values already exists. Skipping insertion.")
             else:
-                db.execute('INSERT INTO sell_optimization (fk_strategy_id, fk_user_id, optimization_name,'
-                           'data_type, class, operator, optimization_min, optimization_max) '
-                           'VALUES (?,?,?,?,?,?)')
-                (id, g.user['id'], name, data_type,
-                 params_class, operator, opti_min, opti_max)
+                # Insert the new row
+                db.execute(
+                    'INSERT INTO {} '
+                    '(fk_strategy_id, fk_user_id, optimization_name, data_type, class, operator, '
+                    'optimization_min, optimization_max) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+                    .format(table_name),
+                    (id, g.user['id'], name, data_type,
+                     params_class, operator, opti_min, opti_max)
+                )
+
         db.commit()
-        return jsonify({'message': 'optimization saved to database'})
+        return jsonify({'message': 'optimization saved to the database'})
     except Exception as e:
         db.rollback()
         print(e)
