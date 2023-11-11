@@ -74,4 +74,29 @@
     <ul id="buy_cond2"></ul>
          <h2>sell conds</h2>
     <ul id="sell_cond2"></ul>
+  
+        <table>
+          <thead>
+            <tr>
+              <th class="th-author"><p>Indicator</p></th>
+              <th class="th-title"><p>operator</p></th>
+              <th class="th-year"><p>min</p></th>
+              <th class="th-year"><p>max</p></th>
+            </tr>
+          </thead>
+          <tbody>
+            <template id="optimize_params">
+              <tr data-all="all" class="param">
+                <td class="indicator"></td>
+                <td class="operator"></td>
+                <td><input class="min" type="number" value="0"></td>
+                <td><input class="max" type="number" value="0"></td>
+                <!-- <td class="max">&#128465;</td> -->
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        <button onclick="load_params()">load params</button>
+
+
 {% endblock %}

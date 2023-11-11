@@ -53,7 +53,8 @@ async function build_conditions() {
   remove_element("sell_cond2");
   insert_frontend(sell_conds, "sell_cond2");
   insert_frontend(buy_conds, "buy_cond2");
-
+  optimizer_params(sell_conds, "_SELL");
+  optimizer_params(buy_conds, "_BUY");
   function insert_frontend(cond, element) {
     // Reference to the ul element
     const myList = document.getElementById(element);
@@ -65,6 +66,53 @@ async function build_conditions() {
       myList.appendChild(listItem);
     }
   }
+}
+function which_side(inputString) {
+  let str = inputString.toUpperCase().includes("BUY");
+  let side;
+  if (str) {
+    side = "BUY";
+  } else {
+    side = "SELL";
+  }
+
+  return side;
+}
+function load_params() {
+  let arr = [];
+  rows = document.querySelectorAll(".param");
+  console.log(rows);
+  rows.forEach((row) => {
+    let indi = row.querySelector(".indicator");
+    side = which_side(indi.innerText);
+    let operator = row.querySelector(".operator");
+    let min = row.querySelector(".min");
+    let max = row.querySelector(".max");
+    let type = "int";
+
+    arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
+  });
+  console.log(arr);
+  data.optimizer_params = arr;
+  data.params_class = "indicator";
+
+  postJsonGetStatus(data, "optimizer_params");
+}
+
+function optimizer_params(sell_conds, suffix) {
+  const title = document.querySelector("title");
+  s_conds = JSON.parse(sell_conds);
+  const tbody = document.querySelector("tbody");
+  const opti_params = document.getElementById("optimize_params");
+  s_conds.forEach((cond) => {
+    console.log(cond["ind"]);
+    const clone = opti_params.content.cloneNode(true);
+    clone.querySelector(".indicator").textContent = cond[0]["ind"] + suffix;
+    clone.querySelector(".operator").textContent = cond[1]["cond"];
+    clone.querySelector(".min").value = "1";
+    clone.querySelector(".max").value = "1";
+    tbody.appendChild(clone);
+  });
 }
 
 function build_indicator_inputs(data) {

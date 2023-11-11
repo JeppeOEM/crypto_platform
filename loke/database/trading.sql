@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS strategy_indicators;
 DROP TABLE IF EXISTS sell_conditions;
 DROP TABLE IF EXISTS buy_conditions;
 DROP TABLE IF EXISTS backtest;
+DROP TABLE IF EXISTS sell_optimization;
+DROP TABLE IF EXISTS buy_optimization;
 PRAGMA foreign_keys = ON;
 -- Create the 'user' table
 CREATE TABLE user (
@@ -72,4 +74,12 @@ CREATE TABLE backtest (
     drawdown FLOAT,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
+);
+CREATE TABLE sell_optimization (
+    optimization_name VARCHAR(55) NOT NULL,
+    class VARCHAR(55) NOT NULL,
+    operator VARCHAR(2) NOT NULL,
+    data_type VARCHAR(5) NOT NULL,
+    optimization_min FLOAT NOT NULL,
+    optimization_max FLOAT NOT NULL
 );

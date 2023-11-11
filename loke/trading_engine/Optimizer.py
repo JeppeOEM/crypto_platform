@@ -3,7 +3,7 @@ import typing
 import copy
 from loke.models.models import BacktestResult
 from loke.trading_engine.process_conds import get_conds
-from loke.trading_engine.process_conds import get_strategy_params
+# from loke.trading_engine.process_conds import get_strategy_params
 from loke.trading_engine.optimize_backtest import optimize_backtest
 
 from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
@@ -32,8 +32,7 @@ class Nsga2:
 
     def set_conds(self):
         get_conds()
-    def set_strategy_params(self):
-
+        get_strategy_params()
 
     def create_initial_population(self) -> typing.List[BacktestResult]:
 

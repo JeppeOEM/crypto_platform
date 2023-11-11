@@ -46,3 +46,7 @@ def get_conds(id):
     sell = type_cast(json.loads(sell[0]))
 
     return buy, sell
+
+
+# def get_strategy_params():
+#     print("lol")
