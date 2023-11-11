@@ -350,6 +350,7 @@ def condition(id):
     data = request.get_json()
     if request.method == 'POST':
         if data['side'] == "buy":
+            print("BUY CONDS")
             print(data['buy_cond'])
             existing_indicator = db.execute(
                 'SELECT 1 FROM buy_conditions '
@@ -376,7 +377,7 @@ def condition(id):
 
             existing_indicator = db.execute(
                 'SELECT 1 FROM sell_conditions '
-                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND sell_eval = ? AND indicator_name = ?',
+                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND sell_eval = ?',
                 (id, g.user['id'], data['sell_cond'])
             ).fetchone()
 
@@ -406,11 +407,11 @@ def load_conditions(id):
     ).fetchall()
 
     sell_conds = db.execute(
-        'SELECT * FROM sell_conditions '
+        'SELECT sell_eval FROM sell_conditions '
         'WHERE fk_user_id = ? AND fk_strategy_id = ?',
         (g.user['id'], id)
     ).fetchall()
-    buy_conds = []
+    print("load_condtion")
     sell_conds = [row[0] for row in sell_conds]
     buy_conds = [row[0] for row in buy_conds]
     print(sell_conds, "SELL")
@@ -422,6 +423,5 @@ def load_conditions(id):
     #     'buy_conds': "buy_conds",
     #     'sell_conds': "sell_conds"
     # }
-    print("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAT")
     print(result_dict)
     return jsonify(result_dict)

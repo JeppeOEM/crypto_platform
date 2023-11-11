@@ -51,8 +51,8 @@ async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
   console.log(sell_conds);
   console.log(buy_conds);
-  insert_frontend(sell_conds, "sell_conds");
-  insert_frontend(buy_conds, "buy_conds");
+  insert_frontend(sell_conds, "sell_cond2");
+  insert_frontend(buy_conds, "buy_cond2");
 
   function insert_frontend(cond, element) {
     // Reference to the ul element
@@ -305,7 +305,9 @@ async function save_cond_buy() {
   document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
   data.buy_cond = JSON.stringify(conditions);
   data.side = "buy";
+  console.log(data.buy_cond);
   let response = await postJsonGetStatus(data, "condition");
+  console.log(response);
   console.log(response);
   let build_conds = await build_conditions();
   document.getElementById("buy_cond2").textContent = `${build_conds}`;
@@ -317,8 +319,9 @@ async function save_cond_sell() {
   cond = [];
   document.getElementById("cond").textContent = `${show_string(cond_sell)}`;
   document.getElementById("saved_conds_sell").textContent = `${show_string(conditions_sell)}`;
-  data.buy_cond = JSON.stringify(conditions_sell);
-  data.side = "buy";
+  data.sell_cond = JSON.stringify(conditions_sell);
+  data.side = "sell";
+  console.log(data.sell_cond);
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
   let build_conds = await build_conditions();
