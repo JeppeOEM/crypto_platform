@@ -289,18 +289,67 @@ def init_strategy(id):
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
 
 
+@bp.route('/<int:id>/load_conditions', methods=['POST'])
+def load_conditions(id):
+    db = get_db()
+    buy_conds = db.execute(
+        'SELECT buy_eval FROM buy_conditions '
+        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
+        (g.user['id'], id)
+    ).fetchall()
+
+    sell_conds = db.execute(
+        'SELECT sell_eval FROM sell_conditions '
+        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
+        (g.user['id'], id)
+    ).fetchall()
+    print("load_condtion")
+    sell_conds = [row[0] for row in sell_conds]
+    buy_conds = [row[0] for row in buy_conds]
+    print(sell_conds, "SELL")
+    result_dict = {
+        'buy_conds': buy_conds,
+        'sell_conds': sell_conds
+    }
+    # result_dict = {
+    #     'buy_conds': "buy_conds",
+    #     'sell_conds': "sell_conds"
+    # }
+    print(result_dict)
+    return jsonify(result_dict)
+
+
+def get_conds(id):
+    db = get_db()
+    buy = db.execute(
+        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+    sell = db.execute(
+        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+    buy = json.loads(buy[0])
+    sell = json.loads(sell[0])
+
+    def type_cast(d):
+        for key in d:
+            if key == "val":
+                key['val'] = float(key['val'])
+
+    return buy, sell
+
+
 @bp.route('/<int:id>/backtest', methods=['POST'])
 def backtest(id):
     print(id)
     data = request.get_json()
     name = data['name']
-    selected_conds_buy = data['conds_buy']
-    selected_conds_buy[0].insert(0, "b")
-    selected_conds_sell = data['conds_sell']
-    selected_conds_sell[0].insert(0, "s")
+    buy, sell = get_conds(id)
+    print(buy, sell)
+    # selected_conds_buy = data['conds_buy']
+    buy[0].insert(0, "b")
+    # selected_conds_sell = data['conds_sell']
+    sell[0].insert(0, "s")
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
 
-    df = load_conditions(df, selected_conds_buy, selected_conds_sell)
+    # df = load_conditions(df, buy, sell)
     # df_bytes = pickle.dumps(df)
     # cache.set('df_cache_key', df_bytes)
     df.to_pickle(f"data/pickles/{name}.pkl")
@@ -385,36 +434,6 @@ def condition(id):
             except Exception as e:
                 # Handle database-related errors
                 return jsonify({'error': str(e)}), 500
-
-
-@bp.route('/<int:id>/load_conditions', methods=['POST'])
-def load_conditions(id):
-    db = get_db()
-    buy_conds = db.execute(
-        'SELECT buy_eval FROM buy_conditions '
-        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
-        (g.user['id'], id)
-    ).fetchall()
-
-    sell_conds = db.execute(
-        'SELECT sell_eval FROM sell_conditions '
-        'WHERE fk_user_id = ? AND fk_strategy_id = ?',
-        (g.user['id'], id)
-    ).fetchall()
-    print("load_condtion")
-    sell_conds = [row[0] for row in sell_conds]
-    buy_conds = [row[0] for row in buy_conds]
-    print(sell_conds, "SELL")
-    result_dict = {
-        'buy_conds': buy_conds,
-        'sell_conds': sell_conds
-    }
-    # result_dict = {
-    #     'buy_conds': "buy_conds",
-    #     'sell_conds': "sell_conds"
-    # }
-    print(result_dict)
-    return jsonify(result_dict)
 
 
 @bp.route('/<int:id>/deletestrat', methods=('POST',))
