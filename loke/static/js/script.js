@@ -355,7 +355,7 @@ function show_string(array_objs) {
 }
 
 async function optimize() {
-  let response = await postJsonGetData(data, "/optimize");
+  let response = await postJsonGetData(data, "optimize");
   console.log(response);
 }
 

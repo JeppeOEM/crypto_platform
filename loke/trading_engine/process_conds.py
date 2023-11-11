@@ -1,7 +1,9 @@
 from loke.trading_engine.Condition import Condition
+import json
+from loke.database.db import get_db
 
 
-def load_conditions(df, selected_conds_buy, selected_conds_sell):
+def process_conds(df, selected_conds_buy, selected_conds_sell):
 
     # selected_conds = ["empty zero index param", indicators[0], conds[0], values[0]]
     con = Condition(df)
@@ -26,3 +28,21 @@ def load_conditions(df, selected_conds_buy, selected_conds_sell):
     df = con.combine_signals(combine_sell_signals, "close_trade")
 
     return df
+
+
+def get_conds(id):
+    db = get_db()
+    buy = db.execute(
+        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+    sell = db.execute(
+        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+
+    def type_cast(d):
+        for key in d:
+            if key == "val":
+                key['val'] = float(key['val'])
+        return d
+    buy = type_cast(json.loads(buy[0]))
+    sell = type_cast(json.loads(sell[0]))
+
+    return buy, sell

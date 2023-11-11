@@ -2,12 +2,15 @@ import random
 import typing
 import copy
 from loke.models.models import BacktestResult
+from loke.trading_engine.process_conds import get_conds
+from loke.trading_engine.process_conds import get_strategy_params
 from loke.trading_engine.optimize_backtest import optimize_backtest
+
 from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
 # import strategies.obv
 # import strategies.ichimoku
 # import strategies.support_resistance
-
+from loke.database.db import get_db
 from loke.database.Hdf5 import Hdf5Client
 
 
@@ -25,6 +28,12 @@ class Nsga2:
 
         self.population_params = []
         self.data = data
+        self.db = get_db()
+
+    def set_conds(self):
+        get_conds()
+    def set_strategy_params(self):
+
 
     def create_initial_population(self) -> typing.List[BacktestResult]:
 

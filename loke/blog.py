@@ -11,9 +11,8 @@ import json
 from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.call_optimizer import call_optimizer
-from loke.trading_engine.indicators.momentum.Ao import Ao
-from loke.trading_engine.indicators.momentum.Rsi import Rsi
-from loke.trading_engine.load_conditions import load_conditions
+from loke.trading_engine.process_conds import process_conds
+from loke.trading_engine.process_conds import get_conds
 import pickle
 import pandas as pd
 # DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
@@ -243,46 +242,6 @@ def update_chart(id):
     return jsonify({'content': new_content})
 
 
-@bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
-def init_strategy(id):
-    if request.method == "POST":
-        print(id)
-        db = get_db()
-        indicators = db.execute(
-            'SELECT settings FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
-        total_indicators = []
-
-        # remove kind: name
-        for row in indicators:
-            try:
-                # row 0 = settings
-                data_dict = json.loads(row[0])
-                for key, value in data_dict.items():
-                    print(key, value)
-                    if key != "kind":
-                        data_dict[key] = int(value) if value.isdigit(
-                        ) else float(value) if "." in value else value
-                total_indicators.append(data_dict)
-            except json.JSONDecodeError as e:
-                print(f"Error decoding JSON: {e}")
-        data = request.get_json()
-        exchange = data['exchange']
-        init_candles = ['init_candles']
-        symbol = data['symbol']
-        name = data['name']
-        description = data['description']
-        s = Strategy(exchange, init_candles, symbol, name, description)
-        s.addIndicators(total_indicators)
-        df = s.create_strategy()
-        df = df.head(1215)
-        df.to_pickle(f"data/pickles/{name}.pkl")
-        cols = df.columns.to_list()
-        # keep kind: name to populate inputs
-        indicators_inputs = [row[0] for row in indicators]
-        print(indicators)
-        return jsonify({"cols": cols, "indicators": indicators_inputs})
-
-
 # def insert_condition(cond):
 #     db = get_db()
 #     db.execute('INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, indicator_name, settings) VALUES (?,?,?,?)',
@@ -319,21 +278,7 @@ def load_conditions(id):
     return jsonify(result_dict)
 
 
-def get_conds(id):
-    db = get_db()
-    buy = db.execute(
-        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
-    sell = db.execute(
-        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
-    buy = json.loads(buy[0])
-    sell = json.loads(sell[0])
 
-    def type_cast(d):
-        for key in d:
-            if key == "val":
-                key['val'] = float(key['val'])
-
-    return buy, sell
 
 
 @bp.route('/<int:id>/backtest', methods=['POST'])
@@ -349,7 +294,7 @@ def backtest(id):
     sell[0].insert(0, "s")
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
 
-    # df = load_conditions(df, buy, sell)
+    df = process_conds(df, buy, sell)
     # df_bytes = pickle.dumps(df)
     # cache.set('df_cache_key', df_bytes)
     df.to_pickle(f"data/pickles/{name}.pkl")
@@ -370,17 +315,59 @@ def optimize(id):
     symbol = data['symbol']
     name = data['name']
     description = data['description']
-    s = Strategy(exchange, init_candles, symbol, name, description)
-    s.addIndicators([
-        {"kind": "rsi", "length": 15},
-    ])
+    # s = Strategy(exchange, init_candles, symbol, name, description)
+    # s.addIndicators([
+    #     {"kind": "rsi", "length": 15},
+    # ])
 
-    df = s.create_strategy()
+    # df = s.create_strategy()
+    df = pd.read_pickle(f"data/pickles/{name}.pkl")
     call_optimizer(df, "dynamic", 10, 10)
 
-    columns = s.column_dict()
-    resp = {"message": f'{columns}'}
+    # columns = s.column_dict()
+    resp = {"message": 'optimized'}
     return resp
+
+
+@bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
+def init_strategy(id):
+    if request.method == "POST":
+        print(id)
+        db = get_db()
+        indicators = db.execute(
+            'SELECT settings FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+        total_indicators = []
+
+        # remove kind: name
+        for row in indicators:
+            try:
+                # row 0 = settings
+                data_dict = json.loads(row[0])
+                for key, value in data_dict.items():
+                    print(key, value)
+                    if key != "kind":
+                        data_dict[key] = int(value) if value.isdigit(
+                        ) else float(value) if "." in value else value
+                total_indicators.append(data_dict)
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON: {e}")
+
+        data = request.get_json()
+        exchange = data['exchange']
+        init_candles = ['init_candles']
+        symbol = data['symbol']
+        name = data['name']
+        description = data['description']
+        s = Strategy(exchange, init_candles, symbol, name, description)
+        s.addIndicators(total_indicators)
+        df = s.create_strategy()
+        df = df.head(1215)
+        df.to_pickle(f"data/pickles/{name}.pkl")
+        cols = df.columns.to_list()
+        # keep kind: name to populate inputs
+        indicators_inputs = [row[0] for row in indicators]
+        print(indicators)
+        return jsonify({"cols": cols, "indicators": indicators_inputs})
 
 
 @bp.route('/<int:id>/condition', methods=['POST', 'GET'])
