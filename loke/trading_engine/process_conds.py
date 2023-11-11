@@ -47,6 +47,6 @@ def get_conds(id):
 
     return buy, sell
 
-
+# dd
 # def get_strategy_params():
 #     print("lol")
