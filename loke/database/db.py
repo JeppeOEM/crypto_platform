@@ -28,6 +28,13 @@ def init_db():
 
     with current_app.open_resource('database/trading.sql') as f:
         db.executescript(f.read().decode('utf8'))
+    with current_app.open_resource('database/insertdata.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
+
+def enable_fk():
+    db = get_db()
+
 
 # functions need to be registered with the application instance;
 
@@ -43,4 +50,6 @@ def init_app(app):
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('Initialized the database.')
+    enable_fk()
+    print("what the fuck")
+    click.echo('Initialized the database. with FK constraint')

@@ -150,6 +150,11 @@ h3 {
   flex-direction: column;
 }
 
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
 p {
   margin-bottom: 0;
 }

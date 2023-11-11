@@ -36,13 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function build_page() {
-  indicatordata = await update_chart("init_strategy");
-  try {
-    build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
-  } catch (error) {
-    console.log(error);
-  }
-  build_indicator_inputs(indicatordata.indicators);
+  indicators_data = await update_chart("init_strategy");
+  remove_element("buy_cond2");
+  remove_element("sell_cond2");
+  build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  build_indicator_inputs(indicators_data.indicators);
   build_buttons(["or", "&"], "compare", "button", "or_and_cond");
   build_conditions();
 }
@@ -51,6 +49,8 @@ async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
   console.log(sell_conds);
   console.log(buy_conds);
+  remove_element("buy_cond2");
+  remove_element("sell_cond2");
   insert_frontend(sell_conds, "sell_cond2");
   insert_frontend(buy_conds, "buy_cond2");
 
@@ -175,7 +175,7 @@ async function update_chart(endpoint) {
     });
 
     const responseData = await response.json();
-    remove_buttons("indicator_cond");
+    remove_element("indicator_cond");
     build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
     return responseData;
   } catch (error) {
@@ -260,11 +260,11 @@ async function strategy_indicators(endpoint) {
   }
 }
 
-function remove_buttons(class_name) {
-  let buttons = document.querySelectorAll(`.${class_name}`);
+function remove_element(class_name) {
+  let elements = document.querySelectorAll(`.${class_name}`);
 
-  buttons.forEach(function (button) {
-    button.parentNode.removeChild(button);
+  elements.forEach(function (ele) {
+    ele.parentNode.removeChild(ele);
   });
 }
 function build_buttons(array, element_id, element, class_name) {
@@ -301,6 +301,7 @@ async function save_cond_buy() {
   //indicators
   conditions.push(cond);
   cond = [];
+
   document.getElementById("cond").textContent = `${show_string(cond)}`;
   document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
   data.buy_cond = JSON.stringify(conditions);
@@ -311,6 +312,7 @@ async function save_cond_buy() {
   console.log(response);
   let build_conds = await build_conditions();
   document.getElementById("buy_cond2").textContent = `${build_conds}`;
+  conditions = [];
 }
 
 async function save_cond_sell() {
@@ -326,6 +328,7 @@ async function save_cond_sell() {
   console.log(response);
   let build_conds = await build_conditions();
   document.getElementById("sell_cond2").textContent = `${build_conds}`;
+  conditions_sell = [];
 }
 
 function del_last() {
@@ -364,6 +367,8 @@ async function backtest() {
 
   data.conds_buy = conditions_copy;
   data.conds_sell = conditions_sell_copy;
+  console.log(data.conds_buy);
+  console.log(data.conds_sell);
 
   let response = await postJsonGetData(data, "backtest");
   document.getElementById("cond").textContent = JSON.stringify(response.message);

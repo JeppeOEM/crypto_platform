@@ -12,7 +12,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT
 );
 -- Create the 'exchanges' table
 CREATE TABLE exchanges (

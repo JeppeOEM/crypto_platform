@@ -30,9 +30,15 @@
 {% endfor %}
 <div id="input-container"></div>
 <div class="form-container" id="form-container"></div>
+<div class="horizontal">
 <form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
   <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
 </form>
+<form action="{{ url_for('blog.truncate', id=strategy['strategy_id']) }}" method="post">
+  <input class="danger" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
+</form>
+</div>
+
 <form class="preventDefault" action="/custom_endpoint" method="post">
     <input type="submit" value="Call Custom Endpoint">
 </form>

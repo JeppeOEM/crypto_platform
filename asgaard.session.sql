@@ -1,2 +1,5 @@
-PRAGMA foreign_keys = ON;
-SELECT * FROM your_table WHERE name = 'John Doe';
+PRAGMA foreign_keys
+INSERT INTO exchanges (exchange_name)
+VALUES ('binance'),
+    ('huobi'),
+    ('bybit');

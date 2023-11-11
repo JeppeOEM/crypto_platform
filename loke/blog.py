@@ -232,16 +232,6 @@ def stratupdate(id):
     return render_template('blog/updatestrat.html', strategy=strategy, indicators=indicators)
 
 
-@bp.route('/<int:id>/deletestrat', methods=('POST',))
-@login_required
-def deletestrat(id):
-    get_strategy(id)
-    db = get_db()
-    db.execute('DELETE FROM strategies WHERE strategy_id = ?', (id,))
-    db.commit()
-    return redirect(url_for('blog.index'))
-
-
 @bp.route('/<int:id>/update_chart', methods=['POST'])
 @login_required
 def update_chart(id):
@@ -425,3 +415,23 @@ def load_conditions(id):
     # }
     print(result_dict)
     return jsonify(result_dict)
+
+
+@bp.route('/<int:id>/deletestrat', methods=('POST',))
+@login_required
+def deletestrat(id):
+    get_strategy(id)
+    db = get_db()
+    db.execute('DELETE FROM strategies WHERE strategy_id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
+
+
+@bp.route('/<int:id>/truncate', methods=('POST',))
+@login_required
+def truncate(id):
+    get_strategy(id)
+    db = get_db()
+    db.execute('DELETE FROM strategies WHERE strategy_id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
