@@ -59,7 +59,7 @@ class Condition:
                 expression_parts.append(str(value))
         expression = " ".join(expression_parts)
 
-        print(expression)
+        print("exp:", expression)
         # evaluate
         self.df[f'{side}_{signal_name}'] = np.where(
             pd.eval(expression, target=self.df), 1, -1)

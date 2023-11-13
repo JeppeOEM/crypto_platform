@@ -18,47 +18,52 @@ def are_nested_arrays_equal(arr1, arr2):
     return True
 
 
+def update_val(indicator, val, condition_buy):
+    flag = False
+    for l in condition_buy:
+        for inner in l:
+            try:
+                if inner['ind'] == indicator:
+                    print(inner['ind'])
+                    flag = True
+
+            except:
+                print("nope")
+            try:
+                if flag and inner['val']:
+                    print(inner['val'])
+                    inner['val'] = val
+                    flag = False
+            except:
+                print("no val")
+    return condition_buy
+
+
 def optimize_backtest(df, parameters, conditions):
     val = parameters["RSI_15_BUY"]
     val2 = parameters["RSI_15_SELL"]
     val3 = parameters["volume_BUY"]
 
-    sell = conditions['conds_sell']
-    buy = conditions['conds_buy']
+    condition_buy = conditions['conds_buy']
+    condition_sell = conditions['conds_sell']
 
-    print(parameters)
+    opti = [['RSI_15', val], ['volume', val3]]
+    opti_sell = [['RSI_15', val2]]
+    for item in opti:
+        condition_buy = update_val(item[0], item[1], condition_buy)
 
-    sell_dict = {key: value for key, value in conditions.items()
-                 if '_SELL' in key}
-    buy_dict = {key: value for key, value in conditions.items()
-                if '_BUY' in key}
-    print("HELLOO")
-    print(sell_dict)
-    print(buy_dict)
-
-    # print(sell_dict)
-    # print(buy_dict)
-    # for param_name, param_value in parameters.items():
-    #     print(f"Parameter Name: {param_name}, Parameter Value: {param_value}")
-
-    condition_buy = [["random", {
-        "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["random", {
-            "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
-    condition_sell = [["random", {
-        "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
+    # for item in opti_sell:
+    #     condition_sell = update_val(item[0], item[1], condition_sell)
+    # condition_buy = [["random", {
+    #     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["random", {
+    #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
+    # condition_sell = [["random", {
+    #     "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
     # condition_buy = [["name1112221", {
     #     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["name1112221", {
     #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
     # condition_sell = [["nam22221322", {
     #     "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
-    print("buy")
-    print(buy)
-    print("condition buy")
-    print(condition_buy)
-    if are_nested_arrays_equal(condition_buy, buy):
-        print("The nested arrays are equal.")
-    else:
-        print("The nested arrays are not equal.")
 
     df = process_conds(df, condition_buy, condition_sell)
 
