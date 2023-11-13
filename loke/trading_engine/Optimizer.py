@@ -13,11 +13,20 @@ from loke.database.db import get_db
 from loke.database.Hdf5 import Hdf5Client
 
 
+def set_contraints(bool: bool, params: typing.Dict) -> bool:
+    print(params)
+    if bool == True:
+        return bool
+    if bool == False:
+        params['volume_BUY'] = max(params["volume_BUY"], params["RSI_15_BUY"])
+        return bool
+
+
 class Nsga2:
-    def __init__(self, data, strategy, population_size: int, strategy_id: int):
+    def __init__(self, data, population_size: int, strategy_id: int):
         # self.exchange = exchange
         self.strategy_id = strategy_id
-        self.strategy = strategy
+        # self.strategy = strategy
         # self.tf = tf
         # self.from_time = from_time
         # self.to_time = to_time
@@ -27,9 +36,6 @@ class Nsga2:
         self.population_params = []
         self.data = data
         self.db = get_db()
-
-    def set_conds(self):
-        get_conds()
 
     def create_initial_population(self) -> typing.List[BacktestResult]:
 
@@ -117,7 +123,7 @@ class Nsga2:
                         new_child.parameters[p], self.params_data[p]["decimals"])
 
             new_child.parameters = self._params_constraints(
-                new_child.parameters)
+                new_child.parameters, self.strategy_id)
 
             if new_child.parameters not in self.population_params:
                 offspring_pop.append(new_child)
@@ -125,30 +131,24 @@ class Nsga2:
 
         return offspring_pop
 
-    def _params_constraints(self, params: typing.Dict) -> typing.Dict:
-        if self.strategy == "obv":
+    def _params_constraints(self, params: typing.Dict, id: int) -> typing.Dict:
+
+        bool = set_contraints(False, params)
+        if bool == True:
             pass
 
-        elif self.strategy == "sup_res":
-            pass
+        # elif self.strategy == "ichimoku":
+        #     # makes sures KIJUN is largest
+        #     params["kijun"] = max(params["kijun"], params["tenkan"])
 
-        elif self.strategy == "dynamic":
-            pass
+        # elif self.strategy == "sma":
+        #     params["slow_ma"] = max(params["slow_ma"], params["fast_ma"])
 
-        elif self.strategy == "ichimoku":
-            params["kijun"] = max(params["kijun"], params["tenkan"])
-
-        elif self.strategy == "sma":
-            params["slow_ma"] = max(params["slow_ma"], params["fast_ma"])
-
-        elif self.strategy == "psar":
-            params["initial_acc"] = min(
-                params["initial_acc"], params["max_acc"])
-            params["acc_increment"] = min(
-                params["acc_increment"], params["max_acc"] - params["initial_acc"])
-        elif self.strategy != "psar":
-            print("free pass")
-            pass
+        # elif self.strategy == "psar":
+        #     params["initial_acc"] = min(
+        #         params["initial_acc"], params["max_acc"])
+        #     params["acc_increment"] = min(
+        #         params["acc_increment"], params["max_acc"] - params["initial_acc"])
 
         return params
 
@@ -216,15 +216,13 @@ class Nsga2:
 
     def evaluate_population(self, population: typing.List[BacktestResult]) -> typing.List[BacktestResult]:
 
-        if self.strategy == "dynamic":
+        for bt in population:
+            pnl, dd = optimize_backtest(
+                self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"], bt.parameters["volume_BUY"])
+            bt.pnl, bt.max_dd = pnl, dd
 
-            for bt in population:
-                pnl, dd = optimize_backtest(
-                    self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"])
-                bt.pnl, bt.max_dd = pnl, dd
+            if bt.pnl == 0:
+                bt.pnl = -float("inf")
+                bt.max_dd = float("inf")
 
-                if bt.pnl == 0:
-                    bt.pnl = -float("inf")
-                    bt.max_dd = float("inf")
-
-            return population
+        return population

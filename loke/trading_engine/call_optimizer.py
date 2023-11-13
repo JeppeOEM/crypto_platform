@@ -1,10 +1,10 @@
 from loke.trading_engine.Optimizer import Nsga2
 
 
-def call_optimizer(df, strategy, pop_size, generations, id):
+def call_optimizer(df, pop_size, generations, id):
 
     generations = int(generations)
-    nsga2 = Nsga2(df, strategy, pop_size, id)
+    nsga2 = Nsga2(df, pop_size, id)
     p_population = nsga2.create_initial_population()
     p_population = nsga2.evaluate_population(p_population)
     p_population = nsga2.crowding_distance(p_population)
