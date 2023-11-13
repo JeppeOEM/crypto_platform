@@ -47,6 +47,9 @@ async function build_page() {
 
 async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
+  console.log("################################################################");
+  console.log("################################################################");
+  console.log("################################################################");
   console.log(sell_conds);
   console.log(buy_conds);
   remove_element("buy_cond2");
@@ -101,17 +104,27 @@ function load_params() {
 
 function optimizer_params(sell_conds, suffix) {
   const title = document.querySelector("title");
-  s_conds = JSON.parse(sell_conds);
+  console.log(sell_conds);
+  s_conds = [];
+  sell_conds.forEach((cond) => {
+    cond = JSON.parse(cond);
+    s_conds.push(cond);
+  });
+  console.log(s_conds);
+
   const tbody = document.querySelector("tbody");
   const opti_params = document.getElementById("optimize_params");
   s_conds.forEach((cond) => {
-    console.log(cond["ind"]);
-    const clone = opti_params.content.cloneNode(true);
-    clone.querySelector(".indicator").textContent = cond[0]["ind"] + suffix;
-    clone.querySelector(".operator").textContent = cond[1]["cond"];
-    clone.querySelector(".min").value = "1";
-    clone.querySelector(".max").value = "1";
-    tbody.appendChild(clone);
+    cond.forEach((val) => {
+      console.log(val[0]);
+      console.log(val[0]["ind"]);
+      const clone = opti_params.content.cloneNode(true);
+      clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
+      clone.querySelector(".operator").textContent = val[1]["cond"];
+      clone.querySelector(".min").value = "1";
+      clone.querySelector(".max").value = "1";
+      tbody.appendChild(clone);
+    });
   });
 }
 

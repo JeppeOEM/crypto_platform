@@ -12,7 +12,6 @@ from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
-from loke.trading_engine.process_conds import get_conds
 import pickle
 import pandas as pd
 # DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
@@ -362,7 +361,7 @@ def optimize(id):
 
     # df = s.create_strategy()
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
-    call_optimizer(df, "dynamic", 10, 10)
+    call_optimizer(df, "dynamic", 10, 10, id)
 
     # columns = s.column_dict()
     resp = {"message": 'optimized'}
@@ -466,6 +465,29 @@ def condition(id):
 @bp.route('/<int:id>/deletestrat', methods=('POST',))
 @login_required
 def deletestrat(id):
+    get_strategy(id)
+    db = get_db()
+    db.execute('DELETE FROM strategies WHERE strategy_id = ?', (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
+
+
+@bp.route('/<int:id>/delete_cond', methods=('POST',))
+@login_required
+def del_last_buy_cond(id):
+    get_strategy(id)
+    side = "buy_condition"
+    db = get_db()
+    table_name = 'buy_condition' if side == 'BUY' else 'sell_condition'
+
+    db.execute('DELETE FROM {}  WHERE strategy_id = ?'.format(table_name), (id,))
+    db.commit()
+    return redirect(url_for('blog.index'))
+
+
+@bp.route('/<int:id>/deletestrat', methods=('POST',))
+@login_required
+def del_last_sell_cond(id):
     get_strategy(id)
     db = get_db()
     db.execute('DELETE FROM strategies WHERE strategy_id = ?', (id,))

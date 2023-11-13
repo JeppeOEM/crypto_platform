@@ -2,8 +2,7 @@ import random
 import typing
 import copy
 from loke.models.models import BacktestResult
-from loke.trading_engine.process_conds import get_conds
-# from loke.trading_engine.process_conds import get_strategy_params
+from loke.trading_engine.process_conds import create_conds
 from loke.trading_engine.optimize_backtest import optimize_backtest
 
 from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
@@ -15,16 +14,15 @@ from loke.database.Hdf5 import Hdf5Client
 
 
 class Nsga2:
-    def __init__(self, data, strategy, population_size: int):
+    def __init__(self, data, strategy, population_size: int, strategy_id: int):
         # self.exchange = exchange
-
+        self.strategy_id = strategy_id
         self.strategy = strategy
         # self.tf = tf
         # self.from_time = from_time
         # self.to_time = to_time
         self.population_size = population_size
-        self.conditions = CONDITIONS[strategy]
-        self.params_data = STRAT_PARAMS[strategy]
+        self.conditions, self.params_data = create_conds(strategy_id)
 
         self.population_params = []
         self.data = data
@@ -32,7 +30,6 @@ class Nsga2:
 
     def set_conds(self):
         get_conds()
-        get_strategy_params()
 
     def create_initial_population(self) -> typing.List[BacktestResult]:
 
