@@ -220,7 +220,7 @@ class Nsga2:
 
             for bt in population:
                 pnl, dd = optimize_backtest(
-                    self.data, bt.parameters["RSI_BUY"], bt.parameters["RSI_SELL"])
+                    self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"])
                 bt.pnl, bt.max_dd = pnl, dd
 
                 if bt.pnl == 0:

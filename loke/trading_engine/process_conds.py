@@ -81,6 +81,8 @@ def get_values(sql_rows):
         # for v in val:
         #     print(v)
         #     # arr.append(v[0])
+
+    print("####################BUY ARR##############")
     print(buy_arr)
     return buy_arr
 
@@ -93,10 +95,28 @@ def get_strategy_params(id):
         'SELECT optimization_name, class, data_type, operator, optimization_min, optimization_max FROM sell_optimization WHERE fk_strategy_id = ?', (id,)).fetchall()
     s_arr = get_values(sell)
     b_arr = get_values(buy)
-    print(sell)
 
-    params = {
-        "RSI_BUY": {"name": "rsi sell val", "type": int, "min": 15, "max": 55},
-        "RSI_SELL": {"name": "rsi sell val", "type": int, "min": 56, "max": 80},
-    }
+    params = {}
+
+    def build_params(params, arr):
+        for opti_param in arr:
+            for key, value in opti_param.items():
+                params[key] = value
+
+    build_params(params, s_arr)
+    build_params(params, b_arr)
+
+    for key, value in params.items():
+        # default value is allways float
+        if value["type"] == int:
+            value["min"] = int(value["min"])
+            value["max"] = int(value["max"])
+
+    print("####################SELL STRAT PARAMS##############")
+    print(params)
+
+    # params = {
+    #     "RSI_15_BUY": {"name": "rsi sell val", "type": int, "min": 15, "max": 55},
+    #     "RSI_15_SELL": {"name": "rsi sell val", "type": int, "min": 56, "max": 80},
+    # }
     return params

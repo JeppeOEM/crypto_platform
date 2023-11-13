@@ -1,45 +1,19 @@
-import os
-
-from flask import Flask
-from loke.database import db
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash
-from . import auth
-from . import blog
+d = {'RSI_15_SELL': {'name': 'indicator', 'type': int, 'min': 66.0, 'max': 75.0},
+     'volume_SELL': {'name': 'indicator', 'type': int, 'min': 1.0, 'max': 111.0},
+     'RSI_15_BUY': {'name': 'indicator', 'type': int, 'min': 20.0, 'max': 90.0},
+     'volume_BUY': {'name': 'indicator', 'type': int, 'min': 1.0, 'max': 222.0}}
 
 
-def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        # should be overridden with a random value when deploying.
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-        CACHE_TYPE="SimpleCache",
-        CACHE_DEFAULT_TIMEOUT=300
-    )
+params = {
+        "RSI_15_BUY": {"name": "rsi sell val", "type": int, "min": 15, "max": 55},
+        "RSI_15_SELL": {"name": "rsi sell val", "type": int, "min": 56, "max": 80},
+    }
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(blog.bp)
 
-    # index points to blog index as it no prefix is defined for the blueprint
-    app.add_url_rule('/', endpoint='index')
-
-    @app.route("/")
-    def index():
-        return render_template("loke/templates/index.html")
-
-    db.init_app(app)
-
-    return app
+{
+    'RSI_15_SELL': {'name': 'indicator', 'type': <class 'int'>, 'min': 66, 'max': 75}, 
+    'volume_SELL': {'name': 'indicator', 'type': <class 'int'>, 'min': 1, 'max': 111}, 
+    'RSI_15_BUY': {'name': 'indicator', 'type': <class 'int'>, 'min': 20, 'max': 90}, 
+    'volume_BUY': {'name': 'indicator', 'type': <class 'int'>, 'min': 1, 'max': 222}
+ }
