@@ -216,7 +216,6 @@ class Nsga2:
         return fronts
 
     def evaluate_population(self, population: typing.List[BacktestResult], conditions: typing.List) -> typing.List[BacktestResult]:
-        print(conditions)
         for bt in population:
             all_params = bt.parameters
             bt.pnl, bt.max_dd = optimize_backtest(

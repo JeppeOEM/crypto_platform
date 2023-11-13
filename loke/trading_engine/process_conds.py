@@ -1,6 +1,7 @@
 from loke.trading_engine.Condition import Condition
 import json
 from loke.database.db import get_db
+import numpy as np
 
 
 def data_type(d_type):
@@ -41,22 +42,52 @@ def create_conds(id):
     db = get_db()
 
     buy = db.execute(
-        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
     sell = db.execute(
-        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchone()
+        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
 
-    def type_cast(d):
-        for key in d:
-            if key == "val":
-                key['val'] = float(key['val'])
-        return d
-    buy = type_cast(json.loads(buy[0]))
-    sell = type_cast(json.loads(sell[0]))
-    buy[0].insert(0, "buy")
-    sell[0].insert(0, 'sell')
+    def type_cast(conds):
+        for cond in conds:
+            for key in cond:
+                if key == "val":
+                    key['val'] = float(key['val'])
+            cond.insert(0, "random")
+        return conds
+    print(buy)
+    print(sell)
 
-    print(buy, sell)
+    buy_arr = []
+    sell_arr = []
+    for b in buy:
+        bb = json.loads(b[0])
+        buy_arr.append(bb)
+    for s in sell:
+        ss = json.loads(s[0])
+        sell_arr.append(ss)
 
+    print(buy_arr)
+    print(sell_arr)
+
+    # s_conds = [json.loads(s['buy_eval']) for s in sell]
+
+    buy = type_cast(buy_arr)
+    sell = type_cast(sell_arr)
+
+    for idx, arr in enumerate(buy):
+        print(arr[idx][1])
+
+        # buy[0].insert(0, "buy")
+        # sell[0].insert(0, 'sell')
+    def flatten_inner_list(nested_list):
+        flattened_list = []
+
+        for sublist in nested_list:
+            flat_sublist = [sublist[0]] + sublist[1]
+            flattened_list.append(flat_sublist)
+        return flattened_list
+
+    buy = flatten_inner_list(buy)
+    sell = flatten_inner_list(sell)
     conds = {
         "conds_buy": buy,
         "conds_sell": sell
@@ -120,3 +151,12 @@ def get_strategy_params(id):
     #     "RSI_15_SELL": {"name": "rsi sell val", "type": int, "min": 56, "max": 80},
     # }
     return params
+
+
+# [["name1112221", {
+#     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["name1112221", {
+#         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
+
+
+# [['random', [{'ind': 'RSI_15'}, {'cond': '<'}, {'val': 1}]],
+#     ['random', [{'ind': 'volume'}, {'cond': '<'}]],['random', [{'ind': 'volume'}, {'cond': '<'}]],['random', [{'ind': 'volume'}, {'cond': '<'}]]]

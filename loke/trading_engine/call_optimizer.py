@@ -4,6 +4,7 @@ from loke.trading_engine.process_conds import create_conds
 
 def call_optimizer(df, pop_size, generations, id):
     conditions, params_data = create_conds(id)
+    print("#########OCONDSDSADSAD################################")
     print(conditions, params_data)
     generations = int(generations)
     nsga2 = Nsga2(df, pop_size, id, params_data)
