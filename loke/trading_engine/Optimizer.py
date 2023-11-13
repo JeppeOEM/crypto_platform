@@ -219,7 +219,7 @@ class Nsga2:
         for bt in population:
             all_params = bt.parameters
             bt.pnl, bt.max_dd = optimize_backtest(
-                self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"], bt.parameters["volume_BUY"], all_params, conditions)
+                self.data, all_params, conditions)
 
             if bt.pnl == 0:
                 bt.pnl = -float("inf")

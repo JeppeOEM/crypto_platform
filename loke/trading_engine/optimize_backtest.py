@@ -18,20 +18,24 @@ def are_nested_arrays_equal(arr1, arr2):
     return True
 
 
-def optimize_backtest(df, val, val2, val3, parameters, conditions):
-    print("conditions optmizse")
-    print(conditions['conds_buy'])
-    print(conditions['conds_sell'])
+def optimize_backtest(df, parameters, conditions):
+    val = parameters["RSI_15_BUY"]
+    val2 = parameters["RSI_15_SELL"]
+    val3 = parameters["volume_BUY"]
 
     sell = conditions['conds_sell']
     buy = conditions['conds_buy']
+
+    print(parameters)
 
     sell_dict = {key: value for key, value in conditions.items()
                  if '_SELL' in key}
     buy_dict = {key: value for key, value in conditions.items()
                 if '_BUY' in key}
+    print("HELLOO")
     print(sell_dict)
-    
+    print(buy_dict)
+
     # print(sell_dict)
     # print(buy_dict)
     # for param_name, param_value in parameters.items():
