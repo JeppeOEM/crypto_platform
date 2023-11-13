@@ -23,7 +23,7 @@ def set_contraints(bool: bool, params: typing.Dict) -> bool:
 
 
 class Nsga2:
-    def __init__(self, data, population_size: int, strategy_id: int):
+    def __init__(self, data, population_size: int, strategy_id: int, params_data):
         # self.exchange = exchange
         self.strategy_id = strategy_id
         # self.strategy = strategy
@@ -31,7 +31,8 @@ class Nsga2:
         # self.from_time = from_time
         # self.to_time = to_time
         self.population_size = population_size
-        self.conditions, self.params_data = create_conds(strategy_id)
+
+        self.params_data = params_data
 
         self.population_params = []
         self.data = data
@@ -214,11 +215,12 @@ class Nsga2:
 
         return fronts
 
-    def evaluate_population(self, population: typing.List[BacktestResult]) -> typing.List[BacktestResult]:
-
+    def evaluate_population(self, population: typing.List[BacktestResult], conditions: typing.List) -> typing.List[BacktestResult]:
+        print(conditions)
         for bt in population:
-            print(bt.parameters)
-            bt.pnl, bt.max_dd = optimize_backtest(self.data, bt.parameters)
+            all_params = bt.parameters
+            bt.pnl, bt.max_dd = optimize_backtest(
+                self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"], bt.parameters["volume_BUY"], all_params, conditions)
 
             if bt.pnl == 0:
                 bt.pnl = -float("inf")

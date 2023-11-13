@@ -52,8 +52,8 @@ def create_conds(id):
         return d
     buy = type_cast(json.loads(buy[0]))
     sell = type_cast(json.loads(sell[0]))
-    buy = buy[0].insert(0, "buy")
-    sell = sell[0].insert(0, 'sell')
+    buy[0].insert(0, "buy")
+    sell[0].insert(0, 'sell')
 
     print(buy, sell)
 
