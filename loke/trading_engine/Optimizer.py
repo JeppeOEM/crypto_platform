@@ -217,9 +217,8 @@ class Nsga2:
     def evaluate_population(self, population: typing.List[BacktestResult]) -> typing.List[BacktestResult]:
 
         for bt in population:
-            pnl, dd = optimize_backtest(
-                self.data, bt.parameters["RSI_15_BUY"], bt.parameters["RSI_15_SELL"], bt.parameters["volume_BUY"])
-            bt.pnl, bt.max_dd = pnl, dd
+            print(bt.parameters)
+            bt.pnl, bt.max_dd = optimize_backtest(self.data, bt.parameters)
 
             if bt.pnl == 0:
                 bt.pnl = -float("inf")
