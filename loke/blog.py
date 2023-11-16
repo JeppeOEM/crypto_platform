@@ -401,6 +401,7 @@ def init_strategy(id):
 
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
+        print(cols)
         # keep kind: name to populate inputs
         indicators_inputs = [row[0] for row in indicators]
         print(indicators)
