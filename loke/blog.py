@@ -324,10 +324,8 @@ def optimizer_params(id):
             ).fetchone()
 
             if existing_row:
-                # Row already exists, handle accordingly (e.g., skip or update)
                 print("Row with the same values already exists. Skipping insertion.")
             else:
-                # Insert the new row
                 db.execute(
                     'INSERT INTO {} '
                     '(fk_strategy_id, fk_user_id, optimization_name, data_type, class, operator, '
@@ -424,10 +422,9 @@ def condition(id):
             ).fetchone()
 
             if existing_indicator:
-                return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
+                return jsonify({'message': 'Condition with the same settings already exists. No data inserted.'}), 400
 
             try:
-                # Insert the indicator if it doesn't exist
                 db.execute(
                     'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval) VALUES (?, ?, ?)',
                     (id, g.user['id'], data['buy_cond'])
@@ -435,7 +432,6 @@ def condition(id):
                 db.commit()
                 return jsonify({'message': 'condition saved to database'})
             except Exception as e:
-                # Handle database-related errors
                 return jsonify({'error': str(e)}), 500
 
         if data['side'] == "sell":

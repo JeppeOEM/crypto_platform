@@ -46,40 +46,14 @@ def create_opti_params(params):
 
 
 def optimize_backtest(df, params, conditions):
-    print("CONDITIOOOOOOOONS")
-    print(conditions)
-    print("THE params A SLOADED FROM OPTIMIZER")
-    print(params)
-    print("THE PARAMETERS A SLOADED FROM OPTIMIZER")
 
     opti_b, opti_s = create_opti_params(params)
-    print(opti_b)
-    print(opti_s)
-
-    cond_buy = update(conditions['conds_buy'], opti_b)
-    print(cond_buy)
-    cond_sell = update(conditions['conds_sell'], opti_s)
-    print(cond_sell)
-
-    # print(val)
-    # print(val2)
-    # print(val3)
-    # print("COOOOOOOOONDS OPTIMIZEBACKTEST")
-    # print(conditions['conds_buy'])
-    # print(conditions['conds_sell'])
+    update(conditions['conds_buy'], opti_b)
+    update(conditions['conds_sell'], opti_s)
     df = process_conds(df, conditions['conds_buy'], conditions['conds_sell'])
 
     backtest = Backtest()
     pnl, drawdown = backtest.run(df)
     return pnl, drawdown
 
-    # condition_buy = [["random", {
-    #     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["random", {
-    #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
-    # condition_sell = [["random", {
-    #     "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
-    # condition_buy = [["name1112221", {
-    #     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["name1112221", {
-    #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
-    # condition_sell = [["nam22221322", {
-    #     "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
+
