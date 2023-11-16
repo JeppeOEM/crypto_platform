@@ -19,33 +19,13 @@ def are_nested_arrays_equal(arr1, arr2):
 
 
 def update_val(indicator, val, values):
-    flag = False
-    for v in values:
-        if isinstance(v, dict):
-            try:
-                v['ind'] == indicator
-                for vv in values:
-                    if 'val' in vv:
-                        vv['val'] = val
-                        print(vv)
-
-            except:
-                continue
+    if any(isinstance(v, dict) and v.get('ind') == indicator for v in values):
+        for v in values:
+            if isinstance(v, dict) and 'val' in v:
+                v['val'] = val
+                break
 
 
-# def update_val(indicator, val, conds):
-#     print(conds)
-#     for l in conds:
-#         for indi in l:
-#             try:
-#                 print(indi['ind'])
-#                 print(indicator)
-#                 if indi['ind'] == indicator:
-#                     indi['val'] = val
-#                     break
-#             except:
-#                 continue
-#     return conds
 
 
 def update(conds, opti_val):
