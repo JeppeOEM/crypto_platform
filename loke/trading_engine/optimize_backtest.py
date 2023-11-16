@@ -24,18 +24,18 @@ def update_val(indicator, val, condition_buy):
         for inner in l:
             try:
                 if inner['ind'] == indicator:
-                    print(inner['ind'])
+                    continue
                     flag = True
 
             except:
-                print("nope")
+                continue
             try:
                 if flag and inner['val']:
                     print(inner['val'])
                     inner['val'] = val
                     flag = False
             except:
-                print("no val")
+                continue
     return condition_buy
 
 
