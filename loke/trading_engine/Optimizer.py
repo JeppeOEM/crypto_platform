@@ -134,7 +134,7 @@ class Nsga2:
 
     def _params_constraints(self, params: typing.Dict, id: int) -> typing.Dict:
 
-        bool = set_contraints(False, params)
+        bool = set_contraints(True, params)
         if bool == True:
             pass
 

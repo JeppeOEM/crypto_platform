@@ -361,7 +361,7 @@ def optimize(id):
 
     # df = s.create_strategy()
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
-    call_optimizer(df, 10, 30, id)
+    call_optimizer(df, 5, 5, id)
 
     # columns = s.column_dict()
     resp = {"message": 'optimized'}

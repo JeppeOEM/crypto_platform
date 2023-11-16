@@ -1,6 +1,5 @@
 from loke.trading_engine.process_conds import process_conds
 from loke.trading_engine.Backtest import Backtest
-from itertools import chain
 
 
 def are_nested_arrays_equal(arr1, arr2):
@@ -26,8 +25,6 @@ def update_val(indicator, val, values):
                 break
 
 
-
-
 def update(conds, opti_val):
     for cond in conds:
         for item in opti_val:
@@ -35,17 +32,33 @@ def update(conds, opti_val):
     return conds
 
 
-def optimize_backtest(df, parameters, conditions):
-    val = parameters["RSI_15_BUY"]
-    val2 = parameters["RSI_15_SELL"]
-    val3 = parameters["volume_BUY"]
+def create_opti_params(params):
+    opti_buy = []
+    opti_sell = []
+    for key, value in params.items():
+        if key.endswith('_BUY'):
+            key = key[:-4]
+            opti_buy.append([key, value])
+        if key.endswith('_SELL'):
+            key = key[:-5]
+            opti_sell.append([key, value])
+    return opti_buy, opti_sell
 
-    opti = [['RSI_15', val], ['volume', val3]]
-    opti_sell = [['RSI_15', val2]]
 
-    cond_buy = update(conditions['conds_buy'], opti)
+def optimize_backtest(df, params, conditions):
+    print("CONDITIOOOOOOOONS")
+    print(conditions)
+    print("THE params A SLOADED FROM OPTIMIZER")
+    print(params)
+    print("THE PARAMETERS A SLOADED FROM OPTIMIZER")
+
+    opti_b, opti_s = create_opti_params(params)
+    print(opti_b)
+    print(opti_s)
+
+    cond_buy = update(conditions['conds_buy'], opti_b)
     print(cond_buy)
-    cond_sell = update(conditions['conds_sell'], opti_sell)
+    cond_sell = update(conditions['conds_sell'], opti_s)
     print(cond_sell)
 
     # print(val)
