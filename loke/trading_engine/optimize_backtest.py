@@ -18,25 +18,41 @@ def are_nested_arrays_equal(arr1, arr2):
     return True
 
 
-def update_val(indicator, val, condition_buy):
+def update_val(indicator, val, values):
     flag = False
-    for l in condition_buy:
-        for inner in l:
+    for v in values:
+        if isinstance(v, dict):
             try:
-                if inner['ind'] == indicator:
-                    continue
-                    flag = True
+                v['ind'] == indicator
+                for vv in values:
+                    if 'val' in vv:
+                        vv['val'] = val
+                        print(vv)
 
             except:
                 continue
-            try:
-                if flag and inner['val']:
-                    print(inner['val'])
-                    inner['val'] = val
-                    flag = False
-            except:
-                continue
-    return condition_buy
+
+
+# def update_val(indicator, val, conds):
+#     print(conds)
+#     for l in conds:
+#         for indi in l:
+#             try:
+#                 print(indi['ind'])
+#                 print(indicator)
+#                 if indi['ind'] == indicator:
+#                     indi['val'] = val
+#                     break
+#             except:
+#                 continue
+#     return conds
+
+
+def update(conds, opti_val):
+    for cond in conds:
+        for item in opti_val:
+            update_val(item[0], item[1], cond)
+    return conds
 
 
 def optimize_backtest(df, parameters, conditions):
@@ -44,16 +60,26 @@ def optimize_backtest(df, parameters, conditions):
     val2 = parameters["RSI_15_SELL"]
     val3 = parameters["volume_BUY"]
 
-    condition_buy = conditions['conds_buy']
-    condition_sell = conditions['conds_sell']
-
     opti = [['RSI_15', val], ['volume', val3]]
     opti_sell = [['RSI_15', val2]]
-    for item in opti:
-        condition_buy = update_val(item[0], item[1], condition_buy)
 
-    # for item in opti_sell:
-    #     condition_sell = update_val(item[0], item[1], condition_sell)
+    cond_buy = update(conditions['conds_buy'], opti)
+    print(cond_buy)
+    cond_sell = update(conditions['conds_sell'], opti_sell)
+    print(cond_sell)
+
+    # print(val)
+    # print(val2)
+    # print(val3)
+    # print("COOOOOOOOONDS OPTIMIZEBACKTEST")
+    # print(conditions['conds_buy'])
+    # print(conditions['conds_sell'])
+    df = process_conds(df, conditions['conds_buy'], conditions['conds_sell'])
+
+    backtest = Backtest()
+    pnl, drawdown = backtest.run(df)
+    return pnl, drawdown
+
     # condition_buy = [["random", {
     #     "ind": "RSI_15"}, {"cond": "<"}, {"val": val2}], ["random", {
     #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
@@ -64,9 +90,3 @@ def optimize_backtest(df, parameters, conditions):
     #         "ind": "volume"}, {"cond": ">"}, {"val": val3}]]
     # condition_sell = [["nam22221322", {
     #     "ind": "RSI_15"}, {"cond": ">"}, {"val": val}]]
-
-    df = process_conds(df, condition_buy, condition_sell)
-
-    backtest = Backtest()
-    pnl, drawdown = backtest.run(df)
-    return pnl, drawdown

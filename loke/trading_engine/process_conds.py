@@ -12,7 +12,9 @@ def data_type(d_type):
 
 
 def process_conds(df, selected_conds_buy, selected_conds_sell):
-
+    print("selected conds")
+    print(selected_conds_buy)
+    print(selected_conds_sell)
     # selected_conds = ["empty zero index param", indicators[0], conds[0], values[0]]
     con = Condition(df)
     # con.add_custom_condition(
