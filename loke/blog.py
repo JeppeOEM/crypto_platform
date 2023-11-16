@@ -361,7 +361,7 @@ def optimize(id):
 
     # df = s.create_strategy()
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
-    call_optimizer(df, 3, 3, id)
+    call_optimizer(df, 10, 30, id)
 
     # columns = s.column_dict()
     resp = {"message": 'optimized'}
@@ -400,7 +400,7 @@ def init_strategy(id):
         s = Strategy(exchange, init_candles, symbol, name, description)
         s.addIndicators(total_indicators)
         df = s.create_strategy()
-        df = df.head(1215)
+
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
         # keep kind: name to populate inputs
