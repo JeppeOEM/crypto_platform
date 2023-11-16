@@ -400,7 +400,7 @@ def init_strategy(id):
         s = Strategy(exchange, init_candles, symbol, name, description)
         s.addIndicators(total_indicators)
         df = s.create_strategy()
-        df = df.head(1215)
+        # df = df.head(1215)
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
         # keep kind: name to populate inputs

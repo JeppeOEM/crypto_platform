@@ -40,7 +40,6 @@ class Backtest:
 
         return dfgroup["pnl"].sum(), dfgroup["drawdown"].max()
 
-
     def filter_signals(self, df, column_prefix):
         selected_columns = [
             col for col in df.columns if col.startswith(column_prefix)]
@@ -50,7 +49,10 @@ class Backtest:
     def analyse(self, df):
         df.reset_index(drop=True, inplace=True)
         df.dropna(inplace=True)
+
         df['pnl'] = df.close.pct_change()
+        print(df.tail(2))
+
         df['cond1'] = np.where(df['open_trade'] == 1, 1, 0)
         df['cond2'] = np.where(df['close_trade'] == 1, 1, 0)
         return df
