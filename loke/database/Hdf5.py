@@ -15,6 +15,7 @@ class Hdf5Client:
     # 'a' = append mode , can read and write and will create file
     def __init__(self, exchange: str):
         self.hf = h5py.File(f"data/{exchange}.h5", 'a')
+        #flush to prevent corruption if error
         self.hf.flush()
 
     def create_dataset(self, symbol: str):
