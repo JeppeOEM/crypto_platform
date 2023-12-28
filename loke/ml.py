@@ -44,14 +44,14 @@ def markov():
     # model.train([np.array(X_train.values)])
     hidden_states = model.predict(X_train)
     # hidden_states = model.predict([X_train.values])[0]
-    preparePlot(df, hidden_states, req_dict)
+    prepare_plot(df, hidden_states, req_dict)
     # to_json = df.to_json(orient='records', date_format='iso')
     # json_string = json.dumps(to_json, default=str)
     json_string = {"message": "TEST"}
     return json_string
 
 
-def plotPlot(all_labels, colors, reqDict, number_of_states):
+def plot_plot(all_labels, colors, reqDict, number_of_states):
     matplotlib.use('SVG')
     market_type = reqDict['market_type']
     timeframe = reqDict['timeframes']
@@ -68,7 +68,7 @@ def plotPlot(all_labels, colors, reqDict, number_of_states):
         f"data/plots/{ts}_{ticker}_markov_s{number_of_states}_{market_type}.svg")
 
 
-def preparePlot(df, hidden_states, requestDict):
+def prepare_plot(df, hidden_states, requestDict):
 
     prices = df["close"].values.astype(float)
     print("Correct Number of rows: ", len(prices) == len(hidden_states))
@@ -91,7 +91,7 @@ def preparePlot(df, hidden_states, requestDict):
                 labels_0.append(prices[i])
                 labels_1.append(float('nan'))
             i += 1
-        plotPlot(all_labels, colors, requestDict, number_of_states)
+        plot_plot(all_labels, colors, requestDict, number_of_states)
 
     if number_of_states == 2:
         labels_0 = []
@@ -112,7 +112,7 @@ def preparePlot(df, hidden_states, requestDict):
                 labels_1.append(float('nan'))
                 labels_2.append(prices[i])
             i += 1
-        plotPlot(all_labels, colors, requestDict, number_of_states)
+        plot_plot(all_labels, colors, requestDict, number_of_states)
         return labels_0, labels_1, labels_2
 
     if number_of_states == 3:
@@ -143,7 +143,7 @@ def preparePlot(df, hidden_states, requestDict):
                 labels_3.append(float('nan'))
                 labels_2.append(prices[i])
             i += 1
-        plotPlot(all_labels, colors, requestDict, number_of_states)
+        plot_plot(all_labels, colors, requestDict, number_of_states)
         return labels_0, labels_1, labels_2, labels_3
 
     if number_of_states == 4:
@@ -185,6 +185,6 @@ def preparePlot(df, hidden_states, requestDict):
                 labels_3.append(float('nan'))
                 labels_4.append(prices[i])
             i += 1
-        plotPlot(all_labels, colors, requestDict, number_of_states)
+        plot_plot(all_labels, colors, requestDict, number_of_states)
 
         return labels_0, labels_1, labels_2, labels_3, labels_4

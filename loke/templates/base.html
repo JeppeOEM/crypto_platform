@@ -2,8 +2,9 @@
 <title>{% block title %}{% endblock %} - Flaskr</title>¨
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 
+<script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+<script type="module" src="{{ url_for('static', filename='js/chart.js') }}"></script>
 <nav>
   <h1>Flaskr</h1>
   <ul>
