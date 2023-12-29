@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
+
+:root {
+  --colorTextSecondary: floralwhite;
+
+  --colorPrimary: blue;
+  --colorSecondary: white;
+  --colorTertiary: yellow;
+
+  --colorToDo: lightsalmon;
+  --colorOngoing: palegoldenrod;
+  --colorDone: lightgreen;
+
+  --imgDelete: url(../img/trash.png);
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Raleway", Arial, Helvetica, sans-serif;
+}
+
+header {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  color: var(--colorTextSecondary);
+  background-color: var(--colorPrimary);
+}
+header > h1 {
+  text-indent: 2rem;
+}
+
+main {
+  padding: 0.5rem;
+  line-height: 1.4rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0.25rem 0 0.25rem 0;
+  color: var(--colorTextSecondary);
+  background-color: var(--colorPrimary);
+  text-align: center;
+}
+
+header.listHeaders {
+  border-radius: 0.5rem 0.5rem 0 0;
+  color: var(--colorPrimary);
+  background-color: var(--colorTertiary);
+  font-weight: bold;
+}
+div.toDoHeader {
+  float: left;
+  width: 33%;
+}
+div.ongoingHeader {
+  float: left;
+  width: 33%;
+}
+div.toDoList {
+  float: left;
+  width: 33%;
+}
+div.ongoingList {
+  float: left;
+  width: 33%;
+}
+div.doneList {
+  float: left;
+  width: 33%;
+}
+
+main.listContent {
+  min-height: 40px;
+  padding-right: 0;
+  overflow: auto;
+}
+
+.clone {
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background-color: var(--colorSecondary);
+}
+
+a {
+  color: var(--colorPrimary);
+  background-color: var(--colorTextSecondary);
+  text-align: center;
+  border-radius: 0.25rem;
+}
+a:hover {
+  cursor: pointer;
+  background-color: var(--colorTertiary);
+}
+
+.buttons {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+.buttons a {
+  margin-right: 10px;
+}
+#new_todo {
+  display: inline-block;
+  width: 25%;
+  border-radius: 0.25rem;
+
+  line-height: 2rem;
+}
+a.addTask {
+  display: inline-block;
+  width: 25%;
+  border-radius: 0.25rem;
+  font-size: 3rem;
+  line-height: 2rem;
+}
+a.save {
+  display: inline-block;
+  width: 25%;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: rgb(171, 21, 21);
+}
+
+a.showHelp {
+  display: block;
+  float: right;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+a.deleteButton {
+  display: block;
+  float: right;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.25rem;
+  background-image: var(--imgDelete);
+}
+
+div.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 3.5rem;
+  border: solid thick var(--colorPrimary);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  width: 80%;
+  height: 80%;
+  left: 10%;
+  background-color: var(--colorTextSecondary);
+}
+@media (min-width: 768px) {
+  div.task {
+    width: 60%;
+    left: 20%;
+  }
+}
+@media (max-height: 480px) {
+  div.task {
+    height: 60%;
+  }
+}
+div.help {
+  left: 20%;
+  width: 60%;
+  height: auto;
+}
+p.helpText {
+  margin-bottom: 0.5rem;
+}
+
+textarea.txtTask {
+  width: 99%;
+  height: 92%;
+  resize: none;
+  overflow: auto;
+  border-color: var(--colorSecondary);
+}
+
+input[type="button"] {
+  padding: 0.25rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+div.buttons {
+  padding-right: 2rem;
+  text-align: right;
+}
+
+div.task {
+  border: thin solid var(--colorPrimary);
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+  width: 95%;
+  max-height: 10rem;
+  overflow: auto;
+  word-wrap: break-word;
+  cursor: pointer;
+}
+div.toDo {
+  background-color: var(--colorToDo);
+}
+div.ongoing {
+  background-color: var(--colorOngoing);
+}
+div.done {
+  background-color: var(--colorDone);
+}
