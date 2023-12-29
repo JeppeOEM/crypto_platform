@@ -128,9 +128,11 @@ function optimizer_params(sell_conds, suffix) {
 }
 
 async function build_indicator_inputs(data) {
+  //returns new array with parsed values
   indicators = data.map((indicator) => {
-    indicator = JSON.parse(indicator);
-
+    indicator = JSON.parse(indicator.settings);
+    //convert to numeric values
+    console.log(indicator, "indicator");
     for (let key in indicator) {
       if (indicator.hasOwnProperty(key)) {
         if (key === "talib") {
@@ -143,19 +145,21 @@ async function build_indicator_inputs(data) {
         }
       }
     }
+
     return indicator;
   });
 
   for (let i = 0; i < indicators.length; i++) {
+    console.log(indicators[i]["id"], "id");
     const form = await loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
     // form.submit();
   }
 }
 
-async function loadIndicator(indicatorValue, category, values = undefined) {
+async function loadIndicator(name, category, values = undefined) {
   // Create a new input field element
   const data = {
-    indicator: indicatorValue,
+    indicator: name,
     category: category,
   };
   console.log(values);
@@ -163,6 +167,7 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
   let indi_data = await postIndicatorData(`add_indicator`);
+  //gets values saved in indicator_strategies
   if (values) {
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -178,13 +183,13 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
     //asign default values
     indi_data = output;
   }
-
+  console.log(indi_data, "indi_data!!!!!!!!!!!!!!!");
   const name_indicator = indi_data[0][1];
   //remove name of indicator
   indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
-  var field = document.createElement("fieldset");
+  let field = document.createElement("fieldset");
   const legend = document.createElement("legend");
   legend.textContent = name_indicator;
   formContainer.appendChild(form);
@@ -194,7 +199,9 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
   form.addEventListener("submit", gogo);
   //form.customParam = form;
   for (let i = 0; i < indi_data.length; i++) {
+    //name type value = lenght float 14
     input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
+    console.log(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
   }
 
   const submitButton = document.createElement("input");
@@ -236,6 +243,29 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
 
     const responseData = await response.json();
     return responseData;
+  }
+}
+async function input_params(key, value, value, field) {
+  console.log(key, value, value, field, "WHAT THE ACTUAL FUCK");
+  if (value != "bool") {
+    const label = document.createElement("label");
+    label.innerText = key;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = key;
+    input.value = value;
+    field.appendChild(label);
+    field.appendChild(input);
+  } else {
+    const label2 = document.createElement("label");
+    label2.innerText = key;
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = key;
+    // checkbox.value = value;
+    checkbox.value = false;
+    field.appendChild(label2);
+    field.appendChild(checkbox);
   }
 }
 
@@ -455,28 +485,6 @@ async function backtest() {
 
   let response = await postJsonGetData(data, "backtest");
   document.getElementById("cond").textContent = JSON.stringify(response.message);
-}
-async function input_params(key, value, value, field) {
-  if (value != "bool") {
-    const label = document.createElement("label");
-    label.innerText = key;
-    const input = document.createElement("input");
-    input.type = "text";
-    input.name = key;
-    input.value = value;
-    field.appendChild(label);
-    field.appendChild(input);
-  } else {
-    const label2 = document.createElement("label");
-    label2.innerText = key;
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = key;
-    // checkbox.value = value;
-    checkbox.value = false;
-    field.appendChild(label2);
-    field.appendChild(checkbox);
-  }
 }
 
 // async function getJson(endpoint) {

@@ -14,6 +14,7 @@ from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
 import pickle
 import pandas as pd
+import copy
 # DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('blog.index') will both work,
@@ -27,7 +28,8 @@ def add_indicator(strategy_id):
     if request.method == 'POST':
         print(strategy_id)
         data = request.get_json()  # Get the JSON data from the request
-        indicator = data.get('indicator')  # Extract the 'indicator' value
+        print("indicator", data)
+        indicator = data.get('indicator')  # Extract the 'indicator' name
         category = data.get('category')
         indicator = indicator.capitalize()
         module_path = f"loke.trading_engine.indicators.{category}.{indicator}"
@@ -376,20 +378,35 @@ def init_strategy(id):
         print(id)
         db = get_db()
         indicators = db.execute(
-            'SELECT settings FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+            'SELECT settings, strategy_indicator_id FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
 
+        total_indicators_id = []
+        # print("teeeeest", indicators[1])
+        # print("teeeeest", indicators[0][0])
         # remove kind: name
+        # THIS IS FOR LOADING DATAFRAME NOT SEND TO FRONTEND
         for row in indicators:
             try:
-                # row 0 = settings
+                # row[0][1] = settings
                 data_dict = json.loads(row[0])
+                # copy object to avoid changing original
+
+                print(data_dict)
                 for key, value in data_dict.items():
-                    print(key, value)
                     if key != "kind":
                         data_dict[key] = int(value) if value.isdigit(
                         ) else float(value) if "." in value else value
+                # assign id from strategy_indicators to indicator
+                        # DANGER HERE
+                # data_dict['id'] = row[1]
+                # print("data_dict", data_dict)
+                data_dict_copy = copy.deepcopy(data_dict)
                 total_indicators.append(data_dict)
+                json_object = json.dumps(data_dict_copy, indent=4)
+                total_indicators_id.append(
+                    {"id": row[1], "settings": json_object})
+
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e}")
 
@@ -400,6 +417,7 @@ def init_strategy(id):
         name = data['name']
         description = data['description']
         s = Strategy(exchange, init_candles, symbol, name, description)
+        print("indicatorssssssssssssssss", total_indicators_id)
         s.addIndicators(total_indicators)
         df = s.create_strategy()
 
@@ -407,9 +425,9 @@ def init_strategy(id):
         cols = df.columns.to_list()
         print(cols)
         # keep kind: name to populate inputs
-        indicators_inputs = [row[0] for row in indicators]
-        print(indicators)
-        return jsonify({"cols": cols, "indicators": indicators_inputs})
+        print("indicators!!!!!!!!!!!!!!!!!", total_indicators_id)
+
+        return jsonify({"cols": cols, "indicators":  total_indicators_id})
 
 
 @bp.route('/<int:id>/condition', methods=['POST', 'GET'])
