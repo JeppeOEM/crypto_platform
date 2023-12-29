@@ -221,12 +221,16 @@ async function loadIndicator(name, category, values = undefined, form_id) {
 
   async function gogo(event) {
     event.preventDefault();
+    // remove "form" and get id
+    let form_id = this.id;
+    form_id = form_id.slice(5);
     // let formdata = event.currentTarget.customParam;
     const formData = new FormData(form);
     form_arr = [["kind", legend.innerText]];
     formData.forEach((value, key) => {
       form_arr.push([key, value]);
     });
+    form_arr.push(form_id);
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
     let indicators_data = await update_chart("init_strategy");

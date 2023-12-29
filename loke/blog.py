@@ -159,7 +159,7 @@ def get_post(id, check_author=True):
 @bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
 @login_required
 def convert_indicator(strategy_id):
-    print(strategy_id)
+    print(strategy_id, "DATAAAAAAA FORM ID")
     if request.method == 'POST':
         data = request.get_json()  # Get the JSON data from the request
         print(data)
