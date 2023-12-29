@@ -29,10 +29,6 @@ let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
 
-function showValue(value) {
-  alert("The value is: " + value);
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();
@@ -44,7 +40,7 @@ async function build_page() {
   remove_element("sell_cond2");
   build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   build_indicator_inputs(indicators_data.indicators);
-  build_buttons(["or", "&"], "compare", "button", "or_and_cond");
+  build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
   build_conditions();
 }
 

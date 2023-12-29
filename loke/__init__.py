@@ -10,9 +10,10 @@ from loke.database import db
 
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
-from . import auth
-from . import blog
-from . import ml
+from .endpoints import auth
+from .endpoints.strategy import blog
+from .machine_learning import markov
+from .endpoints.optimization import optimization
 
 from flask_caching import Cache
 
@@ -58,7 +59,8 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(blog.bp)
-    app.register_blueprint(ml.bp)
+    app.register_blueprint(optimization.bp)
+    app.register_blueprint(markov.bp)
     # index points to blog index as it no prefix is defined for the blueprint
     app.add_url_rule('/', endpoint='index')
 

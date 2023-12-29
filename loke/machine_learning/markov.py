@@ -8,8 +8,9 @@ from flask import (
 from hmmlearn.hmm import GaussianHMM
 import pandas as pd
 
-bp = Blueprint('ml', __name__)
+bp = Blueprint('markov', __name__)
 
+# A standart RSI 14 indicator Must be loaded to the dataframe 
 
 @bp.route('/markov', methods=('POST', 'GET'))
 def markov():
