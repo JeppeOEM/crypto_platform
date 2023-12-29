@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <head>
 
-  <title>{% block title %}{% endblock %} - Flaskr</title>¨
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='list.css') }}" />
+  <title>{% block title %}{% endblock %} - Flaskr</title>
+    {% block extra_code_head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
-  {% block extra_code_head %}{% endblock %}
-</head>
-<nav>
-  <h1>Flaskr</h1>
-  <ul>
-    {% if g.user %}
-    <li><span>{{ g.user['username'] }}</span></li>
-    <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
 
-    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-    <li>
-      <a href="{{ url_for('auth.login') }}">Log In</a>
-      {% endif %}
-    </li>
-  </ul>
-</nav>
+</head>
+<header>
+
+  <nav class="global_nav">
+    <h1>Flaskr</h1>
+    <ul>
+      {% if g.user %}
+      <li><span>{{ g.user['username'] }}</span></li>
+      <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
+      
+      <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+      <li>
+        <a href="{{ url_for('auth.login') }}">Log In</a>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+</header>
 <section class="content">
   <header>{% block header %}{% endblock %}</header>
   {% for message in get_flashed_messages() %}

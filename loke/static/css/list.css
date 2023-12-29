@@ -23,11 +23,6 @@ body {
   font-family: "Raleway", Arial, Helvetica, sans-serif;
 }
 
-header {
-  padding: 0.5rem 0 0.5rem 0.5rem;
-  color: var(--colorTextSecondary);
-  background-color: var(--colorPrimary);
-}
 header > h1 {
   text-indent: 2rem;
 }
@@ -96,11 +91,6 @@ a:hover {
   background-color: var(--colorTertiary);
 }
 
-.buttons {
-  display: flex;
-  padding: 10px;
-  justify-content: space-between;
-}
 .buttons a {
   margin-right: 10px;
 }

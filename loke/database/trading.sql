@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS exchanges;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS strategies;
 DROP TABLE IF EXISTS strategy_indicators;
+DROP TABLE IF EXISTS strategy_indicator_forms;
 DROP TABLE IF EXISTS sell_conditions;
 DROP TABLE IF EXISTS buy_conditions;
 DROP TABLE IF EXISTS backtest;
@@ -38,9 +39,16 @@ CREATE TABLE indicators (
     indicator_name VARCHAR(255) NOT NULL
 );
 -- Create the junction table 'strategy_indicators'
+CREATE TABLE strategy_indicator_forms (
+    form_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_strategy_id INT NOT NULL,
+    fk_user_id INTEGER NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE strategy_indicators (
     fk_strategy_id INT NOT NULL,
     fk_user_id INTEGER NOT NULL,
+    fk_form_id INTEGER,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     indicator_name VARCHAR(55) NOT NULL,
     settings VARCHAR(255) NOT NULL,

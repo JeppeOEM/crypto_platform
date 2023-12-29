@@ -1,18 +1,30 @@
 {% extends 'base.html' %} 
 {% block extra_code_head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}" />
     <script defer src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script>
 {% endblock %}
 
 {% block header %}
 
-<div class="flex-vertical">
-  <p>Id:<span id="strategy_id"> {{strategy['strategy_id']}}</span></p>
-  <h1>{% block title %}Edit "{{ strategy['strategy_name'] }}"
+<div class="horizontal space-between">
+
+  <h1>{% block title %}ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }}{% endblock %}</h1>
+  <div class="horizontal ">
+  <form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
+  </form>
+  <form action="{{ url_for('blog.truncate', id=strategy['strategy_id']) }}" method="post">
+    <input class="danger" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
+  </form>
+  </div>
 
 </div>
-{% endblock %}</h1>
+
+
+
 {% endblock %} {% block content %}
-<form method="post">
+<form class="hidden t" method="post">
   <label for="title"> Title</label>
   <input
     name="strategy_name"
@@ -22,8 +34,11 @@
   <label for="info">info</label>
   <textarea name="info" id="info">{{ request.form['info'] or strategy['info'] }}</textarea>
   <input type="submit" value="Save" />
+  <hr />
 </form>
-<hr />
+<div class="buttons">
+  <button id="update_strat_text">Edit </button>
+</div>
 
 {% for dict_item in indicators %}
     {% for key, value in dict_item.items() %}
@@ -36,14 +51,7 @@
 <!-- <div id="input-container"></div> -->
 <!-- indicator forms -->
 <div class="form-container" id="form-container"></div>
-<div class="horizontal">
-<form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
-  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
-</form>
-<form action="{{ url_for('blog.truncate', id=strategy['strategy_id']) }}" method="post">
-  <input class="danger" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
-</form>
-</div>
+
 
 <form class="preventDefault" action="/custom_endpoint" method="post">
     <input type="submit" value="Call Custom Endpoint">
