@@ -174,7 +174,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
   let indi_data = await postIndicatorData(`add_indicator`);
-  //gets values saved in indicator_strategies
+  //gets values saved in indicator_strategies otherwise default values from Indicator Classes
   if (values) {
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -187,10 +187,8 @@ async function loadIndicator(name, category, values = undefined, form_id) {
         }
       }
     }
-    //asign default values
     indi_data = output;
   }
-  console.log(indi_data, "indi_data!!!!!!!!!!!!!!!");
   const name_indicator = indi_data[0][1];
   //remove name of indicator
   indi_data = indi_data.slice(1);
@@ -208,9 +206,8 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   form.addEventListener("submit", gogo);
   //form.customParam = form;
   for (let i = 0; i < indi_data.length; i++) {
-    //name type value = lenght float 14
+    //name type value forexample: lenght float 14
     input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
-    console.log(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
   }
 
   const submitButton = document.createElement("input");
