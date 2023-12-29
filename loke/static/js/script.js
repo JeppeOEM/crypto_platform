@@ -1,3 +1,6 @@
+//Endpoints MUST NOT HAVE / to access URL id
+//postIndicatorData(`add_indicator`);
+
 class Field {
   constructor(field) {
     this.setField(field);
@@ -47,11 +50,7 @@ async function build_page() {
 
 async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
-  console.log("################################################################");
-  console.log("################################################################");
-  console.log("################################################################");
-  console.log(sell_conds);
-  console.log(buy_conds);
+
   remove_element("buy_cond2");
   remove_element("sell_cond2");
   insert_frontend(sell_conds, "sell_cond2");
@@ -128,7 +127,7 @@ function optimizer_params(sell_conds, suffix) {
   });
 }
 
-function build_indicator_inputs(data) {
+async function build_indicator_inputs(data) {
   indicators = data.map((indicator) => {
     indicator = JSON.parse(indicator);
 
@@ -148,7 +147,8 @@ function build_indicator_inputs(data) {
   });
 
   for (let i = 0; i < indicators.length; i++) {
-    loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
+    const form = await loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
+    // form.submit();
   }
 }
 
@@ -160,7 +160,9 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
   };
   console.log(values);
   let output = [];
-  let indi_data = await postJsonGetData(data, "/add_indicator");
+  const strat_id = document.getElementById("strategy_id");
+  const id = strat_id.dataset.info;
+  let indi_data = await postIndicatorData(`add_indicator`);
   if (values) {
     for (const key in values) {
       if (values.hasOwnProperty(key)) {
@@ -215,6 +217,26 @@ async function loadIndicator(indicatorValue, category, values = undefined) {
   }
 
   // var container = document.getElementById("input-container");
+  async function postIndicatorData(endpoint, method = "POST") {
+    // Create an options object for the fetch request
+    const options = {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    // Make the POST request using the fetch API
+    let response = await fetch(endpoint, options);
+
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  }
 }
 
 // function init_indicators(indicators) {

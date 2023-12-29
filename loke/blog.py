@@ -21,10 +21,11 @@ import pandas as pd
 bp = Blueprint('blog', __name__)
 
 
-@bp.route('/add_indicator', methods=('POST', 'GET'))
+@bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
 @login_required
-def add_indicator():
+def add_indicator(strategy_id):
     if request.method == 'POST':
+        print(strategy_id)
         data = request.get_json()  # Get the JSON data from the request
         indicator = data.get('indicator')  # Extract the 'indicator' value
         category = data.get('category')
@@ -36,6 +37,15 @@ def add_indicator():
         indicator = obj.type_dict()
         indicator = jsonify(indicator)
         print(indicator)
+        # db = get_db()
+
+        # db.execute(
+        #         'INSERT INTO strategy_indicator_forms(fk_user_id, fk_exchange_id)'
+        #         ' VALUES (?, ?)',
+        #         (g.user['id'], strategy_id)
+        # )
+        # db.commit()
+
         return indicator
 
 
@@ -142,14 +152,6 @@ def get_post(id, check_author=True):
         abort(403)
 
     return post
-
-
-# @bp.route('/<int:strategy_id>/get_settings', methods=('GET',))
-# @login_required
-# def convert_indicator(strategy_id):
-#     db = get_db()
-
-#     return render_template('blog/updatestrat.html', strategy=strategy, indicators=indicators)
 
 
 @bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
@@ -364,6 +366,8 @@ def optimize(id):
     # columns = s.column_dict()
     resp = {"message": 'optimized'}
     return resp
+
+# Is called when a indicator is submitted and loads indicators to the dataframe
 
 
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])

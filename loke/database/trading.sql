@@ -46,6 +46,7 @@ CREATE TABLE strategy_indicator_forms (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE strategy_indicators (
+    strategy_indicator_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_strategy_id INT NOT NULL,
     fk_user_id INTEGER NOT NULL,
     fk_form_id INTEGER,
