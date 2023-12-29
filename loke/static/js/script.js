@@ -223,7 +223,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     event.preventDefault();
     // remove "form" and get id
     let form_id = this.id;
-    form_id = form_id.slice(5);
+    form_id = form_id.slice(4);
     // let formdata = event.currentTarget.customParam;
     const formData = new FormData(form);
     form_arr = [["kind", legend.innerText]];

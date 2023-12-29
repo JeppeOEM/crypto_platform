@@ -15,7 +15,7 @@ from loke.trading_engine.process_conds import process_conds
 import pickle
 import pandas as pd
 import copy
-# DOES NOT HAVE URL PREFIX SO INDEX = / CREATE = /CREATE
+# DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('blog.index') will both work,
 # generating the same / URL either way.
@@ -26,9 +26,7 @@ bp = Blueprint('blog', __name__)
 @login_required
 def add_indicator(strategy_id):
     if request.method == 'POST':
-        print(strategy_id)
         data = request.get_json()  # Get the JSON data from the request
-        print("indicator", data)
         indicator = data.get('indicator')  # Extract the 'indicator' name
         category = data.get('category')
         indicator = indicator.capitalize()
@@ -38,7 +36,6 @@ def add_indicator(strategy_id):
         obj = Obj()
         indicator = obj.type_dict()
         indicator = jsonify(indicator)
-        print(indicator)
         # db = get_db()
 
         # db.execute(
@@ -159,21 +156,23 @@ def get_post(id, check_author=True):
 @bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
 @login_required
 def convert_indicator(strategy_id):
-    print(strategy_id, "DATAAAAAAA FORM ID")
+
     if request.method == 'POST':
-        data = request.get_json()  # Get the JSON data from the request
-        print(data)
+
+        data = request.get_json()
+
+        # remove id from data
+        strategy_indicator_id = data.pop()
+        print(strategy_indicator_id, "FORM ID",
+              g.user['id'], "USER ID", strategy_id, "STRAT ID")
         indicator = {}
         for item in data:
             key, value = item
             indicator[key] = value
-        print(indicator)
         json_dict = json.dumps(indicator)
         db = get_db()
-        # SELECT 1 means it wont return the found row but 1, as we dont need the row
+        # SELECT 1 means it wont return the found row, but 1, as we dont need the row
         # Check if the indicator with the given settings already exists
-        print("THIS BOY", )
-
         existing_indicator = db.execute(
             'SELECT 1 FROM strategy_indicators '
             'WHERE fk_strategy_id = ? AND fk_user_id = ? AND settings = ? AND indicator_name = ?',
@@ -184,16 +183,34 @@ def convert_indicator(strategy_id):
             return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
 
         try:
-            # Insert the indicator if it doesn't exist
-            db.execute(
-                'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name) VALUES (?, ?, ?, ?)',
-                (strategy_id, g.user['id'], json_dict, indicator['kind'])
-            )
-            db.commit()
-            return jsonify({'message': 'Indicator successfully inserted'})
+            # Check if the row with the specified strategy_indicator_id already exists
+            existing_row = db.execute(
+                'SELECT * FROM strategy_indicators WHERE strategy_indicator_id = ? AND fk_user_id = ? AND fk_strategy_id = ?',
+                (strategy_indicator_id, g.user['id'], strategy_id)
+            ).fetchone()
+            print(existing_row, "EXISTING ROW")
+            if existing_row:
+                # If the row exists, update it
+                db.execute(
+                    'UPDATE strategy_indicators SET fk_strategy_id=?, fk_user_id=?, settings=?, indicator_name=? WHERE strategy_indicator_id=?',
+                    (strategy_id, g.user['id'], json_dict,
+                     indicator['kind'], strategy_indicator_id)
+                )
+                db.commit()
+                return jsonify({'message': 'Indicator successfully updated'}), 200
+            else:
+                # If the row doesn't exist, insert a new one
+                db.execute(
+                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name) VALUES (?, ?, ?, ?)',
+                    (strategy_id, g.user['id'], json_dict, indicator['kind'])
+                )
+                db.commit()
+                return jsonify({'message': 'Indicator successfully inserted'})
+
         except Exception as e:
             # Handle database-related errors
             return jsonify({'error': str(e)}), 500
+
 
 # converts to int automatically
 
@@ -202,7 +219,6 @@ def convert_indicator(strategy_id):
 @login_required
 def stratupdate(id):
     strategy = get_strategy(id)
-    print("Strategy Data:", strategy)
     if request.method == 'POST':
 
         strategy_name = request.form['strategy_name']
@@ -273,11 +289,7 @@ def load_conditions(id):
         'buy_conds': buy_conds,
         'sell_conds': sell_conds
     }
-    # result_dict = {
-    #     'buy_conds': "buy_conds",
-    #     'sell_conds': "sell_conds"
-    # }
-    print(result_dict)
+
     return jsonify(result_dict)
 
 
@@ -417,15 +429,13 @@ def init_strategy(id):
         name = data['name']
         description = data['description']
         s = Strategy(exchange, init_candles, symbol, name, description)
-        print("indicatorssssssssssssssss", total_indicators_id)
+
         s.addIndicators(total_indicators)
         df = s.create_strategy()
 
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
-        print(cols)
         # keep kind: name to populate inputs
-        print("indicators!!!!!!!!!!!!!!!!!", total_indicators_id)
 
         return jsonify({"cols": cols, "indicators":  total_indicators_id})
 
