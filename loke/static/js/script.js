@@ -130,6 +130,7 @@ function optimizer_params(sell_conds, suffix) {
 async function build_indicator_inputs(data) {
   //returns new array with parsed values
   indicators = data.map((indicator) => {
+    let id = JSON.parse(indicator.id);
     indicator = JSON.parse(indicator.settings);
     //convert to numeric values
     console.log(indicator, "indicator");
@@ -146,17 +147,23 @@ async function build_indicator_inputs(data) {
       }
     }
 
-    return indicator;
+    return { id, indicator };
   });
-
+  console.log(indicators, "indicators!!!!!!!!!");
+  console.log(indicators.length, "indicators lrrrrrrrrrrrrrr!!!!!!!!!");
   for (let i = 0; i < indicators.length; i++) {
-    console.log(indicators[i]["id"], "id");
-    const form = await loadIndicator(indicators[i]["kind"], "momentum", indicators[i]);
+    console.log(indicators[i].indicator);
+    const form = await loadIndicator(
+      indicators[i].indicator["kind"],
+      "momentum",
+      indicators[i].indicator,
+      indicators[i].id
+    );
     // form.submit();
   }
 }
 
-async function loadIndicator(name, category, values = undefined) {
+async function loadIndicator(name, category, values = undefined, form_id) {
   // Create a new input field element
   const data = {
     indicator: name,
@@ -189,6 +196,8 @@ async function loadIndicator(name, category, values = undefined) {
   indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
+  form.classList.add("indicator_form");
+  form.id = `form${form_id}`;
   let field = document.createElement("fieldset");
   const legend = document.createElement("legend");
   legend.textContent = name_indicator;
@@ -220,7 +229,9 @@ async function loadIndicator(name, category, values = undefined) {
     });
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
-    await update_chart("init_strategy");
+    let indicators_data = await update_chart("init_strategy");
+    remove_element("indicator_form");
+    build_indicator_inputs(indicators_data.indicators);
   }
 
   // var container = document.getElementById("input-container");
