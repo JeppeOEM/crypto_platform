@@ -17,11 +17,13 @@ import pandas as pd
 import copy
 # DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
-# url so that url_for('index') or url_for('blog.index') will both work,
+# url so that url_for('index') or url_for('strategy.index') will both work,
 # generating the same / URL either way.
-bp = Blueprint('optimization', __name__)
-@bp.route('/<int:id>/optimizer_params', methods=['POST'])
 
+bp = Blueprint('optimization', __name__)
+
+
+@bp.route('/<int:id>/optimizer_params', methods=['POST'])
 def optimizer_params(id):
     db = get_db()
     data = request.get_json()
@@ -83,3 +85,28 @@ def optimize(id):
     # columns = s.column_dict()
     resp = {"message": 'optimized'}
     return resp
+
+
+@bp.route('/<int:id>/backtest', methods=['POST'])
+def backtest(id):
+    print(id)
+    data = request.get_json()
+    name = data['name']
+    buy, sell = get_conds(id)
+    print(buy, sell)
+    # selected_conds_buy = data['conds_buy']
+    buy[0].insert(0, "b")
+    # selected_conds_sell = data['conds_sell']
+    sell[0].insert(0, "s")
+    df = pd.read_pickle(f"data/pickles/{name}.pkl")
+
+    df = process_conds(df, buy, sell)
+    # df_bytes = pickle.dumps(df)
+    # cache.set('df_cache_key', df_bytes)
+    df.to_pickle(f"data/pickles/{name}.pkl")
+
+    print("BACK HIT")
+    bt = Backtest()
+    result = bt.run(df)
+    json_string = {"message": f'{result}'}
+    return json_string

@@ -11,10 +11,10 @@
 
   <h1 id="strategy_id" data-id="{{strategy['strategy_id']}}" >{% block title %}ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }}{% endblock %}</h1>
   <div class="horizontal ">
-  <form action="{{ url_for('blog.deletestrat', id=strategy['strategy_id']) }}" method="post">
+  <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
     <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
   </form>
-  <form action="{{ url_for('blog.truncate', id=strategy['strategy_id']) }}" method="post">
+  <form action="{{ url_for('strategy.truncate', id=strategy['strategy_id']) }}" method="post">
     <input class="danger" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
   </form>
   </div>
