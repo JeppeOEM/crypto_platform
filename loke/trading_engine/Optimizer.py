@@ -1,7 +1,7 @@
 import random
 import typing
 import copy
-from loke.models.models import BacktestResult
+from loke.models.BacktestResult import BacktestResult
 from loke.trading_engine.process_conds import create_conds
 from loke.trading_engine.optimize_backtest import optimize_backtest
 

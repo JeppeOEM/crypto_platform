@@ -113,3 +113,12 @@ CREATE TABLE buy_optimization (
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
+
+CREATE TABLE optimization_results (
+    optimization_result_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    result TEXT NOT NULL,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id)
+);

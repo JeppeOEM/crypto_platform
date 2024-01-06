@@ -64,8 +64,8 @@ def optimizer_params(id):
         return jsonify({'error': str(e)}), 500
 
 
-@bp.route('/<int:id>/optimize', methods=['POST'])
-def optimize(id):
+@bp.route('/<int:strategy_id>/optimize', methods=['POST'])
+def optimize(strategy_id):
     data = request.get_json()
     # data = request.data
     exchange = data['exchange']
@@ -80,11 +80,42 @@ def optimize(id):
 
     # df = s.create_strategy()
     df = pd.read_pickle(f"data/pickles/{name}.pkl")
-    call_optimizer(df, 5, 5, id)
+    # params: df, pop_size, generations, strategy_id
+    optimization_result = call_optimizer(df, 5, 5, strategy_id)
+    result_json = json.dumps(optimization_result)
+    db = get_db()
+    try:
+        db.execute(
+            'INSERT INTO optimization_results'
+            '(fk_strategy_id, fk_user_id, result) VALUES (?, ?, ?)',
+            (strategy_id, g.user['id'], result_json)
+        )
+        db.commit()
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+    print(optimization_result)
 
     # columns = s.column_dict()
-    resp = {"message": 'optimized'}
+    resp = {"message": "optimization complete"}
     return resp
+
+
+@bp.route('/<int:strategy_id>/optimization_results', methods=['POST'])
+def optimization_results(strategy_id):
+
+    db = get_db()
+    rows = db.execute(
+        'SELECT * FROM optimization_results '
+        'WHERE fk_strategy_id = ? AND fk_user_id = ? '
+        'ORDER BY optimization_result_id DESC',
+        (strategy_id, g.user['id'])
+    ).fetchall()
+
+    result_list = [dict(row) for row in rows]
+
+    return jsonify(result_list), 200
 
 
 @bp.route('/<int:id>/backtest', methods=['POST'])

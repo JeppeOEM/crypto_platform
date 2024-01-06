@@ -12,11 +12,15 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from .endpoints import auth
 from .endpoints.strategy import strategy
-from .machine_learning import markov
+from .endpoints.machine_learning import markov
 from .endpoints.optimization import optimization
 from .endpoints.optimization import conditions
 
 from flask_caching import Cache
+
+# General Info:
+# Dataframe column name can be sensitive to change (_BUY / _SELL)
+
 
 cache = Cache()
 

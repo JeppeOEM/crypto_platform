@@ -42,6 +42,7 @@ async function build_page() {
   build_indicator_inputs(indicators_data.indicators);
   build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
   build_conditions();
+  build_optimization_results();
 }
 
 async function build_conditions() {
@@ -79,7 +80,6 @@ function which_side(inputString) {
 function load_params() {
   let arr = [];
   rows = document.querySelectorAll(".param");
-  console.log(rows);
   rows.forEach((row) => {
     let indi = row.querySelector(".indicator");
     side = which_side(indi.innerText);
@@ -90,7 +90,6 @@ function load_params() {
 
     arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
   });
-  console.log(arr);
   data.optimizer_params = arr;
   data.params_class = "indicator";
 
@@ -99,20 +98,16 @@ function load_params() {
 
 function optimizer_params(sell_conds, suffix) {
   const title = document.querySelector("title");
-  console.log(sell_conds);
   s_conds = [];
   sell_conds.forEach((cond) => {
     cond = JSON.parse(cond);
     s_conds.push(cond);
   });
-  console.log(s_conds);
 
   const tbody = document.querySelector("tbody");
   const opti_params = document.getElementById("optimize_params");
   s_conds.forEach((cond) => {
     cond.forEach((val) => {
-      console.log(val[0]);
-      console.log(val[0]["ind"]);
       const clone = opti_params.content.cloneNode(true);
       clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
       clone.querySelector(".operator").textContent = val[1]["cond"];
@@ -129,7 +124,6 @@ async function build_indicator_inputs(data) {
     let id = JSON.parse(indicator.id);
     indicator = JSON.parse(indicator.settings);
     //convert to numeric values
-    console.log(indicator, "indicator");
     for (let key in indicator) {
       if (indicator.hasOwnProperty(key)) {
         if (key === "talib") {
@@ -145,10 +139,8 @@ async function build_indicator_inputs(data) {
 
     return { id, indicator };
   });
-  console.log(indicators, "indicators!!!!!!!!!");
-  console.log(indicators.length, "indicators lrrrrrrrrrrrrrr!!!!!!!!!");
+
   for (let i = 0; i < indicators.length; i++) {
-    console.log(indicators[i].indicator);
     const form = await loadIndicator(
       indicators[i].indicator["kind"],
       "momentum",
@@ -165,7 +157,6 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     indicator: name,
     category: category,
   };
-  console.log(values);
   let output = [];
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
@@ -318,7 +309,6 @@ async function getJson(endpoint) {
   }
 
   const responseData = await response.json();
-  console.log(responseData, "DDDDDDDD");
   return responseData;
 }
 
@@ -476,8 +466,31 @@ function show_string(array_objs) {
 }
 
 async function optimize() {
-  let response = await postJsonGetData(data, "optimize");
+  const response = await postJsonGetData(data, "optimize");
   console.log(response);
+}
+
+async function build_optimization_results() {
+  const response = await postJsonGetData(data, "optimization_results");
+  const resultList = document.querySelector(".opti_results");
+
+  response.forEach((opti) => {
+    let result = JSON.parse(opti.result);
+    for (let i = 0; i < result.length; i++) {
+      // Convert python math Infinity to "Infinity"
+      result[i] = result[i].replace("Infinity", '"Infinity"');
+    }
+    const parsed = result.map((res) => {
+      res = JSON.parse(res);
+      return res;
+    });
+    console.log(parsed, "parsedddd");
+    const listItem = document.createElement("li");
+    listItem.textContent = `PNL: ${parsed[0]["pnl"]}% max drawdown: ${
+      parsed[0]["max_drawdown"]
+    }% params: ${JSON.stringify(parsed[0]["params"])}`;
+    resultList.appendChild(listItem);
+  });
 }
 
 async function backtest() {

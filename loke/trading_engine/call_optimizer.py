@@ -1,10 +1,10 @@
 from loke.trading_engine.Optimizer import Nsga2
 from loke.trading_engine.process_conds import create_conds
+from flask import jsonify
 
 
 def call_optimizer(df, pop_size, generations, id):
     conditions, params_data = create_conds(id)
-
     generations = int(generations)
     nsga2 = Nsga2(df, pop_size, id, params_data)
     p_population = nsga2.create_initial_population()
@@ -36,5 +36,13 @@ def call_optimizer(df, pop_size, generations, id):
 
     print("\n")
 
-    for individual in p_population:
-        print(individual)
+    # prints final result by calling __repr__ on BacktestResult Class
+    optimization_result = []
+
+    for backtestClass in p_population:
+        print(backtestClass)
+        # return as serialized json
+        json = backtestClass.return_result()
+        optimization_result.append(json)
+
+    return optimization_result

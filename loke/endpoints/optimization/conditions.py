@@ -110,7 +110,7 @@ def condition(id):
                 db.commit()
                 return jsonify({'message': 'condition saved to database'})
             except Exception as e:
-                # Handle database-related errors
+
                 return jsonify({'error': str(e)}), 500
 
 # CREATE ROUTE NAME

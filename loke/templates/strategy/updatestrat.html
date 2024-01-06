@@ -39,6 +39,10 @@
 <div class="buttons">
   <button id="update_strat_text">Edit </button>
 </div>
+<!-- NOT SURE IF WORKING -->
+<div class="buttons">
+  <button id="save_edit_db">Edit </button>
+</div>
 
 {% for dict_item in indicators %}
     {% for key, value in dict_item.items() %}
@@ -79,6 +83,21 @@
      <button onclick="save_cond_sell()" id="save_cond_sell">Save condition sell</button>
      <button onclick="backtest()" id="backtest">Save backtest</button>
      <button onclick="optimize()" id="optimize">Optimize</button>
+               {% for dict_item in indicators %}
+              {% for key, value in dict_item.items() %}
+                  {% if key == "kind" %} 
+                  <!-- will trigger update_chart function in script.js -->
+                  <button onclick="loadIndicator('{{ value }}','momentum')" >{{value}}</button>
+                  {% endif %}
+              {% endfor %} 
+          {% endfor %}
+                    <!-- insert comparison buttons  -->
+        <div id="compare"></div> 
+        <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
+        <div id="or_and"></div> 
+          <label for="value_cond">value</label>
+        <input id="value_cond" type="number">
+        <button onclick="value_cond()" id="value_cond">Add value</button>
      <span id="backtest_result"></span>
      <h2>sell</h2>
      <ul id="sell_conds"></ul>
@@ -137,21 +156,7 @@
         </main>
         <div class="currentTask modal">
           <textarea class="txtTask"></textarea><br />
-          {% for dict_item in indicators %}
-              {% for key, value in dict_item.items() %}
-                  {% if key == "kind" %} 
-                  <!-- will trigger update_chart function in script.js -->
-                  <button onclick="loadIndicator('{{ value }}','momentum')" >{{value}}</button>
-                  {% endif %}
-              {% endfor %} 
-          {% endfor %}
-                    <!-- insert comparison buttons  -->
-        <div id="compare"></div> 
-        <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
-        <div id="or_and"></div> 
-          <label for="value_cond">value</label>
-        <input id="value_cond" type="number">
-        <button onclick="value_cond()" id="value_cond">Add value</button>
+
           
           <div class="buttons">
             <input type="button" class="btnOk" value="Add" />
@@ -171,6 +176,10 @@
         </div>
       </div>
     </div>
+    <!-- insert optimization results here -->
+    <ul class="opti_results">
+
+    </ul>
     </main>
    </div>
 
