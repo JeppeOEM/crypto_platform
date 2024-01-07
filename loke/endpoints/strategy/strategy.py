@@ -162,8 +162,10 @@ def createstrat():
                 (strategy_name, info, g.user['id'], exchange)
             )
             db.commit()
+
+            # Get the ID of the last inserted row
+
             return redirect(url_for('strategy.index'))
-            cur = db.execute('SELECT COUNT(*) FROM strategies')
 
     if request.method == 'GET':
         ndicators = get_indicators

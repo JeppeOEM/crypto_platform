@@ -360,16 +360,17 @@ class CondController {
 }
 
 const condController = new CondController();
-const taskManager1 = condController.createCondManager("conditions_interface_buy");
-const taskManager2 = condController.createCondManager("conditions_interface_sell");
-condController.addCond("conditions_interface_buy", "test", "toDo");
+const taskManager1 = condController.createCondManager("buy_cond_list1");
+const taskManager2 = condController.createCondManager("sell_cond_list2");
+condController.addCond("buy_cond_list1", "test", "toDo");
 
 document.querySelector("#new_todo_buy").addEventListener("click", () => {
-  createList("buy", "conditions_interface_buy");
+  //side and element to CLONE
+  createList("buy", "buy_cond_list1");
 });
 
 document.querySelector("#new_todo_sell").addEventListener("click", () => {
-  createList("sell", "conditions_interface_sell");
+  createList("sell", "sell_cond_list2");
 });
 
 async function createList(side, element) {

@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS buy_conditions;
 DROP TABLE IF EXISTS backtest;
 DROP TABLE IF EXISTS sell_optimization;
 DROP TABLE IF EXISTS buy_optimization;
+DROP TABLE IF EXISTS sell_condition_lists;
+DROP TABLE IF EXISTS buy_condition_lists;
 PRAGMA foreign_keys = ON;
 -- Create the 'user' table
 CREATE TABLE user (
@@ -64,7 +66,8 @@ CREATE TABLE sell_conditions (
     fk_strategy_id INT NOT NULL,
     sell_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
-    FOREIGN KEY (fk_user_id) REFERENCES users(user_id),
+    list_row INT,
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
 CREATE TABLE buy_conditions (
@@ -74,7 +77,48 @@ CREATE TABLE buy_conditions (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     buy_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
-    FOREIGN KEY (fk_user_id) REFERENCES users(user_id),
+    list_row INT,
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TABLE sell_list_junction (
+    id INTEGER PRIMARY KEY,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    fk_sell_list_id INTEGER,
+    fk_sell_conditions_id INTEGER,
+    FOREIGN KEY (fk_sell_list_id) REFERENCES sell_condition_lists(sell_list_id),
+    FOREIGN KEY (fk_sell_conditions_id) REFERENCES sell_conditions(sell_conditions_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TABLE buy_list_junction (
+    id INTEGER PRIMARY KEY,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    fk_buy_list_id INTEGER,
+    fk_buy_conditions_id INTEGER,
+    FOREIGN KEY (fk_buy_list_id) REFERENCES buy_condition_lists(buy_list_id),
+    FOREIGN KEY (fk_buy_conditions_id) REFERENCES buy_conditions(buy_conditions_id),
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TABLE sell_condition_lists (
+    sell_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    frontend_id INT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TABLE buy_condition_lists (
+    buy_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    frontend_id INT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
 CREATE TABLE backtest (
@@ -113,7 +157,6 @@ CREATE TABLE buy_optimization (
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );
-
 CREATE TABLE optimization_results (
     optimization_result_id INTEGER PRIMARY KEY AUTOINCREMENT,
     result TEXT NOT NULL,
