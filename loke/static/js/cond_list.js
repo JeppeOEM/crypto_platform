@@ -44,11 +44,9 @@ class TaskManager {
     this.TodoContent.querySelector(".toDoList").addEventListener("drop", (e) => this.dropTask(e, "toDo"));
     this.TodoContent.querySelector(".ongoingList").addEventListener("drop", (e) => this.dropTask(e, "ongoing"));
     this.TodoContent.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
-
-    this.insertTaskInColumn("Task 1", "done");
   }
 
-  insertTaskInColumn(text, column) {
+  insert_cond(text, column) {
     const task = document.createElement("div");
     const newID = parseInt(this.TodoContent.querySelector(".currentTask").getAttribute("lastid")) + 1;
 
@@ -325,9 +323,10 @@ class TaskManager {
   // }
 }
 
-class TaskManagerHandler {
+class CondController {
   constructor() {
     this.taskManagers = [];
+    this.obj = {};
     //ensure incrementing id
     this.countArray = [];
   }
@@ -335,20 +334,35 @@ class TaskManagerHandler {
     return this.countArray.length;
   }
 
-  createTaskManager(identifier) {
+  createCondManager(identifier) {
     this.identifier = identifier;
     console.log(this.identifier);
+
     const taskManager = new TaskManager(this.identifier);
     this.taskManagers.push(taskManager);
+
+    // Assign the TaskManager instance to this.obj using the identifier as the key
+    this.obj[this.identifier] = taskManager;
+
     // just pushing something of no value
     this.countArray.push(0);
+
     return taskManager;
+  }
+
+  addCond(identifier, text, column) {
+    this.identifier = identifier;
+    this.text = text;
+    this.column = column;
+    const current_cond_list = this.obj[this.identifier];
+    current_cond_list.insert_cond(this.text, this.column);
   }
 }
 
-const taskManagerHandler = new TaskManagerHandler();
-const taskManager1 = taskManagerHandler.createTaskManager("conditions_interface_buy");
-const taskManager2 = taskManagerHandler.createTaskManager("conditions_interface_sell");
+const condController = new CondController();
+const taskManager1 = condController.createCondManager("conditions_interface_buy");
+const taskManager2 = condController.createCondManager("conditions_interface_sell");
+condController.addCond("conditions_interface_buy", "test", "toDo");
 
 document.querySelector("#new_todo_buy").addEventListener("click", () => {
   createList("buy", "conditions_interface_buy");
@@ -361,7 +375,8 @@ document.querySelector("#new_todo_sell").addEventListener("click", () => {
 async function createList(side, element) {
   const newId = await newList();
   console.log(newId);
-  const taskManager = taskManagerHandler.createTaskManager(newId);
+  condController.createCondManager(newId);
+
   async function newList() {
     const cloneContainer = document.querySelector(`.clone_${side}`);
     const clone = cloneContainer.cloneNode(true);
@@ -372,12 +387,36 @@ async function createList(side, element) {
     });
 
     const todoContent = clone.querySelector(`.${element}`);
-    const newId = "todoContent" + (taskManagerHandler.count() + 1);
+    console.log(todoContent, "todoContent");
+    const newId = "todoContent" + (condController.count() + 1);
     todoContent.classList.add(newId);
     console.log(newId);
 
     // Create TaskManager after updating the id
     cloneContainer.parentNode.appendChild(clone);
     return newId;
+  }
+}
+
+document.getElementById("toggleButton").addEventListener("click", toggleConditions);
+
+function toggleConditions() {
+  const buyToggle = document.querySelector(".buy_toggle");
+  const sellToggle = document.querySelector(".sell_toggle");
+
+  const button = document.getElementById("toggleButton");
+
+  if (buyToggle.classList.contains("hidden")) {
+    button.innerText = "Hide Sell Conditions";
+    buyToggle.classList.remove("hidden");
+    buyToggle.classList.add("block");
+    sellToggle.classList.remove("block");
+    sellToggle.classList.add("hidden");
+  } else {
+    button.innerText = "Hide Buy Conditions";
+    buyToggle.classList.remove("block");
+    buyToggle.classList.add("hidden");
+    sellToggle.classList.remove("hidden");
+    sellToggle.classList.add("block");
   }
 }

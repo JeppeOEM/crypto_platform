@@ -175,3 +175,11 @@ header .action {
 .form-container .submitButton {
   margin-left: auto;
 }
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: none;
+}

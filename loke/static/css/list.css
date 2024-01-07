@@ -11,7 +11,32 @@
   --colorDone: lightgreen;
   --imgDelete: url(../img/trash.png);
 }
+#toggleButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
+#toggleContainer {
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  max-height: 200px; /* Set a default max height */
+}
+
+#buyConditions {
+  display: none;
+}
+
+#sellConditions {
+  display: block;
+}
 .form-container {
   max-height: 250px;
   overflow: auto;

@@ -2,7 +2,7 @@
 
 {% block extra_code_head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}" />
-    <script defer src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
+
     <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script>
 {% endblock %}
 
@@ -150,7 +150,14 @@
 
 <button onclick="load_params()">load params</button>
 
-  <div class="mega">
+<button id="toggleButton" onclick="toggleConditions()">Hide Sell Conditions</button>
+
+
+
+  <div  class="mega">
+    <div class="buy_toggle">
+
+
     <header>
       <h1>Buy conditions</h1>
         <a class="bluebtn" id="new_todo_buy">New list</a>
@@ -210,6 +217,10 @@
         </div>
       </div>
     </div>
+        </div>
+        <div class="sell_toggle">
+
+
       <header>
         <h1>Sell conditions</h1>
           <a class="bluebtn" id="new_todo_sell">New list</a>
@@ -269,6 +280,7 @@
           <ul class="opti_results"></ul>
           </div>
       </div>
+              </div>
       <div className='chart-container'>
       <h2>hello</h2>
       <div class="chart"></div>
