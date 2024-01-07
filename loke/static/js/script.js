@@ -255,8 +255,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     return responseData;
   }
 }
-async function input_params(key, value, value, field) {
-  console.log(key, value, value, field, "WHAT THE ACTUAL FUCK");
+async function input_params(key, value, type, field) {
   if (value != "bool") {
     const label = document.createElement("label");
     label.innerText = key;

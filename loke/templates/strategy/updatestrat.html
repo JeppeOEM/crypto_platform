@@ -150,69 +150,129 @@
 
 <button onclick="load_params()">load params</button>
 
-  <div>
+  <div class="mega">
     <header>
-      <h1>To Do List</h1>
-        <a class="bluebtn" id="new_todo">New list</a>
-
+      <h1>Buy conditions</h1>
+        <a class="bluebtn" id="new_todo_buy">New list</a>
     </header>
     <div class="flex_wrap">
 
 
-      <div class="clone flex_basis25">
-      <div class="contentWrapper">
-        <div>
-          <main class="listContent">
-            <div class="flex_horizontal space_between">
-              <a class="showHelp bluebtn">Hyperopt settings</a>
-              <a class="addTask bluebtn">Add Condition</a>
+        <div class="clone_buy flex_basis25">
+        <div class="conditions_interface_buy">
+          <div>
+            <main class="listContent">
+              <div class="flex_horizontal space_between">
+                <a class="showHelp bluebtn">Hyperopt settings</a>
+                <a class="addTask bluebtn">Add Condition</a>
+              </div>
+
+              <div class="toDoList listColumn">
+                <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
+              </div>
+              <div class="binder">
+                <select name="cond_bond" id="cond_bind">
+                  <option value="and">AND</option>
+                  <option value="or">OR</option>
+                </select>
+              </div>
+              <div class="ongoingList listColumn"></div>
+              <div class="binder">            
+                <select name="cond_bond" id="cond_bind">
+                  <option value="and">AND</option>
+                  <option value="or">OR</option>
+                </select></div>
+              <div class="doneList listColumn"></div>
+
+            </main>
+            
+            <div class="currentTask modal">
+              <textarea class="txtTask"></textarea><br />
+
+              <div class="flex_horizontal">
+                  <input type="button" class="btnOk bluebtn mr10" value="Add" />
+                  <input type="button" class="btnCancel bluebtn" value="Cancel" />
+              </div>
+
             </div>
 
-            <div class="toDoList listColumn">
-              <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div>
+            <div class="help modal">
+              <p class="helpText">
+                Add a new "to do" task by pressing the plus ("+") button.<br />
+                Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
+              </p>
+                <input type="button" class="btnClose" value="Close" />
             </div>
-            <div class="binder">
-              <select name="cond_bond" id="cond_bind">
-                <option value="and">AND</option>
-                <option value="or">OR</option>
-              </select>
-            </div>
-            <div class="ongoingList listColumn"></div>
-            <div class="binder">            
-              <select name="cond_bond" id="cond_bind">
-                <option value="and">AND</option>
-                <option value="or">OR</option>
-              </select></div>
-            <div class="doneList listColumn"></div>
-
-          </main>
-          <div class="currentTask modal">
-            <textarea class="txtTask"></textarea><br />
-
-            <div class="flex_horizontal">
-                <input type="button" class="btnOk bluebtn mr10" value="Add" />
-                <input type="button" class="btnCancel bluebtn" value="Cancel" />
-            </div>
-
           </div>
 
-          <div class="help modal">
-            <p class="helpText">
-              Add a new "to do" task by pressing the plus ("+") button.<br />
-              Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
-            </p>
-              <input type="button" class="btnClose" value="Close" />
-          </div>
+        <!-- insert optimization results here -->
+        <ul class="opti_results"></ul>
         </div>
       </div>
-      <!-- insert optimization results here -->
-      <ul class="opti_results"></ul>
-      </div>
     </div>
-    <div className='chart-container'>
-    <h2>hello</h2>
-    <div class="chart"></div>
-  </div>
+      <header>
+        <h1>Sell conditions</h1>
+          <a class="bluebtn" id="new_todo_sell">New list</a>
+      </header>
+      <div class="flex_wrap">
+
+
+          <div class="clone_sell flex_basis25">
+
+          <div class="conditions_interface_sell">
+            <div>
+              <main class="listContent">
+                <div class="flex_horizontal space_between">
+                  <a class="showHelp bluebtn">Hyperopt settings</a>
+                  <a class="addTask bluebtn">Add Condition</a>
+                </div>
+
+                <div class="toDoList listColumn">
+                  <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
+                </div>
+                <div class="binder">
+                  <select name="cond_bond" id="cond_bind">
+                    <option value="and">AND</option>
+                    <option value="or">OR</option>
+                  </select>
+                </div>
+                <div class="ongoingList listColumn"></div>
+                <div class="binder">            
+                  <select name="cond_bond" id="cond_bind">
+                    <option value="and">AND</option>
+                    <option value="or">OR</option>
+                  </select></div>
+                <div class="doneList listColumn"></div>
+
+              </main>
+              
+              <div class="currentTask modal">
+                <textarea class="txtTask"></textarea><br />
+
+                <div class="flex_horizontal">
+                    <input type="button" class="btnOk bluebtn mr10" value="Add" />
+                    <input type="button" class="btnCancel bluebtn" value="Cancel" />
+                </div>
+
+              </div>
+
+              <div class="help modal">
+                <p class="helpText">
+                  Add a new "to do" task by pressing the plus ("+") button.<br />
+                  Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
+                </p>
+                  <input type="button" class="btnClose" value="Close" />
+              </div>
+            </div>
+          </div>
+          <!-- insert optimization results here -->
+          <ul class="opti_results"></ul>
+          </div>
+      </div>
+      <div className='chart-container'>
+      <h2>hello</h2>
+      <div class="chart"></div>
+    </div>
 </div>
 
 
