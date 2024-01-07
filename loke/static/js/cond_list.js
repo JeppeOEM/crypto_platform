@@ -386,10 +386,10 @@ async function createList(side, element) {
       element.parentNode.removeChild(element);
     });
 
-    const todoContent = clone.querySelector(`.${element}`);
-    console.log(todoContent, "todoContent");
-    const newId = "todoContent" + (condController.count() + 1);
-    todoContent.classList.add(newId);
+    const cond_list_content = clone.querySelector(`.${element}`);
+    console.log(cond_list_content, "cond_list");
+    const newId = side + "_cond_list" + (condController.count() + 1);
+    cond_list_content.classList.add(newId);
     console.log(newId);
 
     // Create TaskManager after updating the id
