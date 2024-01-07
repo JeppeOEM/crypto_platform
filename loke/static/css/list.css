@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
 
 :root {
+  --white: white;
   --colorTextSecondary: floralwhite;
   --colorPrimary: blue;
-  --colorSecondary: white;
+  --colorSecondary: rgb(4, 4, 113);
   --colorTertiary: yellow;
   --colorToDo: lightsalmon;
   --colorOngoing: palegoldenrod;
@@ -15,6 +16,8 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+/* CSS */
 
 .operator {
   display: flex;
@@ -49,7 +52,7 @@ header.listHeaders {
   background-color: var(--colorTertiary);
   font-weight: bold;
 }
-div.toDoHeader {
+/* div.toDoHeader {
   float: left;
   width: 33%;
 }
@@ -68,12 +71,27 @@ div.ongoingList {
 div.doneList {
   float: left;
   width: 33%;
+} */
+
+div.listColumn {
+  margin: 10px;
+  padding-bottom: 30px;
+  border: solid 1px black;
+  border-radius: 5px;
+  background-color: var(--white);
 }
 
 main.listContent {
-  min-height: 40px;
-  padding-right: 0;
-  overflow: auto;
+  margin: 10px;
+
+  /* overflow: auto; */
+  display: flex;
+  flex-direction: column;
+}
+
+.binder {
+  display: flex;
+  justify-content: center;
 }
 
 .clone {
@@ -81,34 +99,23 @@ main.listContent {
   background-color: var(--colorSecondary);
 }
 
-a {
-  color: var(--colorPrimary);
-  background-color: var(--colorTextSecondary);
-  text-align: center;
+.bluebtn {
+  display: flex;
+  justify-content: center;
+  background-color: var(--colorPrimary);
+  color: var(--white);
   border-radius: 0.25rem;
-}
-a:hover {
+  font-size: 1.15rem;
+  line-height: 2rem;
+  width: fit-content;
+  padding: 5px 20px;
   cursor: pointer;
-  background-color: var(--colorTertiary);
 }
 
-.buttons a {
-  margin-right: 10px;
+.bluebtn:hover {
+  background-color: #377ba8;
 }
-#new_todo {
-  display: inline-block;
-  width: 25%;
-  border-radius: 0.25rem;
 
-  line-height: 2rem;
-}
-a.addTask {
-  display: inline-block;
-  width: 25%;
-  border-radius: 0.25rem;
-  font-size: 3rem;
-  line-height: 2rem;
-}
 a.save {
   display: inline-block;
   width: 25%;
@@ -176,25 +183,21 @@ textarea.txtTask {
   border-color: var(--colorSecondary);
 }
 
-input[type="button"] {
+/* input[type="button"] {
   padding: 0.25rem 1rem;
   font-size: 1rem;
   font-weight: bold;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-}
-div.buttons {
-  padding-right: 2rem;
-  text-align: right;
-}
+} */
 
 div.task {
   border: thin solid var(--colorPrimary);
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
   padding: 0.25rem;
-  width: 95%;
+  width: 100%;
   max-height: 10rem;
   overflow: auto;
   word-wrap: break-word;

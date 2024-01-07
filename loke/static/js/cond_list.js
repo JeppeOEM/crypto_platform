@@ -88,7 +88,7 @@ class TaskManager {
         this.doneListHeight -= taskHeight;
         break;
     }
-    this.resizeLists();
+    //this.resizeLists();
   }
 
   handleTaskButton() {
@@ -133,7 +133,7 @@ class TaskManager {
 
     this.toDoList.prepend(task);
     this.toDoListHeight += task.offsetHeight + 10;
-    this.resizeLists();
+    //this.resizeLists();
   }
 
   updateTask() {
@@ -157,7 +157,7 @@ class TaskManager {
         this.doneListHeight = this.doneListHeight - previousHeight + task.offsetHeight;
     }
 
-    this.resizeLists();
+    //this.resizeLists();
   }
 
   cancelTaskEdition() {
@@ -255,7 +255,7 @@ class TaskManager {
           break;
       }
 
-      this.resizeLists();
+      //this.resizeLists();
     }
   }
 
@@ -268,15 +268,15 @@ class TaskManager {
     return deleteButton;
   }
 
-  resizeLists() {
-    const higherListHeight = Math.max(this.toDoListHeight, this.ongoingListHeight, this.doneListHeight);
+  // resizeLists() {
+  //   const higherListHeight = Math.max(this.toDoListHeight, this.ongoingListHeight, this.doneListHeight);
 
-    this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
-      list.style.height = higherListHeight + "px";
-    });
+  //   this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
+  //     list.style.height = higherListHeight + "px";
+  //   });
 
-    this.TodoContent.querySelector(".listContent").style.height = higherListHeight + 20 + "px";
-  }
+  //   this.TodoContent.querySelector(".listContent").style.height = higherListHeight + 20 + "px";
+  // }
 }
 
 class TaskManagerManager {

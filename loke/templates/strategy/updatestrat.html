@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block header %}
-<div class="flex_horizontal space-between">
+<div class="flex_horizontal space_between">
   <h1 id="strategy_id" data-id="{{strategy['strategy_id']}}">
     {% block title %}
       ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }}
@@ -33,13 +33,13 @@
   <input type="submit" value="Save" />
   <hr />
 </form>
-<div class="buttons">
-  <button id="update_strat_text">Edit</button>
-</div>
+
+  <button id="update_strat_text">update_strat_text</button>
+
 <!-- NOT SURE IF WORKING -->
-<div class="buttons">
-  <button id="save_edit_db">Edit</button>
-</div>
+
+  <button id="save_edit_db">save_edit_db</button>
+
 
 {% for dict_item in indicators %}
   {% for key, value in dict_item.items() %}
@@ -149,53 +149,68 @@
 
 <button onclick="load_params()">load params</button>
 
-<div>
-  <header>
-    <h1>To Do List</h1>
-    <a id="new_todo">New list</a>
-  </header>
-  <div class="clone">
-    <div class="contentWrapper">
-      <a class="showHelp">Help</a>
-      <div>
-        <header class="listHeaders">
-          <div class="toDoHeader listHeader">Condition 1</div>
-          <div class="ongoingHeader listHeader">Operator</div>
-          <div class="doneHeader listHeader">Condition 2</div>
-        </header>
-        <main class="listContent">
-          <div class="toDoList listColumn"></div>
-          <div class="ongoingList listColumn"></div>
-          <div class="doneList listColumn"></div>
-        </main>
-        <div class="currentTask modal">
-          <textarea class="txtTask"></textarea><br />
-          <div class="buttons">
-            <input type="button" class="btnOk" value="Add" />
-            <input type="button" class="btnCancel" value="Cancel" />
+  <div>
+    <header>
+      <h1>To Do List</h1>
+        <a class="bluebtn" id="new_todo">New list</a>
+
+    </header>
+    <div class="flex_wrap">
+
+
+      <div class="clone flex_basis25">
+      <div class="contentWrapper">
+        <div>
+          <main class="listContent">
+            <div class="flex_horizontal space_between">
+              <a class="showHelp bluebtn">Hyperopt settings</a>
+              <a class="addTask bluebtn">Add Condition</a>
+            </div>
+
+            <div class="toDoList listColumn"></div>
+            <div class="binder">
+              <select name="cond_bond" id="cond_bind">
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+              </select>
+            </div>
+            <div class="ongoingList listColumn"></div>
+            <div class="binder">            
+              <select name="cond_bond" id="cond_bind">
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+              </select></div>
+            <div class="doneList listColumn"></div>
+
+          </main>
+          <div class="currentTask modal">
+            <textarea class="txtTask"></textarea><br />
+
+            <div class="flex_horizontal">
+                <input type="button" class="btnOk bluebtn mr10" value="Add" />
+                <input type="button" class="btnCancel bluebtn" value="Cancel" />
+            </div>
+
           </div>
-        </div>
-        <div class="buttons">
-          <a class="addTask">Add Condition</a>
-        </div>
-        <div class="help modal">
-          <p class="helpText">
-            Add a new "to do" task by pressing the plus ("+") button.<br />
-            Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
-          </p>
-          <div class="buttons">
-            <input type="button" class="btnClose" value="Close" />
+
+          <div class="help modal">
+            <p class="helpText">
+              Add a new "to do" task by pressing the plus ("+") button.<br />
+              Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
+            </p>
+              <input type="button" class="btnClose" value="Close" />
           </div>
         </div>
       </div>
+      <!-- insert optimization results here -->
+      <ul class="opti_results"></ul>
+      </div>
     </div>
-    <!-- insert optimization results here -->
-    <ul class="opti_results"></ul>
+    <div className='chart-container'>
+    <h2>hello</h2>
+    <div class="chart"></div>
   </div>
 </div>
 
-<div className='chart-container'>
-  <h2>hello</h2>
-  <div class="chart"></div>
-</div>
+
 {% endblock %}
