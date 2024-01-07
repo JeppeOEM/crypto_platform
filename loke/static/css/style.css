@@ -135,29 +135,19 @@ header .action {
 .strategy:last-child {
   margin-bottom: 0;
 }
-.strategy form {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: column;
-}
+
 .strategy label {
   font-weight: bold;
   margin-bottom: 0.5em;
 }
-.strategy input,
+
+/* .strategy input,
 .strategy textarea {
   margin-bottom: 1em;
-}
+} */
 .strategy textarea {
   min-height: 12em;
   resize: vertical;
-}
-input.danger {
-  color: #cc2f2e;
-}
-input[type="submit"] {
-  align-self: start;
-  min-width: 10em;
 }
 
 .indicator_input {
@@ -166,16 +156,8 @@ input[type="submit"] {
   align-items: center;
 }
 
-h3 {
-  margin: 0;
-  padding: 0;
-}
 .indicator_input input {
   max-width: 35px;
-}
-.list_flex {
-  display: flex;
-  flex-direction: column;
 }
 
 .form-container input {

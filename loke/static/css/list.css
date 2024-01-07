@@ -12,9 +12,9 @@
   --imgDelete: url(../img/trash.png);
 }
 
-* {
-  margin: 0;
-  box-sizing: border-box;
+.form-container {
+  max-height: 250px;
+  overflow: auto;
 }
 
 /* CSS */

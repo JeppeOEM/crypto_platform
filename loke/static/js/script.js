@@ -195,7 +195,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   form.classList.add("indicator_form");
   form.id = `form${form_id}`;
   let field = document.createElement("fieldset");
-  const legend = document.createElement("legend");
+  const legend = document.createElement("span");
   legend.textContent = name_indicator;
   formContainer.appendChild(form);
   form.appendChild(field);

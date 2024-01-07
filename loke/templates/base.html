@@ -12,10 +12,9 @@
 <header>
 
   <nav class="global_nav">
-    <h1>Flaskr</h1>
+    <h1>{{ g.user['username'] }}</h1>
     <ul>
       {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span></li>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
       
       <li><a href="{{ url_for('auth.register') }}">Register</a></li>

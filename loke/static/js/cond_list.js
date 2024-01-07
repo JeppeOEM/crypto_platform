@@ -206,6 +206,7 @@ class TaskManager {
 
   dropTask(e, listName) {
     const taskList = this.draggedTask.parentNode.id;
+    console.log(taskList, "tasklist");
     const destinationElement = e.target;
     //get the taskid of the element where the task was dropped, if it is a task
     const dropped_taskid = destinationElement.getAttribute("taskid");

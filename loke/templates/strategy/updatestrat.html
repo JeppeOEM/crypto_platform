@@ -14,11 +14,17 @@
     {% endblock %}
   </h1>
   <div class="flex_horizontal">
+      <button class="bluebtn" id="update_strat_text">update_strat_text</button>
+
+<!-- NOT SURE IF WORKING -->
+
+  <button class="bluebtn" id="save_edit_db">save_edit_db</button>
+
     <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
-      <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
+      <input class="bluebtn" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
     </form>
     <form action="{{ url_for('strategy.truncate', id=strategy['strategy_id']) }}" method="post">
-      <input class="danger" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
+      <input class="bluebtn" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
     </form>
   </div>
 </div>
@@ -34,11 +40,6 @@
   <hr />
 </form>
 
-  <button id="update_strat_text">update_strat_text</button>
-
-<!-- NOT SURE IF WORKING -->
-
-  <button id="save_edit_db">save_edit_db</button>
 
 
 {% for dict_item in indicators %}
@@ -167,7 +168,9 @@
               <a class="addTask bluebtn">Add Condition</a>
             </div>
 
-            <div class="toDoList listColumn"></div>
+            <div class="toDoList listColumn">
+              <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div>
+            </div>
             <div class="binder">
               <select name="cond_bond" id="cond_bind">
                 <option value="and">AND</option>
