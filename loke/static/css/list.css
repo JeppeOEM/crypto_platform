@@ -2,15 +2,12 @@
 
 :root {
   --colorTextSecondary: floralwhite;
-
   --colorPrimary: blue;
   --colorSecondary: white;
   --colorTertiary: yellow;
-
   --colorToDo: lightsalmon;
   --colorOngoing: palegoldenrod;
   --colorDone: lightgreen;
-
   --imgDelete: url(../img/trash.png);
 }
 
@@ -19,27 +16,31 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Raleway", Arial, Helvetica, sans-serif;
+.operator {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.minmax {
+  width: 62px;
+}
+
+.param {
+  border: solid 1px black;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 10px;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
 }
 
 header > h1 {
   text-indent: 2rem;
-}
-
-main {
-  padding: 0.5rem;
-  line-height: 1.4rem;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 0.25rem 0 0.25rem 0;
-  color: var(--colorTextSecondary);
-  background-color: var(--colorPrimary);
-  text-align: center;
 }
 
 header.listHeaders {

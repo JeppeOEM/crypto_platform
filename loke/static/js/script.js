@@ -52,20 +52,31 @@ async function build_conditions() {
   remove_element("sell_cond2");
   insert_frontend(sell_conds, "sell_cond2");
   insert_frontend(buy_conds, "buy_cond2");
-  optimizer_params(sell_conds, "_SELL");
-  optimizer_params(buy_conds, "_BUY");
-  function insert_frontend(cond, element) {
-    // Reference to the ul element
-    const myList = document.getElementById(element);
+  //cond, suffix, element to insert into
+  optimizer_params(sell_conds, "_SELL", "param_sell");
+  optimizer_params(buy_conds, "_BUY", "param_buy");
+}
 
-    // Loop through the array and insert list items
-    for (let i = 0; i < cond.length; i++) {
-      const listItem = document.createElement("li");
-      listItem.textContent = cond[i];
-      myList.appendChild(listItem);
-    }
+function insert_frontend(cond, element) {
+  const cond_list = document.getElementById(element);
+  for (let i = 0; i < cond.length; i++) {
+    const listItem = document.createElement("li");
+
+    listItem.textContent = unpack(JSON.parse(cond[i]));
+    cond_list.appendChild(listItem);
   }
 }
+function unpack(cond) {
+  return (
+    cond
+      .flat()
+      // each obj returns as array, with values joined together in a string
+      // there is only 1 val pr array.
+      .map((obj) => Object.values(obj).join("")) //* implicit return *
+      .join(" ")
+  );
+}
+
 function which_side(inputString) {
   let str = inputString.toUpperCase().includes("BUY");
   let side;
@@ -96,17 +107,17 @@ function load_params() {
   postJsonGetStatus(data, "optimizer_params");
 }
 
-function optimizer_params(sell_conds, suffix) {
+function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
-  s_conds = [];
-  sell_conds.forEach((cond) => {
+  cond_arr = [];
+  conditions.forEach((cond) => {
     cond = JSON.parse(cond);
-    s_conds.push(cond);
+    cond_arr.push(cond);
   });
 
-  const tbody = document.querySelector("tbody");
+  const tbody = document.querySelector(`.${element}`);
   const opti_params = document.getElementById("optimize_params");
-  s_conds.forEach((cond) => {
+  cond_arr.forEach((cond) => {
     cond.forEach((val) => {
       const clone = opti_params.content.cloneNode(true);
       clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;

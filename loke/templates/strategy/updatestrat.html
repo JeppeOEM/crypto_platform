@@ -7,13 +7,13 @@
 {% endblock %}
 
 {% block header %}
-<div class="horizontal space-between">
+<div class="flex_horizontal space-between">
   <h1 id="strategy_id" data-id="{{strategy['strategy_id']}}">
     {% block title %}
       ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }}
     {% endblock %}
   </h1>
-  <div class="horizontal">
+  <div class="flex_horizontal">
     <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
       <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
     </form>
@@ -102,27 +102,51 @@
 <h2>sell conds</h2>
 <ul id="sell_cond2"></ul>
 
-<table>
-  <thead>
-    <tr>
-      <th class="th-author"><p>Indicator</p></th>
-      <th class="th-title"><p>Operator</p></th>
-      <th class="th-year"><p>min</p></th>
-      <th class="th-year"><p>max</p></th>
-    </tr>
-  </thead>
-  <tbody>
-    <template id="optimize_params">
-      <tr data-all="all" class="param">
-        <td class="indicator"></td>
-        <td class="operator"></td>
-        <td><input class="min" type="number" value="0"></td>
-        <td><input class="max" type="number" value="0"></td>
-        <!-- <td class="max">&#128465;</td> -->
+<section class="flex_horizontal">
+  <div>
+  <table>
+    <thead>
+      <tr>
+        <th class="th-author"><p>Indicator</p></th>
+        <th class="th-title"><p>Operator</p></th>
+        <th class="th-year"><p>min</p></th>
+        <th class="th-year"><p>max</p></th>
+        <th class="th-year"><p>condition</p></th>
       </tr>
-    </template>
-  </tbody>
-</table>
+    </thead>
+    <tbody class="param_buy">
+      <template id="optimize_params">
+        <tr data-all="all" class="param">
+          <td class="indicator"></td>
+          <td class="operator"></td>
+          <td><input class="min minmax" type="number" value="0"></td>
+          <td><input class="max minmax" type="number" value="0"></td>
+          <td><button>&</button></td>
+          <!-- <td class="max">&#128465;</td> -->
+        </tr>
+      </template>
+    </tbody>
+  </table>
+  </div>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th class="th-author"><p>Indicator</p></th>
+          <th class="th-title"><p>Operator</p></th>
+          <th class="th-year"><p>min</p></th>
+          <th class="th-year"><p>max</p></th>
+          <th class="th-year"><p>condition</p></th>
+        </tr>
+      </thead>
+      <tbody class="param_sell">
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
 <button onclick="load_params()">load params</button>
 
 <div>

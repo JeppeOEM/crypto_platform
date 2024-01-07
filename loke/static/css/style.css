@@ -21,6 +21,38 @@ hr {
   border: none;
   border-top: 1px solid lightgray;
 }
+
+.flex_vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex_horizontal {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+p {
+  margin-bottom: 0;
+}
+.block {
+  display: block;
+}
+.hidden {
+  display: none !important;
+}
+.space-between {
+  justify-content: space-between !important;
+}
+
+
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
 .global_nav {
   position: fixed;
   top: 0px;
@@ -52,15 +84,15 @@ header .action {
   display: block;
   padding: 0.5rem;
 }
-.content {
+.strategy {
   padding: 0 1rem 1rem;
 }
-/* .content > header {
+/* .strategy > header {
   border-bottom: 1px solid lightgray;
   display: flex;
   align-items: flex-end;
 } */
-.content > header h1 {
+.strategy > header h1 {
   flex: auto;
   margin: 1rem 0 0.25rem 0;
 }
@@ -89,23 +121,23 @@ header .action {
 .post .body {
   white-space: pre-line;
 }
-.content:last-child {
+.strategy:last-child {
   margin-bottom: 0;
 }
-.content form {
+.strategy form {
   margin: 1em 0;
   display: flex;
   flex-direction: column;
 }
-.content label {
+.strategy label {
   font-weight: bold;
   margin-bottom: 0.5em;
 }
-.content input,
-.content textarea {
+.strategy input,
+.strategy textarea {
   margin-bottom: 1em;
 }
-.content textarea {
+.strategy textarea {
   min-height: 12em;
   resize: vertical;
 }
@@ -140,7 +172,7 @@ h3 {
 }
 
 .form-container label {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .form-container label:not(:first-child) {
@@ -149,27 +181,4 @@ h3 {
 
 .form-container .submitButton {
   margin-left: auto;
-}
-
-.flex-vertical {
-  display: flex;
-  flex-direction: column;
-}
-
-.horizontal {
-  display: flex !important;
-  flex-direction: row !important;
-}
-
-p {
-  margin-bottom: 0;
-}
-.block {
-  display: block;
-}
-.hidden {
-  display: none !important;
-}
-.space-between {
-  justify-content: space-between !important;
 }

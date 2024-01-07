@@ -33,6 +33,10 @@ class TaskManager {
     btnClose.addEventListener("click", () => this.hideHelp());
     btnClose.addEventListener("keyup", (e) => (e.code === "Escape" ? this.hideHelp() : true));
 
+    // this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
+    //   list.addEventListener("dragover", (e) => console.log(e.target));
+    // });
+
     this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
       list.addEventListener("dragover", (e) => e.preventDefault());
     });
@@ -120,6 +124,11 @@ class TaskManager {
     task.addEventListener("click", (e) => this.taskClick(e));
     task.setAttribute("draggable", "true");
     task.addEventListener("dragstart", (e) => this.dragStart(e));
+    task.addEventListener("drop", (e) => {
+      e.preventDefault();
+      console.log("hit");
+    });
+    //Prepend: inserts nodes before first child of node
     task.prepend(this.deleteButton());
 
     this.toDoList.prepend(task);
@@ -166,6 +175,29 @@ class TaskManager {
     this.TodoContent.querySelector(".help").style.display = "none";
   }
 
+  swapElements(element1, element2) {
+    // Create a placeholder element
+    const temp = document.createElement("div");
+
+    // Swap the classNames of element1 and element2
+    const tempClassName = element1.className;
+    element1.className = element2.className;
+    element2.className = tempClassName;
+
+    // Insert the placeholder before element1
+    element1.parentNode.insertBefore(temp, element1);
+
+    // Move element2 to the position of element1
+    element2.parentNode.insertBefore(element1, element2);
+
+    // Move element1 to the position of element2
+    temp.parentNode.insertBefore(element2, temp);
+
+    // Remove the placeholder
+    temp.parentNode.removeChild(temp);
+    console.log(element1, element2);
+  }
+
   dragStart(e) {
     e.dataTransfer.setData("text/plain", null);
     this.draggedTask = e.target;
@@ -174,8 +206,20 @@ class TaskManager {
 
   dropTask(e, listName) {
     const taskList = this.draggedTask.parentNode.id;
-
+    const destinationElement = e.target;
+    //get the taskid of the element where the task was dropped, if it is a task
+    const dropped_taskid = destinationElement.getAttribute("taskid");
+    if (dropped_taskid) {
+      // const dragged_taskid = this.draggedTask.getAttribute("taskid");
+      // const element1 = document.querySelector(`.task[taskid="${dragged_taskid}"]`);
+      // const element2 = document.querySelector(`.task[taskid="${dropped_taskid}"]`);
+      // console.log(element1, element2);
+      console.log(this.draggedTask, destinationElement);
+      this.swapElements(this.draggedTask, destinationElement);
+    }
+    //check if the the listName already matches the class stored in the element
     if (taskList !== listName + "List") {
+      console.log("task list hit hit");
       const taskHeight = this.draggedTask.offsetHeight + 10;
 
       this.draggedTask.parentNode.removeChild(this.draggedTask);
