@@ -108,20 +108,42 @@ CREATE TABLE sell_condition_lists (
     sell_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
-    frontend_id INT NOT NULL,
+    frontend_id INT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
+CREATE TRIGGER update_frontend_id
+AFTER
+INSERT ON sell_condition_lists BEGIN
+UPDATE sell_condition_lists
+SET frontend_id = (
+        SELECT COUNT(DISTINCT frontend_id) + 1
+        FROM sell_condition_lists
+        WHERE fk_strategy_id = NEW.fk_strategy_id
+    )
+WHERE sell_list_id = NEW.sell_list_id;
+END;
 CREATE TABLE buy_condition_lists (
     buy_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
-    frontend_id INT NOT NULL,
+    frontend_id INT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
+CREATE TRIGGER update_frontend_id_buy
+AFTER
+INSERT ON buy_condition_lists BEGIN
+UPDATE buy_condition_lists
+SET frontend_id = (
+        SELECT COUNT(DISTINCT frontend_id) + 1
+        FROM buy_condition_lists
+        WHERE fk_strategy_id = NEW.fk_strategy_id
+    )
+WHERE buy_list_id = NEW.buy_list_id;
+END;
 CREATE TABLE backtest (
     backtest_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,

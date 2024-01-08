@@ -28,20 +28,27 @@ bp = Blueprint('strategy', __name__)
 @bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
 # @login_required
 def cond_list(strategy_id):
+    side = request.args.get('side', None)
+    print(side, "SIDE")
+    if side == "buy":
+        table_name = 'buy_condition_lists'
+    else:
+        table_name = 'sell_condition_lists'
+
     db = get_db()
     if request.method == 'POST':
-        data = request.get_json()
-        side = data['side']
+        cur = db.cursor()
+        cur.execute(
+            'INSERT INTO {} (fk_user_id, fk_strategy_id) VALUES (?, ?)'.format(
+                table_name),
+            (g.user['id'], strategy_id)
+        )
+        db.commit()
 
-        data = request.get_json()
+        return jsonify({'message': 'Condition list successfully created'}), 200
 
     if request.method == 'GET':
-        side = request.args.get('side', None)
-        print(side, "SIDE")
-        if side == "buy":
-            table_name = 'buy_condition_lists'
-        else:
-            table_name = 'sell_condition_lists'
+
         cond_lists = db.execute(
             'SELECT * FROM {}'.format(table_name)).fetchall()
         # Convert the SQL rows to a list of dictionaries
@@ -190,19 +197,36 @@ def createstrat():
             flash(error)
         else:
             db = get_db()
+            cur = db.cursor()
 
-            db.execute(
-                'INSERT INTO strategies (strategy_name, info, fk_user_id, fk_exchange_id)'
-                ' VALUES (?, ?, ?, ?)',
-                (strategy_name, info, g.user['id'], exchange)
-            )
-            # last_row = db.lastrowid
+            try:
+                cur.execute(
+                    'INSERT INTO strategies (strategy_name, info, fk_user_id, fk_exchange_id)'
+                    ' VALUES (?, ?, ?, ?)',
+                    (strategy_name, info, g.user['id'], exchange)
+                )
 
-            db.commit()
-            # print(last_row, "LAST ROW ID")
-            # Get the ID of the last inserted row??
-            # last = cursor.lastrowid
-            # print(last, "LAST ROW ID")
+                last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
+                strategy_id = last_row[0]
+                # strategy starts with 2 list allways
+                cur.execute(
+                    'INSERT INTO sell_condition_lists (fk_user_id, fk_strategy_id)'
+                    ' VALUES (?, ?)',
+                    (g.user['id'], strategy_id)
+                )
+
+                cur.execute(
+                    'INSERT INTO buy_condition_lists (fk_user_id, fk_strategy_id)'
+                    ' VALUES (?, ?)',
+                    (g.user['id'], strategy_id)
+                )
+
+                db.commit()
+
+            except Exception as e:
+                # An error occurred, rollback the transaction
+                db.rollback()
+                flash(f"Error: {str(e)}")
 
             return redirect(url_for('strategy.index'))
 

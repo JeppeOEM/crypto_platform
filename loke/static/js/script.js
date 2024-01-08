@@ -1,5 +1,6 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
+const condController = new CondController();
 
 const data = {
   exchange: "binance",
@@ -17,14 +18,24 @@ let cond_sell = [];
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();
-  document.querySelector("#new_todo_buy").addEventListener("click", () => {
-    createList("buy", "insert_here");
+  let todo_b = document.querySelector("#new_todo_buy");
+
+  todo_b.addEventListener("click", () => {
+    create_list("buy");
   });
 
-  document.querySelector("#new_todo_sell").addEventListener("click", () => {
-    createList("sell", "insert_here");
+  let todo_s = document.querySelector("#new_todo_sell");
+
+  todo_s.addEventListener("click", () => {
+    create_list("sell");
   });
 });
+
+async function create_list(side) {
+  const status = postJsonGetStatus(data, "cond_list?side=" + side);
+  remove_element("cond_list");
+  build_condition_lists();
+}
 
 async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
@@ -33,46 +44,45 @@ async function build_page() {
   remove_element("sell_cond2");
   //build buttons also build indicator dataframe related buttons
   //params: array, element_id, element, class_name
-  build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   console.log(indicators_data, "indicators_data.indicators");
-  build_indicator_inputs(indicators_data.indicators);
-  build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
-  build_conditions();
-  build_optimization_results();
-  build_condition_lists();
+  await build_indicator_inputs(indicators_data.indicators);
+  await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
+  await build_conditions();
+  await build_optimization_results();
+  await build_condition_lists();
 }
 
 async function createList(side, element) {
-  const newId = await newList();
+  const newId = await newList(side, element);
   console.log(newId);
   condController.createCondManager(newId);
-
-  async function newList() {
-    const cloneContainer = document.querySelector(`.clone_template`);
-    const append_here = document.querySelector(`${side}_clones`);
-    console.log(cloneContainer, "clone_container");
-    const clone = cloneContainer.cloneNode(true);
-
-    // const elementsToRemove = clone.querySelectorAll(`[taskid]`);
-    // elementsToRemove.forEach((element) => {
-    //   element.parentNode.removeChild(element);
-    // });
-
-    const cond_list_content = clone.querySelector(`.${element}`);
-
-    console.log(cond_list_content, "cond_list");
-    const newId = side + "_cond_list" + (condController.count() + 1);
-    cond_list_content.classList.add(newId);
-    console.log(newId);
-
-    // Create TaskManager after updating the id
-    append_here.appendChild(clone);
-    return newId;
-  }
 }
 
+function newList(side, element) {
+  const cloneContainer = document.querySelector(`.clone_template`);
+  const append_here = document.querySelector(`${side}_clones`);
+  // const append_here = document.querySelector(`${side}_clones`);
+  console.log(cloneContainer, "clone_container");
+  const clone = cloneContainer.cloneNode(true);
+
+  // const elementsToRemove = clone.querySelectorAll(`[taskid]`);
+  // elementsToRemove.forEach((element) => {
+  //   element.parentNode.removeChild(element);
+  // });
+  // console.log(clone, "clone");
+  // const cond_list_content = clone.querySelector(`.insert_here`);
+
+  // console.log(cond_list_content, "cond_list");
+  // const newId = side + "insert_here" + (condController.count() + 1);
+  // cond_list_content.classList.add(newId);
+  // console.log(newId);
+  append_here.appendChild(clone);
+
+  // Create TaskManager after updating the id
+  return newId;
+}
 async function build_condition_lists() {
-  // const condController = new CondController();
   // const taskManager1 = condController.createCondManager("buy_cond_list1");
   // const taskManager2 = condController.createCondManager("sell_cond_list2");
   const json_buy = await getJson("cond_list?side=buy");
@@ -85,13 +95,16 @@ async function build_condition_lists() {
   clone_list(json_sell, sell_clones, "sell");
   function clone_list(json, container, side) {
     json.forEach((data) => {
+      let element_name = `${side}insert_here${data.frontend_id}`;
       const clone = clone_template.content.cloneNode(true);
       console.log(clone, "clone");
-      clone.querySelector(".insert_here");
+      let here = clone.querySelector(".insert_here");
+      here.classList.add(element_name);
       const cond_wrapper = clone.querySelector(`.clone_${side}`);
-
       // cond_wrapper.dataset.id = data.buy_list_id;
       container.appendChild(clone);
+      //cond_list.js controller
+      condController.createCondManager(element_name);
     });
   }
 }
@@ -388,7 +401,7 @@ function remove_element(class_name) {
     ele.parentNode.removeChild(ele);
   });
 }
-function build_buttons(array, element_id, element, class_name) {
+async function build_buttons(array, element_id, element, class_name) {
   let container = document.getElementById(element_id);
   for (let i = 0; i < array.length; i++) {
     let button = document.createElement(element);
@@ -587,6 +600,27 @@ async function postJsonGetData(data, endpoint, method = "POST") {
 
   const responseData = await response.json();
   return responseData;
+}
+
+async function postJsonGetStatus(data, endpoint, method = "POST") {
+  // Create an options object for the fetch request
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  // Make the POST request using the fetch API
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  } else {
+    console.log(response.status);
+    return response;
+  }
 }
 
 async function postJsonGetStatus(data, endpoint, method = "POST") {
