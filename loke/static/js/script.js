@@ -69,25 +69,26 @@ async function createList(side, element) {
 }
 
 async function build_condition_lists() {
-  const condController = new CondController();
-  const taskManager1 = condController.createCondManager("buy_cond_list1");
-  const taskManager2 = condController.createCondManager("sell_cond_list2");
+  // const condController = new CondController();
+  // const taskManager1 = condController.createCondManager("buy_cond_list1");
+  // const taskManager2 = condController.createCondManager("sell_cond_list2");
   const json_buy = await getJson("cond_list?side=buy");
   const json_sell = await getJson("cond_list?side=sell");
   console.log(json_buy, json_sell, "lists");
   const sell_clones = document.querySelector(".sell_clones");
   const buy_clones = document.querySelector(".buy_clones");
-  const template = document.querySelector(".template_cond");
-  // clone_list(json_buy, buy_clones);
-  // clone_list(json_sell, sell_clones);
-  function clone_list(json, element) {
+  const clone_buy = document.querySelector(".clone_buy");
+  const clone_template = document.querySelector(".clone_template");
+  clone_list(json_buy, buy_clones, "clone_buy", "buy");
+  clone_list(json_sell, sell_clones, "clone_sell", "sell");
+  function clone_list(json, container, cloned_template, side) {
     json.forEach((data) => {
-      const clone = template.content.cloneNode(true);
+      const clone = clone_template.content.cloneNode(true);
       console.log(clone, "clone");
-      const cond_wrapper = clone.querySelector(".cond_wrapper");
+      const cond_wrapper = clone.querySelector(`.clone_${side}`);
 
-      cond_wrapper.dataset.id = data.buy_list_id;
-      element.appendChild(clone);
+      // cond_wrapper.dataset.id = data.buy_list_id;
+      container.appendChild(clone);
     });
   }
 }

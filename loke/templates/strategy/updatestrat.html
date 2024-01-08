@@ -188,10 +188,26 @@
       <h1>Buy conditions</h1>
         <a class="bluebtn" id="new_todo_buy">New list</a>
     </header>
-            <section class="sell_clones"></section>
     <div class="flex_wrap">
-
-
+      <section class="buy_clones flex_wrap"></section>
+    </div>
+        </div>
+      <div class="sell_toggle">
+        <header>
+          <h1>Sell conditions</h1>
+            <a class="bluebtn" id="new_todo_sell">New list</a>
+        </header>
+        <div class="flex_wrap cond_wrapper">
+        <section class="sell_clones flex_wrap"></section>
+      </div>
+      </div>
+      <div className='chart-container'>
+      <h2>hello</h2>
+      <div class="chart"></div>
+    </div>
+</div>
+<!-- buy -->
+<template class="clone_template">
         <div class="clone_buy flex_basis25">
         <div class="buy_cond_list1">
           <div>
@@ -243,18 +259,9 @@
         <ul class="opti_results"></ul>
         </div>
       </div>
-    </div>
-        </div>
-      <div class="sell_toggle">
-        <header>
-          <h1>Sell conditions</h1>
-            <a class="bluebtn" id="new_todo_sell">New list</a>
-        </header>
-        <section class="sell_clones"></section>
-          <template class="template_cond">
-            <div class="flex_wrap cond_wrapper">
-
-
+</template>
+<!-- sell -->
+<template>
                 <div class="clone_sell flex_basis25">
 
                 <div class="sell_cond_list2">
@@ -306,16 +313,5 @@
                 <!-- insert optimization results here -->
                 <ul class="opti_results"></ul>
                 </div>
-
-            </div>
-          </template>
-
-      </div>
-      <div className='chart-container'>
-      <h2>hello</h2>
-      <div class="chart"></div>
-    </div>
-</div>
-
-
+</template>
 {% endblock %}

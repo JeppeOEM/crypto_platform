@@ -359,10 +359,9 @@ class CondController {
   }
 }
 
-// const condController = new CondController();
-// const taskManager1 = condController.createCondManager("buy_cond_list1");
-// const taskManager2 = condController.createCondManager("sell_cond_list2");
-// condController.addCond("buy_cond_list1", "test", "toDo");
+const condController = new CondController();
+const taskManager1 = condController.createCondManager("buy_cond_list1");
+const taskManager2 = condController.createCondManager("sell_cond_list2");
 
 //side and element to CLONE
 document.querySelector("#new_todo_buy").addEventListener("click", () => {
@@ -380,6 +379,7 @@ async function createList(side, element) {
 
   async function newList() {
     const cloneContainer = document.querySelector(`.clone_${side}`);
+    const append_here = document.querySelector(`${side}_clones`);
     const clone = cloneContainer.cloneNode(true);
 
     const elementsToRemove = clone.querySelectorAll(`[taskid]`);
@@ -394,7 +394,7 @@ async function createList(side, element) {
     console.log(newId);
 
     // Create TaskManager after updating the id
-    cloneContainer.parentNode.appendChild(clone);
+    append_here.appendChild(clone);
     return newId;
   }
 }
