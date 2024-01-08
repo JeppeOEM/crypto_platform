@@ -28,16 +28,10 @@
 <hr />
 {% endif %} {% endfor %}
 
-<h2>Indicators</h2>
-{{ greeting("Alice") }}
+<!-- <h2>Indicators</h2>
+{{ greeting("Alice") }} -->
 
-{% for dict_item in parent_list %}
-    {% for key, value in dict_item.items() %}
-        {% if key == "kind" %} 
-        <button onclick="loadIndicator('{{ value }}')" >{{value}}</button>
-        {% endif %}
-    {% endfor %} 
-{% endfor %}
+
 
 <!-- <ul class="list_flex">
   {% for dict_item in parent_list %}

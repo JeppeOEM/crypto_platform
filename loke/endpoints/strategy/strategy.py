@@ -173,6 +173,7 @@ def createstrat():
 
             return redirect(url_for('strategy.index'))
 
+    # NO get request ever send
     if request.method == 'GET':
         momentum = get_indicators("momentum")
         trend = get_indicators("trend")
@@ -180,8 +181,8 @@ def createstrat():
         print(momentum)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print(trend)
-        momentum = []
-        trend = []
+        # momentum = []
+        # trend = []
         # trend = get_indicators("trend")
         # print(trend)
         # indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {

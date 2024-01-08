@@ -139,15 +139,21 @@ async function build_indicator_inputs(data) {
   });
 
   let categories = ["momentum", "trend"];
+  categories.forEach((category) => {
+    load(category);
+    console.log(category);
+  });
 
-  for (let i = 0; i < indicators.length; i++) {
-    const form = await loadIndicator(
-      indicators[i].indicator["kind"],
-      "momentum",
-      indicators[i].indicator,
-      indicators[i].id
-    );
-    // form.submit();
+  async function load(category) {
+    for (let i = 0; i < indicators.length; i++) {
+      const form = await loadIndicator(
+        indicators[i].indicator["kind"],
+        category,
+        indicators[i].indicator,
+        indicators[i].id
+      );
+      // form.submit();
+    }
   }
 }
 
@@ -157,6 +163,8 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     indicator: name,
     category: category,
   };
+  console.log("something");
+  console.log(data, "data");
   let output = [];
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
