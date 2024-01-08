@@ -20,15 +20,76 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function build_page() {
+  // init strategy gets the indicators saved in indicator_strategies
   indicators_data = await update_chart("init_strategy");
   remove_element("buy_cond2");
   remove_element("sell_cond2");
+  //build buttons also build indicator dataframe related buttons
+  //params: array, element_id, element, class_name
   build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   console.log(indicators_data, "indicators_data.indicators");
   build_indicator_inputs(indicators_data.indicators);
   build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
   build_conditions();
   build_optimization_results();
+  build_condition_lists();
+}
+document.querySelector("#new_todo_buy").addEventListener("click", () => {
+  createList("buy", "buy_cond_list1");
+});
+
+document.querySelector("#new_todo_sell").addEventListener("click", () => {
+  createList("sell", "sell_cond_list2");
+});
+
+async function createList(side, element) {
+  const newId = await newList();
+  console.log(newId);
+  condController.createCondManager(newId);
+
+  async function newList() {
+    const cloneContainer = document.querySelector(`.clone_${side}`);
+    const clone = cloneContainer.cloneNode(true);
+
+    const elementsToRemove = clone.querySelectorAll(`[taskid]`);
+    elementsToRemove.forEach((element) => {
+      element.parentNode.removeChild(element);
+    });
+
+    const cond_list_content = clone.querySelector(`.${element}`);
+    console.log(cond_list_content, "cond_list");
+    const newId = side + "_cond_list" + (condController.count() + 1);
+    cond_list_content.classList.add(newId);
+    console.log(newId);
+
+    // Create TaskManager after updating the id
+    cloneContainer.parentNode.appendChild(clone);
+    return newId;
+  }
+}
+
+async function build_condition_lists() {
+  const condController = new CondController();
+  const taskManager1 = condController.createCondManager("buy_cond_list1");
+  const taskManager2 = condController.createCondManager("sell_cond_list2");
+  const json_buy = await getJson("cond_list?side=buy");
+  const json_sell = await getJson("cond_list?side=sell");
+  console.log(json_buy, json_sell, "lists");
+  const sell_clones = document.querySelector(".sell_clones");
+  const buy_clones = document.querySelector(".buy_clones");
+  const template = document.querySelector(".template_cond");
+  // clone_list(json_buy, buy_clones);
+  // clone_list(json_sell, sell_clones);
+  function clone_list(json, element) {
+    json.forEach((data) => {
+      const clone = template.content.cloneNode(true);
+      console.log(clone, "clone");
+      const cond_wrapper = clone.querySelector(".cond_wrapper");
+
+      cond_wrapper.dataset.id = data.buy_list_id;
+      element.appendChild(clone);
+    });
+  }
 }
 
 async function build_conditions() {
@@ -115,11 +176,12 @@ function optimizer_params(conditions, suffix, element) {
   });
 }
 //runs if there is saved indicators in the db that belongs to the strategy
-async function build_indicator_inputs(data) {
+async function build_indicator_inputs(data, category = null) {
   //returns new array with parsed values
   indicators = data.map((indicator) => {
     console.log(indicator, "indicator");
     let id = JSON.parse(indicator.id);
+    let category = indicator.category;
     indicator = JSON.parse(indicator.settings);
     console.log(indicator, "indicator");
     //convert to numeric values
@@ -136,25 +198,20 @@ async function build_indicator_inputs(data) {
       }
     }
 
-    return { id, indicator };
+    return { id, indicator, category };
   });
 
-  //loads the indicators into the form
-  let categories = ["momentum", "trend"];
-  categories.forEach((category) => {
-    load(category);
-    console.log(category);
-  });
+  load();
 
-  async function load(category) {
+  async function load() {
     for (let i = 0; i < indicators.length; i++) {
+      console.log(indicators[i]);
       const form = await loadIndicator(
         indicators[i].indicator["kind"],
-        category,
-        indicators[i].indicator,
+        indicators[i].category,
+        indicators[i].indicator, //values
         indicators[i].id
       );
-      // form.submit();
     }
   }
 }
@@ -194,6 +251,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   const form = document.createElement("form");
   form.classList.add("indicator_form");
   form.id = `form${form_id}`;
+  form.dataset.category = category;
   let field = document.createElement("fieldset");
   const legend = document.createElement("span");
   legend.textContent = name_indicator;
@@ -201,8 +259,8 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   form.appendChild(field);
   field.appendChild(legend);
 
-  form.addEventListener("submit", gogo);
-  //form.customParam = form;
+  form.addEventListener("submit", submit_to_db);
+  // get values in the form submitted
   for (let i = 0; i < indi_data.length; i++) {
     //name type value forexample: lenght, float, 14, html element
     input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
@@ -215,7 +273,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   field.appendChild(submitButton);
 
   //build input fields of indicator on click
-  async function gogo(event) {
+  async function submit_to_db(event) {
     event.preventDefault();
     // remove "form" and get id
     let form_id = this.id;
@@ -227,11 +285,13 @@ async function loadIndicator(name, category, values = undefined, form_id) {
       form_arr.push([key, value]);
     });
     form_arr.push(form_id);
+    form_arr.unshift(event.target.dataset.category);
+    console.log(form_arr);
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
     let indicators_data = await update_chart("init_strategy");
     remove_element("indicator_form");
-    build_indicator_inputs(indicators_data.indicators);
+    build_indicator_inputs(indicators_data.indicators, category);
   }
 
   // var container = document.getElementById("input-container");
@@ -256,6 +316,16 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     return responseData;
   }
 }
+
+function select_indicator(category, id) {
+  console.log(category, id);
+  const dropdown = document.getElementById(id);
+  const selectedValue = dropdown.value;
+
+  // Call the loadIndicator function with the selected value
+  loadIndicator(selectedValue, category);
+}
+
 async function input_params(key, type, value, field) {
   if (value != "bool") {
     const label = document.createElement("label");
@@ -485,10 +555,7 @@ async function update_chart(endpoint) {
 
 async function getJson(endpoint) {
   const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method: "GET",
   };
   let response = await fetch(endpoint, options);
 

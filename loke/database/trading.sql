@@ -55,6 +55,7 @@ CREATE TABLE strategy_indicators (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     indicator_name VARCHAR(55) NOT NULL,
     settings VARCHAR(255) NOT NULL,
+    category VARCHAR(55) NOT NULL,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );

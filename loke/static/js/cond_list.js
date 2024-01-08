@@ -359,13 +359,13 @@ class CondController {
   }
 }
 
-const condController = new CondController();
-const taskManager1 = condController.createCondManager("buy_cond_list1");
-const taskManager2 = condController.createCondManager("sell_cond_list2");
-condController.addCond("buy_cond_list1", "test", "toDo");
+// const condController = new CondController();
+// const taskManager1 = condController.createCondManager("buy_cond_list1");
+// const taskManager2 = condController.createCondManager("sell_cond_list2");
+// condController.addCond("buy_cond_list1", "test", "toDo");
 
+//side and element to CLONE
 document.querySelector("#new_todo_buy").addEventListener("click", () => {
-  //side and element to CLONE
   createList("buy", "buy_cond_list1");
 });
 

@@ -24,7 +24,7 @@ bp = Blueprint('conditions', __name__)
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
 
 
-@bp.route('/<int:id>/load_conditions', methods=['POST'])
+@bp.route('/<int:id>/load_conditions', methods=['GET'])
 def load_conditions(id):
     db = get_db()
     buy_conds = db.execute(

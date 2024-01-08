@@ -16,11 +16,38 @@ import pickle
 import pandas as pd
 import numpy as np
 import copy
+import sqlite3
+
 # DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('strategy.index') will both work,
 # generating the same / URL either way.
 bp = Blueprint('strategy', __name__)
+
+
+@bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
+# @login_required
+def cond_list(strategy_id):
+    db = get_db()
+    if request.method == 'POST':
+        data = request.get_json()
+        side = data['side']
+
+        data = request.get_json()
+
+    if request.method == 'GET':
+        side = request.args.get('side', None)
+        print(side, "SIDE")
+        if side == "buy":
+            table_name = 'buy_condition_lists'
+        else:
+            table_name = 'sell_condition_lists'
+        cond_lists = db.execute(
+            'SELECT * FROM {}'.format(table_name)).fetchall()
+        # Convert the SQL rows to a list of dictionaries
+        result = [dict(row) for row in cond_lists]
+
+        return jsonify(result)
 
 
 @bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
@@ -96,7 +123,7 @@ def init_strategy(id):
         print(id, "INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT")
         db = get_db()
         indicators = db.execute(
-            'SELECT settings, strategy_indicator_id FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+            'SELECT settings, strategy_indicator_id, category FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
         print(indicators, "fucking indicators")
         total_indicators_id = []
@@ -108,22 +135,23 @@ def init_strategy(id):
             try:
                 # row[0][1] = settings
                 data_dict = json.loads(row[0])
-                # copy object to avoid changing original
 
                 print(data_dict)
                 for key, value in data_dict.items():
                     if key != "kind":
+                        # save as int, float or string
                         data_dict[key] = int(value) if value.isdigit(
                         ) else float(value) if "." in value else value
                 # assign id from strategy_indicators to indicator
                         # DANGER HERE
                 # data_dict['id'] = row[1]
                 # print("data_dict", data_dict)
+                # copy object to avoid changing original
                 data_dict_copy = copy.deepcopy(data_dict)
                 total_indicators.append(data_dict)
                 json_object = json.dumps(data_dict_copy, indent=4)
                 total_indicators_id.append(
-                    {"id": row[1], "settings": json_object})
+                    {"id": row[1], "settings": json_object, "category": row[2]})
 
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e}")
@@ -168,9 +196,13 @@ def createstrat():
                 ' VALUES (?, ?, ?, ?)',
                 (strategy_name, info, g.user['id'], exchange)
             )
-            db.commit()
+            # last_row = db.lastrowid
 
-            # Get the ID of the last inserted row
+            db.commit()
+            # print(last_row, "LAST ROW ID")
+            # Get the ID of the last inserted row??
+            # last = cursor.lastrowid
+            # print(last, "LAST ROW ID")
 
             return redirect(url_for('strategy.index'))
 
@@ -178,18 +210,57 @@ def createstrat():
     if request.method == 'GET':
         momentum = get_indicators("momentum")
         trend = get_indicators("trend")
+
+    return render_template('strategy/createstrat.html', momentum=momentum, trend=trend)
+
+    # db.execute(
+    #     'INSERT INTO sell_condition_lists (fk_user, fk_strategy_id, frontend_id)'
+    #     ' VALUES (?, ?, ?)',
+    #     (g.user['id'], strategy_id exchange)
+    # )
+
+
+# This is the page were you can add indicators to a strategy
+@bp.route('/<int:id>/stratupdate', methods=('GET', 'POST'))
+@login_required
+def stratupdate(id):
+    strategy = get_strategy(id)
+    if request.method == 'POST':
+
+        strategy_name = request.form['strategy_name']
+        info = request.form['info']
+        error = None
+
+        if not strategy_name:
+            error = 'strategy_name is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'UPDATE strategies SET strategy_name = ?, info = ?'
+                ' WHERE strategy_id = ?',
+                (strategy_name, info, id)
+            )
+            db.commit()
+            return redirect(url_for('strategy.index'))
+
+    if request.method == 'GET':
+        momentum = get_indicators("momentum")
+        trend = get_indicators("trend")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print(momentum)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print(trend)
-        # momentum = []
-        # trend = []
-        # trend = get_indicators("trend")
-        # print(trend)
-        # indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
-        #     'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
-
-    return render_template('strategy/createstrat.html', momentum=momentum, trend=trend)
+        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
+            'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
+        # settings = db.execute(
+        #     'SELECT * FROM strategy_indicators WHERE fk_strategy_id = ?',
+        #     (id,)
+        # ).fetchall()
+        # print(settings)
+    return render_template('strategy/updatestrat.html', strategy=strategy, momentum=momentum, trend=trend)
 
 
 def get_strategy(id, check_user=True):
@@ -218,8 +289,10 @@ def convert_indicator(strategy_id):
     if request.method == 'POST':
 
         data = request.get_json()
-
+        print(data, "DAAAAAAAAAAAAAAAAAAA")
         # remove id from data
+        category = data.pop(0)
+        print(category, "CATEGORY")
         strategy_indicator_id = data.pop()
         print(strategy_indicator_id, "FORM ID",
               g.user['id'], "USER ID", strategy_id, "STRAT ID")
@@ -259,8 +332,9 @@ def convert_indicator(strategy_id):
             else:
                 # If the row doesn't exist, insert a new one
                 db.execute(
-                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name) VALUES (?, ?, ?, ?)',
-                    (strategy_id, g.user['id'], json_dict, indicator['kind'])
+                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name, category) VALUES (?, ?, ?, ?, ?)',
+                    (strategy_id, g.user['id'], json_dict,
+                     indicator['kind'], category)
                 )
                 db.commit()
                 return jsonify({'message': 'Indicator successfully inserted'})
@@ -268,50 +342,6 @@ def convert_indicator(strategy_id):
         except Exception as e:
             # Handle database-related errors
             return jsonify({'error': str(e)}), 500
-
-
-# converts to int automatically
-
-
-@bp.route('/<int:id>/stratupdate', methods=('GET', 'POST'))
-@login_required
-def stratupdate(id):
-    strategy = get_strategy(id)
-    if request.method == 'POST':
-
-        strategy_name = request.form['strategy_name']
-        info = request.form['info']
-        error = None
-
-        if not strategy_name:
-            error = 'strategy_name is required.'
-
-        if error is not None:
-            flash(error)
-        else:
-            db = get_db()
-            db.execute(
-                'UPDATE strategies SET strategy_name = ?, info = ?'
-                ' WHERE strategy_id = ?',
-                (strategy_name, info, id)
-            )
-            db.commit()
-            return redirect(url_for('strategy.index'))
-    if request.method == 'GET':
-        momentum = get_indicators("momentum")
-        trend = get_indicators("trend")
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(momentum)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(trend)
-        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
-            'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
-        # settings = db.execute(
-        #     'SELECT * FROM strategy_indicators WHERE fk_strategy_id = ?',
-        #     (id,)
-        # ).fetchall()
-        # print(settings)
-    return render_template('strategy/updatestrat.html', strategy=strategy, indicators=momentum)
 
 
 @bp.route('/<int:id>/update_chart', methods=['POST'])
