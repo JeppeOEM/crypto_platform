@@ -114,10 +114,11 @@ function optimizer_params(conditions, suffix, element) {
     });
   });
 }
-
+//runs if there is saved indicators in the db that belongs to the strategy
 async function build_indicator_inputs(data) {
   //returns new array with parsed values
   indicators = data.map((indicator) => {
+    console.log(indicator, "indicator");
     let id = JSON.parse(indicator.id);
     indicator = JSON.parse(indicator.settings);
     console.log(indicator, "indicator");
