@@ -1,6 +1,6 @@
 from loke.trading_engine.Optimizer import Nsga2
 from loke.trading_engine.process_conds import create_conds
-from flask import jsonify
+
 
 
 def call_optimizer(df, pop_size, generations, id):

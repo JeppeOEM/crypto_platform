@@ -15,10 +15,7 @@ from loke.trading_engine.process_conds import process_conds
 import pickle
 import pandas as pd
 import copy
-# DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
-# app.add_url_rule() associates the endpoint name 'index' with the /
-# url so that url_for('index') or url_for('strategy.index') will both work,
-# generating the same / URL either way.
+
 
 bp = Blueprint('optimization', __name__)
 

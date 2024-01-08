@@ -25,36 +25,7 @@ import sqlite3
 bp = Blueprint('strategy', __name__)
 
 
-@bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
-# @login_required
-def cond_list(strategy_id):
-    side = request.args.get('side', None)
-    print(side, "SIDE")
-    if side == "buy":
-        table_name = 'buy_condition_lists'
-    else:
-        table_name = 'sell_condition_lists'
 
-    db = get_db()
-    if request.method == 'POST':
-        cur = db.cursor()
-        cur.execute(
-            'INSERT INTO {} (fk_user_id, fk_strategy_id) VALUES (?, ?)'.format(
-                table_name),
-            (g.user['id'], strategy_id)
-        )
-        db.commit()
-
-        return jsonify({'message': 'Condition list successfully created'}), 200
-
-    if request.method == 'GET':
-
-        cond_lists = db.execute(
-            'SELECT * FROM {}'.format(table_name)).fetchall()
-        # Convert the SQL rows to a list of dictionaries
-        result = [dict(row) for row in cond_lists]
-
-        return jsonify(result)
 
 
 @bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))

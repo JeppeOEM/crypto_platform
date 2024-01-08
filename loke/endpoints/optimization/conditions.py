@@ -5,23 +5,47 @@ from werkzeug.exceptions import abort
 
 from loke.endpoints.auth import login_required
 from loke.database.db import get_db
-import importlib
-import os
-import json
 from loke.endpoints.strategy.strategy import get_strategy
-from loke.trading_engine.Backtest import Backtest
-from loke.trading_engine.Strategy import Strategy
-from loke.trading_engine.call_optimizer import call_optimizer
-from loke.trading_engine.process_conds import process_conds
-import pickle
+
 import pandas as pd
-import copy
 
 bp = Blueprint('conditions', __name__)
 # def insert_condition(cond):
 #     db = get_db()
 #     db.execute('INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, indicator_name, settings) VALUES (?,?,?,?)',
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
+
+
+@bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
+# @login_required
+def cond_list(strategy_id):
+    side = request.args.get('side', None)
+    print(side, "SIDE")
+    if side == "buy":
+        table_name = 'buy_condition_lists'
+    else:
+        table_name = 'sell_condition_lists'
+
+    db = get_db()
+    if request.method == 'POST':
+        cur = db.cursor()
+        cur.execute(
+            'INSERT INTO {} (fk_user_id, fk_strategy_id) VALUES (?, ?)'.format(
+                table_name),
+            (g.user['id'], strategy_id)
+        )
+        db.commit()
+
+        return jsonify({'message': 'Condition list successfully created'}), 200
+
+    if request.method == 'GET':
+
+        cond_lists = db.execute(
+            'SELECT * FROM {}'.format(table_name)).fetchall()
+        # Convert the SQL rows to a list of dictionaries
+        result = [dict(row) for row in cond_lists]
+
+        return jsonify(result)
 
 
 @bp.route('/<int:id>/load_conditions', methods=['GET'])
@@ -47,7 +71,7 @@ def load_conditions(id):
         'sell_conds': sell_conds
     }
 
-    return jsonify(result_dict)
+    return jsonify(result_dict), 200
 
 
 @bp.route('/<int:id>/delete_cond', methods=('POST',))
@@ -86,7 +110,7 @@ def condition(id):
                     (id, g.user['id'], data['buy_cond'])
                 )
                 db.commit()
-                return jsonify({'message': 'condition saved to database'})
+                return jsonify({'message': 'condition saved to database'}), 200
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
 

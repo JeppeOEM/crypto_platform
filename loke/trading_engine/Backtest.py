@@ -54,7 +54,7 @@ class Backtest:
         try:
             df['pnl'] = df.close.pct_change()
         except:
-            print("EMPTY DATAFRAME, TOO BIG OPTIMIZER PARAMS")
+            print("EMPTY DATAFRAME ERROR")
             print(df.tail(110))
             exit()
         df['cond1'] = np.where(df['open_trade'] == 1, 1, 0)

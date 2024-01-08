@@ -20,6 +20,9 @@ from flask_caching import Cache
 
 # General Info:
 # Dataframe column name can be sensitive to change (_BUY / _SELL)
+# DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
+# app.add_url_rule() associates the endpoint name 'index' with the /
+# url_for('index') or url_for('strategy.index') will both work,
 
 
 cache = Cache()
@@ -49,8 +52,8 @@ def create_app(test_config=None):
 
 # tell Flask to use the above defined config
 
-    if test_config is None:
         # load the instance config, if it exists, when not testing
+    if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
         # load the test config if passed in
@@ -67,7 +70,6 @@ def create_app(test_config=None):
     app.register_blueprint(conditions.bp)
     app.register_blueprint(optimization.bp)
     app.register_blueprint(markov.bp)
-    # index points to strategy index as it no prefix is defined for the blueprint
     app.add_url_rule('/', endpoint='index')
 
     @app.route("/")
