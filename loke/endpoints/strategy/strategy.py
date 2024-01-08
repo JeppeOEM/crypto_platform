@@ -37,6 +37,7 @@ def add_indicator(strategy_id):
         obj = Obj()
         indicator = obj.type_dict()
         indicator = jsonify(indicator)
+        print(indicator, "INDICATOR")
         # db = get_db()
 
         # db.execute(
@@ -92,12 +93,12 @@ def get_indicators(category):
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
 def init_strategy(id):
     if request.method == "POST":
-        print(id)
+        print(id, "INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT")
         db = get_db()
         indicators = db.execute(
             'SELECT settings, strategy_indicator_id FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
-
+        print(indicators, "fucking indicators")
         total_indicators_id = []
         # print("teeeeest", indicators[1])
         # print("teeeeest", indicators[0][0])
@@ -297,6 +298,12 @@ def stratupdate(id):
             db.commit()
             return redirect(url_for('strategy.index'))
     if request.method == 'GET':
+        momentum = get_indicators("momentum")
+        trend = get_indicators("trend")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(momentum)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(trend)
         indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
             'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
         # settings = db.execute(
@@ -304,7 +311,7 @@ def stratupdate(id):
         #     (id,)
         # ).fetchall()
         # print(settings)
-    return render_template('strategy/updatestrat.html', strategy=strategy, indicators=indicators)
+    return render_template('strategy/updatestrat.html', strategy=strategy, indicators=momentum)
 
 
 @bp.route('/<int:id>/update_chart', methods=['POST'])

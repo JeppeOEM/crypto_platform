@@ -139,6 +139,7 @@ async function build_indicator_inputs(data) {
     return { id, indicator };
   });
 
+  //loads the indicators into the form
   let categories = ["momentum", "trend"];
   categories.forEach((category) => {
     load(category);
@@ -186,6 +187,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     indi_data = output;
   }
   const name_indicator = indi_data[0][1];
+  console.log(name_indicator, "name_indicator");
   //remove name of indicator
   indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
