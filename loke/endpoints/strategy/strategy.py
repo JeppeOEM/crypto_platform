@@ -14,6 +14,7 @@ from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
 import pickle
 import pandas as pd
+import numpy as np
 import copy
 # DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
@@ -62,11 +63,12 @@ def index():
     return render_template('strategy/index.html', strategies=strategies, )
 
 
-def get_indicators():
-
+def get_indicators(category):
+    print("GET INDICATORS", category)
     indicators = []
-    module_path = "loke.trading_engine.indicators.momentum"
-    folder_path = "loke/trading_engine/indicators/momentum"
+    # __init__ must import all classes from the folder
+    module_path = f'loke.trading_engine.indicators.{category}'
+    folder_path = f'loke/trading_engine/indicators/{category}'
 
     class_files = [file for file in os.listdir(
         folder_path) if file.endswith(".py") and file != "__init__.py"]
@@ -78,9 +80,13 @@ def get_indicators():
         module = importlib.import_module(f"{module_path}")
         Obj = getattr(module, f"{module_name}")
         obj = Obj()
-        indicators.append(obj.type_dict())
-
-    return indicators
+        print(obj.type_only())
+        indicators.append(obj.type_only())
+    # convert to numpy and back again to flatten
+    indicators = np.array(indicators)
+    # from [[{}],[{}]] to [{},{}]
+    indicators = indicators.flatten('F')
+    return indicators.tolist()
 
 
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
@@ -168,11 +174,20 @@ def createstrat():
             return redirect(url_for('strategy.index'))
 
     if request.method == 'GET':
-        ndicators = get_indicators
-        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
-            'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
+        momentum = get_indicators("momentum")
+        trend = get_indicators("trend")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(momentum)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(trend)
+        momentum = []
+        trend = []
+        # trend = get_indicators("trend")
+        # print(trend)
+        # indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
+        #     'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
 
-    return render_template('strategy/createstrat.html', indicators=indicators)
+    return render_template('strategy/createstrat.html', momentum=momentum, trend=trend)
 
 
 def get_strategy(id, check_user=True):

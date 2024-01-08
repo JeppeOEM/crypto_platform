@@ -9,7 +9,7 @@ import pandas as pd
 
 # logger = logging.getLogger()
 
-# Flush handles errors if there is some writing that stops
+
 
 class Hdf5Client:
     # 'a' = append mode , can read and write and will create file

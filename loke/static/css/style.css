@@ -2,7 +2,11 @@ html {
   font-family: sans-serif;
   background: #eee;
 }
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body {
   margin-top: 50px !important;
   background: white;
@@ -131,14 +135,6 @@ header .action {
 }
 .post .body {
   white-space: pre-line;
-}
-.strategy:last-child {
-  margin-bottom: 0;
-}
-
-.strategy label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
 }
 
 /* .strategy input,

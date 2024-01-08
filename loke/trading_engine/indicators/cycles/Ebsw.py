@@ -1,9 +1,9 @@
+#   ebsw(self, close=None, length=None, bars=None, offset=None, **kwargs)     
 
-
-class Ao:
+class Ebsw:
 
     def __init__(self):
-        self.fast = None
+        self.length = None
         self.slow = None
         self.offset = None
 
@@ -22,9 +22,6 @@ class Ao:
 
     def type_dict(self):
         return [("kind", self.__class__.__name__.lower()), ("fast", "int", 5), ("slow", "int", 34), ("offset", "int", 0),]
-
-    def type_only(self):
-        return [{"kind": self.__class__.__name__.lower(), "fast": "int", "slow": "int", "offset": "int"}]
 
     def default_values(self):
         return [("kind", self.__class__.__name__.lower()), ("fast", 5), ("slow", 34), ("offset", 0),]

@@ -60,7 +60,7 @@ class Condition:
         expression = " ".join(expression_parts)
 
         print("exp:", expression)
-        # evaluate
+        # evaluate true/false
         self.df[f'{side}_{signal_name}'] = np.where(
             pd.eval(expression, target=self.df), 1, -1)
         self.df[f'{side}_{signal_name}'] = self.df[f'{side}_{signal_name}'].shift(

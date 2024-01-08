@@ -37,11 +37,33 @@
 #sellConditions {
   display: block;
 }
-.form-container {
-  max-height: 250px;
-  overflow: auto;
+
+.add_indicators_box {
+  flex: 1;
+  border: solid 1px var(--colorSecondary);
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
+.form-container {
+  flex: 4;
+  height: 200px;
+  overflow: auto;
+  border: solid 1px var(--colorSecondary);
+  border-radius: 5px;
+}
+.indicator_form {
+  padding: 5px;
+}
+
+.search_indicators {
+  width: 100%;
+  padding: 5px 10px;
+}
+
+#search_indicator {
+  width: 100%;
+}
 /* CSS */
 
 .operator {

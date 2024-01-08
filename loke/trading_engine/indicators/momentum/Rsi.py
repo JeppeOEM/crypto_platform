@@ -32,6 +32,9 @@ class Rsi:
             ("drift", "int", 1),
             ("offset", "int", 0)]
 
+    def type_only(self):
+        return [{"kind": self.__class__.__name__.lower(), "length": "int", "scalar": "float", "talib": "bool", "drift": "int", "offset": "int"}]
+
     def __repr__(self):
         description = """Relative Strength Index (RSI)
 

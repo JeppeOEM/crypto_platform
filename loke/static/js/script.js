@@ -1,21 +1,6 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
 
-class Field {
-  constructor(field) {
-    this.setField(field);
-  }
-  getField() {
-    return this.field;
-  }
-  setField(newfield) {
-    this.field = newfield;
-  }
-  addToField(element) {
-    this.field.appendChild(element);
-  }
-}
-
 const data = {
   exchange: "binance",
   init_candles: 100,
@@ -39,6 +24,7 @@ async function build_page() {
   remove_element("buy_cond2");
   remove_element("sell_cond2");
   build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  console.log(indicators_data, "indicators_data.indicators");
   build_indicator_inputs(indicators_data.indicators);
   build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
   build_conditions();
@@ -134,6 +120,7 @@ async function build_indicator_inputs(data) {
   indicators = data.map((indicator) => {
     let id = JSON.parse(indicator.id);
     indicator = JSON.parse(indicator.settings);
+    console.log(indicator, "indicator");
     //convert to numeric values
     for (let key in indicator) {
       if (indicator.hasOwnProperty(key)) {
@@ -150,6 +137,8 @@ async function build_indicator_inputs(data) {
 
     return { id, indicator };
   });
+
+  let categories = ["momentum", "trend"];
 
   for (let i = 0; i < indicators.length; i++) {
     const form = await loadIndicator(
@@ -204,7 +193,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   form.addEventListener("submit", gogo);
   //form.customParam = form;
   for (let i = 0; i < indi_data.length; i++) {
-    //name type value forexample: lenght float 14
+    //name type value forexample: lenght, float, 14, html element
     input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
   }
 
@@ -214,6 +203,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   submitButton.value = "Submit";
   field.appendChild(submitButton);
 
+  //build input fields of indicator on click
   async function gogo(event) {
     event.preventDefault();
     // remove "form" and get id
@@ -255,7 +245,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     return responseData;
   }
 }
-async function input_params(key, value, type, field) {
+async function input_params(key, type, value, field) {
   if (value != "bool") {
     const label = document.createElement("label");
     label.innerText = key;
@@ -285,81 +275,6 @@ async function input_params(key, value, type, field) {
 //   }
 
 // }
-
-async function update_chart(endpoint) {
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const responseData = await response.json();
-    remove_element("indicator_cond");
-    build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
-    return responseData;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
-async function getJson(endpoint) {
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
-
-  const responseData = await response.json();
-  return responseData;
-}
-
-async function postJsonGetData(data, endpoint, method = "POST") {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
-
-  const responseData = await response.json();
-  return responseData;
-}
-
-async function postJsonGetStatus(data, endpoint, method = "POST") {
-  // Create an options object for the fetch request
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  // Make the POST request using the fetch API
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
-  } else {
-    console.log(response.status);
-    return response;
-  }
-}
 
 async function strategy_indicators(endpoint) {
   try {
@@ -538,3 +453,77 @@ async function backtest() {
 //     console.error("Fetch error:", error);
 //   }
 // }
+async function update_chart(endpoint) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+    remove_element("indicator_cond");
+    build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function getJson(endpoint) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+}
+
+async function postJsonGetData(data, endpoint, method = "POST") {
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+}
+
+async function postJsonGetStatus(data, endpoint, method = "POST") {
+  // Create an options object for the fetch request
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  // Make the POST request using the fetch API
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  } else {
+    console.log(response.status);
+    return response;
+  }
+}
