@@ -359,45 +359,46 @@ class CondController {
   }
 }
 
-const condController = new CondController();
-const taskManager1 = condController.createCondManager("buy_cond_list1");
-const taskManager2 = condController.createCondManager("sell_cond_list2");
+// const condController = new CondController();
+// const taskManager1 = condController.createCondManager("buy_cond_list1");
+// const taskManager2 = condController.createCondManager("sell_cond_list2");
 
-//side and element to CLONE
-document.querySelector("#new_todo_buy").addEventListener("click", () => {
-  createList("buy", "buy_cond_list1");
-});
+// document.querySelector("#new_todo_buy").addEventListener("click", () => {
+//   createList("buy", "insert_here");
+// });
 
-document.querySelector("#new_todo_sell").addEventListener("click", () => {
-  createList("sell", "sell_cond_list2");
-});
+// document.querySelector("#new_todo_sell").addEventListener("click", () => {
+//   createList("sell", "insert_here");
+// });
 
-async function createList(side, element) {
-  const newId = await newList();
-  console.log(newId);
-  condController.createCondManager(newId);
+// async function createList(side, element) {
+//   const newId = await newList();
+//   console.log(newId);
+//   condController.createCondManager(newId);
 
-  async function newList() {
-    const cloneContainer = document.querySelector(`.clone_${side}`);
-    const append_here = document.querySelector(`${side}_clones`);
-    const clone = cloneContainer.cloneNode(true);
+//   async function newList() {
+//     const cloneContainer = document.querySelector(`.clone_template`);
+//     const append_here = document.querySelector(`${side}_clones`);
+//     console.log(cloneContainer, "clone_container");
+//     const clone = cloneContainer.cloneNode(true);
 
-    const elementsToRemove = clone.querySelectorAll(`[taskid]`);
-    elementsToRemove.forEach((element) => {
-      element.parentNode.removeChild(element);
-    });
+//     // const elementsToRemove = clone.querySelectorAll(`[taskid]`);
+//     // elementsToRemove.forEach((element) => {
+//     //   element.parentNode.removeChild(element);
+//     // });
 
-    const cond_list_content = clone.querySelector(`.${element}`);
-    console.log(cond_list_content, "cond_list");
-    const newId = side + "_cond_list" + (condController.count() + 1);
-    cond_list_content.classList.add(newId);
-    console.log(newId);
+//     const cond_list_content = clone.querySelector(`.${element}`);
 
-    // Create TaskManager after updating the id
-    append_here.appendChild(clone);
-    return newId;
-  }
-}
+//     console.log(cond_list_content, "cond_list");
+//     const newId = side + "_cond_list" + (condController.count() + 1);
+//     cond_list_content.classList.add(newId);
+//     console.log(newId);
+
+//     // Create TaskManager after updating the id
+//     append_here.appendChild(clone);
+//     return newId;
+//   }
+// }
 
 document.getElementById("toggleButton").addEventListener("click", toggleConditions);
 
