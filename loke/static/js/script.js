@@ -50,19 +50,20 @@ async function create_list(side) {
 
 async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
-  indicators_data = await update_chart("init_strategy");
+  const data = await update_chart("init_strategy");
   remove_element("buy_cond2");
   remove_element("sell_cond2");
   //build buttons also build indicator dataframe related buttons
   //params: array, element_id, element, class_name
 
-  console.log(indicators_data, "indicators_data.indicators");
-  await build_indicator_inputs(indicators_data.indicators);
+  console.log(data, "data.indicators");
+  await build_indicator_inputs(data.indicators);
   await build_conditions();
   await build_optimization_results();
   await build_condition_lists();
   await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
+  build_buttons(data.cols, "conditions", "button", "indicator_cond");
 }
 
 //
@@ -95,6 +96,7 @@ async function build_condition_lists() {
 }
 
 async function build_buttons(array, element_id, element, class_name) {
+  // adds all types of buttons to frontend(also the indicators)
   document.querySelectorAll(`.${element_id}`).forEach((container) => {
     for (let i = 0; i < array.length; i++) {
       let button = document.createElement(element);
@@ -102,7 +104,8 @@ async function build_buttons(array, element_id, element, class_name) {
       button.classList.add(class_name);
       container.appendChild(button);
     }
-    // dataframe column buttons
+
+    // dataframe column buttons functionality
     const buttons = container.querySelectorAll(`.${class_name}`);
     buttons.forEach(function (button) {
       button.addEventListener("click", function (event) {
@@ -112,12 +115,13 @@ async function build_buttons(array, element_id, element, class_name) {
         } else {
           cond.push({ cond: event.target.innerText });
         }
-        document.querySelector(".cond").textContent = `${show_string(cond)}`;
+        //UPDATES THE CURRENT UNSAVED CONDITION STRING
+        document.querySelectorAll(".cond").forEach((cond_string) => {
+          cond_string.textContent = `${show_string(cond)}`;
+        });
       });
     });
   });
-
-
 }
 async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
@@ -125,45 +129,26 @@ async function build_conditions() {
   // remove_element("buy_cond2");
   // remove_element("sell_cond2");
   console.log(sell_conds, buy_conds, "sell_conds, buy_conds");
-  // insert_frontend(sell_conds, "sell_cond2");
-  // insert_frontend(buy_conds, "buy_cond2");
+  insert_frontend(sell_conds, "sell_cond2");
+  insert_frontend(buy_conds, "buy_cond2");
   //cond, suffix, element to insert into
   optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
 }
 
 function insert_frontend(cond, element) {
-  const cond_list = document.querySelector(`.${element}`);
-  console.log(cond_list, element, "cond_list");
-  for (let i = 0; i < cond.length; i++) {
-    const listItem = document.createElement("li");
+  const conds_db = document.querySelectorAll(`.${element}`).forEach((saved_conds) => {
+    console.log(saved_conds, element, "saved_conds");
+    for (let i = 0; i < cond.length; i++) {
+      const listItem = document.createElement("li");
 
-    listItem.textContent = unpack(JSON.parse(cond[i]));
-    cond_list.appendChild(listItem);
-  }
-}
-function unpack(cond) {
-  return (
-    cond
-      .flat()
-      // each obj returns as array, with values joined together in a string
-      // there is only 1 val pr array.
-      .map((obj) => Object.values(obj).join("")) //* implicit return *
-      .join(" ")
-  );
+      listItem.textContent = unpack(JSON.parse(cond[i]));
+      saved_conds.appendChild(listItem);
+      console.log(saved_conds, "saved_conds!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+  });
 }
 
-function which_side(inputString) {
-  let str = inputString.toUpperCase().includes("BUY");
-  let side;
-  if (str) {
-    side = "BUY";
-  } else {
-    side = "SELL";
-  }
-
-  return side;
-}
 function load_params() {
   let arr = [];
   rows = document.querySelectorAll(".param");
@@ -386,26 +371,6 @@ async function input_params(key, type, value, field) {
 
 // }
 
-async function strategy_indicators(endpoint) {
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      const responseData = await response.json();
-    } else {
-      console.error("Error:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
 function remove_element(class_name) {
   let elements = document.querySelectorAll(`.${class_name}`);
 
@@ -419,8 +384,8 @@ async function save_cond_buy() {
   conditions.push(cond);
   // reset global cond
   cond = [];
-  document.querySelectorAll("cond").forEach((cond) => {
-    cond.textContent = `${show_string(cond)}`;
+  document.querySelectorAll("cond").forEach((condbuy) => {
+    condbuy.textContent = `${show_string(cond)}`;
   });
   document.querySelectorAll("saved_conds").forEach((saved_cond) => {
     saved_cond.textContent = `${show_string(conditions)}`;
@@ -430,9 +395,11 @@ async function save_cond_buy() {
   console.log(data.buy_cond);
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
-  console.log(response);
   let build_conds = await build_conditions();
-  document.getElementById("buy_cond2").textContent = `${build_conds}`;
+  document.querySelectorAll("buy_cond2").forEach((bconds) => {
+    bconds.textContent = `${build_conds}`;
+  });
+  console.log(build_conds, "build_conds");
   conditions = [];
 }
 
@@ -451,7 +418,7 @@ async function save_cond_sell() {
   });
   data.sell_cond = JSON.stringify(conditions_sell);
   data.side = "sell";
-  console.log(data.sell_cond);
+
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
   let build_conds = await build_conditions();
@@ -459,7 +426,13 @@ async function save_cond_sell() {
     sellcond2.textContent = `${build_conds}`;
   });
   conditions_sell = [];
+  console.log(build_conds, "build_conds");
 }
+
+// ##################################################################################
+// ##################################################################################
+// ##################################################################################
+// ##################################################################################
 
 function del_last() {
   cond.pop();
@@ -604,7 +577,25 @@ async function postJsonGetData(data, endpoint, method = "POST") {
   const responseData = await response.json();
   return responseData;
 }
+async function strategy_indicators(endpoint) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
+    if (response.ok) {
+      const responseData = await response.json();
+    } else {
+      console.error("Error:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 async function postJsonGetStatus(data, endpoint, method = "POST") {
   // Create an options object for the fetch request
   const options = {
@@ -660,3 +651,25 @@ async function postJsonGetStatus(data, endpoint, method = "POST") {
 //   append_here.appendChild(clone);
 //   return newId;
 // }
+function unpack(cond) {
+  return (
+    cond
+      .flat()
+      // each obj returns as array, with values joined together in a string
+      // there is only 1 val pr array.
+      .map((obj) => Object.values(obj).join("")) //* implicit return *
+      .join(" ")
+  );
+}
+
+function which_side(inputString) {
+  let str = inputString.toUpperCase().includes("BUY");
+  let side;
+  if (str) {
+    side = "BUY";
+  } else {
+    side = "SELL";
+  }
+
+  return side;
+}
