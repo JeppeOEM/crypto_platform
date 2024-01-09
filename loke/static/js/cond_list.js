@@ -1,5 +1,7 @@
 "use strict";
 import { selected_cond_instance } from "./globals.js";
+import { save_cond_buy } from "./conditions.js";
+import { save_cond_sell } from "./conditions.js";
 const selected_cond = selected_cond_instance;
 
 export class CondController {
@@ -163,12 +165,21 @@ class CondManager {
   }
 
   handleTaskButton() {
-    const taskText = this.TodoContent.querySelector(".txtTask");
+    // const taskText = this.TodoContent.querySelector(".txtTask");
     const currentTask = this.TodoContent.querySelector(".currentTask");
 
-    if (taskText.value.trim() === "") {
-      taskText.focus();
-      return false;
+    // if (taskText.value.trim() === "") {
+    //   taskText.focus();
+    //   return false;
+    // }
+    //check if the button is the add button or the update button
+
+    if (this.TodoContent.classList.contains("buy_side")) {
+      save_cond_buy();
+    } else if (this.TodoContent.classList.contains("sell_side")) {
+      save_cond_sell();
+    } else {
+      console.log("classList not containing buy_side or sell_side");
     }
 
     if (this.TodoContent.querySelector(".btnOk").value === this.addTaskText) {
@@ -177,20 +188,19 @@ class CondManager {
       this.updateTask();
     }
 
-    taskText.value = "";
+    // taskText.value = "";
     currentTask.style.display = "none";
   }
 
   addTaskToList() {
     const task = document.createElement("div");
-    const taskText = document.querySelector(".currentTask.modal");
-    console.log(taskText.value, "taskText");
+    // const taskText = this.TodoContent.querySelector(".currentTask.modal");
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const newID = parseInt(currentTask.getAttribute("currentid")) + 1;
 
     task.classList.add("task");
     task.classList.add("toDo");
-    task.innerText = taskText.value;
+    task.innerText = selected_cond.get_string();
     task.setAttribute("taskId", currentTask.getAttribute("currentid"));
     currentTask.setAttribute("lastid", newID);
     task.addEventListener("click", (e) => this.taskClick(e));

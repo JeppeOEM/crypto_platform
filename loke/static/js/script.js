@@ -10,8 +10,10 @@ window.del_last_buy_cond = del_last_buy_cond;
 window.del_last_sell_cond = del_last_sell_cond;
 window.del_last = del_last;
 window.save_cond_sell = save_cond_sell;
+window.save_cond_buy = save_cond_buy;
 
 const selected_cond = selected_cond_instance;
+
 const condController = new CondController();
 
 const data = {
@@ -59,6 +61,7 @@ function value_cond(btn) {
   document.querySelectorAll(".cond").forEach((cond_string) => {
     cond_string.textContent = `${show_string(cond)}`;
   });
+  selected_cond.set_string(show_string(cond));
 }
 
 async function create_list(side) {
@@ -105,6 +108,7 @@ async function build_condition_lists() {
       let cond_modal = clone.querySelector(".currentTask");
       cond_modal.dataset.side = "buy";
       insert_name.classList.add(element_name);
+      insert_name.classList.add(`${side}_side`);
       if (side == "buy") {
         insert_name.dataset.primary_key = data.buy_list_id;
       } else {
@@ -145,11 +149,12 @@ async function build_buttons(array, element_id, element, class_name) {
         document.querySelectorAll(".cond").forEach((cond_string) => {
           cond_string.textContent = `${show_string(cond)}`;
         });
+        selected_cond.set_string(show_string(cond));
       });
     });
   });
 }
-async function build_conditions() {
+export async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
 
   // remove_element("buy_cond2");
@@ -405,57 +410,59 @@ function remove_element(class_name) {
   });
 }
 
-async function save_cond_buy() {
-  //indicators
-  conditions.push(cond);
-  // reset global cond
-  cond = [];
-  document.querySelectorAll("cond").forEach((condbuy) => {
-    condbuy.textContent = `${show_string(cond)}`;
-  });
-  document.querySelectorAll("saved_conds").forEach((saved_cond) => {
-    saved_cond.textContent = `${show_string(conditions)}`;
-  });
-  data.buy_cond = JSON.stringify(conditions);
-  data.side = "buy";
-  data.primary_key = selected_cond.get();
-  console.log(data.buy_cond);
-  let response = await postJsonGetStatus(data, "condition");
-  console.log(response);
-  let build_conds = await build_conditions();
-  document.querySelectorAll("buy_cond2").forEach((bconds) => {
-    bconds.textContent = `${build_conds}`;
-  });
-  console.log(build_conds, "build_conds");
-  conditions = [];
-}
+// export async function save_cond_buy() {
+//   //indicators
+//   conditions.push(cond);
+//   // reset global cond
+//   cond = [];
+//   document.querySelectorAll("cond").forEach((condbuy) => {
+//     condbuy.textContent = `${show_string(cond)}`;
+//   });
+//   document.querySelectorAll("saved_conds").forEach((saved_cond) => {
+//     saved_cond.textContent = `${show_string(conditions)}`;
+//   });
+//   data.buy_cond = JSON.stringify(conditions);
+//   data.side = "buy";
+//   data.primary_key = selected_cond.get();
+//   console.log(data.buy_cond);
+//   let response = await postJsonGetStatus(data, "condition");
+//   console.log(response);
+//   let build_conds = await build_conditions();
+//   document.querySelectorAll("buy_cond2").forEach((bconds) => {
+//     bconds.textContent = `${build_conds}`;
+//   });
+//   console.log(build_conds, "build_conds");
+//   conditions = [];
+//   selected_cond.set_string("");
+// }
 
-async function save_cond_sell() {
-  //indicators
-  //cond_sell is global variable
-  conditions_sell.push(cond);
-  // reset global cond
-  cond = [];
-  document.querySelectorAll("cond").forEach((cond) => {
-    cond.textContent = `${show_string(cond_sell)}`;
-  });
+// export async function save_cond_sell() {
+//   //indicators
+//   //cond_sell is global variable
+//   conditions_sell.push(cond);
+//   // reset global cond
+//   cond = [];
+//   document.querySelectorAll("cond").forEach((cond) => {
+//     cond.textContent = `${show_string(cond_sell)}`;
+//   });
 
-  document.querySelectorAll("saved_conds_sell").forEach((saved_cond) => {
-    saved_cond.textContent = `${show_string(conditions_sell)}`;
-  });
-  data.sell_cond = JSON.stringify(conditions_sell);
-  data.side = "sell";
-  data.primary_key = selected_cond.get();
+//   document.querySelectorAll("saved_conds_sell").forEach((saved_cond) => {
+//     saved_cond.textContent = `${show_string(conditions_sell)}`;
+//   });
+//   data.sell_cond = JSON.stringify(conditions_sell);
+//   data.side = "sell";
+//   data.primary_key = selected_cond.get();
 
-  let response = await postJsonGetStatus(data, "condition");
-  console.log(response);
-  let build_conds = await build_conditions();
-  document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
-    sellcond2.textContent = `${build_conds}`;
-  });
-  conditions_sell = [];
-  console.log(build_conds, "build_conds");
-}
+//   let response = await postJsonGetStatus(data, "condition");
+//   console.log(response);
+//   let build_conds = await build_conditions();
+//   document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
+//     sellcond2.textContent = `${build_conds}`;
+//   });
+//   conditions_sell = [];
+//   console.log(build_conds, "build_conds");
+//   selected_cond.set_string("");
+// }
 
 // ##################################################################################
 // ##################################################################################
@@ -467,6 +474,7 @@ function del_last() {
   document.querySelectorAll(".cond").forEach((unsaved_cond) => {
     unsaved_cond.textContent = `${show_string(cond)}`;
   });
+  selected_cond.set_string(show_string(cond));
 }
 
 function del_last_sell_cond() {
@@ -474,6 +482,7 @@ function del_last_sell_cond() {
   document.querySelectorAll("conditions_sell").forEach((cond_sell) => {
     cond_sell.textContent = `${show_string(cond_sell)}`;
   });
+  selected_cond.set_string(show_string(cond));
 }
 
 function del_last_buy_cond() {
@@ -481,9 +490,11 @@ function del_last_buy_cond() {
   document.querySelectorAll("conditions").forEach((cond) => {
     cond.textContent = `${show_string(cond)}`;
   });
+  selected_cond.set_string(show_string(cond));
 }
 
 function show_string(array_objs) {
+  selected_cond.set_obj_array(array_objs);
   let arr_strings = [];
   for (let i = 0; i < array_objs.length; i++)
     for (const [key, value] of Object.entries(array_objs[i])) {

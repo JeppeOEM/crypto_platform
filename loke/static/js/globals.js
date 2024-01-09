@@ -1,14 +1,32 @@
 class SelectedCond {
   constructor() {
-    this._selectedCond;
+    this._cond_id;
+    this._cond_string;
+    this._cond_obj_array = [];
   }
 
   get() {
-    return this._selectedCond;
+    return this._cond_id;
   }
 
   set(value) {
-    this._selectedCond = value;
+    this._cond_id = value;
+  }
+
+  get_string() {
+    return this._cond_string;
+  }
+
+  set_string(value) {
+    this._cond_string = value;
+  }
+
+  get_obj_array() {
+    return this._cond_obj_array;
+  }
+
+  set_obj_array(value) {
+    this._cond_obj_array = value;
   }
 }
 
