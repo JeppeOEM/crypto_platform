@@ -200,6 +200,7 @@ class CondManager {
 
     task.classList.add("task");
     task.classList.add("toDo");
+    console.log(selected_cond.get_string());
     task.innerText = selected_cond.get_string();
     task.setAttribute("taskId", currentTask.getAttribute("currentid"));
     currentTask.setAttribute("lastid", newID);

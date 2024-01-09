@@ -53,14 +53,14 @@ function value_cond(btn) {
   const parentDiv = btn.parentElement;
   const inputElement = parentDiv.querySelector(".value_cond");
   var value = inputElement.value;
-  cond.push({ val: parseFloat(value) });
-
+  // cond.push({ val: parseFloat(value) });
+  selected_cond.add_cond({ val: parseFloat(value) });
   // Assuming you have an element with class 'unsaved_cond'
 
   document.querySelectorAll(".cond").forEach((cond_string) => {
-    cond_string.textContent = `${show_string(cond)}`;
+    // cond_string.textContent = `${show_string(cond)}`;
+    cond_string.textContent = `${show_string(selected_cond.get_cond())}`;
   });
-  selected_cond.set_string(show_string(cond));
 }
 
 async function create_list(side) {
@@ -141,16 +141,18 @@ async function build_buttons(array, element_id, element, class_name) {
         let text = event.target.innerText;
         //USES GLOBAL COND ARRAY
         if (class_name == "indicator_cond") {
-          cond.push({ ind: event.target.innerText });
+          // cond.push({ ind: event.target.innerText });
+          selected_cond.add_cond({ ind: event.target.innerText });
           console.log(cond);
         } else {
-          cond.push({ cond: event.target.innerText });
+          selected_cond.add_cond({ cond: event.target.innerText });
+          // cond.push({ cond: event.target.innerText });
         }
         //UPDATES THE CURRENT UNSAVED CONDITION STRING
         document.querySelectorAll(".cond").forEach((cond_string) => {
-          cond_string.textContent = `${show_string(cond)}`;
+          // cond_string.textContent = `${show_string(cond)}`;
+          cond_string.textContent = `${show_string(selected_cond.get_cond())}`;
         });
-        selected_cond.set_string(show_string(cond));
       });
     });
   });
@@ -203,6 +205,7 @@ function load_params() {
 function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
   const cond_arr = [];
+  console.log(conditions, "conditions");
   //global conditions arrayy
   conditions.forEach((cond) => {
     cond = JSON.parse(cond);

@@ -1,9 +1,10 @@
+import { show_string } from "./functions/show_string.js";
 class SelectedCond {
   constructor() {
     this._cond_id;
     this._cond_string;
     this._cond_obj_array = [];
-    this._conditions = [];
+    this._cond = [];
   }
 
   get() {
@@ -18,24 +19,20 @@ class SelectedCond {
     return this._cond_string;
   }
 
-  set_string(value) {
-    this._cond_string = value;
+  set_string() {
+    this._cond_string = show_string(this._cond);
   }
 
-  get_obj_array() {
-    return this._cond_obj_array;
+  get_cond() {
+    return this._cond;
   }
 
-  set_obj_array(value) {
-    this._cond_obj_array = value;
+  add_cond(value) {
+    this._cond.push(value);
   }
 
-  get_conditions() {
-    return this._conditions;
-  }
-
-  set_conditions(value) {
-    this._conditions = value;
+  reset_cond() {
+    this._cond = [];
   }
 }
 

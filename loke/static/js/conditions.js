@@ -22,9 +22,11 @@ const data = {
 
 export async function save_cond_buy() {
   //indicators
-  conditions.push(cond);
+  conditions.push(selected_cond.get_cond());
   // reset global cond
-  cond = [];
+  selected_cond.set_string();
+  selected_cond.reset_cond();
+  // cond = [];
   document.querySelectorAll("cond").forEach((condbuy) => {
     condbuy.textContent = `${show_string(cond)}`;
   });
@@ -32,6 +34,7 @@ export async function save_cond_buy() {
     saved_cond.textContent = `${show_string(conditions)}`;
   });
   data.buy_cond = JSON.stringify(conditions);
+  console.log(data.buy_cond);
   data.side = "buy";
   data.primary_key = selected_cond.get();
   console.log(data.buy_cond);
@@ -43,7 +46,6 @@ export async function save_cond_buy() {
   //   });
   //   console.log(build_conds, "build_conds");
   conditions = [];
-  selected_cond.set_string("");
 }
 
 export async function save_cond_sell() {
@@ -71,7 +73,7 @@ export async function save_cond_sell() {
   //   });
   conditions_sell = [];
   console.log(build_conds, "build_conds");
-  selected_cond.set_string("");
+  selected_cond.reset_cond();
 }
 
 function del_last() {
