@@ -1,6 +1,8 @@
 "use strict";
+import { selected_cond_instance } from "./globals.js";
+const selected_cond = selected_cond_instance;
 
-class CondController {
+export class CondController {
   constructor() {
     this.taskManagers = [];
     this.obj = {};
@@ -113,10 +115,13 @@ class CondManager {
   }
 
   addTask() {
+    //global variable for the db
+    selected_cond.set(parseInt(this.TodoContent.dataset.primary_key));
+    console.log(selected_cond.get, "selected_cond");
+    console.log(selected_cond, "selected_cond");
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const txtTask = this.TodoContent.querySelector(".txtTask");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
-
     txtTask.value = "";
     this.TodoContent.querySelector(".btnOk").value = this.addTaskText;
     currentTask.setAttribute("currentid", newID);
@@ -178,7 +183,8 @@ class CondManager {
 
   addTaskToList() {
     const task = document.createElement("div");
-    const taskText = this.TodoContent.querySelector(".txtTask");
+    const taskText = document.querySelector(".currentTask.modal");
+    console.log(taskText.value, "taskText");
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const newID = parseInt(currentTask.getAttribute("currentid")) + 1;
 

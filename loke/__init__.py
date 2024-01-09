@@ -1,22 +1,21 @@
-import os
-import pandas_ta as ta
-from flask import Flask
-from flask_caching import Cache
-
-from flask import Flask, request, jsonify
-from flask_caching import Cache
-
-from loke.database import db
-
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash
 from .endpoints import auth
 from .endpoints.strategy import strategy
 from .endpoints.machine_learning import markov
 from .endpoints.optimization import optimization
 from .endpoints.optimization import conditions
-
+from flask import Flask, request, session, g, redirect, url_for, abort, \
+    render_template, flash
+from loke.database import db
+from flask import Flask, request, jsonify
 from flask_caching import Cache
+from flask import Flask
+import pandas_ta as ta
+import os
+import mimetypes
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/css', '.css')
+###
+
 
 # General Info:
 # Dataframe column name can be sensitive to change (_BUY / _SELL)
@@ -52,7 +51,7 @@ def create_app(test_config=None):
 
 # tell Flask to use the above defined config
 
-        # load the instance config, if it exists, when not testing
+    # load the instance config, if it exists, when not testing
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:

@@ -63,8 +63,9 @@ CREATE INDEX idx_indicator_name ON strategy_indicators(indicator_name);
 CREATE TABLE sell_conditions (
     sell_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
-    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     fk_strategy_id INT NOT NULL,
+    fk_sell_list_id INT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     sell_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT,
@@ -75,6 +76,7 @@ CREATE TABLE buy_conditions (
     buy_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
+    fk_buy_list_id INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     buy_eval VARCHAR(255),
     optimizer_params VARCHAR(255),

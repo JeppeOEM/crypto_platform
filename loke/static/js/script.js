@@ -1,5 +1,17 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
+import { selected_cond_instance } from "./globals.js";
+import { CondController } from "./cond_list.js";
+window.optimize = optimize;
+window.value_cond = value_cond;
+window.load_params = load_params;
+window.select_indicator = select_indicator;
+window.del_last_buy_cond = del_last_buy_cond;
+window.del_last_sell_cond = del_last_sell_cond;
+window.del_last = del_last;
+window.save_cond_sell = save_cond_sell;
+
+const selected_cond = selected_cond_instance;
 const condController = new CondController();
 
 const data = {
@@ -15,6 +27,11 @@ let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
 
+// export { selected_cond };
+function test() {
+  console.log("test");
+}
+window.test = test;
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();
@@ -43,6 +60,7 @@ function value_cond(btn) {
     cond_string.textContent = `${show_string(cond)}`;
   });
 }
+
 async function create_list(side) {
   const status = postJsonGetStatus(data, "cond_list?side=" + side);
   remove_element("cond_list");
@@ -83,10 +101,17 @@ async function build_condition_lists() {
     json.forEach((data) => {
       let element_name = `${side}_cond_list_${data.frontend_id}`;
       const clone = clone_template.content.cloneNode(true);
-      let insert_name = clone.querySelector(".insert_here");
+      let insert_name = clone.querySelector(".single_list");
       let cond_modal = clone.querySelector(".currentTask");
       cond_modal.dataset.side = "buy";
       insert_name.classList.add(element_name);
+      if (side == "buy") {
+        insert_name.dataset.primary_key = data.buy_list_id;
+      } else {
+        insert_name.dataset.primary_key = data.sell_list_id;
+      }
+      console.log(data.buy_list_id, "data.buy_list_id");
+      insert_name.dataset.frontend_id = data.frontend_id;
       // const cond_wrapper = clone.querySelector(`.clone_${side}`);
       // cond_wrapper.dataset.id = data.buy_list_id;
       container.appendChild(clone);
@@ -171,7 +196,7 @@ function load_params() {
 
 function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
-  cond_arr = [];
+  const cond_arr = [];
   conditions.forEach((cond) => {
     cond = JSON.parse(cond);
     cond_arr.push(cond);
@@ -193,7 +218,7 @@ function optimizer_params(conditions, suffix, element) {
 //runs if there is saved indicators in the db that belongs to the strategy
 async function build_indicator_inputs(data, category = null) {
   //returns new array with parsed values
-  indicators = data.map((indicator) => {
+  let indicators = data.map((indicator) => {
     let id = JSON.parse(indicator.id);
     let category = indicator.category;
     indicator = JSON.parse(indicator.settings);
@@ -393,6 +418,7 @@ async function save_cond_buy() {
   });
   data.buy_cond = JSON.stringify(conditions);
   data.side = "buy";
+  data.primary_key = selected_cond.get();
   console.log(data.buy_cond);
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
@@ -419,6 +445,7 @@ async function save_cond_sell() {
   });
   data.sell_cond = JSON.stringify(conditions_sell);
   data.side = "sell";
+  data.primary_key = selected_cond.get();
 
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
@@ -507,6 +534,8 @@ async function backtest() {
   let response = await postJsonGetData(data, "backtest");
   document.getElementById("cond").textContent = JSON.stringify(response.message);
 }
+
+window.backtest = backtest;
 
 // async function getJson(endpoint) {
 //   try {
@@ -618,26 +647,26 @@ async function postJsonGetStatus(data, endpoint, method = "POST") {
   }
 }
 
-async function postJsonGetStatus(data, endpoint, method = "POST") {
-  // Create an options object for the fetch request
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
+// async function postJsonGetStatus(data, endpoint, method = "POST") {
+//   // Create an options object for the fetch request
+//   const options = {
+//     method: method,
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   };
 
-  // Make the POST request using the fetch API
-  let response = await fetch(endpoint, options);
+//   // Make the POST request using the fetch API
+//   let response = await fetch(endpoint, options);
 
-  if (!response.ok) {
-    throw new Error("Request failed");
-  } else {
-    console.log(response.status);
-    return response;
-  }
-}
+//   if (!response.ok) {
+//     throw new Error("Request failed");
+//   } else {
+//     console.log(response.status);
+//     return response;
+//   }
+// }
 // async function createList(side, element) {
 //   const newId = await newList(side, element);
 //   console.log(newId);

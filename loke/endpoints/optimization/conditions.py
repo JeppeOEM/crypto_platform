@@ -104,8 +104,8 @@ def condition(id):
 
             try:
                 db.execute(
-                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval) VALUES (?, ?, ?)',
-                    (id, g.user['id'], data['buy_cond'])
+                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_buy_list_id) VALUES (?, ?, ?, ?)',
+                    (id, g.user['id'], data['buy_cond'], data['primary_key'])
                 )
                 db.commit()
                 return jsonify({'message': 'condition saved to database'}), 200
@@ -126,8 +126,8 @@ def condition(id):
             try:
                 # Insert the indicator if it doesn't exist
                 db.execute(
-                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
-                    (id, g.user['id'], data['sell_cond'])
+                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_sell_list_id) VALUES (?, ?, ?, ?)',
+                    (id, g.user['id'], data['sell_cond'], data['primary_key'])
                 )
                 db.commit()
                 return jsonify({'message': 'condition saved to database'})

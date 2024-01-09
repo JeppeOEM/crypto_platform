@@ -11,7 +11,7 @@
     <button class="bluebtn" id="update_strat_text">update_strat_text</button>
 
     <!-- NOT SURE IF WORKING -->
-
+    <div class="dodo"></div>
     <button class="bluebtn" id="save_edit_db">save_edit_db</button>
 
     <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
@@ -20,7 +20,7 @@
     <form action="{{ url_for('strategy.truncate', id=strategy['strategy_id']) }}" method="post">
       <input class="bluebtn" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
     </form>
-    <button class="fuck">fuck</button>
+    <button onclick="test()" class="fuck">fuck</button>
   </div>
 </div>
 {% endblock %} {% block content %}
@@ -169,7 +169,7 @@
 <!-- Condition list Template-->
 <template class="clone_template">
   <div class="cond_list flex_basis25">
-    <div class="insert_here">
+    <div class="single_list">
       <div>
         <main class="listContent">
           <div class="flex_horizontal space_between">
@@ -202,7 +202,6 @@
           <form action="">
             <input type="text" value="lol" class="txtTask" />
             <!-- need button so other form dont submit it -->
-            <button type="submit"></button>
           </form>
           <div class="cond"></div>
           <div class="conditions"></div>
