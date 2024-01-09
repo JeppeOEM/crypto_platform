@@ -31,6 +31,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function value_cond(btn) {
+  const parentDiv = btn.parentElement;
+  const inputElement = parentDiv.querySelector(".value_cond");
+  var value = inputElement.value;
+  cond.push({ val: parseFloat(value) });
+
+  // Assuming you have an element with class 'unsaved_cond'
+  document.querySelectorAll(".unsaved_cond").forEach((unsaved_cond) => {
+    unsaved_cond.textContent = show_string(cond);
+  });
+}
 async function create_list(side) {
   const status = postJsonGetStatus(data, "cond_list?side=" + side);
   remove_element("cond_list");
@@ -91,6 +102,7 @@ async function build_buttons(array, element_id, element, class_name) {
       button.classList.add(class_name);
       container.appendChild(button);
     }
+    // dataframe column buttons
     const buttons = container.querySelectorAll(`.${class_name}`);
     buttons.forEach(function (button) {
       button.addEventListener("click", function (event) {
@@ -105,27 +117,7 @@ async function build_buttons(array, element_id, element, class_name) {
     });
   });
 
-  document.querySelectorAll(`.${element_id}`).forEach((container) => {
-    for (let i = 0; i < array.length; i++) {
-      let button = document.createElement(element);
-      button.innerText = array[i];
-      button.classList.add(class_name);
-      container.appendChild(button);
-    }
-    const buttons = container.querySelectorAll(`.${class_name}`);
-    buttons.forEach(function (button) {
-      button.addEventListener("click", function (event) {
-        let text = event.target.innerText;
-        if (class_name == "indicator_cond") {
-          cond.push({ ind: event.target.innerText });
-        } else {
-          cond.push({ cond: event.target.innerText });
-        }
-        document.querySelector(".cond").textContent = `${show_string(cond)}`;
-      });
-    });
-  });
-  // let container = document.getElementById(element_id);
+
 }
 async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
@@ -422,12 +414,6 @@ function remove_element(class_name) {
   });
 }
 
-function value_cond() {
-  let value_cond = document.getElementById("value_cond").value;
-  cond.push({ val: parseFloat(value_cond) });
-  document.getElementById("cond").textContent = `${show_string(cond)}`;
-}
-
 async function save_cond_buy() {
   //indicators
   conditions.push(cond);
@@ -489,14 +475,12 @@ function del_last_sell_cond() {
   });
 }
 
-function del_last_buy_cond() {  
+function del_last_buy_cond() {
   conditions.pop();
   document.querySelectorAll("conditions").forEach((cond) => {
     cond.textContent = `${show_string(cond)}`;
   });
 }
-
-
 
 function show_string(array_objs) {
   let arr_strings = [];

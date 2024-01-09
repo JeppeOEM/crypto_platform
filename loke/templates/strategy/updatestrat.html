@@ -88,8 +88,6 @@
 
 <!-- insert comparison buttons  -->
 <div class="compare"></div>
-<div class="compare"></div>
-<div class="compare"></div>
 
 <span id="backtest_result"></span>
 <h2>sell</h2>
@@ -207,6 +205,8 @@
 
           <form action="">
             <input type="text" value="lol" class="txtTask" />
+            <!-- need button so other form dont submit it -->
+            <button type="submit"></button>
           </form>
           <div class="cond"></div>
           <div class="conditions"></div>
@@ -214,8 +214,10 @@
           <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
           <div class="or_and"></div>
           <label for="value_cond">value</label>
-          <input id="value_cond" type="number" />
-          <button onclick="value_cond()" id="value_cond">Add value</button>
+          <div>
+            <input name="value_cond" class="value_cond" type="number" />
+            <button onclick="value_cond(this)" class="smallbtn">Add</button>
+          </div>
           <br />
 
           <div class="flex_horizontal">
