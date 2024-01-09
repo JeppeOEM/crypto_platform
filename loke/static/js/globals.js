@@ -3,6 +3,7 @@ class SelectedCond {
     this._cond_id;
     this._cond_string;
     this._cond_obj_array = [];
+    this._conditions = [];
   }
 
   get() {
@@ -27,6 +28,14 @@ class SelectedCond {
 
   set_obj_array(value) {
     this._cond_obj_array = value;
+  }
+
+  get_conditions() {
+    return this._conditions;
+  }
+
+  set_conditions(value) {
+    this._conditions = value;
   }
 }
 

@@ -2,15 +2,14 @@
 //postIndicatorData(`add_indicator`);
 import { selected_cond_instance } from "./globals.js";
 import { CondController } from "./cond_list.js";
+import { show_string } from "./functions/show_string.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
 window.load_params = load_params;
 window.select_indicator = select_indicator;
-window.del_last_buy_cond = del_last_buy_cond;
-window.del_last_sell_cond = del_last_sell_cond;
-window.del_last = del_last;
-window.save_cond_sell = save_cond_sell;
-window.save_cond_buy = save_cond_buy;
+
+// window.save_cond_sell = save_cond_sell;
+// window.save_cond_buy = save_cond_buy;
 
 const selected_cond = selected_cond_instance;
 
@@ -24,8 +23,8 @@ const data = {
   description: "description",
 };
 
-let conditions = [];
-let conditions_sell = [];
+// let conditions = [];
+// let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
 
@@ -140,8 +139,10 @@ async function build_buttons(array, element_id, element, class_name) {
     buttons.forEach(function (button) {
       button.addEventListener("click", function (event) {
         let text = event.target.innerText;
+        //USES GLOBAL COND ARRAY
         if (class_name == "indicator_cond") {
           cond.push({ ind: event.target.innerText });
+          console.log(cond);
         } else {
           cond.push({ cond: event.target.innerText });
         }
@@ -202,6 +203,7 @@ function load_params() {
 function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
   const cond_arr = [];
+  //global conditions arrayy
   conditions.forEach((cond) => {
     cond = JSON.parse(cond);
     cond_arr.push(cond);
@@ -325,7 +327,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     form_id = form_id.slice(4);
     // let formdata = event.currentTarget.customParam;
     const formData = new FormData(form);
-    form_arr = [["kind", legend.innerText]];
+    let form_arr = [["kind", legend.innerText]];
     formData.forEach((value, key) => {
       form_arr.push([key, value]);
     });
@@ -469,40 +471,6 @@ function remove_element(class_name) {
 // ##################################################################################
 // ##################################################################################
 
-function del_last() {
-  cond.pop();
-  document.querySelectorAll(".cond").forEach((unsaved_cond) => {
-    unsaved_cond.textContent = `${show_string(cond)}`;
-  });
-  selected_cond.set_string(show_string(cond));
-}
-
-function del_last_sell_cond() {
-  conditions_sell.pop();
-  document.querySelectorAll("conditions_sell").forEach((cond_sell) => {
-    cond_sell.textContent = `${show_string(cond_sell)}`;
-  });
-  selected_cond.set_string(show_string(cond));
-}
-
-function del_last_buy_cond() {
-  conditions.pop();
-  document.querySelectorAll("conditions").forEach((cond) => {
-    cond.textContent = `${show_string(cond)}`;
-  });
-  selected_cond.set_string(show_string(cond));
-}
-
-function show_string(array_objs) {
-  selected_cond.set_obj_array(array_objs);
-  let arr_strings = [];
-  for (let i = 0; i < array_objs.length; i++)
-    for (const [key, value] of Object.entries(array_objs[i])) {
-      arr_strings.push(value);
-    }
-  return JSON.stringify(arr_strings);
-}
-
 async function optimize() {
   const response = await postJsonGetData(data, "optimize");
   console.log(response);
@@ -530,23 +498,6 @@ async function build_optimization_results() {
     resultList.appendChild(listItem);
   });
 }
-
-async function backtest() {
-  // let conditions_copy = [[{ ind: "AO_14_14" }, { cond: ">" }, { val: 50 }]];
-  // let conditions_sell_copy = [[{ ind: "AO_14_14" }, { cond: "<" }, { val: 11 }]];
-  let conditions_copy = conditions;
-  let conditions_sell_copy = conditions_sell;
-
-  data.conds_buy = conditions_copy;
-  data.conds_sell = conditions_sell_copy;
-  console.log(data.conds_buy);
-  console.log(data.conds_sell);
-
-  let response = await postJsonGetData(data, "backtest");
-  document.getElementById("cond").textContent = JSON.stringify(response.message);
-}
-
-window.backtest = backtest;
 
 // async function getJson(endpoint) {
 //   try {

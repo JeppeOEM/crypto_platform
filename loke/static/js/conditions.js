@@ -1,9 +1,17 @@
+import { selected_cond_instance } from "./globals.js";
+import { postJsonGetStatus } from "./fetch.js";
+import { show_string } from "./functions/show_string.js";
+
+const selected_cond = selected_cond_instance;
 window.save_cond_sell = save_cond_sell;
 window.save_cond_buy = save_cond_buy;
+window.del_last_buy_cond = del_last_buy_cond;
+window.del_last_sell_cond = del_last_sell_cond;
+window.del_last = del_last;
 
-import { postJsonGetStatus } from "./fetch.js";
-import { build_conditions } from "./script.js";
-
+let conditions = [];
+let conditions_sell = [];
+let cond = [];
 const data = {
   exchange: "binance",
   init_candles: 100,
@@ -29,11 +37,11 @@ export async function save_cond_buy() {
   console.log(data.buy_cond);
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
-  let build_conds = await build_conditions();
-  document.querySelectorAll("buy_cond2").forEach((bconds) => {
-    bconds.textContent = `${build_conds}`;
-  });
-  console.log(build_conds, "build_conds");
+  //   let build_conds = await build_conditions();
+  //   document.querySelectorAll("buy_cond2").forEach((bconds) => {
+  //     bconds.textContent = `${build_conds}`;
+  //   });
+  //   console.log(build_conds, "build_conds");
   conditions = [];
   selected_cond.set_string("");
 }
@@ -57,11 +65,35 @@ export async function save_cond_sell() {
 
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
-  let build_conds = await build_conditions();
-  document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
-    sellcond2.textContent = `${build_conds}`;
-  });
+  //   let build_conds = await build_conditions();
+  //   document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
+  //     sellcond2.textContent = `${build_conds}`;
+  //   });
   conditions_sell = [];
   console.log(build_conds, "build_conds");
   selected_cond.set_string("");
+}
+
+function del_last() {
+  cond.pop();
+  document.querySelectorAll(".cond").forEach((unsaved_cond) => {
+    unsaved_cond.textContent = `${show_string(cond)}`;
+  });
+  selected_cond.set_string(show_string(cond));
+}
+
+function del_last_sell_cond() {
+  conditions_sell.pop();
+  document.querySelectorAll("conditions_sell").forEach((cond_sell) => {
+    cond_sell.textContent = `${show_string(cond_sell)}`;
+  });
+  selected_cond.set_string(show_string(cond));
+}
+
+function del_last_buy_cond() {
+  conditions.pop();
+  document.querySelectorAll("conditions").forEach((cond) => {
+    cond.textContent = `${show_string(cond)}`;
+  });
+  selected_cond.set_string(show_string(cond));
 }
