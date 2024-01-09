@@ -38,8 +38,9 @@ function value_cond(btn) {
   cond.push({ val: parseFloat(value) });
 
   // Assuming you have an element with class 'unsaved_cond'
-  document.querySelectorAll(".unsaved_cond").forEach((unsaved_cond) => {
-    unsaved_cond.textContent = show_string(cond);
+
+  document.querySelectorAll(".cond").forEach((cond_string) => {
+    cond_string.textContent = `${show_string(cond)}`;
   });
 }
 async function create_list(side) {
