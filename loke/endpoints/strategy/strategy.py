@@ -25,9 +25,6 @@ import sqlite3
 bp = Blueprint('strategy', __name__)
 
 
-
-
-
 @bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
 @login_required
 def add_indicator(strategy_id):
@@ -65,6 +62,7 @@ def index():
     # ).fetchall()
 
     strategies = db.execute('SELECT * FROM strategies').fetchall()
+    print(strategies)
 
     return render_template('strategy/index.html', strategies=strategies, )
 

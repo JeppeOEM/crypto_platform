@@ -10,23 +10,24 @@
 
 <!-- prettier-ignore -->
 {% for strategy in strategies %}
-<article class="post">
-  <header>
-    <div>
-      <h1>{{ strategy['strategy_name'] }}</h1>
-      <div class="about">{{ strategy['created'].strftime('%Y-%m-%d') }}</div>
-    </div>
-    {% if g.user['id'] == strategy['fk_user_id'] %}
-    <a class="action" href="{{ url_for('strategy.stratupdate', id=strategy['strategy_id']) }}">Edit</a>
+  {% if g.user and g.user['id'] == strategy['fk_user_id'] %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ strategy['strategy_name'] }}</h1>
+          <div class="about">{{ strategy['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        <a class="action" href="{{ url_for('strategy.stratupdate', id=strategy['strategy_id']) }}">Edit</a>
+      </header>
+      <p class="body">{{ strategy['info'] }}</p>
+    </article>
+    <!-- loop.last is a special variable available inside Jinja for loops. 
+        It’s used to display a line after each post except the last one, to visually separate them. -->
+    {% if not loop.last %}
+    <hr />
     {% endif %}
-  </header>
-  <p class="body">{{ strategy['info'] }}</p>
-</article>
-<!-- loop.last is a special variable available inside Jinja for loops. 
-    It’s used to display a line after each post except the last one, to visually separate them. -->
-{% if not loop.last %}
-<hr />
-{% endif %} {% endfor %}
+  {% endif %}
+{% endfor %}
 
 <!-- <h2>Indicators</h2>
 {{ greeting("Alice") }} -->

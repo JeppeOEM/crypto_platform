@@ -42,6 +42,13 @@ hr {
   flex-basis: calc(25% - 10px);
 }
 
+.ml5 {
+  margin-left: 5px;
+}
+.mr5 {
+  margin-right: 5px;
+}
+
 .ml10 {
   margin-left: 10px;
 }
@@ -157,7 +164,7 @@ header .action {
 }
 
 .form-container input {
-  max-width: 60px;
+  max-width: 30px;
 }
 
 .form-container label {

@@ -266,13 +266,18 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
   const form = document.createElement("form");
+  const delbtn = document.createElement("button");
+  delbtn.innerText = "X";
+  delbtn.classList = "smallbtn_red mr5";
   form.classList.add("indicator_form");
   form.id = `form${form_id}`;
+  form.classList.add("flex_horizontal");
   form.dataset.category = category;
   let field = document.createElement("fieldset");
   const legend = document.createElement("span");
   legend.textContent = name_indicator;
   formContainer.appendChild(form);
+  form.appendChild(delbtn);
   form.appendChild(field);
   field.appendChild(legend);
 
@@ -283,10 +288,10 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     input_params(indi_data[i][0], indi_data[i][1], indi_data[i][2], field);
   }
 
-  const submitButton = document.createElement("input");
+  const submitButton = document.createElement("button");
   submitButton.type = "submit";
-  submitButton.id = "submitIndicator";
-  submitButton.value = "Submit";
+  submitButton.classList = "smallbtn ml10";
+  submitButton.innerText = "Submit";
   field.appendChild(submitButton);
 
   //build input fields of indicator on click

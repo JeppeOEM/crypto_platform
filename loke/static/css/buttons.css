@@ -1,3 +1,75 @@
+.bluebtn {
+  display: flex;
+  justify-content: center;
+  background-color: var(--colorPrimary);
+  color: var(--white);
+  border-radius: 5px;
+  font-size: 1rem;
+  line-height: 2rem;
+  width: fit-content;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.smallbtn {
+  background-color: green;
+  color: var(--white);
+  border-radius: 2px;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  width: fit-content;
+  padding: 0px 5px;
+  cursor: pointer;
+}
+
+.smallbtn_red {
+  background-color: red;
+  color: var(--white);
+  border-radius: 2px;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  width: fit-content;
+  padding: 0px 5px;
+  cursor: pointer;
+}
+
+.bluebtn:hover {
+  background-color: #377ba8;
+}
+
+/* .delbtn {
+  border: none;
+  background-color: transparent;
+  margin-right: 5px;
+  cursor: pointer;
+} */
+
+a.save {
+  display: inline-block;
+  width: 25%;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 2rem;
+  font-weight: 600;
+  color: rgb(171, 21, 21);
+}
+
+a.showHelp {
+  display: block;
+  float: right;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+a.deleteButton {
+  display: block;
+  float: right;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.25rem;
+  background-image: var(--imgDelete);
+}
+
 /* .buttons {
   width: 300px;
   margin: 20px auto;

@@ -1,24 +1,18 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %} {% block extra_code_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}" />
 
-{% block extra_code_head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}" />
-
-    <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script>
-{% endblock %}
-
-{% block header %}
+<script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script>
+{% endblock %} {% block header %}
 <div class="flex_horizontal space_between">
   <h1 id="strategy_id" data-id="{{strategy['strategy_id']}}">
-    {% block title %}
-      ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }}
-    {% endblock %}
+    {% block title %} ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }} {% endblock %}
   </h1>
   <div class="flex_horizontal">
-      <button class="bluebtn" id="update_strat_text">update_strat_text</button>
+    <button class="bluebtn" id="update_strat_text">update_strat_text</button>
 
-<!-- NOT SURE IF WORKING -->
+    <!-- NOT SURE IF WORKING -->
 
-  <button class="bluebtn" id="save_edit_db">save_edit_db</button>
+    <button class="bluebtn" id="save_edit_db">save_edit_db</button>
 
     <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
       <input class="bluebtn" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
@@ -29,58 +23,46 @@
     <button class="fuck">fuck</button>
   </div>
 </div>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <form class="hidden t" method="post">
   <label for="title">Title</label>
-  <input name="strategy_name" id="strategy_name" value="{{ request.form['strategy_name'] or strategy['strategy_name'] }}" required />
+  <input
+    name="strategy_name"
+    id="strategy_name"
+    value="{{ request.form['strategy_name'] or strategy['strategy_name'] }}"
+    required />
   <label for="info">Info</label>
   <textarea name="info" id="info">{{ request.form['info'] or strategy['info'] }}</textarea>
   <input type="submit" value="Save" />
   <hr />
 </form>
 
-
-
-
-
 <!-- <div id="input-container"></div> -->
 <!-- indicator forms -->
 <div class="flex_horizontal">
   <div class="add_indicators_box">
     <div class="search_indicators">
-        <form class="flex_horizontal">
-          <label for="search_indicator">Search:</label>
-          <input type="text" name="" id="search_indicator">
-          <button type="submit">search</button>
-        </form>
+      <form class="flex_horizontal">
+        <label for="search_indicator">Search:</label>
+        <input type="text" name="" id="search_indicator" />
+        <button type="submit">search</button>
+      </form>
     </div>
 
-<select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
-  <option value="">Momentum</option>
-  {% for dict_item in momentum %}
-    {% for key, value in dict_item.items() %}
-      {% if key == "kind" %} 
-        <option value="{{ value }}">{{ value }}</option>
-      {% endif %}
-    {% endfor %} 
-  {% endfor %}
-</select>
+    <select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
+      <option value="">Momentum</option>
+      {% for dict_item in momentum %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+      <option value="{{ value }}">{{ value }}</option>
+      {% endif %} {% endfor %} {% endfor %}
+    </select>
 
-
-<select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
-  <option value="">Trend</option>
-  {% for dict_item in trend %}
-    {% for key, value in dict_item.items() %}
-      {% if key == "kind" %} 
-        <option value="{{ value }}">{{ value }}</option>
-      {% endif %}
-    {% endfor %} 
-  {% endfor %}
-</select>
-
-</div>
+    <select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
+      <option value="">Trend</option>
+      {% for dict_item in trend %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+      <option value="{{ value }}">{{ value }}</option>
+      {% endif %} {% endfor %} {% endfor %}
+    </select>
+  </div>
   <div class="form-container" id="form-container"></div>
 </div>
 
@@ -107,17 +89,12 @@
 
 <!-- will trigger update_chart function in script.js -->
 
-
-
-
-
-
 <!-- insert comparison buttons  -->
-<div id="compare"></div> 
+<div id="compare"></div>
 <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
-<div id="or_and"></div> 
+<div id="or_and"></div>
 <label for="value_cond">value</label>
-<input id="value_cond" type="number">
+<input id="value_cond" type="number" />
 <button onclick="value_cond()" id="value_cond">Add value</button>
 
 <span id="backtest_result"></span>
@@ -132,29 +109,29 @@
 
 <section class="flex_horizontal">
   <div>
-  <table>
-    <thead>
-      <tr>
-        <th class="th-author"><p>Indicator</p></th>
-        <th class="th-title"><p>Operator</p></th>
-        <th class="th-year"><p>min</p></th>
-        <th class="th-year"><p>max</p></th>
-        <th class="th-year"><p>condition</p></th>
-      </tr>
-    </thead>
-    <tbody class="param_buy">
-      <template id="optimize_params">
-        <tr data-all="all" class="param">
-          <td class="indicator"></td>
-          <td class="operator"></td>
-          <td><input class="min minmax" type="number" value="0"></td>
-          <td><input class="max minmax" type="number" value="0"></td>
-          <td><button>&</button></td>
-          <!-- <td class="max">&#128465;</td> -->
+    <table>
+      <thead>
+        <tr>
+          <th class="th-author"><p>Indicator</p></th>
+          <th class="th-title"><p>Operator</p></th>
+          <th class="th-year"><p>min</p></th>
+          <th class="th-year"><p>max</p></th>
+          <th class="th-year"><p>condition</p></th>
         </tr>
-      </template>
-    </tbody>
-  </table>
+      </thead>
+      <tbody class="param_buy">
+        <template id="optimize_params">
+          <tr data-all="all" class="param">
+            <td class="indicator"></td>
+            <td class="operator"></td>
+            <td><input class="min minmax" type="number" value="0" /></td>
+            <td><input class="max minmax" type="number" value="0" /></td>
+            <td><button>&</button></td>
+            <!-- <td class="max">&#128465;</td> -->
+          </tr>
+        </template>
+      </tbody>
+    </table>
   </div>
   <div>
     <table>
@@ -167,99 +144,91 @@
           <th class="th-year"><p>condition</p></th>
         </tr>
       </thead>
-      <tbody class="param_sell">
-
-      </tbody>
+      <tbody class="param_sell"></tbody>
     </table>
   </div>
 </section>
-
 
 <button onclick="load_params()">load params</button>
 
 <button id="toggleButton" onclick="toggleConditions()">Hide Sell Conditions</button>
 
-
-
-  <div  class="mega">
-<div class="buy_toggle">
-
-
+<div class="mega">
+  <div class="buy_toggle">
     <header>
       <h1>Buy conditions</h1>
-        <a class="bluebtn" id="new_todo_buy">New list</a>
+      <a class="bluebtn" id="new_todo_buy">New list</a>
     </header>
     <div class="flex_wrap">
       <section class="buy_clones flex_wrap"></section>
     </div>
-        </div>
-      <div class="sell_toggle">
-        <header>
-          <h1>Sell conditions</h1>
-            <a class="bluebtn" id="new_todo_sell">New list</a>
-        </header>
-        <div class="flex_wrap cond_wrapper">
-        <section class="sell_clones flex_wrap"></section>
-      </div>
-      </div>
-      <div className='chart-container'>
-      <h2>hello</h2>
-      <div class="chart"></div>
+  </div>
+  <div class="sell_toggle">
+    <header>
+      <h1>Sell conditions</h1>
+      <a class="bluebtn" id="new_todo_sell">New list</a>
+    </header>
+    <div class="flex_wrap cond_wrapper">
+      <section class="sell_clones flex_wrap"></section>
     </div>
+  </div>
+  <div className="chart-container">
+    <h2>hello</h2>
+    <div class="chart"></div>
+  </div>
 </div>
 <!-- buy -->
 <template class="clone_template">
-        <div class="cond_list flex_basis25">
-        <div class="insert_here">
-          <div>
-            <main class="listContent">
-              <div class="flex_horizontal space_between">
-                <a class="showHelp bluebtn">Hyperopt settings</a>
-                <a class="addTask bluebtn">Add Condition</a>
-              </div>
-
-              <div class="toDoList listColumn">
-                <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
-              </div>
-              <div class="binder">
-                <select name="cond_bond" id="cond_bind">
-                  <option value="and">AND</option>
-                  <option value="or">OR</option>
-                </select>
-              </div>
-              <div class="ongoingList listColumn"></div>
-              <div class="binder">            
-                <select name="cond_bond" id="cond_bind">
-                  <option value="and">AND</option>
-                  <option value="or">OR</option>
-                </select></div>
-              <div class="doneList listColumn"></div>
-
-            </main>
-            
-            <div class="currentTask modal">
-              <textarea class="txtTask"></textarea><br />
-
-              <div class="flex_horizontal">
-                  <input type="button" class="btnOk bluebtn mr10" value="Add" />
-                  <input type="button" class="btnCancel bluebtn" value="Cancel" />
-              </div>
-
-            </div>
-
-            <div class="help modal">
-              <p class="helpText">
-                Add a new "to do" task by pressing the plus ("+") button.<br />
-                Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
-              </p>
-                <input type="button" class="btnClose" value="Close" />
-            </div>
+  <div class="cond_list flex_basis25">
+    <div class="insert_here">
+      <div>
+        <main class="listContent">
+          <div class="flex_horizontal space_between">
+            <a class="showHelp bluebtn">Hyperopt settings</a>
+            <a class="addTask bluebtn">Add Condition</a>
           </div>
 
-        <!-- insert optimization results here -->
-        <ul class="opti_results"></ul>
+          <div class="toDoList listColumn">
+            <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
+          </div>
+          <div class="binder">
+            <select name="cond_bond" id="cond_bind">
+              <option value="and">AND</option>
+              <option value="or">OR</option>
+            </select>
+          </div>
+          <div class="ongoingList listColumn"></div>
+          <div class="binder">
+            <select name="cond_bond" id="cond_bind">
+              <option value="and">AND</option>
+              <option value="or">OR</option>
+            </select>
+          </div>
+          <div class="doneList listColumn"></div>
+        </main>
+
+        <div class="currentTask modal">
+          <textarea class="txtTask"></textarea><br />
+
+          <div class="flex_horizontal">
+            <input type="button" class="btnOk bluebtn mr10" value="Add" />
+            <input type="button" class="btnCancel bluebtn" value="Cancel" />
+          </div>
+        </div>
+
+        <div class="help modal">
+          <p class="helpText">
+            Add a new "to do" task by pressing the plus ("+") button.<br />
+            Move a task from one area to another ("to do", "ongoing", "done") by dragging and dropping it.
+          </p>
+          <input type="button" class="btnClose" value="Close" />
         </div>
       </div>
+
+      <!-- insert optimization results here -->
+      <ul class="opti_results"></ul>
+    </div>
+  </div>
 </template>
 <!-- sell -->
 
