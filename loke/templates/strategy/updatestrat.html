@@ -68,14 +68,16 @@
 
 <div id="saved_conds"></div>
 <div id="saved_conds_sell"></div>
-<div id="cond"></div>
+<div class="cond"></div>
 <button onclick="del_last()">Del</button>
 <button onclick="del_last_sell_cond()">Del sell condition</button>
 <button onclick="del_last_buy_cond()">Del buy condition</button>
 
 <button id="update-button">Update Div</button>
 <!-- insert indicator btn's -->
-<div id="conditions"></div>
+
+<div class="conditions"></div>
+
 <div id="conditions_sell"></div>
 <!-- insert comparison buttons -->
 <!-- <div id="compare"></div> 
@@ -90,9 +92,9 @@
 <!-- will trigger update_chart function in script.js -->
 
 <!-- insert comparison buttons  -->
-<div id="compare"></div>
+<div class="compare"></div>
 <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
-<div id="or_and"></div>
+<div class="or_and"></div>
 <label for="value_cond">value</label>
 <input id="value_cond" type="number" />
 <button onclick="value_cond()" id="value_cond">Add value</button>
@@ -172,12 +174,13 @@
       <section class="sell_clones flex_wrap"></section>
     </div>
   </div>
+  <h2>Chart</h2>
   <div className="chart-container">
-    <h2>hello</h2>
     <div class="chart"></div>
   </div>
 </div>
-<!-- buy -->
+
+<!-- Condition list Template-->
 <template class="clone_template">
   <div class="cond_list flex_basis25">
     <div class="insert_here">
@@ -208,7 +211,10 @@
         </main>
 
         <div class="currentTask modal">
-          <textarea class="txtTask"></textarea><br />
+          <form action="">
+            <input type="text" value="lol" class="txtTask" />
+          </form>
+          <br />
 
           <div class="flex_horizontal">
             <input type="button" class="btnOk bluebtn mr10" value="Add" />

@@ -53,35 +53,7 @@ async function build_page() {
   await build_condition_lists();
 }
 
-async function createList(side, element) {
-  const newId = await newList(side, element);
-  console.log(newId);
-  condController.createCondManager(newId);
-}
-
-function newList(side, element) {
-  const cloneContainer = document.querySelector(`.clone_template`);
-  const append_here = document.querySelector(`${side}_clones`);
-  // const append_here = document.querySelector(`${side}_clones`);
-  console.log(cloneContainer, "clone_container");
-  const clone = cloneContainer.cloneNode(true);
-
-  // const elementsToRemove = clone.querySelectorAll(`[taskid]`);
-  // elementsToRemove.forEach((element) => {
-  //   element.parentNode.removeChild(element);
-  // });
-  // console.log(clone, "clone");
-  // const cond_list_content = clone.querySelector(`.insert_here`);
-
-  // console.log(cond_list_content, "cond_list");
-  // const newId = side + "insert_here" + (condController.count() + 1);
-  // cond_list_content.classList.add(newId);
-  // console.log(newId);
-  append_here.appendChild(clone);
-
-  // Create TaskManager after updating the id
-  return newId;
-}
+//
 async function build_condition_lists() {
   // const taskManager1 = condController.createCondManager("buy_cond_list1");
   // const taskManager2 = condController.createCondManager("sell_cond_list2");
@@ -95,12 +67,13 @@ async function build_condition_lists() {
   clone_list(json_sell, sell_clones, "sell");
   function clone_list(json, container, side) {
     json.forEach((data) => {
-      let element_name = `${side}insert_here${data.frontend_id}`;
+      let element_name = `${side}_cond_list_${data.frontend_id}`;
       const clone = clone_template.content.cloneNode(true);
-      console.log(clone, "clone");
-      let here = clone.querySelector(".insert_here");
-      here.classList.add(element_name);
-      const cond_wrapper = clone.querySelector(`.clone_${side}`);
+      let insert_name = clone.querySelector(".insert_here");
+      let cond_modal = clone.querySelector(".currentTask");
+      cond_modal.dataset.side = "buy";
+      insert_name.classList.add(element_name);
+      // const cond_wrapper = clone.querySelector(`.clone_${side}`);
       // cond_wrapper.dataset.id = data.buy_list_id;
       container.appendChild(clone);
       //cond_list.js controller
@@ -196,11 +169,9 @@ function optimizer_params(conditions, suffix, element) {
 async function build_indicator_inputs(data, category = null) {
   //returns new array with parsed values
   indicators = data.map((indicator) => {
-    console.log(indicator, "indicator");
     let id = JSON.parse(indicator.id);
     let category = indicator.category;
     indicator = JSON.parse(indicator.settings);
-    console.log(indicator, "indicator");
     //convert to numeric values
     for (let key in indicator) {
       if (indicator.hasOwnProperty(key)) {
@@ -222,7 +193,6 @@ async function build_indicator_inputs(data, category = null) {
 
   async function load() {
     for (let i = 0; i < indicators.length; i++) {
-      console.log(indicators[i]);
       const form = await loadIndicator(
         indicators[i].indicator["kind"],
         indicators[i].category,
@@ -239,8 +209,6 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     indicator: name,
     category: category,
   };
-  console.log("something");
-  console.log(data, "data");
   let output = [];
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
@@ -407,27 +375,28 @@ function remove_element(class_name) {
   });
 }
 async function build_buttons(array, element_id, element, class_name) {
-  let container = document.getElementById(element_id);
-  for (let i = 0; i < array.length; i++) {
-    let button = document.createElement(element);
-    button.innerText = array[i];
-    button.classList.add(class_name);
-    container.appendChild(button);
-  }
-
-  const buttons = container.querySelectorAll(`.${class_name}`);
-
-  buttons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      let text = event.target.innerText;
-      if (class_name == "indicator_cond") {
-        cond.push({ ind: event.target.innerText });
-      } else {
-        cond.push({ cond: event.target.innerText });
-      }
-      document.getElementById("cond").textContent = `${show_string(cond)}`;
+  document.querySelectorAll(`.${element_id}`).forEach((container) => {
+    console.log(container);
+    for (let i = 0; i < array.length; i++) {
+      let button = document.createElement(element);
+      button.innerText = array[i];
+      button.classList.add(class_name);
+      container.appendChild(button);
+    }
+    const buttons = container.querySelectorAll(`.${class_name}`);
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        let text = event.target.innerText;
+        if (class_name == "indicator_cond") {
+          cond.push({ ind: event.target.innerText });
+        } else {
+          cond.push({ cond: event.target.innerText });
+        }
+        document.querySelector(".cond").textContent = `${show_string(cond)}`;
+      });
     });
   });
+  // let container = document.getElementById(element_id);
 }
 
 function value_cond() {
@@ -648,3 +617,17 @@ async function postJsonGetStatus(data, endpoint, method = "POST") {
     return response;
   }
 }
+// async function createList(side, element) {
+//   const newId = await newList(side, element);
+//   console.log(newId);
+//   condController.createCondManager(newId);
+// }
+
+// function newList(side, element) {
+//   const cloneContainer = document.querySelector(`.clone_template`);
+//   const append_here = document.querySelector(`${side}_clones`);
+//   console.log(cloneContainer, "clone_container");
+//   const clone = cloneContainer.cloneNode(true);
+//   append_here.appendChild(clone);
+//   return newId;
+// }

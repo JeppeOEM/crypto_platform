@@ -1,10 +1,46 @@
 "use strict";
 
-class TaskManager {
+class CondController {
+  constructor() {
+    this.taskManagers = [];
+    this.obj = {};
+    //ensure incrementing id
+    this.countArray = [];
+  }
+  count() {
+    return this.countArray.length;
+  }
+
+  createCondManager(identifier) {
+    this.identifier = identifier;
+
+    const taskManager = new CondManager(this.identifier);
+    this.taskManagers.push(taskManager);
+
+    // Assign the TaskManager instance to this.obj using the identifier as the key
+    this.obj[this.identifier] = taskManager;
+
+    // just pushing something of no value
+    this.countArray.push(0);
+
+    return taskManager;
+  }
+
+  addCond(identifier, text, column) {
+    this.identifier = identifier;
+    this.text = text;
+    this.column = column;
+    const current_cond_list = this.obj[this.identifier];
+    current_cond_list.insert_cond(this.text, this.column);
+  }
+}
+
+class CondManager {
   constructor(identifier) {
     this.identifier = identifier;
     this.addTaskText = "Add";
     this.updateTaskText = "Update";
+    //individual box
     this.TodoContent = document.querySelector(`.${this.identifier}`);
     this.toDoList = this.TodoContent.querySelector(".toDoList");
     this.draggedTask = {};
@@ -303,7 +339,7 @@ class TaskManager {
 
   deleteButton() {
     const deleteButton = document.createElement("a");
-
+    deleteButton.innerText = "🗑️";
     deleteButton.classList.add("deleteButton");
     deleteButton.addEventListener("click", (e) => this.deleteButtonClick(e));
 
@@ -321,42 +357,6 @@ class TaskManager {
 
   //   this.TodoContent.querySelector(".listContent").style.height = higherListHeight + 20 + "px";
   // }
-}
-
-class CondController {
-  constructor() {
-    this.taskManagers = [];
-    this.obj = {};
-    //ensure incrementing id
-    this.countArray = [];
-  }
-  count() {
-    return this.countArray.length;
-  }
-
-  createCondManager(identifier) {
-    this.identifier = identifier;
-    console.log(this.identifier);
-
-    const taskManager = new TaskManager(this.identifier);
-    this.taskManagers.push(taskManager);
-
-    // Assign the TaskManager instance to this.obj using the identifier as the key
-    this.obj[this.identifier] = taskManager;
-
-    // just pushing something of no value
-    this.countArray.push(0);
-
-    return taskManager;
-  }
-
-  addCond(identifier, text, column) {
-    this.identifier = identifier;
-    this.text = text;
-    this.column = column;
-    const current_cond_list = this.obj[this.identifier];
-    current_cond_list.insert_cond(this.text, this.column);
-  }
 }
 
 // const condController = new CondController();
