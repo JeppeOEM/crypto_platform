@@ -30,10 +30,7 @@ def cond_list(strategy_id):
     if request.method == 'POST':
         cur = db.cursor()
         cur.execute(
-            'INSERT INTO {} (fk_user_id, fk_strategy_id) VALUES (?, ?)'.format(
-                table_name),
-            (g.user['id'], strategy_id)
-        )
+            'INSERT INTO {} (fk_user_id, fk_strategy_id) VALUES (?, ?)'.format(table_name), (g.user['id'], strategy_id))
         db.commit()
 
         return jsonify({'message': 'Condition list successfully created'}), 200
@@ -41,7 +38,8 @@ def cond_list(strategy_id):
     if request.method == 'GET':
 
         cond_lists = db.execute(
-            'SELECT * FROM {}'.format(table_name)).fetchall()
+            'SELECT * FROM {} '
+            'WHERE fk_user_id = ? AND fk_strategy_id = ?'.format(table_name), (g.user['id'], strategy_id)).fetchall()
         # Convert the SQL rows to a list of dictionaries
         result = [dict(row) for row in cond_lists]
 

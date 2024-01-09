@@ -65,18 +65,13 @@
   </div>
   <div class="form-container" id="form-container"></div>
 </div>
-
-<div id="saved_conds"></div>
-<div id="saved_conds_sell"></div>
 <div class="cond"></div>
+<div id="saved_conds"></div>
+<div class="saved_conds_sell"></div>
+
 <button onclick="del_last()">Del</button>
 <button onclick="del_last_sell_cond()">Del sell condition</button>
 <button onclick="del_last_buy_cond()">Del buy condition</button>
-
-<button id="update-button">Update Div</button>
-<!-- insert indicator btn's -->
-
-<div class="conditions"></div>
 
 <div id="conditions_sell"></div>
 <!-- insert comparison buttons -->
@@ -93,21 +88,18 @@
 
 <!-- insert comparison buttons  -->
 <div class="compare"></div>
-<p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
-<div class="or_and"></div>
-<label for="value_cond">value</label>
-<input id="value_cond" type="number" />
-<button onclick="value_cond()" id="value_cond">Add value</button>
+<div class="compare"></div>
+<div class="compare"></div>
 
 <span id="backtest_result"></span>
 <h2>sell</h2>
-<ul id="sell_conds"></ul>
+<ul class="sell_conds"></ul>
 <h2>buy</h2>
-<ul id="buy_conds"></ul>
+<ul class="buy_conds"></ul>
 <h2>buy conds</h2>
-<ul id="buy_cond2"></ul>
+<ul class="buy_cond2"></ul>
 <h2>sell conds</h2>
-<ul id="sell_cond2"></ul>
+<ul class="sell_cond2"></ul>
 
 <section class="flex_horizontal">
   <div>
@@ -211,9 +203,19 @@
         </main>
 
         <div class="currentTask modal">
+          <!-- insert indicator btn's -->
+
           <form action="">
             <input type="text" value="lol" class="txtTask" />
           </form>
+          <div class="cond"></div>
+          <div class="conditions"></div>
+          <div class="compare"></div>
+          <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
+          <div class="or_and"></div>
+          <label for="value_cond">value</label>
+          <input id="value_cond" type="number" />
+          <button onclick="value_cond()" id="value_cond">Add value</button>
           <br />
 
           <div class="flex_horizontal">

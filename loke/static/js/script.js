@@ -44,13 +44,14 @@ async function build_page() {
   remove_element("sell_cond2");
   //build buttons also build indicator dataframe related buttons
   //params: array, element_id, element, class_name
-  await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+
   console.log(indicators_data, "indicators_data.indicators");
   await build_indicator_inputs(indicators_data.indicators);
-  await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
   await build_conditions();
   await build_optimization_results();
   await build_condition_lists();
+  await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
+  await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
 }
 
 //
@@ -63,9 +64,9 @@ async function build_condition_lists() {
   const sell_clones = document.querySelector(".sell_clones");
   const buy_clones = document.querySelector(".buy_clones");
   const clone_template = document.querySelector(".clone_template");
-  clone_list(json_buy, buy_clones, "buy");
-  clone_list(json_sell, sell_clones, "sell");
-  function clone_list(json, container, side) {
+  await clone_list(json_buy, buy_clones, "buy");
+  await clone_list(json_sell, sell_clones, "sell");
+  async function clone_list(json, container, side) {
     json.forEach((data) => {
       let element_name = `${side}_cond_list_${data.frontend_id}`;
       const clone = clone_template.content.cloneNode(true);
@@ -82,20 +83,66 @@ async function build_condition_lists() {
   }
 }
 
+async function build_buttons(array, element_id, element, class_name) {
+  document.querySelectorAll(`.${element_id}`).forEach((container) => {
+    for (let i = 0; i < array.length; i++) {
+      let button = document.createElement(element);
+      button.innerText = array[i];
+      button.classList.add(class_name);
+      container.appendChild(button);
+    }
+    const buttons = container.querySelectorAll(`.${class_name}`);
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        let text = event.target.innerText;
+        if (class_name == "indicator_cond") {
+          cond.push({ ind: event.target.innerText });
+        } else {
+          cond.push({ cond: event.target.innerText });
+        }
+        document.querySelector(".cond").textContent = `${show_string(cond)}`;
+      });
+    });
+  });
+
+  document.querySelectorAll(`.${element_id}`).forEach((container) => {
+    for (let i = 0; i < array.length; i++) {
+      let button = document.createElement(element);
+      button.innerText = array[i];
+      button.classList.add(class_name);
+      container.appendChild(button);
+    }
+    const buttons = container.querySelectorAll(`.${class_name}`);
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        let text = event.target.innerText;
+        if (class_name == "indicator_cond") {
+          cond.push({ ind: event.target.innerText });
+        } else {
+          cond.push({ cond: event.target.innerText });
+        }
+        document.querySelector(".cond").textContent = `${show_string(cond)}`;
+      });
+    });
+  });
+  // let container = document.getElementById(element_id);
+}
 async function build_conditions() {
   const { sell_conds, buy_conds } = await getJson("load_conditions");
 
-  remove_element("buy_cond2");
-  remove_element("sell_cond2");
-  insert_frontend(sell_conds, "sell_cond2");
-  insert_frontend(buy_conds, "buy_cond2");
+  // remove_element("buy_cond2");
+  // remove_element("sell_cond2");
+  console.log(sell_conds, buy_conds, "sell_conds, buy_conds");
+  // insert_frontend(sell_conds, "sell_cond2");
+  // insert_frontend(buy_conds, "buy_cond2");
   //cond, suffix, element to insert into
   optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
 }
 
 function insert_frontend(cond, element) {
-  const cond_list = document.getElementById(element);
+  const cond_list = document.querySelector(`.${element}`);
+  console.log(cond_list, element, "cond_list");
   for (let i = 0; i < cond.length; i++) {
     const listItem = document.createElement("li");
 
@@ -374,30 +421,6 @@ function remove_element(class_name) {
     ele.parentNode.removeChild(ele);
   });
 }
-async function build_buttons(array, element_id, element, class_name) {
-  document.querySelectorAll(`.${element_id}`).forEach((container) => {
-    console.log(container);
-    for (let i = 0; i < array.length; i++) {
-      let button = document.createElement(element);
-      button.innerText = array[i];
-      button.classList.add(class_name);
-      container.appendChild(button);
-    }
-    const buttons = container.querySelectorAll(`.${class_name}`);
-    buttons.forEach(function (button) {
-      button.addEventListener("click", function (event) {
-        let text = event.target.innerText;
-        if (class_name == "indicator_cond") {
-          cond.push({ ind: event.target.innerText });
-        } else {
-          cond.push({ cond: event.target.innerText });
-        }
-        document.querySelector(".cond").textContent = `${show_string(cond)}`;
-      });
-    });
-  });
-  // let container = document.getElementById(element_id);
-}
 
 function value_cond() {
   let value_cond = document.getElementById("value_cond").value;
@@ -408,10 +431,14 @@ function value_cond() {
 async function save_cond_buy() {
   //indicators
   conditions.push(cond);
+  // reset global cond
   cond = [];
-
-  document.getElementById("cond").textContent = `${show_string(cond)}`;
-  document.getElementById("saved_conds").textContent = `${show_string(conditions)}`;
+  document.querySelectorAll("cond").forEach((cond) => {
+    cond.textContent = `${show_string(cond)}`;
+  });
+  document.querySelectorAll("saved_conds").forEach((saved_cond) => {
+    saved_cond.textContent = `${show_string(conditions)}`;
+  });
   data.buy_cond = JSON.stringify(conditions);
   data.side = "buy";
   console.log(data.buy_cond);
@@ -425,33 +452,51 @@ async function save_cond_buy() {
 
 async function save_cond_sell() {
   //indicators
+  //cond_sell is global variable
   conditions_sell.push(cond);
+  // reset global cond
   cond = [];
-  document.getElementById("cond").textContent = `${show_string(cond_sell)}`;
-  document.getElementById("saved_conds_sell").textContent = `${show_string(conditions_sell)}`;
+  document.querySelectorAll("cond").forEach((cond) => {
+    cond.textContent = `${show_string(cond_sell)}`;
+  });
+
+  document.querySelectorAll("saved_conds_sell").forEach((saved_cond) => {
+    saved_cond.textContent = `${show_string(conditions_sell)}`;
+  });
   data.sell_cond = JSON.stringify(conditions_sell);
   data.side = "sell";
   console.log(data.sell_cond);
   let response = await postJsonGetStatus(data, "condition");
   console.log(response);
   let build_conds = await build_conditions();
-  document.getElementById("sell_cond2").textContent = `${build_conds}`;
+  document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
+    sellcond2.textContent = `${build_conds}`;
+  });
   conditions_sell = [];
 }
 
 function del_last() {
   cond.pop();
-  document.getElementById("cond").textContent = `${show_string(cond)}`;
+  document.querySelectorAll(".cond").forEach((unsaved_cond) => {
+    unsaved_cond.textContent = `${show_string(cond)}`;
+  });
 }
 
 function del_last_sell_cond() {
   conditions_sell.pop();
-  document.getElementById("conditions_sell").textContent = `${show_string(cond)}`;
+  document.querySelectorAll("conditions_sell").forEach((cond_sell) => {
+    cond_sell.textContent = `${show_string(cond_sell)}`;
+  });
 }
-function del_last_buy_cond() {
+
+function del_last_buy_cond() {  
   conditions.pop();
-  document.getElementById("conditions").textContent = `${show_string(cond)}`;
+  document.querySelectorAll("conditions").forEach((cond) => {
+    cond.textContent = `${show_string(cond)}`;
+  });
 }
+
+
 
 function show_string(array_objs) {
   let arr_strings = [];
