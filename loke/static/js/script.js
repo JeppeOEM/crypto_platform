@@ -1,8 +1,11 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
 import { selected_cond_instance } from "./globals.js";
-import { CondController } from "./cond_list.js";
+// import { CondController } from "./cond_list.js";
+import { condController } from "./cond_list.js";
 import { show_string } from "./functions/show_string.js";
+import { getJson } from "./fetch.js";
+import { build_conds } from "./conditions.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
 window.load_params = load_params;
@@ -13,7 +16,7 @@ window.select_indicator = select_indicator;
 
 const selected_cond = selected_cond_instance;
 
-const condController = new CondController();
+// const condController = condController;
 
 const data = {
   exchange: "binance",
@@ -79,12 +82,13 @@ async function build_page() {
 
   console.log(data, "data.indicators");
   await build_indicator_inputs(data.indicators);
-  await build_conditions();
+  // await build_conditions();
   await build_optimization_results();
   await build_condition_lists();
   await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
   await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
-  build_buttons(data.cols, "conditions", "button", "indicator_cond");
+  await build_buttons(data.cols, "conditions", "button", "indicator_cond");
+  await build_conds();
 }
 
 //
@@ -99,7 +103,9 @@ async function build_condition_lists() {
   const clone_template = document.querySelector(".clone_template");
   await clone_list(json_buy, buy_clones, "buy");
   await clone_list(json_sell, sell_clones, "sell");
+
   async function clone_list(json, container, side) {
+    let primary_key;
     json.forEach((data) => {
       let element_name = `${side}_cond_list_${data.frontend_id}`;
       const clone = clone_template.content.cloneNode(true);
@@ -110,16 +116,19 @@ async function build_condition_lists() {
       insert_name.classList.add(`${side}_side`);
       if (side == "buy") {
         insert_name.dataset.primary_key = data.buy_list_id;
+        primary_key = data.buy_list_id;
+        console.log(data.buy_list_id, "data.buy_list_id");
       } else {
         insert_name.dataset.primary_key = data.sell_list_id;
+        primary_key = data.sell_list_id;
       }
-      console.log(data.buy_list_id, "data.buy_list_id");
+      console.log(primary_key, "primary_key");
       insert_name.dataset.frontend_id = data.frontend_id;
       // const cond_wrapper = clone.querySelector(`.clone_${side}`);
       // cond_wrapper.dataset.id = data.buy_list_id;
       container.appendChild(clone);
       //cond_list.js controller
-      condController.createCondManager(element_name);
+      condController.createCondManager(element_name, primary_key);
     });
   }
 }
@@ -162,9 +171,9 @@ export async function build_conditions() {
 
   // remove_element("buy_cond2");
   // remove_element("sell_cond2");
-  console.log(sell_conds, buy_conds, "sell_conds, buy_conds");
-  insert_frontend(sell_conds, "sell_cond2");
-  insert_frontend(buy_conds, "buy_cond2");
+  // console.log(sell_conds, buy_conds, "sell_conds, buy_conds");
+  // insert_frontend(sell_conds, "sell_cond2");
+  // insert_frontend(buy_conds, "buy_cond2");
   //cond, suffix, element to insert into
   optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
@@ -539,20 +548,6 @@ async function update_chart(endpoint) {
   } catch (error) {
     console.error("Error:", error);
   }
-}
-
-async function getJson(endpoint) {
-  const options = {
-    method: "GET",
-  };
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
-
-  const responseData = await response.json();
-  return responseData;
 }
 
 async function postJsonGetData(data, endpoint, method = "POST") {

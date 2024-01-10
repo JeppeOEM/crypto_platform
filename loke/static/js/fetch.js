@@ -18,3 +18,17 @@ export async function postJsonGetStatus(data, endpoint, method = "POST") {
     return response;
   }
 }
+
+export async function getJson(endpoint) {
+  const options = {
+    method: "GET",
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+}

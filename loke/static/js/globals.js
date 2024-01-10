@@ -34,6 +34,10 @@ class SelectedCond {
   reset_cond() {
     this._cond = [];
   }
+
+  del_last() {
+    this._cond.pop();
+  }
 }
 
 // Create an instance of the class

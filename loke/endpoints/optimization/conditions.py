@@ -16,6 +16,19 @@ bp = Blueprint('conditions', __name__)
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
 
 
+@bp.route('/<int:strategy_id>/update_row', methods=['GET'])
+def update_row(strategy_id):
+    db = get_db()
+    data = request.get_json()
+
+    if data['side'] == "buy":
+        table_name = 'buy_conditions'
+    else:
+        table_name = 'sell_conditions'
+    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND '.format(
+        table_name), (data['list_row'], strategy_id, g.user['id']))
+
+
 @bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
 # @login_required
 def cond_list(strategy_id):
@@ -49,21 +62,20 @@ def cond_list(strategy_id):
 @bp.route('/<int:id>/load_conditions', methods=['GET'])
 def load_conditions(id):
     db = get_db()
-    buy_conds = db.execute(
-        'SELECT buy_eval FROM buy_conditions '
+    buy_conds_cursor = db.execute(
+        'SELECT * FROM buy_conditions '
         'WHERE fk_user_id = ? AND fk_strategy_id = ?',
         (g.user['id'], id)
-    ).fetchall()
+    )
+    buy_conds = [dict(row) for row in buy_conds_cursor.fetchall()]
 
-    sell_conds = db.execute(
-        'SELECT sell_eval FROM sell_conditions '
+    sell_conds_cursor = db.execute(
+        'SELECT * FROM sell_conditions '
         'WHERE fk_user_id = ? AND fk_strategy_id = ?',
         (g.user['id'], id)
-    ).fetchall()
-    print("load_condtion")
-    sell_conds = [row[0] for row in sell_conds]
-    buy_conds = [row[0] for row in buy_conds]
-    print(sell_conds, "SELL")
+    )
+    sell_conds = [dict(row) for row in sell_conds_cursor.fetchall()]
+
     result_dict = {
         'buy_conds': buy_conds,
         'sell_conds': sell_conds
@@ -88,6 +100,7 @@ def del_last_buy_cond(id):
 @bp.route('/<int:id>/condition', methods=['POST', 'GET'])
 def condition(id):
     db = get_db()
+    cur = db.cursor()
     data = request.get_json()
     if request.method == 'POST':
         if data['side'] == "buy":
@@ -103,12 +116,16 @@ def condition(id):
                 return jsonify({'message': 'Condition with the same settings already exists. No data inserted.'}), 400
 
             try:
-                db.execute(
-                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_buy_list_id) VALUES (?, ?, ?, ?)',
-                    (id, g.user['id'], data['buy_cond'], data['primary_key'])
+                cur.execute(
+                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_buy_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    (id, g.user['id'], data['buy_cond'],
+                     data['primary_key'], 1)
                 )
                 db.commit()
-                return jsonify({'message': 'condition saved to database'}), 200
+
+                last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
+                condition_id = last_row[0]
+                return jsonify({'message': condition_id}), 200
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
 
@@ -125,12 +142,15 @@ def condition(id):
 
             try:
                 # Insert the indicator if it doesn't exist
-                db.execute(
-                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_sell_list_id) VALUES (?, ?, ?, ?)',
-                    (id, g.user['id'], data['sell_cond'], data['primary_key'])
+                cur.execute(
+                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_sell_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    (id, g.user['id'], data['sell_cond'],
+                     data['primary_key'], 1)
                 )
                 db.commit()
-                return jsonify({'message': 'condition saved to database'})
+                last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
+                condition_id = last_row[0]
+                return jsonify({'message':  condition_id}), 200
             except Exception as e:
 
                 return jsonify({'error': str(e)}), 500

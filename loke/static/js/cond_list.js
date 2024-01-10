@@ -6,7 +6,7 @@ const selected_cond = selected_cond_instance;
 
 export class CondController {
   constructor() {
-    this.taskManagers = [];
+    this.objList = [];
     this.obj = {};
     //ensure incrementing id
     this.countArray = [];
@@ -15,11 +15,13 @@ export class CondController {
     return this.countArray.length;
   }
 
-  createCondManager(identifier) {
+  createCondManager(identifier, primary_key) {
     this.identifier = identifier;
+    this.primary_key = primary_key;
+    console.log(this.primary_key, "primary_key!!!!!!!");
 
-    const taskManager = new CondManager(this.identifier);
-    this.taskManagers.push(taskManager);
+    const taskManager = new CondManager(this.identifier, this.primary_key);
+    this.objList.push(taskManager);
 
     // Assign the TaskManager instance to this.obj using the identifier as the key
     this.obj[this.identifier] = taskManager;
@@ -37,10 +39,30 @@ export class CondController {
     const current_cond_list = this.obj[this.identifier];
     current_cond_list.insert_cond(this.text, this.column);
   }
-}
 
+  getKey(key) {
+    console.log(key, "key");
+    const result = [];
+    for (let i = 0; i < this.objList.length; i++) {
+      if (this.objList[i].primary_key === key) {
+        return this.objList[i];
+      }
+    }
+
+    console.log(result);
+    // let arr = this.objList.forEach((obj) => {
+    //   if (obj.primary_key === key) {
+    //     return obj;
+    //   }
+    // });
+  }
+}
+const condController = new CondController();
+export { condController };
 class CondManager {
-  constructor(identifier) {
+  constructor(identifier, primary_key) {
+    this.primary_key = primary_key;
+    console.log(this.primary_key, "primary_key COND CONTROl");
     this.identifier = identifier;
     this.addTaskText = "Add";
     this.updateTaskText = "Update";
@@ -86,7 +108,7 @@ class CondManager {
     this.TodoContent.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
   }
 
-  insert_cond(text, column) {
+  insert_cond(text, column, id) {
     const task = document.createElement("div");
     const newID = parseInt(this.TodoContent.querySelector(".currentTask").getAttribute("lastid")) + 1;
 
@@ -99,7 +121,7 @@ class CondManager {
     task.setAttribute("draggable", "true");
     task.addEventListener("dragstart", (e) => this.dragStart(e));
     task.prepend(this.deleteButton());
-
+    task.dataset.cond_key = id;
     const columnList = this.TodoContent.querySelector(`.${column}List`);
     columnList.prepend(task);
 

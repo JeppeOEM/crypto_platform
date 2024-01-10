@@ -1,8 +1,12 @@
 import { selected_cond_instance } from "./globals.js";
 import { postJsonGetStatus } from "./fetch.js";
+import { getJson } from "./fetch.js";
 import { show_string } from "./functions/show_string.js";
+import { condController } from "./cond_list.js";
 
 const selected_cond = selected_cond_instance;
+
+// const condController = condController
 window.save_cond_sell = save_cond_sell;
 window.save_cond_buy = save_cond_buy;
 window.del_last_buy_cond = del_last_buy_cond;
@@ -19,6 +23,42 @@ const data = {
   name: "test",
   description: "description",
 };
+
+export async function build_conds() {
+  const json = await getJson("load_conditions");
+  const buy_conds = json.buy_conds;
+  const sell_conds = json.sell_conds;
+  console.log(buy_conds, "buy_conds!");
+  console.log(load_cond_managers_buy(buy_conds));
+  console.log(load_cond_managers_sell(sell_conds));
+
+  function load_cond_managers_buy(arr) {
+    const lol = arr.forEach((cond) => {
+      let condManager = condController.getKey(cond.fk_buy_list_id);
+      condManager.insert_cond(cond.buy_eval, which_row(cond.list_row), cond.buy_conditions_id);
+    });
+    console.log(lol);
+  }
+
+  function load_cond_managers_sell(arr) {
+    const lol = arr.forEach((cond) => {
+      let condManager = condController.getKey(cond.fk_sell_list_id);
+      condManager.insert_cond(cond.buy_eval, which_row(cond.list_row), cond.sell_conditions_id);
+    });
+    console.log(lol);
+  }
+}
+
+function which_row(number) {
+  switch (number) {
+    case 1:
+      return "toDo";
+    case 2:
+      return "onGoing";
+    case 3:
+      return "done";
+  }
+}
 
 export async function save_cond_buy() {
   //indicators
@@ -49,11 +89,10 @@ export async function save_cond_buy() {
 }
 
 export async function save_cond_sell() {
-  //indicators
-  //cond_sell is global variable
-  conditions_sell.push(cond);
+  conditions.push(selected_cond.get_cond());
   // reset global cond
-  cond = [];
+  selected_cond.set_string();
+  selected_cond.reset_cond();
   document.querySelectorAll("cond").forEach((cond) => {
     cond.textContent = `${show_string(cond_sell)}`;
   });
@@ -77,7 +116,7 @@ export async function save_cond_sell() {
 }
 
 function del_last() {
-  cond.pop();
+  selected_cond.del_last();
   document.querySelectorAll(".cond").forEach((unsaved_cond) => {
     unsaved_cond.textContent = `${show_string(cond)}`;
   });

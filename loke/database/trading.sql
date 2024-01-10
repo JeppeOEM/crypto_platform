@@ -68,7 +68,7 @@ CREATE TABLE sell_conditions (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     sell_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
-    list_row INT,
+    list_row INT NOT NULL,
     FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
@@ -80,7 +80,7 @@ CREATE TABLE buy_conditions (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     buy_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
-    list_row INT,
+    list_row INT NOT NULL,
     FOREIGN KEY (fk_user_id) REFERENCES user(id),
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
 );
