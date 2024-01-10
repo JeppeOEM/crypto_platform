@@ -7,3 +7,4 @@ h5py
 pandas_ta
 Flask-SQLAlchemy
 matplotlib
+ccxt

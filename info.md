@@ -7,3 +7,9 @@ conds = [{"cond": "<"}, {"cond": ">"}, {
 "cond": "=="}, {"cond": "and"}, {"cond": "or"}]
 values = [{"val": 41}, {"val": 48}, {"val": 15}]
 or_and = [{"or_and_btns": "&"}, {"or_and_btns": "or"}]
+
+webpack tutorial:
+https://digitalhedgehog.org/articles/how-to-use-flask-with-webpack
+
+
+Webpack manifest plugin is used for Cache busting (update js, when new is added)

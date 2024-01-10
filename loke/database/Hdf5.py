@@ -5,6 +5,7 @@ import time
 import h5py
 import numpy as np
 import pandas as pd
+logger = logging.getLogger()
 
 
 # logger = logging.getLogger()
@@ -104,8 +105,8 @@ class Hdf5Client:
 
         query_time = round((time.time() - start_query), 2)
 
-        logger.info("Retrieved %s %s data from database in %s seconds",
-                    len(df.index), symbol, query_time)
+        # logger.info("Retrieved %s %s data from database in %s seconds",
+        #             len(df.index), symbol, query_time)
 
         return df
 
