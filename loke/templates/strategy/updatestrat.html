@@ -111,10 +111,10 @@
 
 <!-- <button id="toggleButton" onclick="toggleConditions()">Hide Sell Conditions</button> -->
 
-<div class="mega">
+<div class="condition_list_clones flex_horizontal">
   <div class="buy_toggle">
     <header>
-      <h1>Buy conditions</h1>
+      <h2 class="h2_underline">Buy conditions</h2>
       <a class="bluebtn_big" id="new_todo_buy">New list</a>
     </header>
     <div class="flex_wrap">
@@ -123,19 +123,20 @@
   </div>
   <div class="sell_toggle">
     <header>
-      <h1>Sell conditions</h1>
+      <h2 class="h2_underline">Sell conditions</h2>
       <a class="bluebtn_big" id="new_todo_sell">New list</a>
     </header>
     <div class="flex_wrap cond_wrapper">
       <section class="sell_clones flex_wrap"></section>
     </div>
   </div>
+</div>
+<div class="flex_vertical">
   <h2>Chart</h2>
   <div className="chart-container">
     <div class="chart"></div>
   </div>
 </div>
-
 <!-- Condition list Template-->
 <template class="clone_template">
   <div class="cond_list flex_basis25">

@@ -3,8 +3,8 @@ html {
 }
 * {
   box-sizing: border-box;
-  /* margin: 0;
-  padding: 0; */
+  margin: 0;
+  padding: 0;
   color: var(--white);
 }
 button {
@@ -94,7 +94,13 @@ fieldset {
 /* .basic_input {
   margin: 10px 5px;
 } */
+.h2_underline {
+  padding-bottom: var(--padsmall);
+  margin-bottom: var(--padsmall);
+  border-bottom: solid 1px var(--borderColor);
+}
 
+/* NAV */
 .global_nav {
   position: fixed;
   top: 0px;

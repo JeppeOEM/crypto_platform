@@ -27,7 +27,21 @@
   display: block;
 }
 
+.condition_list_clones {
+  gap: 10px;
+}
 
+.buy_toggle,
+.sell_toggle {
+  flex: 1;
+  padding: 10px;
+  border: solid 1px var(--borderColor);
+  border-radius: var(--borderRadius2);
+}
+/* .buy_toggle{
+    margin-left: 0px;
+    margin-right
+} */
 /* CSS */
 
 .operator {
@@ -51,10 +65,6 @@ table {
 tr:hover {
   background-color: #f5f5f5;
   cursor: pointer;
-}
-
-header > h1 {
-  text-indent: 2rem;
 }
 
 header.listHeaders {

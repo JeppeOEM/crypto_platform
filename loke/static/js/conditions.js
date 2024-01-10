@@ -1,4 +1,5 @@
 import { selected_cond_instance } from "./globals.js";
+import { optimizer_params } from "./optimize.js";
 import { postJsonGetData } from "./fetch.js";
 import { postJsonGetStatus } from "./fetch.js";
 import { getJson } from "./fetch.js";
@@ -15,11 +16,10 @@ window.save_cond_buy = save_cond_buy;
 window.del_last_buy_cond = del_last_buy_cond;
 window.del_last_sell_cond = del_last_sell_cond;
 window.del_last = del_last;
-window.load_params = load_params;
 
-let conditions = [];
-let conditions_sell = [];
-let cond = [];
+// let conditions = [];
+// let conditions_sell = [];
+// let cond = [];
 const data = {
   exchange: "binance",
   init_candles: 100,
@@ -27,51 +27,6 @@ const data = {
   name: "test",
   description: "description",
 };
-
-function load_params() {
-  const arr = [];
-  rows = document.querySelectorAll(".param");
-  rows.forEach((row) => {
-    const indi = row.querySelector(".indicator");
-    side = which_side(indi.innerText);
-    const operator = row.querySelector(".operator");
-    const min = row.querySelector(".min");
-    const max = row.querySelector(".max");
-    const type = "int";
-
-    arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
-  });
-  data.optimizer_params = arr;
-  data.params_class = "indicator";
-
-  const status = postJsonGetStatus(data, "optimizer_params");
-  console.log(status);
-}
-
-export function optimizer_params(conditions, suffix, element) {
-  const title = document.querySelector("title");
-  const cond_arr = [];
-  console.log(conditions, "conditions");
-  //global conditions arrayy
-  conditions.forEach((cond) => {
-    console.log(cond, "cond eval", cond.indicator_json);
-    cond = JSON.parse(cond.indicator_json);
-    cond_arr.push(cond);
-  });
-
-  const tbody = document.querySelector(`.${element}`);
-  const opti_params = document.getElementById("optimize_params");
-  cond_arr.forEach((cond) => {
-    cond.forEach((val) => {
-      const clone = opti_params.content.cloneNode(true);
-      clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
-      clone.querySelector(".operator").textContent = val[1]["cond"];
-      clone.querySelector(".min").value = "1";
-      clone.querySelector(".max").value = "1";
-      tbody.appendChild(clone);
-    });
-  });
-}
 
 export async function build_conds() {
   const json = await getJson("load_conditions");
@@ -148,7 +103,7 @@ export async function save_cond_buy() {
   // optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
 
-  conditions = [];
+  // conditions = [];
 }
 
 export async function save_cond_sell() {
@@ -181,7 +136,7 @@ export async function save_cond_sell() {
   // optimizer_params(sell_conds, "_SELL", "param_sell");
 
   optimizer_params(sell_conds, "_SELL", "param_buy");
-  conditions_sell = [];
+  // conditions_sell = [];
   console.log(build_conds, "build_conds");
   selected_cond.reset_cond();
 }
