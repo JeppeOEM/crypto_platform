@@ -125,6 +125,7 @@ class CondManager {
     task.prepend(this.deleteButton());
     task.dataset.cond_key = id;
     const columnList = this.TodoContent.querySelector(`.${column}List`);
+    console.log(columnList, "columnList", task);
     columnList.prepend(task);
 
     switch (column) {
@@ -384,8 +385,13 @@ class CondManager {
       list_row: which_row_string(listName),
       side: "buy",
     };
-    // console.log(data);
-    // let response = postJsonGetData(data, "update_condition_row");
+
+    update_cond(data);
+
+    async function update_cond(data) {
+      await postJsonGetData(data, "update_condition_row");
+      console.log(data);
+    }
     // console.log(response);
     //this.resizeLists();
     // }

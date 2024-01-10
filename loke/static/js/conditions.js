@@ -1,5 +1,5 @@
 import { selected_cond_instance } from "./globals.js";
-import { postJsonGetStatus } from "./fetch.js";
+import { postJsonGetData } from "./fetch.js";
 import { getJson } from "./fetch.js";
 import { show_string } from "./functions/show_string.js";
 import { condController } from "./cond_list.js";
@@ -37,6 +37,7 @@ export async function build_conds() {
   function load_cond_managers_buy(arr) {
     const lol = arr.forEach((cond) => {
       let condManager = condController.getKey(cond.fk_buy_list_id);
+      console.log(which_row(cond.list_row));
       condManager.insert_cond(cond.buy_eval, which_row(cond.list_row), cond.buy_conditions_id);
     });
     console.log(lol);
@@ -56,7 +57,7 @@ function which_row(number) {
     case 1:
       return "toDo";
     case 2:
-      return "onGoing";
+      return "ongoing";
     case 3:
       return "done";
   }
@@ -157,20 +158,4 @@ function del_last_buy_cond() {
   selected_cond.set_string(show_string(cond));
 }
 
-async function postJsonGetData(data, endpoint, method = "POST") {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let response = await fetch(endpoint, options);
 
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
-
-  const responseData = await response.json();
-  return responseData;
-}
