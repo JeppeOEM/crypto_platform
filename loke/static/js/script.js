@@ -10,7 +10,7 @@ import { postJsonGetStatus } from "./fetch.js";
 import { build_conds } from "./conditions.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
-window.load_params = load_params;
+
 window.select_indicator = select_indicator;
 
 // window.save_cond_sell = save_cond_sell;
@@ -123,17 +123,17 @@ async function build_condition_lists() {
       insert_name.classList.add(element_name);
       insert_name.classList.add(`${side}_side`);
       if (side == "buy") {
-        insert_name.dataset.primary_key = data.buy_list_id;
-        primary_key = data.buy_list_id;
-        console.log(data.buy_list_id, "data.buy_list_id");
+        insert_name.dataset.primary_key = data.list_id;
+        primary_key = data.list_id;
+        console.log(data.list_id, "data.list_id");
       } else {
-        insert_name.dataset.primary_key = data.sell_list_id;
-        primary_key = data.sell_list_id;
+        insert_name.dataset.primary_key = data.list_id;
+        primary_key = data.list_id;
       }
       console.log(primary_key, "primary_key");
       insert_name.dataset.frontend_id = data.frontend_id;
       // const cond_wrapper = clone.querySelector(`.clone_${side}`);
-      // cond_wrapper.dataset.id = data.buy_list_id;
+      // cond_wrapper.dataset.id = data.list_id;
       container.appendChild(clone);
       //cond_list.js controller
       condController.createCondManager(element_name, primary_key);
@@ -174,18 +174,6 @@ async function build_buttons(array, element_id, element, class_name) {
     });
   });
 }
-export async function build_conditions() {
-  const { sell_conds, buy_conds } = await getJson("load_conditions");
-
-  // remove_element("buy_cond2");
-  // remove_element("sell_cond2");
-  // console.log(sell_conds, buy_conds, "sell_conds, buy_conds");
-  // insert_frontend(sell_conds, "sell_cond2");
-  // insert_frontend(buy_conds, "buy_cond2");
-  //cond, suffix, element to insert into
-  optimizer_params(sell_conds, "_SELL", "param_sell");
-  optimizer_params(buy_conds, "_BUY", "param_buy");
-}
 
 function insert_frontend(cond, element) {
   const conds_db = document.querySelectorAll(`.${element}`).forEach((saved_conds) => {
@@ -200,48 +188,6 @@ function insert_frontend(cond, element) {
   });
 }
 
-function load_params() {
-  let arr = [];
-  rows = document.querySelectorAll(".param");
-  rows.forEach((row) => {
-    let indi = row.querySelector(".indicator");
-    side = which_side(indi.innerText);
-    let operator = row.querySelector(".operator");
-    let min = row.querySelector(".min");
-    let max = row.querySelector(".max");
-    let type = "int";
-
-    arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
-  });
-  data.optimizer_params = arr;
-  data.params_class = "indicator";
-
-  postJsonGetStatus(data, "optimizer_params");
-}
-
-function optimizer_params(conditions, suffix, element) {
-  const title = document.querySelector("title");
-  const cond_arr = [];
-  console.log(conditions, "conditions");
-  //global conditions arrayy
-  conditions.forEach((cond) => {
-    cond = JSON.parse(cond);
-    cond_arr.push(cond);
-  });
-
-  const tbody = document.querySelector(`.${element}`);
-  const opti_params = document.getElementById("optimize_params");
-  cond_arr.forEach((cond) => {
-    cond.forEach((val) => {
-      const clone = opti_params.content.cloneNode(true);
-      clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
-      clone.querySelector(".operator").textContent = val[1]["cond"];
-      clone.querySelector(".min").value = "1";
-      clone.querySelector(".max").value = "1";
-      tbody.appendChild(clone);
-    });
-  });
-}
 //runs if there is saved indicators in the db that belongs to the strategy
 async function build_indicator_inputs(data, category = null) {
   //returns new array with parsed values

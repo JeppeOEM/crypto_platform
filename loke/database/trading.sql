@@ -62,33 +62,33 @@ CREATE TABLE strategy_indicators (
 );
 CREATE INDEX idx_indicator_name ON strategy_indicators(indicator_name);
 CREATE TABLE sell_conditions (
-    sell_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    condition_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
-    fk_sell_list_id INT NOT NULL,
+    fk_list_id INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     sell_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT NOT NULL,
     FOREIGN KEY (fk_user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_sell_list_id) REFERENCES sell_condition_lists(sell_list_id) ON DELETE CASCADE
+    FOREIGN KEY (fk_list_id) REFERENCES sell_condition_lists(list_id) ON DELETE CASCADE
 );
 CREATE TABLE buy_conditions (
-    buy_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    condition_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
-    fk_buy_list_id INT NOT NULL,
+    fk_list_id INT NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     buy_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT NOT NULL,
     FOREIGN KEY (fk_user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_buy_list_id) REFERENCES buy_condition_lists(buy_list_id) ON DELETE CASCADE
+    FOREIGN KEY (fk_list_id) REFERENCES buy_condition_lists(list_id) ON DELETE CASCADE
 );
 CREATE TABLE sell_condition_lists (
-    sell_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    list_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
     frontend_id INT,
@@ -105,10 +105,10 @@ SET frontend_id = (
         FROM sell_condition_lists
         WHERE fk_strategy_id = NEW.fk_strategy_id
     )
-WHERE sell_list_id = NEW.sell_list_id;
+WHERE list_id = NEW.list_id;
 END;
 CREATE TABLE buy_condition_lists (
-    buy_list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    list_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
     frontend_id INT,
@@ -125,7 +125,7 @@ SET frontend_id = (
         FROM buy_condition_lists
         WHERE fk_strategy_id = NEW.fk_strategy_id
     )
-WHERE buy_list_id = NEW.buy_list_id;
+WHERE list_id = NEW.list_id;
 END;
 CREATE TABLE backtest (
     backtest_id INTEGER PRIMARY KEY AUTOINCREMENT,

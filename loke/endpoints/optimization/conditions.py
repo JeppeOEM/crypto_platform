@@ -36,7 +36,7 @@ def delete_condition(strategy_id):
 
 
 @bp.route('/<int:strategy_id>/delete_condition_list', methods=['POST'])
-def delete_condition(strategy_id):
+def delete_condition_list(strategy_id):
     db = get_db()
     data = request.get_json()
     print(data, "DATA")
@@ -47,7 +47,7 @@ def delete_condition(strategy_id):
         table_name = 'sell_condition_lists'
 
     # Fix the DELETE statement
-    db.execute(f'DELETE FROM {table_name} WHERE strategy_id = ? AND user_id = ? AND sell_list_id = ?',
+    db.execute(f'DELETE FROM {table_name} WHERE strategy_id = ? AND user_id = ? AND list_id = ?',
                (strategy_id, g.user['id'], data['id']))
     db.commit()
 
@@ -64,7 +64,7 @@ def update_row(strategy_id):
         table_name = 'buy_conditions'
     else:
         table_name = 'sell_conditions'
-    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND buy_conditions_id = ?'.format(
+    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND condition_id = ?'.format(
         table_name), (data['list_row'], strategy_id, g.user['id'], data['id']))
     db.commit()
     return jsonify({'message': 'Row updated'}), 200
@@ -158,7 +158,7 @@ def condition(id):
 
             try:
                 cur.execute(
-                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_buy_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
                     (id, g.user['id'], data['buy_cond'],
                      data['primary_key'], 1)
                 )
@@ -184,7 +184,7 @@ def condition(id):
             try:
                 # Insert the indicator if it doesn't exist
                 cur.execute(
-                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_sell_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
                     (id, g.user['id'], data['sell_cond'],
                      data['primary_key'], 1)
                 )
