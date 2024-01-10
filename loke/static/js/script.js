@@ -45,12 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   todo_b.addEventListener("click", () => {
     create_list("buy");
+    location.reload();
+    // remove_element("cond_list");
+    // build_condition_lists();
   });
 
   let todo_s = document.querySelector("#new_todo_sell");
 
   todo_s.addEventListener("click", () => {
     create_list("sell");
+    location.reload();
+    // remove_element("cond_list");
+    // build_condition_lists();
   });
 });
 
@@ -70,8 +76,8 @@ function value_cond(btn) {
 
 async function create_list(side) {
   const status = postJsonGetStatus(data, "cond_list?side=" + side);
-  remove_element("cond_list");
-  build_condition_lists();
+  // remove_element("cond_list");
+  // build_condition_lists();
 }
 
 async function build_page() {
@@ -551,10 +557,6 @@ async function update_chart(endpoint) {
     console.error("Error:", error);
   }
 }
-
-
-
-
 
 // async function postJsonGetStatus(data, endpoint, method = "POST") {
 //   // Create an options object for the fetch request

@@ -16,6 +16,44 @@ bp = Blueprint('conditions', __name__)
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
 
 
+@bp.route('/<int:strategy_id>/delete_condition', methods=['POST'])
+def delete_condition(strategy_id):
+    db = get_db()
+    data = request.get_json()
+    print(data, "DATA")
+
+    if data['side'] == "buy":
+        table_name = 'buy_conditions'
+    else:
+        table_name = 'sell_conditions'
+
+    # Fix the DELETE statement
+    db.execute(f'DELETE FROM {table_name} WHERE strategy_id = ? AND user_id = ? AND condition_id = ?',
+               (strategy_id, g.user['id'], data['id']))
+    db.commit()
+
+    return jsonify({'message': 'Row updated'}), 200
+
+
+@bp.route('/<int:strategy_id>/delete_condition_list', methods=['POST'])
+def delete_condition(strategy_id):
+    db = get_db()
+    data = request.get_json()
+    print(data, "DATA")
+
+    if data['side'] == "buy":
+        table_name = 'buy_condition_lists'
+    else:
+        table_name = 'sell_condition_lists'
+
+    # Fix the DELETE statement
+    db.execute(f'DELETE FROM {table_name} WHERE strategy_id = ? AND user_id = ? AND sell_list_id = ?',
+               (strategy_id, g.user['id'], data['id']))
+    db.commit()
+
+    return jsonify({'message': 'Row updated'}), 200
+
+
 @bp.route('/<int:strategy_id>/update_condition_row', methods=['POST'])
 def update_row(strategy_id):
     db = get_db()

@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS strategy_indicators;
 DROP TABLE IF EXISTS strategy_indicator_forms;
 DROP TABLE IF EXISTS sell_conditions;
 DROP TABLE IF EXISTS buy_conditions;
+DROP TABLE IF EXISTS conditions;
 DROP TABLE IF EXISTS backtest;
 DROP TABLE IF EXISTS sell_optimization;
 DROP TABLE IF EXISTS buy_optimization;
@@ -69,8 +70,9 @@ CREATE TABLE sell_conditions (
     sell_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT NOT NULL,
-    FOREIGN KEY (fk_user_id) REFERENCES user(id),
-    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+    FOREIGN KEY (fk_user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id) ON DELETE CASCADE,
+    FOREIGN KEY (fk_sell_list_id) REFERENCES sell_condition_lists(sell_list_id) ON DELETE CASCADE
 );
 CREATE TABLE buy_conditions (
     buy_conditions_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -81,30 +83,9 @@ CREATE TABLE buy_conditions (
     buy_eval VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT NOT NULL,
-    FOREIGN KEY (fk_user_id) REFERENCES user(id),
-    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
-);
-CREATE TABLE sell_list_junction (
-    id INTEGER PRIMARY KEY,
-    fk_user_id INT NOT NULL,
-    fk_strategy_id INT NOT NULL,
-    fk_sell_list_id INTEGER,
-    fk_sell_conditions_id INTEGER,
-    FOREIGN KEY (fk_sell_list_id) REFERENCES sell_condition_lists(sell_list_id),
-    FOREIGN KEY (fk_sell_conditions_id) REFERENCES sell_conditions(sell_conditions_id),
-    FOREIGN KEY (fk_user_id) REFERENCES user(id),
-    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
-);
-CREATE TABLE buy_list_junction (
-    id INTEGER PRIMARY KEY,
-    fk_user_id INT NOT NULL,
-    fk_strategy_id INT NOT NULL,
-    fk_buy_list_id INTEGER,
-    fk_buy_conditions_id INTEGER,
-    FOREIGN KEY (fk_buy_list_id) REFERENCES buy_condition_lists(buy_list_id),
-    FOREIGN KEY (fk_buy_conditions_id) REFERENCES buy_conditions(buy_conditions_id),
-    FOREIGN KEY (fk_user_id) REFERENCES user(id),
-    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+    FOREIGN KEY (fk_user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id) ON DELETE CASCADE,
+    FOREIGN KEY (fk_buy_list_id) REFERENCES buy_condition_lists(buy_list_id) ON DELETE CASCADE
 );
 CREATE TABLE sell_condition_lists (
     sell_list_id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -3,7 +3,7 @@ import { selected_cond_instance } from "./globals.js";
 import { save_cond_buy } from "./conditions.js";
 import { save_cond_sell } from "./conditions.js";
 import { last_cond_dom } from "./globals.js";
-import { postJsonGetData } from "./fetch.js";
+import { postJsonGetData, postJsonGetStatus } from "./fetch.js";
 const selected_cond = selected_cond_instance;
 
 export class CondController {
@@ -149,7 +149,7 @@ class CondManager {
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const txtTask = this.TodoContent.querySelector(".txtTask");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
-    txtTask.value = "";
+    // txtTask.value = "";
     this.TodoContent.querySelector(".btnOk").value = this.addTaskText;
     currentTask.setAttribute("currentid", newID);
     currentTask.style.display = "block";
@@ -169,11 +169,15 @@ class CondManager {
   }
 
   deleteButtonClick(e) {
+    //Make sure that the click event stops here and dont fire anything in the ancestors/descendants
     e.stopPropagation();
+    console.log(e.target.parentElement.dataset.cond_key, "e.target");
     const taskHeight = e.target.parentElement.offsetHeight + 10;
     const currentListName = e.target.parentElement.parentElement.id;
 
     e.target.parentElement.remove();
+    const response = postJsonGetStatus(data, "delete_condition");
+    console.log(response, "response");
 
     switch (currentListName) {
       case "toDoList":
@@ -250,6 +254,7 @@ class CondManager {
   }
 
   updateTask() {
+    selected_cond.reset_cond();
     const taskText = this.TodoContent.querySelector(".txtTask");
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const task = this.TodoContent.querySelector('div.task[taskid="' + currentTask.getAttribute("currentid") + '"]');
@@ -325,8 +330,8 @@ class CondManager {
     try {
       taskList = draggedTask.parentNode.id;
     } catch {
-      let lol = e.target;
-      console.log(lol);
+      let lol = e.targwet;
+      console.log(lol, "lol!!!!!!!!!!!!!!!!!!");
       console.log(this.draggedTask);
     }
 

@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<head>
-  <title>{% block title %}{% endblock %} - Flaskr</title>
-  {% block extra_code_head %}{% endblock %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <script type="module" src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
-  <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
-  <!-- <script type="module" src="{{ url_for('static', filename='js/chart.js') }}"></script> -->
-</head>
-<header>
-  <nav class="global_nav">
-    <h1>{{ g.user['username'] }}</h1>
-    <ul>
-      {% if g.user %}
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %} - Flaskr</title>
+    {% block extra_code_head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />
+    <script type="module" src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- <script type="module" src="{{ url_for('static', filename='js/chart.js') }}"></script> -->
+  </head>
+  <body>
+    <header>
+      <nav class="global_nav">
+        <h1>{{ g.user['username'] }}</h1>
+        <ul>
+          {% if g.user %}
+          <li><a href="{{ url_for('auth.logout') }}">Log Out</a> {% else %}</li>
 
-      <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-      <li>
-        <a href="{{ url_for('auth.login') }}">Log In</a>
-        {% endif %}
-      </li>
-    </ul>
-  </nav>
-</header>
-<section class="strategy">
-  <header>{% block header %}{% endblock %}</header>
-  {% for message in get_flashed_messages() %}
-  <div class="flash">{{ message }}</div>
-  {% endfor %} {% block content %}{% endblock %}
-</section>
+          <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+          <li>
+            <a href="{{ url_for('auth.login') }}">Log In</a>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="strategy">
+      <header>{% block header %}{% endblock %}</header>
+      {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+      {% endfor %} {% block content %}{% endblock %}
+    </section>
+  </body>
+</html>
