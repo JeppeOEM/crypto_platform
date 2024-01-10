@@ -1,4 +1,5 @@
-.bluebtn {
+.greybtn {
+  border: solid 1px var(--borderColor);
   display: flex;
   justify-content: center;
   background-color: var(--colorPrimary);
@@ -11,29 +12,55 @@
   cursor: pointer;
 }
 
+.bluebtn_big {
+  border: solid 1px var(--borderColor);
+  display: flex;
+  justify-content: center;
+  background-color: var(--green);
+  color: var(--white);
+  border-radius: 5px;
+  font-size: 1rem;
+  line-height: 2rem;
+  width: fit-content;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.smallbtn_grey {
+  border: solid 1px var(--borderColor);
+  background-color: var(--colorPrimary);
+  color: var(--white);
+  border-radius: var(--borderRadius2);
+  font-size: 0.9rem;
+  line-height: 1rem;
+  width: fit-content;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
 .smallbtn {
-  background-color: green;
+  background-color: var(--green);
   color: var(--white);
-  border-radius: 2px;
+  border-radius: var(--borderRadius2);
   font-size: 0.9rem;
   line-height: 1rem;
   width: fit-content;
-  padding: 0px 5px;
+  padding: 6px 10px;
   cursor: pointer;
 }
 
-.smallbtn_red {
-  background-color: red;
+.smallbtn_blue {
+  background-color: var(--pink);
   color: var(--white);
-  border-radius: 2px;
+  border-radius: var(--borderRadius2);
   font-size: 0.9rem;
   line-height: 1rem;
   width: fit-content;
-  padding: 0px 5px;
+  padding: 6px 10px;
   cursor: pointer;
 }
 
-.bluebtn:hover {
+.greybtn:hover {
   background-color: #377ba8;
 }
 
@@ -54,13 +81,6 @@ a.save {
   color: rgb(171, 21, 21);
 }
 
-a.showHelp {
-  display: block;
-  float: right;
-  margin-right: 1rem;
-  padding: 0.5rem;
-  font-size: 1.2rem;
-}
 a.deleteButton {
   display: block;
   float: right;
@@ -68,6 +88,17 @@ a.deleteButton {
   height: 1.5rem;
   margin-left: 0.25rem;
   background-image: var(--imgDelete);
+}
+.functionality_btns button,
+.or_and_btns button,
+.compare_btns button,
+.condition_btns button {
+  margin-right: var(--padsmall);
+}
+
+.functionality_btns {
+  margin-top: var(--padsmall);
+  margin-bottom: var(--padsmall);
 }
 
 /* .buttons {

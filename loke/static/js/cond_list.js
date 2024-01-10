@@ -3,7 +3,8 @@ import { selected_cond_instance } from "./globals.js";
 import { save_cond_buy } from "./conditions.js";
 import { save_cond_sell } from "./conditions.js";
 import { last_cond_dom } from "./globals.js";
-import { postJsonGetData, postJsonGetStatus } from "./fetch.js";
+import { optimizer_params } from "./conditions.js";
+import { postJsonGetData, postJsonGetStatus, getJson } from "./fetch.js";
 const selected_cond = selected_cond_instance;
 
 export class CondController {
@@ -258,9 +259,7 @@ class CondManager {
     this.toDoList.prepend(task);
     this.toDoListHeight += task.offsetHeight + 10;
 
-    //global var
-
-    //this.resizeLists();
+    this.load_opti_params();
   }
 
   updateTask() {
@@ -285,6 +284,7 @@ class CondManager {
         this.doneListHeight = this.doneListHeight - previousHeight + task.offsetHeight;
     }
 
+    this.load_opti_params();
     //this.resizeLists();
   }
 
@@ -301,6 +301,15 @@ class CondManager {
 
   hideHelp() {
     this.TodoContent.querySelector(".help").style.display = "none";
+  }
+
+  async load_opti_params() {
+    const json = await getJson("load_conditions");
+    const buy_conds = json.buy_conds;
+    const sell_conds = json.sell_conds;
+    // optimizer_params(sell_conds, "_SELL", "param_sell");
+    optimizer_params(buy_conds, "_BUY", "param_buy");
+    optimizer_params(sell_conds, "_SELL", "param_buy");
   }
 
   swapElements(element1, element2) {

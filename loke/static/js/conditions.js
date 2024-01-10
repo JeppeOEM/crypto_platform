@@ -48,13 +48,14 @@ function load_params() {
   console.log(status);
 }
 
-function optimizer_params(conditions, suffix, element) {
+export function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
   const cond_arr = [];
   console.log(conditions, "conditions");
   //global conditions arrayy
   conditions.forEach((cond) => {
-    cond = JSON.parse(cond);
+    console.log(cond, "cond eval", cond.indicator_json);
+    cond = JSON.parse(cond.indicator_json);
     cond_arr.push(cond);
   });
 
@@ -77,24 +78,17 @@ export async function build_conds() {
   const buy_conds = json.buy_conds;
   const sell_conds = json.sell_conds;
   // optimizer_params(sell_conds, "_SELL", "param_sell");
-  // optimizer_params(buy_conds, "_BUY", "param_buy");
+  optimizer_params(buy_conds, "_BUY", "param_buy");
+  optimizer_params(sell_conds, "_SELL", "param_buy");
   console.log(buy_conds, "buy_conds!");
-  console.log(load_cond_managers_buy(buy_conds));
-  // console.log(load_cond_managers_sell(sell_conds));
+  console.log(load_cond_managers(buy_conds));
+  console.log(load_cond_managers(sell_conds));
 
-  function load_cond_managers_buy(arr) {
+  function load_cond_managers(arr) {
     const lol = arr.forEach((cond) => {
       let condManager = condController.getKey(cond.fk_list_id);
       console.log(which_row(cond.list_row));
-      condManager.insert_cond(cond.buy_eval, which_row(cond.list_row), cond.condition_id);
-    });
-    console.log(lol);
-  }
-
-  function load_cond_managers_sell(arr) {
-    const lol = arr.forEach((cond) => {
-      let condManager = condController.getKey(cond.fk_list_id);
-      condManager.insert_cond(cond.buy_eval, which_row(cond.list_row), cond.condition_id);
+      condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
     });
     console.log(lol);
   }
@@ -147,11 +141,13 @@ export async function save_cond_buy() {
   let last_dom = last_cond_dom.get();
   last_dom.dataset.cond_key = response.id;
   last_cond_dom.set(last_dom);
-  //   let build_conds = await build_conditions();
-  //   document.querySelectorAll("buy_cond2").forEach((bconds) => {
-  //     bconds.textContent = `${build_conds}`;
-  //   });
-  //   console.log(build_conds, "build_conds");
+
+  const json = await getJson("load_conditions");
+  const buy_conds = json.buy_conds;
+
+  // optimizer_params(sell_conds, "_SELL", "param_sell");
+  optimizer_params(buy_conds, "_BUY", "param_buy");
+
   conditions = [];
 }
 
@@ -173,10 +169,18 @@ export async function save_cond_sell() {
 
   let response = await postJsonGetData(data, "condition");
   console.log(response.id);
-  //   let build_conds = await build_conditions();
-  //   document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
-  //     sellcond2.textContent = `${build_conds}`;
-  //   });
+  console.log(last_cond_dom, "last_cond_dom");
+  //assign id to last cond inserted in the dom
+  let last_dom = last_cond_dom.get();
+  last_dom.dataset.cond_key = response.id;
+  last_cond_dom.set(last_dom);
+
+  const json = await getJson("load_conditions");
+  const sell_conds = json.sell_conds;
+
+  // optimizer_params(sell_conds, "_SELL", "param_sell");
+
+  optimizer_params(sell_conds, "_SELL", "param_buy");
   conditions_sell = [];
   console.log(build_conds, "build_conds");
   selected_cond.reset_cond();

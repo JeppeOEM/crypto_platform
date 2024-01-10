@@ -6,4 +6,4 @@ run help.py to get indicator info
 conds = [{"cond": "<"}, {"cond": ">"}, {
 "cond": "=="}, {"cond": "and"}, {"cond": "or"}]
 values = [{"val": 41}, {"val": 48}, {"val": 15}]
-or_and = [{"or_and": "&"}, {"or_and": "or"}]
+or_and = [{"or_and_btns": "&"}, {"or_and_btns": "or"}]

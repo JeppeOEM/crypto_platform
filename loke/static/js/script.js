@@ -93,9 +93,9 @@ async function build_page() {
   // await build_conditions();
   await build_optimization_results();
   await build_condition_lists();
-  await build_buttons(["<", ">", "==", "&", "or"], "compare", "button", "compare_cond");
-  await build_buttons(["or", "&"], "or_and", "button", "or_and_cond");
-  await build_buttons(data.cols, "conditions", "button", "indicator_cond");
+  await build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
+  await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
+  await build_buttons(data.cols, "condition_btns", "button", "indicator_cond");
   await build_conds();
 }
 
@@ -148,6 +148,7 @@ async function build_buttons(array, element_id, element, class_name) {
       let button = document.createElement(element);
       button.innerText = array[i];
       button.classList.add(class_name);
+      button.classList.add("smallbtn");
       container.appendChild(button);
     }
 
@@ -259,7 +260,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
   const form = document.createElement("form");
   const delbtn = document.createElement("button");
   delbtn.innerText = "X";
-  delbtn.classList = "smallbtn_red mr5";
+  delbtn.classList = "smallbtn_blue mr5";
   form.classList.add("indicator_form");
   form.id = `form${form_id}`;
   form.classList.add("flex_horizontal");
@@ -497,7 +498,7 @@ async function update_chart(endpoint) {
 
     const responseData = await response.json();
     remove_element("indicator_cond");
-    build_buttons(responseData.cols, "conditions", "button", "indicator_cond");
+    build_buttons(responseData.cols, "condition_btns", "button", "indicator_cond");
     return responseData;
   } catch (error) {
     console.error("Error:", error);

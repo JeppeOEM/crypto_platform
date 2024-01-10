@@ -27,37 +27,7 @@
   display: block;
 }
 
-.cond_list {
-  border: solid 1px var(--colorSecondary);
-  border-radius: var(--borderRadius2);
-}
 
-.add_indicators_box {
-  flex: 1;
-  border: solid 1px var(--colorSecondary);
-  border-radius: var(--borderRadius2);
-  margin-right: 10px;
-}
-
-.form-container {
-  flex: 4;
-  height: 200px;
-  overflow: auto;
-  border: solid 1px var(--colorSecondary);
-  border-radius: var(--borderRadius2);
-}
-.indicator_form {
-  padding: 5px;
-}
-
-.search_indicators {
-  width: 100%;
-  padding: 5px 10px;
-}
-
-#search_indicator {
-  width: 100%;
-}
 /* CSS */
 
 .operator {
@@ -115,6 +85,7 @@ div.doneList {
 } */
 
 div.listColumn {
+  min-width: 200px;
   margin: 10px;
   padding-bottom: 30px;
   border: solid 1px black;
@@ -138,21 +109,20 @@ main.listContent {
 
 .clone {
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
-  background-color: var(--colorSecondary);
+  background-color: var(--borderColor);
 }
 
 div.modal {
   display: none;
   position: fixed;
   z-index: 1;
-  top: 3.5rem;
-  border: solid thick var(--colorPrimary);
-  border-radius: 0.5rem;
-  padding: 0.25rem;
-  width: 80%;
-  height: 80%;
-  left: 10%;
-  background-color: var(--colorTextSecondary);
+  top: 10.5rem;
+  border: solid 1px var(--borderColor2);
+  border-radius: var(--borderRadius2);
+  padding: 20px;
+
+  left: 40%;
+  background-color: var(--borderColor);
 }
 @media (min-width: 768px) {
   div.task {
@@ -179,7 +149,7 @@ textarea.txtTask {
   height: 92%;
   resize: none;
   overflow: auto;
-  border-color: var(--colorSecondary);
+  border-color: var(--borderColor);
 }
 
 /* input[type="button"] {

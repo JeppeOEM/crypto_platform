@@ -149,7 +149,7 @@ def condition(id):
             print(data['buy_cond'])
             existing_indicator = db.execute(
                 'SELECT 1 FROM buy_conditions '
-                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND buy_eval = ?',
+                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND indicator_json = ?',
                 (id, g.user['id'], data['buy_cond'])
             ).fetchone()
 
@@ -158,7 +158,7 @@ def condition(id):
 
             try:
                 cur.execute(
-                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, indicator_json, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
                     (id, g.user['id'], data['buy_cond'],
                      data['primary_key'], 1)
                 )
@@ -174,7 +174,7 @@ def condition(id):
 
             existing_indicator = db.execute(
                 'SELECT 1 FROM sell_conditions '
-                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND sell_eval = ?',
+                'WHERE fk_strategy_id = ? AND fk_user_id = ? AND indicator_json = ?',
                 (id, g.user['id'], data['sell_cond'])
             ).fetchone()
 
@@ -184,7 +184,7 @@ def condition(id):
             try:
                 # Insert the indicator if it doesn't exist
                 cur.execute(
-                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, indicator_json, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?)',
                     (id, g.user['id'], data['sell_cond'],
                      data['primary_key'], 1)
                 )

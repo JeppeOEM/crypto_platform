@@ -8,17 +8,17 @@
     {% block title %} ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }} {% endblock %}
   </h1>
   <div class="flex_horizontal">
-    <button class="bluebtn" id="update_strat_text">update_strat_text</button>
+    <button class="greybtn" id="update_strat_text">update_strat_text</button>
 
     <!-- NOT SURE IF WORKING -->
     <div class="dodo"></div>
-    <button class="bluebtn" id="save_edit_db">save_edit_db</button>
+    <button class="greybtn" id="save_edit_db">save_edit_db</button>
 
     <form action="{{ url_for('strategy.deletestrat', id=strategy['strategy_id']) }}" method="post">
-      <input class="bluebtn" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
+      <input class="greybtn" type="submit" value="Delete" onclick="return confirm('Are you sure?');" />
     </form>
     <form action="{{ url_for('strategy.truncate', id=strategy['strategy_id']) }}" method="post">
-      <input class="bluebtn" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
+      <input class="greybtn" type="submit" value="Reset strategy" onclick="return confirm('Are you sure?');" />
     </form>
     <button onclick="test()" class="fuck">fuck</button>
   </div>
@@ -42,47 +42,46 @@
 <div class="flex_horizontal">
   <div class="add_indicators_box">
     <div class="search_indicators">
-      <form class="flex_horizontal">
-        <label for="search_indicator">Search:</label>
+      <form class="flex_horizontal basic_input">
+        <button class="smallbtn_grey" type="submit">search</button>
         <input type="text" name="" id="search_indicator" />
-        <button type="submit">search</button>
       </form>
     </div>
+    <div class="indicator_selectors">
+      <select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
+        <option value="">Momentum</option>
+        {% for dict_item in momentum %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+        <option value="{{ value }}">{{ value }}</option>
+        {% endif %} {% endfor %} {% endfor %}
+      </select>
 
-    <select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
-      <option value="">Momentum</option>
-      {% for dict_item in momentum %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
-      <option value="{{ value }}">{{ value }}</option>
-      {% endif %} {% endfor %} {% endfor %}
-    </select>
-
-    <select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
-      <option value="">Trend</option>
-      {% for dict_item in trend %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
-      <option value="{{ value }}">{{ value }}</option>
-      {% endif %} {% endfor %} {% endfor %}
-    </select>
+      <select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
+        <option value="">Trend</option>
+        {% for dict_item in trend %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+        <option value="{{ value }}">{{ value }}</option>
+        {% endif %} {% endfor %} {% endfor %}
+      </select>
+    </div>
   </div>
   <div class="form-container" id="form-container"></div>
 </div>
-<div class="cond"></div>
+
 <div id="saved_conds"></div>
 <div class="saved_conds_sell"></div>
 
 <div id="conditions_sell"></div>
 <!-- insert comparison buttons -->
-<!-- <div id="compare"></div> 
+<!-- <div id="compare_btns"></div> 
   <label for="value_cond">value</label>
   <input id="value_cond" type="number">
   <button onclick="value_cond()" id="value_cond">Add value</button> -->
-
-<button onclick="backtest()" id="backtest">Save backtest</button>
-<button onclick="optimize()" id="optimize">Optimize</button>
+<div class="functionality_btns flex_horizontal">
+  <button class="greybtn" onclick="backtest()" id="backtest">Save backtest</button>
+  <button class="greybtn" onclick="optimize()" id="optimize">Optimize</button>
+  <button class="greybtn" onclick="load_params()">Load optimizer params</button>
+</div>
 
 <!-- will trigger update_chart function in script.js -->
-
-<!-- insert comparison buttons  -->
-<div class="compare"></div>
 
 <span id="backtest_result"></span>
 
@@ -105,21 +104,10 @@
   </div>
   <div>
     <table>
-      <thead>
-        <tr>
-          <th class="th-author"><p>Indicator</p></th>
-          <th class="th-title"><p>Operator</p></th>
-          <th class="th-year"><p>min</p></th>
-          <th class="th-year"><p>max</p></th>
-          <th class="th-year"><p>condition</p></th>
-        </tr>
-      </thead>
       <tbody class="param_sell"></tbody>
     </table>
   </div>
 </section>
-
-<button onclick="load_params()">load params</button>
 
 <!-- <button id="toggleButton" onclick="toggleConditions()">Hide Sell Conditions</button> -->
 
@@ -127,7 +115,7 @@
   <div class="buy_toggle">
     <header>
       <h1>Buy conditions</h1>
-      <a class="bluebtn" id="new_todo_buy">New list</a>
+      <a class="bluebtn_big" id="new_todo_buy">New list</a>
     </header>
     <div class="flex_wrap">
       <section class="buy_clones flex_wrap"></section>
@@ -136,7 +124,7 @@
   <div class="sell_toggle">
     <header>
       <h1>Sell conditions</h1>
-      <a class="bluebtn" id="new_todo_sell">New list</a>
+      <a class="bluebtn_big" id="new_todo_sell">New list</a>
     </header>
     <div class="flex_wrap cond_wrapper">
       <section class="sell_clones flex_wrap"></section>
@@ -155,8 +143,8 @@
       <div>
         <main class="listContent">
           <div class="flex_horizontal space_between">
-            <a class="showHelp bluebtn">Hyperopt settings</a>
-            <a class="addTask bluebtn">Add Condition</a>
+            <a class="showHelp greybtn">Settings</a>
+            <a class="addTask greybtn">Add</a>
           </div>
 
           <div class="toDoList listColumn">
@@ -186,25 +174,23 @@
           </form> -->
           <div class="txtTask"></div>
           <div class="cond"></div>
-          <div class="conditions"></div>
-          <div class="compare"></div>
-          <p>OR AND BUTTONS DIFFRENT CLASSNAME</p>
-          <div class="or_and"></div>
-          <label for="value_cond">value</label>
-          <div>
+          <!-- insert comparison buttons  -->
+          <div class="compare_btns"></div>
+          <div class="condition_btns"></div>
+          <p>|| &&</p>
+          <div class="or_and_btns"></div>
+          <div class="basic_input">
+            <button onclick="value_cond(this)" class="smallbtn_grey">Add value</button>
             <input name="value_cond" class="value_cond" type="number" />
-            <button onclick="value_cond(this)" class="smallbtn">Add</button>
           </div>
-          <button onclick="del_last()">Del</button>
-          <button onclick="del_last_sell_cond()">Del sell condition</button>
-          <button onclick="del_last_buy_cond()">Del buy condition</button>
-          <!-- <button onclick="save_cond_buy()" id="save_cond_buy">Save condition buy</button>
-          <button onclick="save_cond_sell()" id="save_cond_sell">Save condition sell</button> -->
+          <button class="smallbtn_blue" onclick="del_last()">Del</button>
+          <button class="smallbtn_blue" onclick="del_last_sell_cond()">Del sell condition</button>
+          <button class="smallbtn_blue" onclick="del_last_buy_cond()">Del buy condition</button>
           <br />
 
           <div class="flex_horizontal">
-            <input type="button" class="btnOk bluebtn mr10" value="Add" />
-            <input type="button" class="btnCancel bluebtn" value="Cancel" />
+            <input type="button" class="btnOk greybtn mr10" value="Add" />
+            <input type="button" class="btnCancel greybtn" value="Cancel" />
           </div>
         </div>
 

@@ -3,7 +3,7 @@ CREATE TABLE conditions (
     fk_user_id INT NOT NULL,
     fk_strategy_id INT NOT NULL,
     fk_list_id INT NOT NULL,
-    buy_eval VARCHAR(255),
+    indicator_json VARCHAR(255),
     optimizer_params VARCHAR(255),
     list_row INT NOT NULL,
     side VARCHAR(4) NOT NULL,

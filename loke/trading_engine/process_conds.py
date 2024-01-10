@@ -44,9 +44,9 @@ def create_conds(id):
     db = get_db()
 
     buy = db.execute(
-        'SELECT buy_eval FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
+        'SELECT indicator_json FROM buy_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
     sell = db.execute(
-        'SELECT sell_eval FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
+        'SELECT indicator_json FROM sell_conditions WHERE fk_strategy_id = ?', (id,)).fetchall()
 
     def type_cast(conds):
         for cond in conds:
@@ -70,7 +70,7 @@ def create_conds(id):
     print(buy_arr)
     print(sell_arr)
 
-    # s_conds = [json.loads(s['buy_eval']) for s in sell]
+    # s_conds = [json.loads(s['indicator_json']) for s in sell]
 
     buy = type_cast(buy_arr)
     sell = type_cast(sell_arr)

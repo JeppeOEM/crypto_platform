@@ -401,13 +401,13 @@ def deletestrat(id):
 # def load_conditions(id):
 #     db = get_db()
 #     buy_conds = db.execute(
-#         'SELECT buy_eval FROM buy_conditions '
+#         'SELECT indicator_json FROM buy_conditions '
 #         'WHERE fk_user_id = ? AND fk_strategy_id = ?',
 #         (g.user['id'], id)
 #     ).fetchall()
 
 #     sell_conds = db.execute(
-#         'SELECT sell_eval FROM sell_conditions '
+#         'SELECT indicator_json FROM sell_conditions '
 #         'WHERE fk_user_id = ? AND fk_strategy_id = ?',
 #         (g.user['id'], id)
 #     ).fetchall()
@@ -445,7 +445,7 @@ def deletestrat(id):
 #             print(data['buy_cond'])
 #             existing_indicator = db.execute(
 #                 'SELECT 1 FROM buy_conditions '
-#                 'WHERE fk_strategy_id = ? AND fk_user_id = ? AND buy_eval = ?',
+#                 'WHERE fk_strategy_id = ? AND fk_user_id = ? AND indicator_json = ?',
 #                 (id, g.user['id'], data['buy_cond'])
 #             ).fetchone()
 
@@ -454,7 +454,7 @@ def deletestrat(id):
 
 #             try:
 #                 db.execute(
-#                     'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, buy_eval) VALUES (?, ?, ?)',
+#                     'INSERT INTO buy_conditions (fk_strategy_id, fk_user_id, indicator_json) VALUES (?, ?, ?)',
 #                     (id, g.user['id'], data['buy_cond'])
 #                 )
 #                 db.commit()
@@ -466,7 +466,7 @@ def deletestrat(id):
 
 #             existing_indicator = db.execute(
 #                 'SELECT 1 FROM sell_conditions '
-#                 'WHERE fk_strategy_id = ? AND fk_user_id = ? AND sell_eval = ?',
+#                 'WHERE fk_strategy_id = ? AND fk_user_id = ? AND indicator_json = ?',
 #                 (id, g.user['id'], data['sell_cond'])
 #             ).fetchone()
 
@@ -476,7 +476,7 @@ def deletestrat(id):
 #             try:
 #                 # Insert the indicator if it doesn't exist
 #                 db.execute(
-#                     'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, sell_eval) VALUES (?, ?, ?)',
+#                     'INSERT INTO sell_conditions (fk_strategy_id, fk_user_id, indicator_json) VALUES (?, ?, ?)',
 #                     (id, g.user['id'], data['sell_cond'])
 #                 )
 #                 db.commit()
