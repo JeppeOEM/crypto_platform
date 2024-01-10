@@ -1,7 +1,7 @@
-import lightweightCharts from "https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.1/+esm";
+import { createChart } from "lightweight-charts";
 const chart_div = document.querySelector(".chart");
 
-const chart = lightweightCharts.createChart(chart_div, {
+const chart = createChart(chart_div, {
   width: 600,
   height: 300,
   layout: {
