@@ -28,11 +28,11 @@ def delete_condition(strategy_id):
         table_name = 'sell_conditions'
 
     # Fix the DELETE statement
-    db.execute(f'DELETE FROM {table_name} WHERE strategy_id = ? AND user_id = ? AND condition_id = ?',
+    db.execute(f'DELETE FROM {table_name} WHERE fk_strategy_id = ? AND fk_user_id = ? AND condition_id = ?',
                (strategy_id, g.user['id'], data['id']))
     db.commit()
 
-    return jsonify({'message': 'Row updated'}), 200
+    return jsonify({'message': 'condition deleted'}), 200
 
 
 @bp.route('/<int:strategy_id>/delete_condition_list', methods=['POST'])

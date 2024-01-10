@@ -1,0 +1,15 @@
+:root {
+  --white: #e4e5e0;
+  --colorTextSecondary: floralwhite;
+  --colorPrimary: #87939a;
+  --colorSecondary: #787878;
+  --colorTertiary: yellow;
+  --colorToDo: lightsalmon;
+  --colorOngoing: palegoldenrod;
+  --colorDone: lightgreen;
+  --lightblack: #555555;
+  --black: #3c3f41;
+  --lightblue: #14a1ff;
+  --imgDelete: url(../img/trash.png);
+  --borderRadius2: 4px;
+}

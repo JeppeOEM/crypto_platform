@@ -14,7 +14,7 @@ export async function postJsonGetStatus(data, endpoint, method = "POST") {
   if (!response.ok) {
     throw new Error("Request failed");
   } else {
-    console.log(response.status);
+    console.log("success:", response.status);
     return response;
   }
 }
@@ -49,4 +49,3 @@ export async function postJsonGetData(data, endpoint, method = "POST") {
   const responseData = await response.json();
   return responseData;
 }
-

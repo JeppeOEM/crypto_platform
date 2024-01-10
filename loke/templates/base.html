@@ -3,6 +3,7 @@
   <head>
     <title>{% block title %}{% endblock %} - Flaskr</title>
     {% block extra_code_head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vars.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}" />

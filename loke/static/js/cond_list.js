@@ -171,13 +171,23 @@ class CondManager {
   deleteButtonClick(e) {
     //Make sure that the click event stops here and dont fire anything in the ancestors/descendants
     e.stopPropagation();
-    console.log(e.target.parentElement.dataset.cond_key, "e.target");
+    let side;
+    if (e.target.closest(".sell_side")) {
+      side = "sell";
+    } else if (e.target.closest(".buy_side")) {
+      side = "buy";
+    }
     const taskHeight = e.target.parentElement.offsetHeight + 10;
     const currentListName = e.target.parentElement.parentElement.id;
 
     e.target.parentElement.remove();
-    const response = postJsonGetStatus(data, "delete_condition");
-    console.log(response, "response");
+
+    let data = {
+      id: e.target.parentElement.dataset.cond_key,
+      side: side,
+    };
+
+    postJsonGetStatus(data, "delete_condition");
 
     switch (currentListName) {
       case "toDoList":
@@ -465,7 +475,7 @@ class CondManager {
 //   }
 // }
 
-document.getElementById("toggleButton").addEventListener("click", toggleConditions);
+// document.getElementById("toggleButton").addEventListener("click", toggleConditions);
 
 function toggleConditions() {
   const buyToggle = document.querySelector(".buy_toggle");

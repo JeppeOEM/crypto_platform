@@ -1,16 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
 
-:root {
-  --white: white;
-  --colorTextSecondary: floralwhite;
-  --colorPrimary: blue;
-  --colorSecondary: rgb(4, 4, 113);
-  --colorTertiary: yellow;
-  --colorToDo: lightsalmon;
-  --colorOngoing: palegoldenrod;
-  --colorDone: lightgreen;
-  --imgDelete: url(../img/trash.png);
-}
 #toggleButton {
   background-color: #4caf50;
   color: white;
@@ -38,10 +27,15 @@
   display: block;
 }
 
+.cond_list {
+  border: solid 1px var(--colorSecondary);
+  border-radius: var(--borderRadius2);
+}
+
 .add_indicators_box {
   flex: 1;
   border: solid 1px var(--colorSecondary);
-  border-radius: 5px;
+  border-radius: var(--borderRadius2);
   margin-right: 10px;
 }
 
@@ -50,7 +44,7 @@
   height: 200px;
   overflow: auto;
   border: solid 1px var(--colorSecondary);
-  border-radius: 5px;
+  border-radius: var(--borderRadius2);
 }
 .indicator_form {
   padding: 5px;
@@ -124,13 +118,14 @@ div.listColumn {
   margin: 10px;
   padding-bottom: 30px;
   border: solid 1px black;
-  border-radius: 5px;
+  border-radius: var(--borderRadius2);
   background-color: var(--white);
 }
 
 main.listContent {
-  margin: 10px;
-
+  padding: 10px;
+  border-radius: var(--borderRadius2);
+  background-color: var(--lightBlack);
   /* overflow: auto; */
   display: flex;
   flex-direction: column;
@@ -145,8 +140,6 @@ main.listContent {
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   background-color: var(--colorSecondary);
 }
-
-
 
 div.modal {
   display: none;
