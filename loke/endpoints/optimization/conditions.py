@@ -16,17 +16,20 @@ bp = Blueprint('conditions', __name__)
 #                    (strategy_id, g.user['id'], indicator['kind'], json_dict))
 
 
-@bp.route('/<int:strategy_id>/update_row', methods=['GET'])
+@bp.route('/<int:strategy_id>/update_condition_row', methods=['POST'])
 def update_row(strategy_id):
     db = get_db()
     data = request.get_json()
+    print(data, "DATA")
 
     if data['side'] == "buy":
         table_name = 'buy_conditions'
     else:
         table_name = 'sell_conditions'
-    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND '.format(
-        table_name), (data['list_row'], strategy_id, g.user['id']))
+    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND buy_conditions_id = ?'.format(
+        table_name), (data['list_row'], strategy_id, g.user['id'], data['id']))
+    db.commit()
+    return jsonify({'message': 'Row updated'}), 200
 
 
 @bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
@@ -125,7 +128,7 @@ def condition(id):
 
                 last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
                 condition_id = last_row[0]
-                return jsonify({'message': condition_id}), 200
+                return jsonify({'id': condition_id}), 200
             except Exception as e:
                 return jsonify({'error': str(e)}), 500
 
@@ -150,7 +153,7 @@ def condition(id):
                 db.commit()
                 last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
                 condition_id = last_row[0]
-                return jsonify({'message':  condition_id}), 200
+                return jsonify({'id':  condition_id}), 200
             except Exception as e:
 
                 return jsonify({'error': str(e)}), 500

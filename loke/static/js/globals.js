@@ -1,4 +1,22 @@
 import { show_string } from "./functions/show_string.js";
+
+class LastCondDom {
+  constructor() {
+    this._last_cond_dom;
+  }
+
+  get() {
+    return this._last_cond_dom;
+  }
+
+  set(value) {
+    this._last_cond_dom = value;
+  }
+}
+const last_cond_dom = new LastCondDom();
+
+export { last_cond_dom };
+
 class SelectedCond {
   constructor() {
     this._cond_id;

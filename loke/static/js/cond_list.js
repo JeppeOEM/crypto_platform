@@ -2,6 +2,8 @@
 import { selected_cond_instance } from "./globals.js";
 import { save_cond_buy } from "./conditions.js";
 import { save_cond_sell } from "./conditions.js";
+import { last_cond_dom } from "./globals.js";
+import { postJsonGetData } from "./fetch.js";
 const selected_cond = selected_cond_instance;
 
 export class CondController {
@@ -216,6 +218,8 @@ class CondManager {
 
   addTaskToList() {
     const task = document.createElement("div");
+    last_cond_dom.set(task);
+
     // const taskText = this.TodoContent.querySelector(".currentTask.modal");
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const newID = parseInt(currentTask.getAttribute("currentid")) + 1;
@@ -238,6 +242,9 @@ class CondManager {
 
     this.toDoList.prepend(task);
     this.toDoListHeight += task.offsetHeight + 10;
+
+    //global var
+
     //this.resizeLists();
   }
 
@@ -371,7 +378,15 @@ class CondManager {
         this.doneListHeight += taskHeight;
         break;
     }
-
+    console.log(listName);
+    const data = {
+      id: draggedTask.dataset.cond_key,
+      list_row: which_row_string(listName),
+      side: "buy",
+    };
+    // console.log(data);
+    // let response = postJsonGetData(data, "update_condition_row");
+    // console.log(response);
     //this.resizeLists();
     // }
   }
@@ -459,5 +474,15 @@ function toggleConditions() {
     buyToggle.classList.add("hidden");
     sellToggle.classList.remove("hidden");
     sellToggle.classList.add("block");
+  }
+}
+function which_row_string(string) {
+  switch (string) {
+    case "toDo":
+      return 1;
+    case "ongoing":
+      return 2;
+    case "done":
+      return 3;
   }
 }

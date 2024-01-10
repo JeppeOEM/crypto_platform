@@ -4,6 +4,8 @@ import { getJson } from "./fetch.js";
 import { show_string } from "./functions/show_string.js";
 import { condController } from "./cond_list.js";
 
+import { last_cond_dom } from "./globals.js";
+
 const selected_cond = selected_cond_instance;
 
 // const condController = condController
@@ -30,7 +32,7 @@ export async function build_conds() {
   const sell_conds = json.sell_conds;
   console.log(buy_conds, "buy_conds!");
   console.log(load_cond_managers_buy(buy_conds));
-  console.log(load_cond_managers_sell(sell_conds));
+  // console.log(load_cond_managers_sell(sell_conds));
 
   function load_cond_managers_buy(arr) {
     const lol = arr.forEach((cond) => {
@@ -60,6 +62,17 @@ function which_row(number) {
   }
 }
 
+function which_row_string(string) {
+  switch (string) {
+    case "toDo":
+      return 1;
+    case "onGoing":
+      return 2;
+    case "done":
+      return 3;
+  }
+}
+
 export async function save_cond_buy() {
   //indicators
   conditions.push(selected_cond.get_cond());
@@ -78,8 +91,13 @@ export async function save_cond_buy() {
   data.side = "buy";
   data.primary_key = selected_cond.get();
   console.log(data.buy_cond);
-  let response = await postJsonGetStatus(data, "condition");
-  console.log(response);
+  let response = await postJsonGetData(data, "condition");
+  console.log(response.id);
+  console.log(last_cond_dom, "last_cond_dom");
+  //assign id to last cond inserted in the dom
+  let last_dom = last_cond_dom.get();
+  last_dom.dataset.cond_key = response.id;
+  last_cond_dom.set(last_dom);
   //   let build_conds = await build_conditions();
   //   document.querySelectorAll("buy_cond2").forEach((bconds) => {
   //     bconds.textContent = `${build_conds}`;
@@ -104,8 +122,8 @@ export async function save_cond_sell() {
   data.side = "sell";
   data.primary_key = selected_cond.get();
 
-  let response = await postJsonGetStatus(data, "condition");
-  console.log(response);
+  let response = await postJsonGetData(data, "condition");
+  console.log(response.id);
   //   let build_conds = await build_conditions();
   //   document.querySelectorAll("sell_cond2").forEach((sellcond2) => {
   //     sellcond2.textContent = `${build_conds}`;
@@ -137,4 +155,22 @@ function del_last_buy_cond() {
     cond.textContent = `${show_string(cond)}`;
   });
   selected_cond.set_string(show_string(cond));
+}
+
+async function postJsonGetData(data, endpoint, method = "POST") {
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  return responseData;
 }

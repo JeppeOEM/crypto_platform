@@ -5,6 +5,8 @@ import { selected_cond_instance } from "./globals.js";
 import { condController } from "./cond_list.js";
 import { show_string } from "./functions/show_string.js";
 import { getJson } from "./fetch.js";
+import { postJsonGetData } from "./fetch.js";
+import { postJsonGetStatus } from "./fetch.js";
 import { build_conds } from "./conditions.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
@@ -550,62 +552,9 @@ async function update_chart(endpoint) {
   }
 }
 
-async function postJsonGetData(data, endpoint, method = "POST") {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let response = await fetch(endpoint, options);
 
-  if (!response.ok) {
-    throw new Error("Request failed");
-  }
 
-  const responseData = await response.json();
-  return responseData;
-}
-async function strategy_indicators(endpoint) {
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
 
-    if (response.ok) {
-      const responseData = await response.json();
-    } else {
-      console.error("Error:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-async function postJsonGetStatus(data, endpoint, method = "POST") {
-  // Create an options object for the fetch request
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-
-  // Make the POST request using the fetch API
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
-  } else {
-    console.log(response.status);
-    return response;
-  }
-}
 
 // async function postJsonGetStatus(data, endpoint, method = "POST") {
 //   // Create an options object for the fetch request
