@@ -2,58 +2,26 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
-
 from loke.endpoints.auth import login_required
 from loke.database.db import get_db
-import importlib
-import os
-import json
 from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
-from loke.controllers.StrategyController import StrategyController
+from loke.controllers.StrategyController import get_strategy_controller
+from .func_get_indicators import get_indicators
 
-import pickle
+import json
 import pandas as pd
 import numpy as np
 import copy
-import sqlite3
+
 
 # DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url so that url_for('index') or url_for('strategy.index') will both work,
 # generating the same / URL either way.
 bp = Blueprint('strategy', __name__)
-
-strategy_controler = StrategyController()
-
-
-@bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
-@login_required
-def add_indicator(strategy_id):
-    if request.method == 'POST':
-        data = request.get_json()  # Get the JSON data from the request
-        indicator = data.get('indicator')  # Extract the 'indicator' name
-        category = data.get('category')
-        indicator = indicator.capitalize()
-        module_path = f"loke.trading_engine.indicators.{category}.{indicator}"
-        module = importlib.import_module(f"{module_path}")
-        Obj = getattr(module, f"{indicator}")
-        obj = Obj()
-        indicator = obj.type_dict()
-        indicator = jsonify(indicator)
-        print(indicator, "INDICATOR")
-        # db = get_db()
-
-        # db.execute(
-        #         'INSERT INTO strategy_indicator_forms(fk_user_id, fk_exchange_id)'
-        #         ' VALUES (?, ?)',
-        #         (g.user['id'], strategy_id)
-        # )
-        # db.commit()
-
-        return indicator
 
 
 @bp.route('/')
@@ -71,41 +39,24 @@ def index():
     return render_template('strategy/index.html', strategies=strategies, )
 
 
-def get_indicators(category):
-    print("GET INDICATORS", category)
-    indicators = []
-    # __init__ must import all classes from the folder
-    module_path = f'loke.trading_engine.indicators.{category}'
-    folder_path = f'loke/trading_engine/indicators/{category}'
-
-    class_files = [file for file in os.listdir(
-        folder_path) if file.endswith(".py") and file != "__init__.py"]
-
-    # Loop through the Python files and import the classes
-    for file_name in class_files:
-        # Remove the ".py" extension
-        module_name = os.path.splitext(file_name)[0]
-        module = importlib.import_module(f"{module_path}")
-        Obj = getattr(module, f"{module_name}")
-        obj = Obj()
-        print(obj.type_only())
-        indicators.append(obj.type_only())
-    # convert to numpy and back again to flatten
-    indicators = np.array(indicators)
-    # from [[{}],[{}]] to [{},{}]
-    indicators = indicators.flatten('F')
-    return indicators.tolist()
+@bp.route('/current_df', methods=('GET', 'POST'))
+def current_df():
+    print("#####################################################################")
+    s = get_strategy_controller().get_strategy()
+    name = "test"
+    df = pd.read_pickle("data/pickles/test.pkl")
+    print(df.head(10), "CURRENT DF")
+    return jsonify({"msg": f"{df.head(10)}"})
 
 
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
 def init_strategy(id):
     if request.method == "POST":
-        print(id, "INIIIIIIIIIIIIIIIIIIIIIIIIIIIIIT")
+
         db = get_db()
         indicators = db.execute(
             'SELECT settings, strategy_indicator_id, category FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
-        print(indicators, "fucking indicators")
         total_indicators_id = []
         # print("teeeeest", indicators[1])
         # print("teeeeest", indicators[0][0])
@@ -149,7 +100,14 @@ def init_strategy(id):
 
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
+        print(cols, "COLUMNS")
+        print(df)
         # keep kind: name to populate inputs
+        get_strategy_controller().set_strategy(s)
+        ss = get_strategy_controller().get_strategy()
+        print(ss, "STRATEGY")
+        print("#####################################################################")
+        print(ss.df, "STRATEGY")
 
         return jsonify({"cols": cols, "indicators":  total_indicators_id})
 
@@ -270,86 +228,15 @@ def get_strategy(id, check_user=True):
     return strategy
 
 
-@bp.route('/current_df', methods=('GET', 'POST'))
-def current_df():
-    print("#####################################################################")
-    s = strategy_controler.get_strategy()
-    print("#####################################################################")
-    print(s)
-    return jsonify({"message": s})
+# @bp.route('/<int:id>/update_chart', methods=['POST'])
+# @login_required
+# def update_chart(id):
+#     print(id)
+#     db = get_db()
 
-
-@bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
-@login_required
-def convert_indicator(strategy_id):
-
-    if request.method == 'POST':
-
-        data = request.get_json()
-        print(data, "DAAAAAAAAAAAAAAAAAAA")
-        # remove id from data
-        category = data.pop(0)
-        print(category, "CATEGORY")
-        strategy_indicator_id = data.pop()
-        print(strategy_indicator_id, "FORM ID",
-              g.user['id'], "USER ID", strategy_id, "STRAT ID")
-        indicator = {}
-        for item in data:
-            key, value = item
-            indicator[key] = value
-        json_dict = json.dumps(indicator)
-        db = get_db()
-        # SELECT 1 means it wont return the found row, but 1, as we dont need the row
-        # Check if the indicator with the given settings already exists
-        existing_indicator = db.execute(
-            'SELECT 1 FROM strategy_indicators '
-            'WHERE fk_strategy_id = ? AND fk_user_id = ? AND settings = ? AND indicator_name = ?',
-            (strategy_id, g.user['id'], json_dict, indicator['kind'])
-        ).fetchone()
-
-        if existing_indicator:
-            return jsonify({'message': 'Indicator with the same settings already exists. No data inserted.'}), 400
-
-        try:
-            # Check if the row with the specified strategy_indicator_id already exists
-            existing_row = db.execute(
-                'SELECT * FROM strategy_indicators WHERE strategy_indicator_id = ? AND fk_user_id = ? AND fk_strategy_id = ?',
-                (strategy_indicator_id, g.user['id'], strategy_id)
-            ).fetchone()
-            print(existing_row, "EXISTING ROW")
-            if existing_row:
-                # If the row exists, update it
-                db.execute(
-                    'UPDATE strategy_indicators SET fk_strategy_id=?, fk_user_id=?, settings=?, indicator_name=? WHERE strategy_indicator_id=?',
-                    (strategy_id, g.user['id'], json_dict,
-                     indicator['kind'], strategy_indicator_id)
-                )
-                db.commit()
-                return jsonify({'message': 'Indicator successfully updated'}), 200
-            else:
-                # If the row doesn't exist, insert a new one
-                db.execute(
-                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name, category) VALUES (?, ?, ?, ?, ?)',
-                    (strategy_id, g.user['id'], json_dict,
-                     indicator['kind'], category)
-                )
-                db.commit()
-                return jsonify({'message': 'Indicator successfully inserted'})
-
-        except Exception as e:
-            # Handle database-related errors
-            return jsonify({'error': str(e)}), 500
-
-
-@bp.route('/<int:id>/update_chart', methods=['POST'])
-@login_required
-def update_chart(id):
-    print(id)
-    db = get_db()
-
-    # Your code to generate or fetch new content
-    new_content = "New content fetched from the server"
-    return jsonify({'content': new_content})
+#     # Your code to generate or fetch new content
+#     new_content = "New content fetched from the server"
+#     return jsonify({'content': new_content})
 
 
 @bp.route('/<int:id>/truncate', methods=('POST',))

@@ -33,8 +33,6 @@ const data = {
 let cond = [];
 let cond_sell = [];
 
-let test = getJson("/current_df");
-
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();
@@ -558,3 +556,5 @@ function which_side(inputString) {
 
   return side;
 }
+let test = getJson("/current_df");
+console.log(test, "test");

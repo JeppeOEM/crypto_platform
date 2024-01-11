@@ -42,17 +42,17 @@ export class Chart {
       wickUpColor: "rgba(255, 144, 0, 1)",
     });
   }
-
-  async getCandlesticks(coinPair, timeframe) {
-    const query = context.query;
+  setData(data) {
+    this.candleSeries.setData(data);
+  }
+  async getCandlesticks(pair, timeframe, market_type) {
     const apiUrl = `/load_df`;
-    const { market_type, pair } = urlStringConversion(query.ticker);
     let pair2 = pair.toUpperCase();
 
     const jsonData = {
       ticker: pair2,
       market_type: market_type,
-      timeframes: [query.timeframe],
+      timeframes: [timeframe],
       timerange_start: 159810060000,
       timerange_end: "now",
     };
@@ -78,10 +78,6 @@ export class Chart {
     } catch (error) {
       console.error("Fetch error:", error);
     }
-  }
-
-  setData(data) {
-    this.candleSeries.setData(data);
   }
 }
 
