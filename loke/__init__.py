@@ -1,9 +1,9 @@
 from .endpoints import auth
 from .endpoints.strategy import strategy
+from .endpoints.strategy import data_strategy
 from .endpoints.machine_learning import markov
 from .endpoints.optimization import optimization
 from .endpoints.optimization import conditions
-from .endpoints.download import download_binance
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from loke.database import db
@@ -70,7 +70,7 @@ def create_app(test_config=None):
     app.register_blueprint(conditions.bp)
     app.register_blueprint(optimization.bp)
     app.register_blueprint(markov.bp)
-    app.register_blueprint(download.bp)
+    app.register_blueprint(data_strategy.bp)
     app.add_url_rule('/', endpoint='index')
 
     @app.route("/")

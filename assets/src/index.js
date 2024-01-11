@@ -48,11 +48,11 @@ let candleSeries = chart.addCandlestickSeries({
 //   { time: Date.parse("2019-04-11 14:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
 // ]);
 
-export async function getServerSideProps(coin_pair, timeframe) {
+export async function get_candlesticks(coin_pair, timeframe) {
   //const ticker = context.params.ticker;
   const query = context.query;
   console.log(query);
-  const apiUrl = `http://127.0.0.1:8000/loaddfs/`;
+  const apiUrl = `/load_df`;
   const { market_type, pair } = urlStringConversion(query.ticker);
   let pair2 = pair;
   pair2 = pair2.toUpperCase();
@@ -89,55 +89,7 @@ export async function getServerSideProps(coin_pair, timeframe) {
     });
 
   let lol = "lol";
-  return {
-    props: { chart_data },
-  };
-}
-
-export async function get_chart_data(context) {
-  //const ticker = context.params.ticker;
-  const query = context.query;
-  console.log(query);
-  const apiUrl = `http://127.0.0.1:8000/loaddfs/`;
-  const { market_type, pair } = urlStringConversion(query.ticker);
-  let pair2 = pair;
-  pair2 = pair2.toUpperCase();
-  const jsonData = {
-    ticker: pair2,
-    market_type: market_type,
-    timeframes: [query.timeframe],
-    timerange_start: 159810060000,
-    timerange_end: "now",
-  };
-  let chart_data;
-  const requestOptions = {
-    method: "POST", // You can use 'GET', 'POST', 'PUT', 'DELETE', etc.
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(jsonData),
-  };
-
-  chart_data = await fetch(apiUrl, requestOptions)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      data = JSON.parse(data);
-      console.log(data);
-      return data;
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
-
-  let lol = "lol";
-  return {
-    props: { chart_data },
-  };
+  return { chart_data };
 }
 
 console.log(chart_div);
