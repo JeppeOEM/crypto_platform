@@ -57,6 +57,9 @@ select {
   margin: 5px;
   flex-basis: calc(25% - 10px);
 }
+.gap10 {
+  gap: var(--padsmall);
+}
 
 .ml5 {
   margin-left: 5px;

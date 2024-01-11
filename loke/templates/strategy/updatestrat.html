@@ -39,33 +39,40 @@
 
 <!-- <div id="input-container"></div> -->
 <!-- indicator forms -->
-<div class="flex_horizontal">
-  <div class="add_indicators_box">
-    <div class="search_indicators">
-      <form class="flex_horizontal basic_input">
-        <button class="smallbtn_grey" type="submit">search</button>
-        <input type="text" name="" id="search_indicator" />
-      </form>
-    </div>
-    <div class="indicator_selectors">
-      <select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
-        <option value="">Momentum</option>
-        {% for dict_item in momentum %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
-        <option value="{{ value }}">{{ value }}</option>
-        {% endif %} {% endfor %} {% endfor %}
-      </select>
+<div class="flex_horizontal gap10">
+  <div class="flex_vertical">
+    <div class="add_indicators_box">
+      <div class="search_indicators">
+        <form class="flex_horizontal basic_input">
+          <button class="smallbtn_grey" type="submit">search</button>
+          <input type="text" name="" id="search_indicator" />
+        </form>
+      </div>
+      <div class="indicator_selectors">
+        <select id="momentumDropdown" onchange="select_indicator('momentum','momentumDropdown')">
+          <option value="">Momentum</option>
+          {% for dict_item in momentum %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+          <option value="{{ value }}">{{ value }}</option>
+          {% endif %} {% endfor %} {% endfor %}
+        </select>
 
-      <select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
-        <option value="">Trend</option>
-        {% for dict_item in trend %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
-        <option value="{{ value }}">{{ value }}</option>
-        {% endif %} {% endfor %} {% endfor %}
-      </select>
+        <select id="trendDropdown" onchange="select_indicator('trend','trendDropdown')">
+          <option value="">Trend</option>
+          {% for dict_item in trend %} {% for key, value in dict_item.items() %} {% if key == "kind" %}
+          <option value="{{ value }}">{{ value }}</option>
+          {% endif %} {% endfor %} {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-container" id="form-container"></div>
+  </div>
+
+  <div class="flex_vertical chart_box">
+    <div className="chart-container">
+      <div class="chart"></div>
     </div>
   </div>
-  <div class="form-container" id="form-container"></div>
 </div>
-
 <div id="saved_conds"></div>
 <div class="saved_conds_sell"></div>
 
@@ -131,12 +138,7 @@
     </div>
   </div>
 </div>
-<div class="flex_vertical">
-  <h2>Chart</h2>
-  <div className="chart-container">
-    <div class="chart"></div>
-  </div>
-</div>
+
 <!-- Condition list Template-->
 <template class="clone_template">
   <div class="cond_list flex_basis25">

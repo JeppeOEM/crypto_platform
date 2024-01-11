@@ -1,10 +1,10 @@
 import { createChart, CrosshairMode } from "lightweight-charts";
-import { urlStringConversion } from "./urlStringConversion";
+import { urlStringConversion } from "./chart/url_string_conversion.js";
 
 const chart_div = document.querySelector(".chart");
 const chart = createChart(chart_div, {
-  width: 400,
-  height: 300,
+  width: 1100,
+  height: 500,
   layout: {
     background: {
       type: "solid",
