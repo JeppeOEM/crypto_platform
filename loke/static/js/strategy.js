@@ -33,11 +33,8 @@ const data = {
 let cond = [];
 let cond_sell = [];
 
-// export { selected_cond };
-function test() {
-  console.log("test");
-}
-window.test = test;
+let test = getJson("/current_df");
+
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();

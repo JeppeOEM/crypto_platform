@@ -12,6 +12,8 @@ from loke.trading_engine.Backtest import Backtest
 from loke.trading_engine.Strategy import Strategy
 from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
+from loke.controllers.StrategyController import StrategyController
+
 import pickle
 import pandas as pd
 import numpy as np
@@ -23,6 +25,8 @@ import sqlite3
 # url so that url_for('index') or url_for('strategy.index') will both work,
 # generating the same / URL either way.
 bp = Blueprint('strategy', __name__)
+
+strategy_controler = StrategyController()
 
 
 @bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
@@ -150,6 +154,13 @@ def init_strategy(id):
         return jsonify({"cols": cols, "indicators":  total_indicators_id})
 
 
+@bp.route('/<int:strategy_id>/strategy', methods=('GET', 'POST'))
+@login_required
+def strategy(strategy_id):
+
+    return render_template('strategy/{strategy_id}/updatestrat.html')
+
+
 @bp.route('/createstrat', methods=('GET', 'POST'))
 @login_required
 def createstrat():
@@ -196,15 +207,11 @@ def createstrat():
                 # An error occurred, rollback the transaction
                 db.rollback()
                 flash(f"Error: {str(e)}")
-
-            return redirect(url_for('strategy.index'))
+            return redirect(url_for('strategy.stratupdate', id=strategy_id))
 
     # NO get request ever send
     if request.method == 'GET':
-        momentum = get_indicators("momentum")
-        trend = get_indicators("trend")
-
-    return render_template('strategy/createstrat.html', momentum=momentum, trend=trend)
+        return render_template('strategy/createstrat.html')
 
     # db.execute(
     #     'INSERT INTO sell_condition_lists (fk_user, fk_strategy_id, frontend_id)'
@@ -242,17 +249,7 @@ def stratupdate(id):
     if request.method == 'GET':
         momentum = get_indicators("momentum")
         trend = get_indicators("trend")
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(momentum)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(trend)
-        indicators = [{'kind': 'ao', 'fast': 'int', 'slow': 'int', 'offset': 'int'}, {
-            'kind': 'rsi', 'length': 'int', 'scalar': 'float', 'talib': 'bool', 'offset': 'int'}]
-        # settings = db.execute(
-        #     'SELECT * FROM strategy_indicators WHERE fk_strategy_id = ?',
-        #     (id,)
-        # ).fetchall()
-        # print(settings)
+
     return render_template('strategy/updatestrat.html', strategy=strategy, momentum=momentum, trend=trend)
 
 
@@ -266,13 +263,20 @@ def get_strategy(id, check_user=True):
 
     if strategy is None:
         abort(404, f"strategy id {id} doesn't exist.")
-    print(strategy)
-    # print(strategy['fk_user_id'])
-    print(g.user['id'])
+
     if check_user and strategy['fk_user_id'] != g.user['id']:
         abort(403)
 
     return strategy
+
+
+@bp.route('/current_df', methods=('GET', 'POST'))
+def current_df():
+    print("#####################################################################")
+    s = strategy_controler.get_strategy()
+    print("#####################################################################")
+    print(s)
+    return jsonify({"message": s})
 
 
 @bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
