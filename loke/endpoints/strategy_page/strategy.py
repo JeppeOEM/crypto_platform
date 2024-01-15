@@ -96,8 +96,7 @@ def init_strategy(id):
         print("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤INIT STRATEGY¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
 
         print(exchange, init_candles, symbol, name, description)
-        s = Strategy("exchange", exchange, "init candles", init_candles,
-                     "symbol", symbol, "NAME", name, "DESCRIPTION", description)
+        s = Strategy(exchange, init_candles, symbol, name, description)
 
         s.addIndicators(total_indicators)
         df = s.create_strategy()

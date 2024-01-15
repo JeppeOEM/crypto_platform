@@ -33,7 +33,7 @@ file_handler.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
 logger.addHandler(file_handler)
 ## 
-## enables the frontend to recognize the js modules
+## enables the frontend to recognize the js/css modules
 mimetypes.add_type('application/javascript', '.js')
 mimetypes.add_type('text/css', '.css')
 ###

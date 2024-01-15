@@ -77,20 +77,23 @@ async function create_list(side) {
 
 async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
-  const data = await update_chart("init_strategy");
+  const strategy_data = await update_chart("init_strategy");
+  console.log(strategy_data, "strategy_data!!!!!!!!!!!!!!!!!!!!!");
+  remove_element("indicator_cond");
+  build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
   remove_element("sell_cond2");
-  //build buttons also build indicator dataframe related buttons
+  //build buttons also build indicator strategy_dataframe related buttons
   //params: array, element_id, element, class_name
 
-  console.log(data, "data.indicators");
-  build_indicator_inputs(data.indicators);
+  console.log(strategy_data, "strategy_data.indicators");
+  build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
   build_optimization_results();
   build_condition_lists();
   build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
   build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
-  build_buttons(data.cols, "condition_btns", "button", "indicator_cond");
+  build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   build_conds();
 }
 
@@ -298,7 +301,11 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     console.log(form_arr);
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
+
     let indicators_data = await update_chart("init_strategy");
+    console.log(indicators_data, "indicators_data!!!!!!!!!!!!!!!!!!!!");
+    remove_element("indicator_cond");
+    build_buttons(indicators_data.cols, "condition_btns", "button", "indicator_cond");
     remove_element("indicator_form");
     build_indicator_inputs(indicators_data.indicators, category);
   }
@@ -492,8 +499,7 @@ async function update_chart(endpoint) {
     });
 
     const responseData = await response.json();
-    remove_element("indicator_cond");
-    build_buttons(responseData.cols, "condition_btns", "button", "indicator_cond");
+
     return responseData;
   } catch (error) {
     console.error("Error:", error);
