@@ -2819,3 +2819,502 @@
 2024-01-15 22:53:49,178 INFO :: 127.0.0.1 - - [15/Jan/2024 22:53:49] "POST /19/add_indicator HTTP/1.1" 200 -
 2024-01-15 22:53:49,179 INFO :: 127.0.0.1 - - [15/Jan/2024 22:53:49] "GET /19/cond_list?side=sell HTTP/1.1" 200 -
 2024-01-15 22:53:49,189 INFO :: 127.0.0.1 - - [15/Jan/2024 22:53:49] "POST /19/add_indicator HTTP/1.1" 200 -
+2024-01-15 23:02:34,679 INFO :: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-15 23:02:34,680 INFO :: [33mPress CTRL+C to quit[0m
+2024-01-15 23:02:34,682 INFO ::  * Restarting with stat
+2024-01-15 23:02:36,767 WARNING ::  * Debugger is active!
+2024-01-15 23:02:36,775 INFO ::  * Debugger PIN: 900-174-766
+2024-01-15 23:02:47,141 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "GET / HTTP/1.1" 200 -
+2024-01-15 23:02:47,182 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:47,185 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:47,186 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:47,204 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:47,209 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:47] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:50,866 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "GET /auth/register HTTP/1.1" 200 -
+2024-01-15 23:02:50,891 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:50,895 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:50,902 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:50,903 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:50,906 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:50] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:57,408 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[32mPOST /auth/register HTTP/1.1[0m" 302 -
+2024-01-15 23:02:57,419 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "GET /auth/login HTTP/1.1" 200 -
+2024-01-15 23:02:57,454 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:57,458 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:57,471 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:57,471 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:02:57,473 INFO :: 127.0.0.1 - - [15/Jan/2024 23:02:57] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:00,576 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2024-01-15 23:03:00,583 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "GET / HTTP/1.1" 200 -
+2024-01-15 23:03:00,618 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:00,629 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:00,630 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:00,632 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:00,633 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:00] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:02,195 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:03:02,225 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:02,229 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:02,230 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:02,231 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:02,237 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:02] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:03:05,330 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:05] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:03:05,353 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:05] "GET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:03:05,381 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:05] "GET /createstrat?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:03:05,478 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:05] "[36mGET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-01-15 23:03:05,516 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:05] "[36mGET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-01-15 23:03:16,383 INFO :: 127.0.0.1 - - [15/Jan/2024 23:03:16] "[36mGET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-01-15 23:06:32,434 INFO :: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-15 23:06:32,435 INFO :: [33mPress CTRL+C to quit[0m
+2024-01-15 23:06:32,440 INFO ::  * Restarting with stat
+2024-01-15 23:06:34,951 WARNING ::  * Debugger is active!
+2024-01-15 23:06:34,958 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:06:36,291 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:06:36,333 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:36,348 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:36,353 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:36,353 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:36,354 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:36,808 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-15 23:06:40,919 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:40] "GET / HTTP/1.1" 200 -
+2024-01-15 23:06:40,981 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:40] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:40,983 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:40] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:40,997 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:40] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:41,003 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:41] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:41,004 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:41] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:42,722 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /auth/register HTTP/1.1" 200 -
+2024-01-15 23:06:42,784 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:42,786 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:42,788 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:42,790 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:42,792 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:42] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:45,840 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "[32mPOST /auth/register HTTP/1.1[0m" 302 -
+2024-01-15 23:06:45,850 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /auth/login HTTP/1.1" 200 -
+2024-01-15 23:06:45,918 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:45,924 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:45,925 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:45,928 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:45,932 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:45] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:48,714 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2024-01-15 23:06:48,722 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET / HTTP/1.1" 200 -
+2024-01-15 23:06:48,790 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:48,792 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:48,795 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:48,803 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:48,804 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:48] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:50,370 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:06:50,443 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:06:50,446 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:06:50,446 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:06:50,451 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:06:50,454 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:50] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:06:55,372 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:55] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:06:55,445 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:55] "GET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:06:55,456 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:55] "GET /createstrat?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:06:55,757 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:55] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:06:55,807 INFO :: 127.0.0.1 - - [15/Jan/2024 23:06:55] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:08:56,890 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:08:57,236 INFO ::  * Restarting with stat
+2024-01-15 23:09:00,168 WARNING ::  * Debugger is active!
+2024-01-15 23:09:00,179 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:09:03,274 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:09:03,724 INFO ::  * Restarting with stat
+2024-01-15 23:09:06,254 WARNING ::  * Debugger is active!
+2024-01-15 23:09:06,263 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:09:07,306 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:09:07,632 INFO ::  * Restarting with stat
+2024-01-15 23:09:09,970 WARNING ::  * Debugger is active!
+2024-01-15 23:09:09,976 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:09:16,121 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:09:16,527 INFO ::  * Restarting with stat
+2024-01-15 23:09:19,008 WARNING ::  * Debugger is active!
+2024-01-15 23:09:19,016 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:09:19,050 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:09:19,059 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:09:19,092 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:09:19,098 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:09:19,098 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:09:19,102 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:09:19,106 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:09:19,500 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-15 23:09:25,841 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:25] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:09:25,873 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:25] "GET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:09:25,877 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:25] "GET /createstrat?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:09:26,186 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:26] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:09:26,237 INFO :: 127.0.0.1 - - [15/Jan/2024 23:09:26] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:09:52,654 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:09:52,928 INFO ::  * Restarting with stat
+2024-01-15 23:09:56,044 WARNING ::  * Debugger is active!
+2024-01-15 23:09:56,053 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:09:57,104 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:09:57,535 INFO ::  * Restarting with stat
+2024-01-15 23:10:00,507 WARNING ::  * Debugger is active!
+2024-01-15 23:10:00,514 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:10:01,045 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:01] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:10:01,078 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:01] "GET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:10:01,089 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:01] "GET /createstrat?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:10:01,482 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:01] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:10:01,542 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:01] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:10:03,516 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:10:03,552 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:10:03,555 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:10:03,568 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:10:03,572 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:10:03,573 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:03] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:10:04,058 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:04] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-15 23:10:07,725 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET / HTTP/1.1" 200 -
+2024-01-15 23:10:07,789 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:10:07,820 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:10:07,836 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:10:07,837 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:10:07,837 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:07] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:10:09,084 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:10:09,144 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:10:09,156 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:10:09,160 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:10:09,164 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:10:09,167 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:09] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:10:12,377 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:12] "[35m[1mPOST /createstrat HTTP/1.1[0m" 500 -
+2024-01-15 23:10:12,410 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:12] "GET /createstrat?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:10:12,413 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:12] "GET /createstrat?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:10:12,788 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:12] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:10:12,842 INFO :: 127.0.0.1 - - [15/Jan/2024 23:10:12] "GET /createstrat?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:15:10,567 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:15:10,956 INFO ::  * Restarting with stat
+2024-01-15 23:15:13,278 WARNING ::  * Debugger is active!
+2024-01-15 23:15:13,284 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:15:18,392 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:15:18,672 INFO ::  * Restarting with stat
+2024-01-15 23:15:21,297 WARNING ::  * Debugger is active!
+2024-01-15 23:15:21,304 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:15:22,352 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:15:22,677 INFO ::  * Restarting with stat
+2024-01-15 23:15:26,241 INFO ::  * Restarting with stat
+2024-01-15 23:15:28,535 WARNING ::  * Debugger is active!
+2024-01-15 23:15:28,541 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:15:38,720 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:15:39,175 INFO ::  * Restarting with stat
+2024-01-15 23:15:41,999 WARNING ::  * Debugger is active!
+2024-01-15 23:15:42,006 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:15:42,882 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:15:42,911 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:15:42,915 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:15:42,919 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:15:42,920 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:15:42,923 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:42] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,024 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "[32mPOST /createstrat HTTP/1.1[0m" 302 -
+2024-01-15 23:15:46,047 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /2/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:15:46,102 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,108 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,114 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,118 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,124 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,137 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,142 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:15:46,145 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,149 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,397 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,434 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,438 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,446 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,448 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,448 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,455 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:15:46,585 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:46] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:15:48,340 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:48] "POST /2/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:15:49,356 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:49] "POST /2/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:15:49,367 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:49] "POST /2/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:15:49,369 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:49] "GET /2/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:15:49,370 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:49] "GET /2/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:15:49,379 INFO :: 127.0.0.1 - - [15/Jan/2024 23:15:49] "GET /2/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:16:09,885 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-15 23:16:10,313 INFO ::  * Restarting with stat
+2024-01-15 23:16:16,109 INFO ::  * Restarting with stat
+2024-01-15 23:16:18,706 WARNING ::  * Debugger is active!
+2024-01-15 23:16:18,712 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:17:51,018 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /2/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:17:51,052 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,057 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,061 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,065 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,078 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,088 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:17:51,091 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,094 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,098 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,360 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,404 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,404 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,406 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,408 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,409 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,415 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:17:51,481 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:51] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:17:52,714 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:52] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-15 23:17:53,116 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "POST /2/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:17:53,909 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "POST /2/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:17:53,922 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "POST /2/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:17:53,924 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "GET /2/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:17:53,925 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "GET /2/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:17:53,951 INFO :: 127.0.0.1 - - [15/Jan/2024 23:17:53] "GET /2/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:18:30,460 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:30] "[35m[1mGET /2/stratupdate HTTP/1.1[0m" 500 -
+2024-01-15 23:18:30,477 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:30] "GET /2/stratupdate?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-01-15 23:18:30,484 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:30] "GET /2/stratupdate?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-01-15 23:18:30,530 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:30] "GET /2/stratupdate?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-01-15 23:18:30,596 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:30] "[36mGET /2/stratupdate?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-01-15 23:18:38,171 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:38] "[33mGET /2 HTTP/1.1[0m" 404 -
+2024-01-15 23:18:40,747 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET / HTTP/1.1" 200 -
+2024-01-15 23:18:40,761 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:18:40,763 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:18:40,764 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:18:40,772 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:18:40,772 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:40] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:18:44,497 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "GET /auth/register HTTP/1.1" 200 -
+2024-01-15 23:18:44,508 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:44,510 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:44,517 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:44,518 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:44,520 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:44] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:47,798 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[32mPOST /auth/register HTTP/1.1[0m" 302 -
+2024-01-15 23:18:47,803 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "GET /auth/login HTTP/1.1" 200 -
+2024-01-15 23:18:47,824 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:47,825 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:47,827 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:47,833 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:47,834 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:47] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:50,461 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[32mPOST /auth/login HTTP/1.1[0m" 302 -
+2024-01-15 23:18:50,467 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "GET / HTTP/1.1" 200 -
+2024-01-15 23:18:50,489 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:50,492 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:50,492 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:50,494 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:50,494 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:50] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:51,413 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "GET /createstrat HTTP/1.1" 200 -
+2024-01-15 23:18:51,429 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:51,434 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:51,434 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:51,436 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:51,437 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:51] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,780 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[32mPOST /createstrat HTTP/1.1[0m" 302 -
+2024-01-15 23:18:53,787 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:18:53,805 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:18:53,811 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,813 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,815 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,815 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,820 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,825 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,825 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,830 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:53,830 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,836 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,839 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,842 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,845 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,846 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,852 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:18:53,981 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:53] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:18:55,125 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:18:55,836 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "POST /3/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:18:55,842 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "POST /3/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:18:55,845 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "GET /3/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:18:55,846 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "GET /3/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:18:55,852 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:55] "GET /3/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:18:59,212 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/list.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:59,215 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:59,223 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:59,226 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:59,227 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:18:59,232 INFO :: 127.0.0.1 - - [15/Jan/2024 23:18:59] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:19:58,128 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:19:58,148 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,152 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,161 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,162 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,165 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,174 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,174 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:19:58,177 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,181 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,184 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,196 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,203 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,205 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,211 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,215 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,216 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:19:58,272 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:58] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:19:59,807 INFO :: 127.0.0.1 - - [15/Jan/2024 23:19:59] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:20:00,598 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:00] "POST /3/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:20:00,606 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:00] "POST /3/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:20:00,610 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:00] "GET /3/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:20:00,610 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:00] "GET /3/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:20:00,622 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:00] "GET /3/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:20:30,686 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:20:30,713 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,715 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,728 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,729 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,729 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,735 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:20:30,743 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,746 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,750 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,757 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,769 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,772 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,784 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,785 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,791 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,798 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:20:30,887 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:30] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:20:32,348 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:32] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:20:33,120 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:33] "POST /3/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:20:33,129 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:33] "POST /3/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:20:33,130 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:33] "GET /3/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:20:33,132 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:33] "GET /3/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:20:33,142 INFO :: 127.0.0.1 - - [15/Jan/2024 23:20:33] "GET /3/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:21:11,241 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:21:11,259 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,263 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,264 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,268 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,275 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,284 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,284 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:21:11,285 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,288 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,289 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,302 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,306 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,312 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,312 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,315 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,316 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:21:11,410 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:11] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:21:12,617 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:12] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:21:13,351 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:13] "POST /3/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:21:13,360 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:13] "POST /3/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:21:13,361 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:13] "GET /3/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:21:13,362 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:13] "GET /3/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:21:13,371 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:13] "GET /3/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:21:22,061 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:21:22,085 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/list.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,098 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,099 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,100 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,108 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,109 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,111 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/cond_list.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,113 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/strategy.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,115 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/dist/main.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,125 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/updatestrat_selectors.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,156 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/classes/globals.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,162 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/conditions.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,163 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/optimize.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,166 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/functions/show_string.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,169 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/classes/StrategyData.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,172 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "[36mGET /static/js/fetch.js HTTP/1.1[0m" 304 -
+2024-01-15 23:21:22,214 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:22] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:21:23,509 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:23] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:21:24,141 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:24] "POST /3/init_strategy HTTP/1.1" 200 -
+2024-01-15 23:21:24,148 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:24] "POST /3/optimization_results HTTP/1.1" 200 -
+2024-01-15 23:21:24,149 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:24] "GET /3/load_conditions HTTP/1.1" 200 -
+2024-01-15 23:21:24,150 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:24] "GET /3/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-15 23:21:24,159 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:24] "GET /3/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-15 23:21:25,069 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/list.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:25,069 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:25,070 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:25,071 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:25,072 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-15 23:21:25,077 INFO :: 127.0.0.1 - - [15/Jan/2024 23:21:25] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-15 23:22:41,936 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /3/stratupdate HTTP/1.1" 200 -
+2024-01-15 23:22:41,951 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,953 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,954 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,963 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,965 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,968 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-15 23:22:41,973 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,979 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,980 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,984 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,995 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,997 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-15 23:22:41,998 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:41] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-15 23:22:42,000 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:42] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-15 23:22:42,010 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:42] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-15 23:22:42,012 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:42] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-15 23:22:42,102 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:42] "GET /current_df HTTP/1.1" 200 -
+2024-01-15 23:22:42,116 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:42] "[35m[1mPOST /3/init_strategy HTTP/1.1[0m" 500 -
+2024-01-15 23:22:43,512 INFO :: 127.0.0.1 - - [15/Jan/2024 23:22:43] "POST /3/load_pickled_df HTTP/1.1" 200 -
+2024-01-15 23:26:26,066 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:26:26,408 INFO ::  * Restarting with stat
+2024-01-15 23:26:31,208 INFO ::  * Restarting with stat
+2024-01-15 23:26:35,272 INFO ::  * Restarting with stat
+2024-01-15 23:26:37,898 WARNING ::  * Debugger is active!
+2024-01-15 23:26:37,909 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:26:38,963 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:26:39,245 INFO ::  * Restarting with stat
+2024-01-15 23:26:44,887 INFO ::  * Restarting with stat
+2024-01-15 23:26:48,444 INFO ::  * Restarting with stat
+2024-01-15 23:26:53,024 INFO ::  * Restarting with stat
+2024-01-15 23:26:56,603 INFO ::  * Restarting with stat
+2024-01-15 23:26:58,931 WARNING ::  * Debugger is active!
+2024-01-15 23:26:58,937 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:27:08,102 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:27:08,537 INFO ::  * Restarting with stat
+2024-01-15 23:27:11,098 WARNING ::  * Debugger is active!
+2024-01-15 23:27:11,105 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:27:27,414 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:27:27,692 INFO ::  * Restarting with stat
+2024-01-15 23:27:33,398 INFO ::  * Restarting with stat
+2024-01-15 23:27:35,719 WARNING ::  * Debugger is active!
+2024-01-15 23:27:35,725 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:27:40,828 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:27:41,189 INFO ::  * Restarting with stat
+2024-01-15 23:27:43,493 WARNING ::  * Debugger is active!
+2024-01-15 23:27:43,499 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:27:50,643 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:27:50,915 INFO ::  * Restarting with stat
+2024-01-15 23:27:53,337 WARNING ::  * Debugger is active!
+2024-01-15 23:27:53,344 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:27:57,430 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:27:57,766 INFO ::  * Restarting with stat
+2024-01-15 23:28:00,161 WARNING ::  * Debugger is active!
+2024-01-15 23:28:00,167 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:02,229 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:02,550 INFO ::  * Restarting with stat
+2024-01-15 23:28:04,857 WARNING ::  * Debugger is active!
+2024-01-15 23:28:04,863 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:05,906 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:06,182 INFO ::  * Restarting with stat
+2024-01-15 23:28:08,409 WARNING ::  * Debugger is active!
+2024-01-15 23:28:08,415 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:20,620 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:20,959 INFO ::  * Restarting with stat
+2024-01-15 23:28:23,243 WARNING ::  * Debugger is active!
+2024-01-15 23:28:23,250 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:28,370 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:28,650 INFO ::  * Restarting with stat
+2024-01-15 23:28:30,952 WARNING ::  * Debugger is active!
+2024-01-15 23:28:30,958 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:37,080 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:37,351 INFO ::  * Restarting with stat
+2024-01-15 23:28:39,694 WARNING ::  * Debugger is active!
+2024-01-15 23:28:39,702 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:44,812 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:45,088 INFO ::  * Restarting with stat
+2024-01-15 23:28:47,348 WARNING ::  * Debugger is active!
+2024-01-15 23:28:47,354 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:28:57,537 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:28:57,811 INFO ::  * Restarting with stat
+2024-01-15 23:29:22,936 INFO ::  * Restarting with stat
+2024-01-15 23:29:25,444 WARNING ::  * Debugger is active!
+2024-01-15 23:29:25,450 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:29:37,674 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:29:37,969 INFO ::  * Restarting with stat
+2024-01-15 23:29:40,240 WARNING ::  * Debugger is active!
+2024-01-15 23:29:40,247 INFO ::  * Debugger PIN: 117-265-993
+2024-01-15 23:30:22,974 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\data_strategy.py', reloading
+2024-01-15 23:30:23,260 INFO ::  * Restarting with stat

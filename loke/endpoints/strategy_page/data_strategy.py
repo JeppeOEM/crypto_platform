@@ -3,6 +3,7 @@ from flask import (
 )
 import json
 import pandas as pd
+from loke.database.db import get_db
 # from loke.functions.getDataframe import getDataframe
 from loke.functions.getDataframe import getDataframe
 import json
@@ -23,6 +24,18 @@ def load_pickled_df(strategy_id):
 
     # DONT use jsonify this time it is converted to json string already
     return jsonData
+
+
+@bp.route('/<int:strategy_id>/current_chart', methods=('POST', 'GET'))
+def current_chart(strategy_id):
+    data = request.get_json()
+    db = get_db()
+    current_pair = db.execute(
+        'SELECT pair FROM strategies WHERE fk_strategy_id = ? AND fk_user_id = ?', (strategy_id, g.user['id'])).fetchone()
+    # print(jsonData)
+
+    # DONT use jsonify this time it is converted to json string already
+    return jsonify(current_pair)
 
 
 def createChartJson(df):

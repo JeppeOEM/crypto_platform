@@ -1,9 +1,12 @@
 import { Chart } from "./chart/Chart";
-import { postJsonGetData } from "../../loke/static/js/fetch";
+import { getJson } from "../../loke/static/js/fetch";
 
-function insert_chart() {
+async function insert_chart() {
   const chartDiv = document.querySelector(".chart");
   const customChart = new Chart(chartDiv);
-  customChart.getCandlesticks("ETH/USD", "1m", "spot");
+
+  const response = await getJson("current_chart");
+  console.log(response, "fuckinging response");
+  customChart.getCandlesticks("BTC/USD", "1m", "spot");
 }
 insert_chart();

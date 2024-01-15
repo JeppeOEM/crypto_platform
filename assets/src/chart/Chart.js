@@ -52,6 +52,7 @@ export class Chart {
     const apiUrl = `load_pickled_df`;
     let coin_pair = pair.toUpperCase();
     console.log(market_type);
+    console.log(coin_pair);
 
     const data_obj = {
       ticker: coin_pair,

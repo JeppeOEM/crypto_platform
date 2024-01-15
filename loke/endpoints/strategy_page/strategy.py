@@ -145,9 +145,9 @@ def createstrat():
 
             try:
                 cur.execute(
-                    'INSERT INTO strategies (strategy_name, info, fk_user_id, fk_exchange_id)'
-                    ' VALUES (?, ?, ?, ?)',
-                    (strategy_name, info, g.user['id'], exchange)
+                    'INSERT INTO strategies (strategy_name, info, fk_user_id, fk_exchange_id, pair)'
+                    ' VALUES (?, ?, ?, ?, ?)',
+                    (strategy_name, info, g.user['id'], exchange, "ETHBTC")
                 )
 
                 last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
@@ -170,6 +170,8 @@ def createstrat():
             except Exception as e:
                 # An error occurred, rollback the transaction
                 db.rollback()
+                print("##########################################################")
+                print("Error!!: {}".format(e))
                 flash(f"Error: {str(e)}")
             return redirect(url_for('strategy.stratupdate', id=strategy_id))
 
