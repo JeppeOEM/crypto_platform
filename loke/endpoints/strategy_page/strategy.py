@@ -90,13 +90,13 @@ def init_strategy(id):
         data = request.get_json()
         exchange = data['exchange']
         init_candles = ['init_candles']
-        symbol = data['symbol']
+        pair = data['pair']
         name = data['name']
         description = data['description']
         print("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤INIT STRATEGY¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
 
-        print(exchange, init_candles, symbol, name, description)
-        s = Strategy(exchange, init_candles, symbol, name, description)
+        print(exchange, init_candles, pair, name, description)
+        s = Strategy(exchange, init_candles, pair, name, description)
 
         s.addIndicators(total_indicators)
         df = s.create_strategy()

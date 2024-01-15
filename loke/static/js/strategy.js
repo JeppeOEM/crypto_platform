@@ -1,6 +1,7 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
 import { selected_cond_instance } from "./classes/globals.js";
+import { strategyDataInstance } from "./classes/StrategyData.js";
 // import { CondController } from "./cond_list.js";
 import { condController } from "./cond_list.js";
 import { show_string } from "./functions/show_string.js";
@@ -10,23 +11,16 @@ import { postJsonGetStatus } from "./fetch.js";
 import { build_conds } from "./conditions.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
-
 window.select_indicator = select_indicator;
 
 // window.save_cond_sell = save_cond_sell;
 // window.save_cond_buy = save_cond_buy;
 
+//Global variables stored in private classes
+const strategyData = strategyDataInstance;
 const selected_cond = selected_cond_instance;
 
 // const condController = condController;
-
-const data = {
-  exchange: "binance",
-  init_candles: 100,
-  symbol: "BTCUSDT",
-  name: "test",
-  description: "description",
-};
 
 let conditions = [];
 let conditions_sell = [];
@@ -77,7 +71,8 @@ async function create_list(side) {
 
 async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
-  const strategy_data = await update_chart("init_strategy");
+  const data = strategyData.getDataObject();
+  const strategy_data = await postJsonGetData(data, "init_strategy");
   console.log(strategy_data, "strategy_data!!!!!!!!!!!!!!!!!!!!!");
   remove_element("indicator_cond");
   build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
@@ -302,7 +297,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
 
-    let indicators_data = await update_chart("init_strategy");
+    let indicators_data = await postJsonGetData(data, "init_strategy");
     console.log(indicators_data, "indicators_data!!!!!!!!!!!!!!!!!!!!");
     remove_element("indicator_cond");
     build_buttons(indicators_data.cols, "condition_btns", "button", "indicator_cond");
@@ -488,23 +483,23 @@ async function build_optimization_results() {
 //     console.error("Fetch error:", error);
 //   }
 // }
-async function update_chart(endpoint) {
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+// async function update_chart(data, endpoint) {
+//   try {
+//     const response = await fetch(endpoint, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(data),
+//     });
 
-    const responseData = await response.json();
+//     const responseData = await response.json();
 
-    return responseData;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
+//     return responseData;
+//   } catch (error) {
+//     console.error("Error:", error);
+//   }
+// }
 
 // async function postJsonGetStatus(data, endpoint, method = "POST") {
 //   // Create an options object for the fetch request
