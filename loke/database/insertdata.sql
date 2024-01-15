@@ -9,7 +9,8 @@ INSERT INTO strategies (
         strategy_id,
         fk_user_id,
         strategy_name,
-        fk_exchange_id
+        fk_exchange_id,
+        pair
     )
-VALUES (1, 1, "test", 1);
+VALUES (1, 1, "test", 1,"BTCUSDT");
 

@@ -33,6 +33,7 @@ CREATE TABLE strategies (
     fk_exchange_id INTEGER NOT NULL DEFAULT 1,
     info TEXT,
     expression TEXT,
+    pair VARCHAR(35) NOT NULL,
     FOREIGN KEY (fk_exchange_id) REFERENCES exchanges(exchange_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );

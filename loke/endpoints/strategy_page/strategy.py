@@ -10,6 +10,7 @@ from loke.trading_engine.call_optimizer import call_optimizer
 from loke.trading_engine.process_conds import process_conds
 from loke.controllers.StrategyController import get_strategy_controller
 from .func_get_indicators import get_indicators
+from loke.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
 
 import json
 import pandas as pd
@@ -91,6 +92,7 @@ def init_strategy(id):
         exchange = data['exchange']
         init_candles = ['init_candles']
         pair = data['pair']
+        print(pair, pair, pair, pair, pair)
         name = data['name']
         description = data['description']
         print("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤INIT STRATEGY¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
@@ -111,15 +113,16 @@ def init_strategy(id):
         print(ss, "STRATEGY")
         print("#####################################################################")
         print(ss.df, "STRATEGY")
+        dataset_pairs = get_hdf5_pairs(exchange)
+        print(dataset_pairs, "DATASET PAIRS")
+        return jsonify({"cols": cols, "indicators":  total_indicators_id, "dataset_pairs": dataset_pairs})
 
-        return jsonify({"cols": cols, "indicators":  total_indicators_id})
 
+# @bp.route('/<int:strategy_id>/strategy', methods=('GET', 'POST'))
+# # @login_required
+# def strategy(strategy_id):
 
-@bp.route('/<int:strategy_id>/strategy', methods=('GET', 'POST'))
-# @login_required
-def strategy(strategy_id):
-
-    return render_template('strategy/{strategy_id}/updatestrat.html')
+#     return render_template('strategy/{strategy_id}/updatestrat.html')
 
 
 @bp.route('/createstrat', methods=('GET', 'POST'))

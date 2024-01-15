@@ -35,17 +35,15 @@ export async function build_conds() {
   // optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
   optimizer_params(sell_conds, "_SELL", "param_buy");
-  console.log(buy_conds, "buy_conds!");
   console.log(load_cond_managers(buy_conds));
   console.log(load_cond_managers(sell_conds));
 
   function load_cond_managers(arr) {
-    const lol = arr.forEach((cond) => {
+    arr.forEach((cond) => {
       let condManager = condController.getKey(cond.fk_list_id);
-      console.log(which_row(cond.list_row));
       condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
     });
-    console.log(lol);
+
   }
 }
 
@@ -85,13 +83,11 @@ export async function save_cond_buy() {
     saved_cond.textContent = `${show_string(conditions)}`;
   });
   data.buy_cond = JSON.stringify(conditions);
-  console.log(data.buy_cond);
+
   data.side = "buy";
   data.primary_key = selected_cond.get();
-  console.log(data.buy_cond);
+
   let response = await postJsonGetData(data, "condition");
-  console.log(response.id);
-  console.log(last_cond_dom, "last_cond_dom");
   //assign id to last cond inserted in the dom
   let last_dom = last_cond_dom.get();
   last_dom.dataset.cond_key = response.id;
@@ -123,8 +119,7 @@ export async function save_cond_sell() {
   data.primary_key = selected_cond.get();
 
   let response = await postJsonGetData(data, "condition");
-  console.log(response.id);
-  console.log(last_cond_dom, "last_cond_dom");
+
   //assign id to last cond inserted in the dom
   let last_dom = last_cond_dom.get();
   last_dom.dataset.cond_key = response.id;

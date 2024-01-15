@@ -7,7 +7,7 @@ from loke.database.db import get_db
 from loke.data_download.Hdf5 import Hdf5Client
 from loke.data_download.BinanceClient import BinanceClient
 from loke.data_download.data_collector import collect_all
-from datetime import datetime
+from loke.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
 import importlib
 import os
 import json
@@ -28,16 +28,7 @@ def data_dashboard():
     if request.method == 'GET':
         print("get")
         exchange = "binance"
-        h5_db = Hdf5Client(exchange)
-        pair_names = h5_db.get_all_dataset_names()
-        pair_info = []
-        for pair in pair_names:
-            first_ts, last_ts = h5_db.get_first_last_timestamp(pair)
-            first_ts = datetime.utcfromtimestamp(first_ts / 1000.0)
-            last_ts = datetime.utcfromtimestamp(last_ts / 1000.0)
-            pair_dict = {pair: (first_ts, last_ts)}
-            pair_info.append(pair_dict)
-
+        pair_info = get_hdf5_pairs()
         print("first last", pair_info)
         print(pair_info)
         return render_template('data_download/dashboard.html', pair_info=pair_info)
@@ -49,6 +40,12 @@ def download_coin():
     client = BinanceClient(False)
     print(data['coin'])
     collect_all(client, "binance", data['coin'])
+
+
+@bp.route('/get_all_dataset_pairs', methods=('POST', 'GET'))
+def get_all_dataset_pairs():
+    pair_info = get_hdf5_pairs()
+    return jsonify(pair_info)
 
 
 @bp.route('/get_all_pairs', methods=('POST', 'GET'))

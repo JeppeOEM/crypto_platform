@@ -52,9 +52,6 @@ export class Chart {
     const apiUrl = `load_pickled_df`;
     let coin_pair = pair.toUpperCase();
     console.log(market_type);
-    console.log(market_type);
-    console.log(market_type);
-    console.log(market_type);
 
     const data_obj = {
       ticker: coin_pair,
@@ -63,7 +60,7 @@ export class Chart {
       timerange_start: 159810060000,
       timerange_end: "now",
     };
-
+    console.log(data_obj);
     await fetch(apiUrl, {
       method: "POST", // or 'POST' if needed
       headers: {

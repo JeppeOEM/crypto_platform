@@ -1,7 +1,7 @@
 class StrategyData {
   constructor() {
     this._exchange = "binance";
-    this._pair = "BTCUSDT";
+    this._pair = "ETHUSDT";
     this._name = "test";
     this._description = "description";
     this._init_candles = 100;

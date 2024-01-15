@@ -21,7 +21,6 @@ export class CondController {
   createCondManager(identifier, primary_key) {
     this.identifier = identifier;
     this.primary_key = primary_key;
-    console.log(this.primary_key, "primary_key!!!!!!!");
 
     const taskManager = new CondManager(this.identifier, this.primary_key);
     this.objList.push(taskManager);
@@ -44,7 +43,6 @@ export class CondController {
   }
 
   getKey(key) {
-    console.log(key, "key");
     const result = [];
     for (let i = 0; i < this.objList.length; i++) {
       if (this.objList[i].primary_key === key) {
@@ -52,7 +50,6 @@ export class CondController {
       }
     }
 
-    console.log(result);
     // let arr = this.objList.forEach((obj) => {
     //   if (obj.primary_key === key) {
     //     return obj;
@@ -65,7 +62,6 @@ export { condController };
 class CondManager {
   constructor(identifier, primary_key) {
     this.primary_key = primary_key;
-    console.log(this.primary_key, "primary_key COND CONTROl");
     this.identifier = identifier;
     this.addTaskText = "Add";
     this.updateTaskText = "Update";
@@ -126,7 +122,6 @@ class CondManager {
     task.prepend(this.deleteButton());
     task.dataset.cond_key = id;
     const columnList = this.TodoContent.querySelector(`.${column}List`);
-    console.log(columnList, "columnList", task);
     columnList.prepend(task);
 
     switch (column) {
@@ -145,8 +140,7 @@ class CondManager {
   addTask() {
     //global variable for the db
     selected_cond.set(parseInt(this.TodoContent.dataset.primary_key));
-    console.log(selected_cond.get, "selected_cond");
-    console.log(selected_cond, "selected_cond");
+
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const txtTask = this.TodoContent.querySelector(".txtTask");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
@@ -242,7 +236,6 @@ class CondManager {
 
     task.classList.add("task");
     task.classList.add("toDo");
-    console.log(selected_cond.get_string());
     task.innerText = selected_cond.get_string();
     task.setAttribute("taskId", currentTask.getAttribute("currentid"));
     currentTask.setAttribute("lastid", newID);
@@ -349,8 +342,7 @@ class CondManager {
     try {
       taskList = draggedTask.parentNode.id;
     } catch {
-      let lol = e.targwet;
-      console.log(lol, "lol!!!!!!!!!!!!!!!!!!");
+      console.log("Cath Activated");
       console.log(this.draggedTask);
     }
 

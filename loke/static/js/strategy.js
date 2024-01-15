@@ -30,23 +30,6 @@ let cond_sell = [];
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_page();
-  let todo_b = document.querySelector("#new_todo_buy");
-
-  todo_b.addEventListener("click", () => {
-    create_list("buy");
-    location.reload();
-    // remove_element("cond_list");
-    // build_condition_lists();
-  });
-
-  let todo_s = document.querySelector("#new_todo_sell");
-
-  todo_s.addEventListener("click", () => {
-    create_list("sell");
-    location.reload();
-    // remove_element("cond_list");
-    // build_condition_lists();
-  });
 });
 
 function value_cond(btn) {
@@ -73,7 +56,10 @@ async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
   const data = strategyData.getDataObject();
   const strategy_data = await postJsonGetData(data, "init_strategy");
-  console.log(strategy_data, "strategy_data!!!!!!!!!!!!!!!!!!!!!");
+  // const datasets_available = strategyData.dataset_pairs;
+
+  build_dataset_pair_selector(strategy_data.dataset_pairs);
+  // console.log(datasets_available, "datasets_available");
   remove_element("indicator_cond");
   build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
@@ -81,7 +67,7 @@ async function build_page() {
   //build buttons also build indicator strategy_dataframe related buttons
   //params: array, element_id, element, class_name
 
-  console.log(strategy_data, "strategy_data.indicators");
+
   build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
   build_optimization_results();
@@ -90,15 +76,57 @@ async function build_page() {
   build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   build_conds();
+
+  let todo_b = document.querySelector("#new_todo_buy");
+
+  todo_b.addEventListener("click", () => {
+    create_list("buy");
+    location.reload();
+    // remove_element("cond_list");
+    // build_condition_lists();
+  });
+
+  let todo_s = document.querySelector("#new_todo_sell");
+
+  todo_s.addEventListener("click", () => {
+    create_list("sell");
+    location.reload();
+    // remove_element("cond_list");
+    // build_condition_lists();
+  });
 }
 
 //
+
+async function build_dataset_pair_selector(dataset_pairs) {
+  // Create select element
+  const selectElement = document.createElement("select");
+  selectElement.id = "dataset_pair_selector";
+
+  // Iterate through the keys of the first object to get the options
+  dataset_pairs.forEach((dataset_pair) => {
+    for (let key in dataset_pair) {
+      const optionElement = document.createElement("option");
+      optionElement.value = key;
+      optionElement.text = key;
+      selectElement.appendChild(optionElement);
+    }
+  });
+
+  document.querySelector("#strategy_dataset_selector").appendChild(selectElement);
+
+  document.querySelector("#dataset_pair_selector").addEventListener("change", function (event) {
+    const pair = event.target.value;
+    strategyData.setPair(pair);
+    console.log(strategyData.getPair(), "strategyData.getPair()");
+  });
+}
+
 async function build_condition_lists() {
   // const taskManager1 = condController.createCondManager("buy_cond_list1");
   // const taskManager2 = condController.createCondManager("sell_cond_list2");
   const json_buy = await getJson("cond_list?side=buy");
   const json_sell = await getJson("cond_list?side=sell");
-  console.log(json_buy, json_sell, "lists");
   const sell_clones = document.querySelector(".sell_clones");
   const buy_clones = document.querySelector(".buy_clones");
   const clone_template = document.querySelector(".clone_template");
@@ -118,12 +146,12 @@ async function build_condition_lists() {
       if (side == "buy") {
         insert_name.dataset.primary_key = data.list_id;
         primary_key = data.list_id;
-        console.log(data.list_id, "data.list_id");
+
       } else {
         insert_name.dataset.primary_key = data.list_id;
         primary_key = data.list_id;
       }
-      console.log(primary_key, "primary_key");
+
       insert_name.dataset.frontend_id = data.frontend_id;
       // const cond_wrapper = clone.querySelector(`.clone_${side}`);
       // cond_wrapper.dataset.id = data.list_id;
@@ -154,7 +182,7 @@ async function build_buttons(array, element_id, element, class_name) {
         if (class_name == "indicator_cond") {
           // cond.push({ ind: event.target.innerText });
           selected_cond.add_cond({ ind: event.target.innerText });
-          console.log(cond);
+
         } else {
           selected_cond.add_cond({ cond: event.target.innerText });
           // cond.push({ cond: event.target.innerText });
@@ -171,13 +199,13 @@ async function build_buttons(array, element_id, element, class_name) {
 
 function insert_frontend(cond, element) {
   const conds_db = document.querySelectorAll(`.${element}`).forEach((saved_conds) => {
-    console.log(saved_conds, element, "saved_conds");
+
     for (let i = 0; i < cond.length; i++) {
       const listItem = document.createElement("li");
 
       listItem.textContent = unpack(JSON.parse(cond[i]));
       saved_conds.appendChild(listItem);
-      console.log(saved_conds, "saved_conds!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
     }
   });
 }
@@ -246,7 +274,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     indi_data = output;
   }
   const name_indicator = indi_data[0][1];
-  console.log(name_indicator, "name_indicator");
+
   //remove name of indicator
   indi_data = indi_data.slice(1);
   const formContainer = document.getElementById("form-container");
@@ -293,7 +321,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
     });
     form_arr.push(form_id);
     form_arr.unshift(event.target.dataset.category);
-    console.log(form_arr);
+
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
 
@@ -329,7 +357,7 @@ async function loadIndicator(name, category, values = undefined, form_id) {
 }
 
 function select_indicator(category, id) {
-  console.log(category, id);
+
   const dropdown = document.getElementById(id);
   const selectedValue = dropdown.value;
 
@@ -436,11 +464,13 @@ function remove_element(class_name) {
 // ##################################################################################
 
 async function optimize() {
+  const data = strategyData.getDataObject();
   const response = await postJsonGetData(data, "optimize");
-  console.log(response);
+
 }
 
 async function build_optimization_results() {
+  const data = strategyData.getDataObject();
   const response = await postJsonGetData(data, "optimization_results");
   const resultList = document.querySelector(".opti_results");
 
@@ -454,7 +484,7 @@ async function build_optimization_results() {
       res = JSON.parse(res);
       return res;
     });
-    console.log(parsed, "parsedddd");
+
     const listItem = document.createElement("li");
     listItem.textContent = `PNL: ${parsed[0]["pnl"]}% max drawdown: ${
       parsed[0]["max_drawdown"]
@@ -558,4 +588,4 @@ function which_side(inputString) {
   return side;
 }
 let test = getJson("/current_df");
-console.log(test, "test");
+
