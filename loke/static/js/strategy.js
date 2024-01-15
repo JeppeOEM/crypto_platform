@@ -1,6 +1,6 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
-import { selected_cond_instance } from "./globals.js";
+import { selected_cond_instance } from "./classes/globals.js";
 // import { CondController } from "./cond_list.js";
 import { condController } from "./cond_list.js";
 import { show_string } from "./functions/show_string.js";
@@ -28,8 +28,8 @@ const data = {
   description: "description",
 };
 
-// let conditions = [];
-// let conditions_sell = [];
+let conditions = [];
+let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
 
@@ -84,14 +84,14 @@ async function build_page() {
   //params: array, element_id, element, class_name
 
   console.log(data, "data.indicators");
-  await build_indicator_inputs(data.indicators);
+  build_indicator_inputs(data.indicators);
   // await build_conditions();
-  await build_optimization_results();
-  await build_condition_lists();
-  await build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
-  await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
-  await build_buttons(data.cols, "condition_btns", "button", "indicator_cond");
-  await build_conds();
+  build_optimization_results();
+  build_condition_lists();
+  build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
+  build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
+  build_buttons(data.cols, "condition_btns", "button", "indicator_cond");
+  build_conds();
 }
 
 //

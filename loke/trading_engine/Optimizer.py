@@ -10,7 +10,7 @@ from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS,
 # import strategies.ichimoku
 # import strategies.support_resistance
 from loke.database.db import get_db
-from loke.database.Hdf5 import Hdf5Client
+from loke.data_download.Hdf5 import Hdf5Client
 
 
 def set_contraints(bool: bool, params: typing.Dict) -> bool:

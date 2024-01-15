@@ -6,7 +6,6 @@ from loke.endpoints.auth import login_required
 from loke.database.db import get_db
 
 
-
 import importlib
 import os
 import json
@@ -18,7 +17,7 @@ bp = Blueprint('indicators_strategy', __name__)
 
 
 @bp.route('/<int:strategy_id>/add_indicator', methods=('POST', 'GET'))
-@login_required
+# @login_required
 def add_indicator(strategy_id):
     if request.method == 'POST':
         data = request.get_json()  # Get the JSON data from the request
@@ -45,7 +44,7 @@ def add_indicator(strategy_id):
 
 
 @bp.route('/<int:strategy_id>/convert_indicator', methods=('POST',))
-@login_required
+# @login_required
 def convert_indicator(strategy_id):
 
     if request.method == 'POST':

@@ -1,4 +1,1 @@
-remove list_row from sql file
-
-  console.log(load_cond_managers_buy(buy_conds));
-  console.log(load_cond_managers_sell(sell_conds));
+Update data fetching method

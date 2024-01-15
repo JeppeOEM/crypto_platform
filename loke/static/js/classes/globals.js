@@ -1,5 +1,5 @@
-import { show_string } from "./functions/show_string.js";
-
+import { show_string } from "../functions/show_string.js";
+//save the last inserted condition list in the dom
 class LastCondDom {
   constructor() {
     this._last_cond_dom;

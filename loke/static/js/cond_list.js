@@ -1,8 +1,8 @@
 "use strict";
-import { selected_cond_instance } from "./globals.js";
+import { selected_cond_instance } from "./classes/globals.js";
 import { save_cond_buy } from "./conditions.js";
 import { save_cond_sell } from "./conditions.js";
-import { last_cond_dom } from "./globals.js";
+import { last_cond_dom } from "./classes/globals.js";
 import { optimizer_params } from "./optimize.js";
 import { postJsonGetData, postJsonGetStatus, getJson } from "./fetch.js";
 const selected_cond = selected_cond_instance;

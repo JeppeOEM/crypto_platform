@@ -45,7 +45,7 @@ def current_df():
     s = get_strategy_controller().get_strategy()
     name = "test"
     df = pd.read_pickle("data/pickles/test.pkl")
-    print(df.head(10), "CURRENT DF")
+    # print(df.head(10), "CURRENT DF")
     return jsonify({"msg": f"{df.head(10)}"})
 
 
@@ -93,15 +93,19 @@ def init_strategy(id):
         symbol = data['symbol']
         name = data['name']
         description = data['description']
-        s = Strategy(exchange, init_candles, symbol, name, description)
+        print("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤INIT STRATEGY¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
+
+        print(exchange, init_candles, symbol, name, description)
+        s = Strategy("exchange", exchange, "init candles", init_candles,
+                     "symbol", symbol, "NAME", name, "DESCRIPTION", description)
 
         s.addIndicators(total_indicators)
         df = s.create_strategy()
 
         df.to_pickle(f"data/pickles/{name}.pkl")
         cols = df.columns.to_list()
-        print(cols, "COLUMNS")
-        print(df)
+        # print(cols, "COLUMNS")
+        # print(df)
         # keep kind: name to populate inputs
         get_strategy_controller().set_strategy(s)
         ss = get_strategy_controller().get_strategy()
@@ -113,14 +117,14 @@ def init_strategy(id):
 
 
 @bp.route('/<int:strategy_id>/strategy', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def strategy(strategy_id):
 
     return render_template('strategy/{strategy_id}/updatestrat.html')
 
 
 @bp.route('/createstrat', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def createstrat():
     if request.method == 'POST':
         strategy_name = request.form['strategy_name']
@@ -180,7 +184,7 @@ def createstrat():
 
 # This is the page were you can add indicators to a strategy
 @bp.route('/<int:id>/stratupdate', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def stratupdate(id):
     strategy = get_strategy(id)
     if request.method == 'POST':
@@ -229,7 +233,7 @@ def get_strategy(id, check_user=True):
 
 
 # @bp.route('/<int:id>/update_chart', methods=['POST'])
-# @login_required
+# #@login_required
 # def update_chart(id):
 #     print(id)
 #     db = get_db()
@@ -240,7 +244,7 @@ def get_strategy(id, check_user=True):
 
 
 @bp.route('/<int:id>/truncate', methods=('POST',))
-@login_required
+# @login_required
 def truncate(id):
     get_strategy(id)
     db = get_db()
@@ -275,7 +279,7 @@ def truncate(id):
 
 
 @bp.route('/<int:id>/deletestrat', methods=('POST',))
-@login_required
+# @login_required
 def deletestrat(id):
     get_strategy(id)
     db = get_db()
@@ -315,7 +319,7 @@ def deletestrat(id):
 
 
 # @bp.route('/<int:id>/delete_cond', methods=('POST',))
-# @login_required
+# #@login_required
 # def del_last_buy_cond(id):
 #     get_strategy(id)
 #     side = "buy_condition"
@@ -378,7 +382,7 @@ def deletestrat(id):
 
 
 # @bp.route('/<int:id>/deletestrat', methods=('POST',))
-# @login_required
+# #@login_required
 # def del_last_sell_cond(id):
 #     get_strategy(id)
 #     db = get_db()

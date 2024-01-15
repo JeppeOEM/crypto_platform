@@ -4,8 +4,8 @@ import datetime
 import time
 import pandas as pd
 
-from loke.database.Hdf5 import Hdf5Client
-from loke.data_download.binance import BinanceClient
+from loke.data_download.Hdf5 import Hdf5Client
+from loke.data_download.BinanceClient import BinanceClient
 
 
 logger = logging.getLogger()

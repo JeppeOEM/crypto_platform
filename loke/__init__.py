@@ -1,28 +1,46 @@
-from .endpoints import auth
-from .endpoints.strategy import strategy
-from .endpoints.strategy import data_strategy
-from .endpoints.strategy import indicators_strategy
-from .endpoints.machine_learning import markov
-from .endpoints.optimization import optimization
-from .endpoints.optimization import conditions
-from .controllers.StrategyController import StrategyController
+import mimetypes
+import os
+import pandas_ta as ta
+from flask import Flask
+from flask_caching import Cache
+from flask import Flask, request, jsonify
+from loke.database import db
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
-from loke.database import db
-from flask import Flask, request, jsonify
-from flask_caching import Cache
-from flask import Flask
-import pandas_ta as ta
-import os
-import mimetypes
+from .controllers.StrategyController import StrategyController
+from .endpoints.data_page import data_page
+from .endpoints.optimization import conditions
+from .endpoints.optimization import optimization
+from .endpoints.machine_learning import markov
+from .endpoints.strategy_page import indicators_strategy
+from .endpoints.strategy_page import data_strategy
+from .endpoints.strategy_page import strategy
+from .endpoints import auth
+import logging
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+formatter = logging.Formatter("%(asctime)s %(levelname)s :: %(message)s")
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+stream_handler.setLevel(logging.INFO)
+
+file_handler = logging.FileHandler("info.log")
+file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.DEBUG)
+
+logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
+## 
+## enables the frontend to recognize the js modules
 mimetypes.add_type('application/javascript', '.js')
 mimetypes.add_type('text/css', '.css')
 ###
 
 
 # General Info:
-# Dataframe column name can be sensitive to change (_BUY / _SELL)
-# DOES NOT HAVE URL PREFIX SO INDEX = / and CREATE = /CREATE
+# Dataframe column names can be sensitive to change (_BUY / _SELL)
 # app.add_url_rule() associates the endpoint name 'index' with the /
 # url_for('index') or url_for('strategy.index') will both work,
 
@@ -74,6 +92,7 @@ def create_app(test_config=None):
     app.register_blueprint(conditions.bp)
     app.register_blueprint(optimization.bp)
     app.register_blueprint(markov.bp)
+    app.register_blueprint(data_page.bp)
     app.add_url_rule('/', endpoint='index')
 
     @app.route("/")

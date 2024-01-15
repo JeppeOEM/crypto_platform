@@ -1,5 +1,5 @@
-from functions.load_json_path import load_json_path
-from functions.resample_timeseries import resample_timeseries
+from .load_json_path import load_json_path
+from .resample_timeseries import resample_timeseries
 import ccxt
 
 

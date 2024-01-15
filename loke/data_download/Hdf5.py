@@ -11,12 +11,11 @@ logger = logging.getLogger()
 # logger = logging.getLogger()
 
 
-
 class Hdf5Client:
     # 'a' = append mode , can read and write and will create file
     def __init__(self, exchange: str):
         self.hf = h5py.File(f"data/{exchange}.h5", 'a')
-        #flush to prevent corruption if error
+        # flush to prevent corruption if error
         self.hf.flush()
 
     def create_dataset(self, symbol: str):
@@ -121,3 +120,6 @@ class Hdf5Client:
         last_ts = max(existing_data, key=lambda x: x[0])[0]
 
         return first_ts, last_ts
+
+    def get_all_dataset_names(self) -> List[str]:
+        return list(self.hf.keys())

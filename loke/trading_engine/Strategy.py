@@ -1,4 +1,4 @@
-from loke.database.Hdf5 import Hdf5Client
+from loke.data_download.Hdf5 import Hdf5Client
 
 
 import pandas_ta as ta
@@ -18,6 +18,7 @@ class Strategy:
         self.df = self.initialize()
 
     def initialize(self):
+        #if init candle is NaN/String, predeterminded amount of candles will be given
         h5_db = Hdf5Client(self.exchange)
         data = h5_db.get_rows(self.symbol, self.init_candles)
         return data

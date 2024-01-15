@@ -1,11 +1,12 @@
 import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
+// import { postJsonGetData } from "../../loke/static/js/fetch";
 
 export class Chart {
   constructor(container) {
     this.container = container;
     this.chart = createChart(container, {
-      width: 1100,
+      width: 1300,
       height: 500,
       layout: {
         background: {
@@ -41,43 +42,57 @@ export class Chart {
       wickDownColor: "rgba(55, 144, 0, 1)",
       wickUpColor: "rgba(255, 144, 0, 1)",
     });
+    this.resizeChart();
   }
   setData(data) {
     this.candleSeries.setData(data);
   }
-  async getCandlesticks(pair, timeframe, market_type) {
-    const apiUrl = `/load_df`;
-    let pair2 = pair.toUpperCase();
 
-    const jsonData = {
-      ticker: pair2,
+  async getCandlesticks(pair, timeframe, market_type) {
+    const apiUrl = `load_pickled_df`;
+    let coin_pair = pair.toUpperCase();
+    console.log(market_type);
+    console.log(market_type);
+    console.log(market_type);
+    console.log(market_type);
+
+    const data_obj = {
+      ticker: coin_pair,
       market_type: market_type,
       timeframes: [timeframe],
       timerange_start: 159810060000,
       timerange_end: "now",
     };
 
-    const requestOptions = {
-      method: "POST",
+    await fetch(apiUrl, {
+      method: "POST", // or 'POST' if needed
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(jsonData),
-    };
+      body: JSON.stringify(data_obj),
+    })
+      .then((response) => response.json())
+      .then((jsonData) => {
+        // Handle jsonData as a JSON object
+        jsonData = JSON.parse(jsonData);
 
-    try {
-      const response = await fetch(apiUrl, requestOptions);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // Now you can use jsonData in your frontend code
+        // For example, pass it to your Chart class
+        this.setData(jsonData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  resizeChart() {
+    new ResizeObserver((entries) => {
+      if (entries.length === 0 || entries[0].target !== this.container) {
+        return;
       }
-
-      const data = await response.json();
-      const parsedData = JSON.parse(data);
-      console.log(parsedData);
-      return parsedData;
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
+      const newRect = entries[0].contentRect;
+      this.chart.applyOptions({ height: newRect.height, width: newRect.width });
+    }).observe(this.container);
   }
 }
 
@@ -128,3 +143,41 @@ export class Chart {
 //     }
 //   }
 // }, 200);
+// const requestOptions = {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(jsonData),
+// };
+
+// try {
+//   const response = await fetch(apiUrl, requestOptions);
+//   if (!response.ok) {
+//     throw new Error(`HTTP error! Status: ${response.status}`);
+//   }
+
+//   const data = await response.json();
+//   const parsedData = JSON.parse(data);
+//   console.log(parsedData);
+//   return parsedData;
+// } catch (error) {
+//   console.error("Fetch error:", error);
+// }
+export async function postJsonGetData(data, endpoint, method = "POST") {
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  let response = await fetch(endpoint, options);
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+}

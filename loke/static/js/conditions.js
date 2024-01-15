@@ -1,4 +1,4 @@
-import { selected_cond_instance } from "./globals.js";
+import { selected_cond_instance } from "./classes/globals.js";
 import { optimizer_params } from "./optimize.js";
 import { postJsonGetData } from "./fetch.js";
 import { postJsonGetStatus } from "./fetch.js";
@@ -6,7 +6,7 @@ import { getJson } from "./fetch.js";
 import { show_string } from "./functions/show_string.js";
 import { condController } from "./cond_list.js";
 
-import { last_cond_dom } from "./globals.js";
+import { last_cond_dom } from "./classes/globals.js";
 
 const selected_cond = selected_cond_instance;
 

@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from loke.endpoints.auth import login_required
 from loke.database.db import get_db
-from loke.endpoints.strategy.strategy import get_strategy
+from loke.endpoints.strategy_page.strategy import get_strategy
 
 import pandas as pd
 
@@ -71,7 +71,7 @@ def update_row(strategy_id):
 
 
 @bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))
-# @login_required
+# #@login_required
 def cond_list(strategy_id):
     side = request.args.get('side', None)
     print(side, "SIDE")
@@ -126,7 +126,7 @@ def load_conditions(id):
 
 
 @bp.route('/<int:id>/delete_cond', methods=('POST',))
-@login_required
+# @login_required
 def del_last_buy_cond(id):
     get_strategy(id)
     side = "buy_condition"
@@ -200,7 +200,7 @@ def condition(id):
 
 
 @bp.route('/<int:id>/deletestratsssssss', methods=('POST',))
-@login_required
+# @login_required
 def del_last_sell_cond(id):
     get_strategy(id)
     db = get_db()

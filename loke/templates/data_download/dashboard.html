@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block extra_code_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/data_page/data_page.css') }}" />
+<script type="module" src="{{ url_for('static', filename='js/data_page/data_page.js') }}"></script>
+{% endblock %}{% block header %}
+<h1>{% block title %}Data Download{% endblock %}</h1>
+{% endblock %} {% block content %}
+<h2>Download market Data</h2>
+<form id="download_form">
+  <fieldset>
+    <label for="download_coin">Coin</label>
+    <input type="text" name="coin" id="download_coin" />
+    <button class="greybtn" type="submit">Download</button>
+  </fieldset>
+</form>
+
+<section>
+  <ul>
+    {% for pair_dict in pair_info %} {% for key, value in pair_dict.items() %}
+    <li>
+      <button>{{ key }} - from: {{ value[0] }}, to: {{ value[1] }}</button>
+    </li>
+    {% endfor %} {% endfor %}
+  </ul>
+</section>
+
+{% endblock %}

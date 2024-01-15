@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% block extra_code_head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/list.css') }}" />
-
+<script type="module" src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/strategy.js') }}"></script>
 <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/main.js') }}"></script>
 {% endblock %} {% block header %}
 <div class="flex_horizontal space_between">
   <h1 id="strategy_id" data-id="{{strategy['strategy_id']}}">
@@ -176,6 +178,7 @@
           <div class="txtTask"></div>
           <div class="cond"></div>
           <!-- insert comparison buttons  -->
+          <div class="compare"></div>
           <div class="compare_btns"></div>
           <div class="condition_btns"></div>
           <p>|| &&</p>

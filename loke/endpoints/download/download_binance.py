@@ -6,6 +6,8 @@ import json
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
+
+from loke.data_download.data_collector import collect_all
 # markets = exchange.load_markets()
 # for market in markets:
 #     print(market)
@@ -14,6 +16,15 @@ from flask import (
 # print(lol)
 
 bp = Blueprint('download', __name__)
+
+
+@bp.route('/marketdata')
+def download_data():
+    data = request.get_json()
+    print(data)
+    ticker = 'BTC/USDT'
+    timeframe = '1m'
+    exchange = 'binance'
 
 
 @bp.route('/binance/all', methods=['GET'])
