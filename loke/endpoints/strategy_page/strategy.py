@@ -50,6 +50,49 @@ def current_df():
     return jsonify({"msg": f"{df.head(10)}"})
 
 
+@bp.route('/<int:strategy_id>/strategy_pair', methods=['POST', 'GET'])
+def strategy_pair(strategy_id):
+    try:
+        db = get_db()
+
+        if request.method == 'POST':
+            data = request.get_json()
+            new_pair_value = data['pair']
+
+            if new_pair_value is not None:
+                db.execute(
+                    'UPDATE strategies SET pair = ? WHERE strategy_id = ? AND fk_user_id = ?', (
+                        new_pair_value, strategy_id, g.user['id'])
+                )
+                db.commit()
+
+                return jsonify({'message': 'Pair value updated successfully'}), 200
+            else:
+                return jsonify({'error': 'Missing new_pair_value in the request'}), 400
+        else:
+           # Handle GET request if needed
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+            pair_result = db.execute(
+                'SELECT pair FROM strategies WHERE strategy_id = ?', (
+                    strategy_id,)
+            ).fetchone()
+
+            pair = pair_result['pair']
+            return jsonify({'pair': pair}), 200
+
+        # Handle GET request if needed
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
 def init_strategy(id):
     if request.method == "POST":
@@ -88,13 +131,27 @@ def init_strategy(id):
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e}")
 
-        data = request.get_json()
-        exchange = data['exchange']
-        init_candles = ['init_candles']
-        pair = data['pair']
-        print(pair, pair, pair, pair, pair)
-        name = data['name']
-        description = data['description']
+        try:
+            # Assuming 'db' is your SQLite database connection
+            pair_result = db.execute(
+                'SELECT pair, strategy_name, info FROM strategies WHERE strategy_id = ?', (
+                    id,)
+            ).fetchone()
+
+            pair = pair_result['pair']
+            name = pair_result['strategy_name']
+            description = pair_result['info']
+            # This will print the string value of 'pair'
+
+            db.commit()
+
+        except Exception as e:
+            print(e)
+            return jsonify({'error': str(e)}), 500
+
+        exchange = "binance"
+        init_candles = 100
+
         print("¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤INIT STRATEGY¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
 
         print(exchange, init_candles, pair, name, description)
@@ -108,12 +165,12 @@ def init_strategy(id):
         # print(cols, "COLUMNS")
         # print(df)
         # keep kind: name to populate inputs
-        get_strategy_controller().set_strategy(s)
-        ss = get_strategy_controller().get_strategy()
-        print(ss, "STRATEGY")
-        print("#####################################################################")
-        print(ss.df, "STRATEGY")
+        # get_strategy_controller().set_strategy(s)
+        # ss = get_strategy_controller().get_strategy()
+
         dataset_pairs = get_hdf5_pairs(exchange)
+        print("DATASET PAIRS", dataset_pairs,
+              "¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤")
         print(dataset_pairs, "DATASET PAIRS")
         return jsonify({"cols": cols, "indicators":  total_indicators_id, "dataset_pairs": dataset_pairs})
 
@@ -147,7 +204,7 @@ def createstrat():
                 cur.execute(
                     'INSERT INTO strategies (strategy_name, info, fk_user_id, fk_exchange_id, pair)'
                     ' VALUES (?, ?, ?, ?, ?)',
-                    (strategy_name, info, g.user['id'], exchange, "ETHBTC")
+                    (strategy_name, info, g.user['id'], exchange, "ETHUSDT")
                 )
 
                 last_row = cur.execute('SELECT last_insert_rowid()').fetchone()

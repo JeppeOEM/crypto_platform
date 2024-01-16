@@ -4,6 +4,7 @@ class StrategyData {
     this._name = "test";
     this._description = "description";
     this._init_candles = 100;
+    this._pair = "";
   }
 
   getExchange() {

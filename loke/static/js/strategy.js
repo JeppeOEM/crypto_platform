@@ -54,11 +54,13 @@ async function create_list(side) {
 
 async function build_page() {
   // init strategy gets the indicators saved in indicator_strategies
-  const data = strategyData.getDataObject();
+  // const data = strategyData.getDataObject();
+  let data = {};
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
-
-  build_dataset_pair_selector(strategy_data.dataset_pairs);
+  let dataset_pairs = await strategy_data.dataset_pairs;
+  console.log(dataset_pairs, "dataset_pairs");
+  build_dataset_pair_selector(dataset_pairs);
   // console.log(datasets_available, "datasets_available");
   remove_element("indicator_cond");
   build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
@@ -66,7 +68,6 @@ async function build_page() {
   remove_element("sell_cond2");
   //build buttons also build indicator strategy_dataframe related buttons
   //params: array, element_id, element, class_name
-
 
   build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
@@ -102,7 +103,9 @@ async function build_dataset_pair_selector(dataset_pairs) {
   // Create select element
   const selectElement = document.createElement("select");
   selectElement.id = "dataset_pair_selector";
-
+  const data = await getJson("strategy_pair");
+  const current_pair = data.pair;
+  console.log(current_pair, "current_pair");
   // Iterate through the keys of the first object to get the options
   dataset_pairs.forEach((dataset_pair) => {
     for (let key in dataset_pair) {
@@ -110,15 +113,20 @@ async function build_dataset_pair_selector(dataset_pairs) {
       optionElement.value = key;
       optionElement.text = key;
       selectElement.appendChild(optionElement);
+
+      // Set the option as selected if it matches the current strategy pair value
+      if (key === current_pair) {
+        optionElement.selected = true;
+      }
     }
   });
 
   document.querySelector("#strategy_dataset_selector").appendChild(selectElement);
 
-  document.querySelector("#dataset_pair_selector").addEventListener("change", function (event) {
+  document.querySelector("#dataset_pair_selector").addEventListener("change", async function (event) {
     const pair = event.target.value;
-    strategyData.setPair(pair);
-    console.log(strategyData.getPair(), "strategyData.getPair()");
+    let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
+    console.log(status, "status", pair);
   });
 }
 
@@ -146,7 +154,6 @@ async function build_condition_lists() {
       if (side == "buy") {
         insert_name.dataset.primary_key = data.list_id;
         primary_key = data.list_id;
-
       } else {
         insert_name.dataset.primary_key = data.list_id;
         primary_key = data.list_id;
@@ -182,7 +189,6 @@ async function build_buttons(array, element_id, element, class_name) {
         if (class_name == "indicator_cond") {
           // cond.push({ ind: event.target.innerText });
           selected_cond.add_cond({ ind: event.target.innerText });
-
         } else {
           selected_cond.add_cond({ cond: event.target.innerText });
           // cond.push({ cond: event.target.innerText });
@@ -199,13 +205,11 @@ async function build_buttons(array, element_id, element, class_name) {
 
 function insert_frontend(cond, element) {
   const conds_db = document.querySelectorAll(`.${element}`).forEach((saved_conds) => {
-
     for (let i = 0; i < cond.length; i++) {
       const listItem = document.createElement("li");
 
       listItem.textContent = unpack(JSON.parse(cond[i]));
       saved_conds.appendChild(listItem);
-
     }
   });
 }
@@ -357,7 +361,6 @@ async function loadIndicator(name, category, values = undefined, form_id) {
 }
 
 function select_indicator(category, id) {
-
   const dropdown = document.getElementById(id);
   const selectedValue = dropdown.value;
 
@@ -466,7 +469,6 @@ function remove_element(class_name) {
 async function optimize() {
   const data = strategyData.getDataObject();
   const response = await postJsonGetData(data, "optimize");
-
 }
 
 async function build_optimization_results() {
@@ -588,4 +590,3 @@ function which_side(inputString) {
   return side;
 }
 let test = getJson("/current_df");
-
