@@ -4781,3 +4781,240 @@
 2024-01-16 21:55:55,500 INFO :: 127.0.0.1 - - [16/Jan/2024 21:55:55] "GET /5/cond_list?side=sell HTTP/1.1" 200 -
 2024-01-16 21:56:19,436 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
 2024-01-16 21:56:19,732 INFO ::  * Restarting with stat
+2024-01-16 21:56:24,502 INFO ::  * Restarting with stat
+2024-01-16 21:56:27,227 WARNING ::  * Debugger is active!
+2024-01-16 21:56:27,240 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 21:56:27,297 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /5/stratupdate HTTP/1.1" 200 -
+2024-01-16 21:56:27,334 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,341 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,342 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,351 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,361 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,361 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,368 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,368 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,382 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-16 21:56:27,664 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,738 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,739 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,741 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,744 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,745 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,754 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-16 21:56:27,817 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /current_df HTTP/1.1" 200 -
+2024-01-16 21:56:27,895 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:27] "GET /5/stratupdate HTTP/1.1" 200 -
+2024-01-16 21:56:28,849 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:28] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-16 21:56:28,908 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:28] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-16 21:56:28,986 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:28] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-16 21:56:29,155 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-16 21:56:29,222 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-16 21:56:29,228 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,241 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-16 21:56:29,241 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,242 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "POST /5/load_pickled_df HTTP/1.1" 200 -
+2024-01-16 21:56:29,244 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,245 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,311 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,315 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,331 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,336 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,341 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,446 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-16 21:56:29,527 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "GET /current_df HTTP/1.1" 200 -
+2024-01-16 21:56:29,617 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-16 21:56:30,934 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:30] "POST /5/load_pickled_df HTTP/1.1" 200 -
+2024-01-16 21:56:31,532 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:31] "POST /5/init_strategy HTTP/1.1" 200 -
+2024-01-16 21:56:32,419 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "POST /5/init_strategy HTTP/1.1" 200 -
+2024-01-16 21:56:32,430 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "POST /5/add_indicator HTTP/1.1" 200 -
+2024-01-16 21:56:32,431 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "POST /5/optimization_results HTTP/1.1" 200 -
+2024-01-16 21:56:32,443 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "GET /5/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-16 21:56:32,446 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "GET /5/strategy_pair HTTP/1.1" 200 -
+2024-01-16 21:56:32,446 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "GET /5/load_conditions HTTP/1.1" 200 -
+2024-01-16 21:56:32,460 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:32] "GET /5/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-16 21:56:34,128 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /5/stratupdate HTTP/1.1" 200 -
+2024-01-16 21:56:34,152 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,173 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,177 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,185 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,186 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,189 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-16 21:56:34,201 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,205 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,207 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,476 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,537 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,538 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,539 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,540 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,540 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,549 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-16 21:56:34,618 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:34] "GET /current_df HTTP/1.1" 200 -
+2024-01-16 21:56:35,897 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:35] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-16 21:56:36,734 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:36] "POST /5/load_pickled_df HTTP/1.1" 200 -
+2024-01-16 21:56:38,584 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "POST /5/init_strategy HTTP/1.1" 200 -
+2024-01-16 21:56:38,597 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "POST /5/add_indicator HTTP/1.1" 200 -
+2024-01-16 21:56:38,598 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "POST /5/optimization_results HTTP/1.1" 200 -
+2024-01-16 21:56:38,602 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "GET /5/strategy_pair HTTP/1.1" 200 -
+2024-01-16 21:56:38,610 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "GET /5/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-16 21:56:38,611 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "GET /5/load_conditions HTTP/1.1" 200 -
+2024-01-16 21:56:38,625 INFO :: 127.0.0.1 - - [16/Jan/2024 21:56:38] "GET /5/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-16 21:57:13,069 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /5/stratupdate HTTP/1.1" 200 -
+2024-01-16 21:57:13,106 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,107 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,108 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,111 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,111 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,122 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-16 21:57:13,126 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,126 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,144 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,393 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,453 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,456 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,459 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,463 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,460 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,465 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-16 21:57:13,528 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:13] "GET /current_df HTTP/1.1" 200 -
+2024-01-16 21:57:14,387 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-16 21:57:14,992 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:14] "POST /5/load_pickled_df HTTP/1.1" 200 -
+2024-01-16 21:57:16,612 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "POST /5/init_strategy HTTP/1.1" 200 -
+2024-01-16 21:57:16,624 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "POST /5/add_indicator HTTP/1.1" 200 -
+2024-01-16 21:57:16,626 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "POST /5/optimization_results HTTP/1.1" 200 -
+2024-01-16 21:57:16,628 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "GET /5/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-16 21:57:16,631 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "GET /5/load_conditions HTTP/1.1" 200 -
+2024-01-16 21:57:16,633 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "GET /5/strategy_pair HTTP/1.1" 200 -
+2024-01-16 21:57:16,642 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:16] "GET /5/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-16 21:57:20,360 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:20] "POST /5/strategy_pair HTTP/1.1" 200 -
+2024-01-16 21:57:22,964 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:22] "GET /5/stratupdate HTTP/1.1" 200 -
+2024-01-16 21:57:22,989 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:22] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,008 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,008 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,009 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,010 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,012 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-16 21:57:23,012 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/cond_list.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,026 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/strategy.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,027 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,287 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/updatestrat_selectors.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,336 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/conditions.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,336 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/optimize.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,337 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/classes/globals.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,337 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/fetch.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,341 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/functions/show_string.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,346 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /static/js/classes/StrategyData.js HTTP/1.1" 200 -
+2024-01-16 21:57:23,396 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:23] "GET /current_df HTTP/1.1" 200 -
+2024-01-16 21:57:24,470 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-16 21:57:25,407 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:25] "POST /5/load_pickled_df HTTP/1.1" 200 -
+2024-01-16 21:57:27,415 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "POST /5/init_strategy HTTP/1.1" 200 -
+2024-01-16 21:57:27,427 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "POST /5/optimization_results HTTP/1.1" 200 -
+2024-01-16 21:57:27,428 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "POST /5/add_indicator HTTP/1.1" 200 -
+2024-01-16 21:57:27,432 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "GET /5/load_conditions HTTP/1.1" 200 -
+2024-01-16 21:57:27,434 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "GET /5/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-16 21:57:27,437 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "GET /5/strategy_pair HTTP/1.1" 200 -
+2024-01-16 21:57:27,446 INFO :: 127.0.0.1 - - [16/Jan/2024 21:57:27] "GET /5/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-16 21:58:56,348 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 21:58:56,646 INFO ::  * Restarting with stat
+2024-01-16 21:58:59,000 WARNING ::  * Debugger is active!
+2024-01-16 21:58:59,007 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 21:59:55,884 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 21:59:56,182 INFO ::  * Restarting with stat
+2024-01-16 21:59:58,651 WARNING ::  * Debugger is active!
+2024-01-16 21:59:58,658 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:00:01,734 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:00:02,013 INFO ::  * Restarting with stat
+2024-01-16 22:00:09,560 INFO ::  * Restarting with stat
+2024-01-16 22:00:11,744 WARNING ::  * Debugger is active!
+2024-01-16 22:00:11,752 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:00:14,837 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:00:15,147 INFO ::  * Restarting with stat
+2024-01-16 22:00:18,789 INFO ::  * Restarting with stat
+2024-01-16 22:00:21,269 INFO ::  * Restarting with stat
+2024-01-16 22:00:24,199 WARNING ::  * Debugger is active!
+2024-01-16 22:00:24,205 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:05:42,043 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:05:42,378 INFO ::  * Restarting with stat
+2024-01-16 22:05:44,768 WARNING ::  * Debugger is active!
+2024-01-16 22:05:44,775 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:06:00,042 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:06:00,325 INFO ::  * Restarting with stat
+2024-01-16 22:06:13,970 INFO ::  * Restarting with stat
+2024-01-16 22:06:16,563 INFO ::  * Restarting with stat
+2024-01-16 22:06:20,022 INFO ::  * Restarting with stat
+2024-01-16 22:06:22,375 WARNING ::  * Debugger is active!
+2024-01-16 22:06:22,382 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:06:27,504 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:06:27,782 INFO ::  * Restarting with stat
+2024-01-16 22:06:32,315 INFO ::  * Restarting with stat
+2024-01-16 22:06:34,591 WARNING ::  * Debugger is active!
+2024-01-16 22:06:34,599 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:06:59,057 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:06:59,334 INFO ::  * Restarting with stat
+2024-01-16 22:07:01,765 WARNING ::  * Debugger is active!
+2024-01-16 22:07:01,772 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:07:02,812 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:07:03,161 INFO ::  * Restarting with stat
+2024-01-16 22:07:05,638 WARNING ::  * Debugger is active!
+2024-01-16 22:07:05,645 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:07:08,728 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:07:09,141 INFO ::  * Restarting with stat
+2024-01-16 22:07:11,740 WARNING ::  * Debugger is active!
+2024-01-16 22:07:11,746 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:07:14,824 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:07:15,090 INFO ::  * Restarting with stat
+2024-01-16 22:07:17,498 WARNING ::  * Debugger is active!
+2024-01-16 22:07:17,507 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:07:18,560 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:07:18,851 INFO ::  * Restarting with stat
+2024-01-16 22:07:21,295 WARNING ::  * Debugger is active!
+2024-01-16 22:07:21,302 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:07:22,347 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:07:22,676 INFO ::  * Restarting with stat
+2024-01-16 22:07:24,927 WARNING ::  * Debugger is active!
+2024-01-16 22:07:24,934 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:09:10,592 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:09:10,864 INFO ::  * Restarting with stat
+2024-01-16 22:09:13,263 WARNING ::  * Debugger is active!
+2024-01-16 22:09:13,270 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:09:41,754 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:09:42,137 INFO ::  * Restarting with stat
+2024-01-16 22:09:45,110 INFO ::  * Restarting with stat
+2024-01-16 22:09:52,874 INFO ::  * Restarting with stat
+2024-01-16 22:10:02,448 INFO ::  * Restarting with stat
+2024-01-16 22:10:05,033 INFO ::  * Restarting with stat
+2024-01-16 22:10:13,815 INFO ::  * Restarting with stat
+2024-01-16 22:10:19,414 INFO ::  * Restarting with stat
+2024-01-16 22:10:22,914 INFO ::  * Restarting with stat
+2024-01-16 22:10:39,524 INFO ::  * Restarting with stat
+2024-01-16 22:10:41,787 WARNING ::  * Debugger is active!
+2024-01-16 22:10:41,793 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:10:54,023 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:10:54,429 INFO ::  * Restarting with stat
+2024-01-16 22:10:56,891 WARNING ::  * Debugger is active!
+2024-01-16 22:10:56,903 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:10:57,959 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:10:58,238 INFO ::  * Restarting with stat
+2024-01-16 22:11:00,527 WARNING ::  * Debugger is active!
+2024-01-16 22:11:00,535 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:11:06,670 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:11:06,979 INFO ::  * Restarting with stat
+2024-01-16 22:11:09,577 WARNING ::  * Debugger is active!
+2024-01-16 22:11:09,584 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:11:19,774 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:11:20,064 INFO ::  * Restarting with stat
+2024-01-16 22:11:23,786 INFO ::  * Restarting with stat
+2024-01-16 22:11:26,108 WARNING ::  * Debugger is active!
+2024-01-16 22:11:26,116 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:11:59,700 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:11:59,966 INFO ::  * Restarting with stat
+2024-01-16 22:12:02,370 WARNING ::  * Debugger is active!
+2024-01-16 22:12:02,377 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:12:12,562 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:12:12,841 INFO ::  * Restarting with stat
+2024-01-16 22:12:15,722 INFO ::  * Restarting with stat
+2024-01-16 22:12:20,288 INFO ::  * Restarting with stat
+2024-01-16 22:12:27,816 INFO ::  * Restarting with stat
+2024-01-16 22:12:30,066 WARNING ::  * Debugger is active!
+2024-01-16 22:12:30,073 INFO ::  * Debugger PIN: 117-265-993
+2024-01-16 22:12:36,185 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\strategy_page\\strategy.py', reloading
+2024-01-16 22:12:36,489 INFO ::  * Restarting with stat

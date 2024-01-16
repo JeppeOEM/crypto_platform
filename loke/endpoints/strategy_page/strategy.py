@@ -93,6 +93,60 @@ def strategy_pair(strategy_id):
         return jsonify({'error': str(e)}), 500
 
 
+@bp.route('/<int:id>/reload_strategy_df', methods=['POST', 'GET'])
+def reload_strategy_df(id):
+    # db = get_db()
+    db = get_db()
+    indicators = db.execute(
+        'SELECT settings, strategy_indicator_id, category FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+    total_indicators = []
+    total_indicators_id = []
+    # print("teeeeest", indicators[1])
+    # print("teeeeest", indicators[0][0])
+    # remove kind: name
+    # THIS IS FOR LOADING DATAFRAME NOT SEND TO FRONTEND
+    for row in indicators:
+        try:
+            # row[0][1] = settings
+            data_dict = json.loads(row[0])
+
+            print(data_dict)
+            for key, value in data_dict.items():
+                if key != "kind":
+                    # save as int, float or string
+                    data_dict[key] = int(value) if value.isdigit(
+                    ) else float(value) if "." in value else value
+            # assign id from strategy_indicators to indicator
+                    # DANGER HERE
+            # data_dict['id'] = row[1]
+            # print("data_dict", data_dict)
+            # copy object to avoid changing original
+            data_dict_copy = copy.deepcopy(data_dict)
+            total_indicators.append(data_dict)
+            json_object = json.dumps(data_dict_copy, indent=4)
+            total_indicators_id.append(
+                {"id": row[1], "settings": json_object, "category": row[2]})
+
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+
+    # strategy = db.execute(
+    #     'SELECT pair, strategy_name, info FROM strategies WHERE strategy_id = ?', (
+    #         id,)
+    # ).fetchone()
+    # exchange = "binance"
+    # init_candles = 100
+    # pair = strategy['pair']
+    # name = strategy['strategy_name']
+    # description = strategy['info']
+    # s = Strategy(exchange, init_candles, pair, name, description)
+
+    # s.addIndicators(total_indicators)
+    # df = s.create_strategy()
+
+    # df.to_pickle(f"data/pickles/{name}.pkl")
+
+
 @bp.route('/<int:id>/init_strategy', methods=['POST', 'GET'])
 def init_strategy(id):
     if request.method == "POST":

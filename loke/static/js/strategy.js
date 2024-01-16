@@ -127,6 +127,9 @@ async function build_dataset_pair_selector(dataset_pairs) {
     const pair = event.target.value;
     let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
     console.log(status, "status", pair);
+    let data = await postJsonGetData({}, "init_strategy");
+    console.log(data);
+    insert_chart();
   });
 }
 
