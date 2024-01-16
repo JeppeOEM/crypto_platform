@@ -43,7 +43,6 @@ export async function build_conds() {
       let condManager = condController.getKey(cond.fk_list_id);
       condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
     });
-
   }
 }
 

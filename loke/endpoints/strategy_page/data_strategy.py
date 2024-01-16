@@ -15,8 +15,11 @@ bp = Blueprint('data_strategy', __name__)
 @bp.route('/<int:strategy_id>/load_pickled_df', methods=('POST', 'GET'))
 def load_pickled_df(strategy_id):
     data = request.get_json()
+    print(data, "data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    name = data['name']
+    print(name, "name!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     print(strategy_id)
-    df = pd.read_pickle('data/pickles/test.pkl')
+    df = pd.read_pickle(f'data/pickles/{name}.pkl')
     print(df, "////////////////////////////////////////////////////////////////")
     print(df.columns, "columns")
     jsonData = createChartJson(df)
@@ -28,7 +31,7 @@ def load_pickled_df(strategy_id):
 
 @bp.route('/<int:strategy_id>/current_chart', methods=('POST', 'GET'))
 def current_chart(strategy_id):
-    data = request.get_json()
+    # data = request.get_json()
     db = get_db()
     current_pair = db.execute(
         'SELECT pair FROM strategies WHERE fk_strategy_id = ? AND fk_user_id = ?', (strategy_id, g.user['id'])).fetchone()

@@ -40,6 +40,27 @@ def index():
     return render_template('strategy/index.html', strategies=strategies, )
 
 
+@bp.route('/<int:strategy_id>/get_strategy', methods=['GET'])
+def get_strategy(strategy_id):
+    try:
+        db = get_db()
+        strategy = db.execute(
+            'SELECT * FROM strategies WHERE strategy_id = ? AND fk_user_id = ?', (
+                strategy_id, g.user['id'])
+        ).fetchone()
+
+        if strategy is not None:
+            strategy_dict = dict(strategy)
+            print(strategy_dict, "STRATEGY DICT")
+            return jsonify(strategy_dict), 200
+        else:
+            return jsonify({'error': 'Strategy not found'}), 404
+
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
+
+
 @bp.route('/current_df', methods=('GET', 'POST'))
 def current_df():
     print("#####################################################################")

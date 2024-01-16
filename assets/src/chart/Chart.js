@@ -1,5 +1,6 @@
 import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
+import { getJson } from "../fetch.js";
 // import { postJsonGetData } from "../../loke/static/js/fetch";
 
 export class Chart {
@@ -48,22 +49,12 @@ export class Chart {
     this.candleSeries.setData(data);
   }
 
-  async getCandlesticks(pair, timeframe, market_type) {
+  async getCandlesticks(data_obj) {
     const apiUrl = `load_pickled_df`;
-    let coin_pair = pair.toUpperCase();
-    console.log(market_type);
-    console.log(coin_pair);
 
-    const data_obj = {
-      ticker: coin_pair,
-      market_type: market_type,
-      timeframes: [timeframe],
-      timerange_start: 159810060000,
-      timerange_end: "now",
-    };
     console.log(data_obj);
     await fetch(apiUrl, {
-      method: "POST", // or 'POST' if needed
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -71,11 +62,7 @@ export class Chart {
     })
       .then((response) => response.json())
       .then((jsonData) => {
-        // Handle jsonData as a JSON object
         jsonData = JSON.parse(jsonData);
-
-        // Now you can use jsonData in your frontend code
-        // For example, pass it to your Chart class
         this.setData(jsonData);
       })
       .catch((error) => {

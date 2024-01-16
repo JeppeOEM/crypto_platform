@@ -1,10 +1,10 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
-import { selected_cond_instance } from "./classes/globals.js";
-import { strategyDataInstance } from "./classes/StrategyData.js";
+import { selected_cond_instance } from "../../loke/static/js/classes/globals.js";
+import { strategyDataInstance } from "../../loke/static/js/classes/StrategyData.js";
 // import { CondController } from "./cond_list.js";
 import { condController } from "./cond_list.js";
-import { show_string } from "./functions/show_string.js";
+import { show_string } from "../../loke/static/js/functions/show_string.js";
 import { getJson } from "./fetch.js";
 import { postJsonGetData } from "./fetch.js";
 import { postJsonGetStatus } from "./fetch.js";
