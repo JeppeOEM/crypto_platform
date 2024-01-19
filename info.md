@@ -10,6 +10,3 @@ or_and = [{"or_and_btns": "&"}, {"or_and_btns": "or"}]
 
 webpack tutorial:
 https://digitalhedgehog.org/articles/how-to-use-flask-with-webpack
-
-
-Webpack manifest plugin is used for Cache busting (update js, when new is added)

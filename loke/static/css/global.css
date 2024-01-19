@@ -103,6 +103,10 @@ fieldset {
   border-bottom: solid 1px var(--borderColor);
 }
 
+.modal {
+  z-index: 9999 !important;
+}
+
 /* NAV */
 .global_nav {
   position: fixed;
