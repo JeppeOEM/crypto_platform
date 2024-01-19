@@ -9,9 +9,7 @@ import { show_string } from "./functions/show_string.js";
 import { postJsonGetData } from "./functions/fetch.js";
 import { postJsonGetStatus } from "./functions/fetch.js";
 import { build_strategy_page } from "./strategy_page/build_strategy_page.js";
-window.optimize = optimize;
-window.value_cond = value_cond;
-window.select_indicator = select_indicator;
+
 
 // window.save_cond_sell = save_cond_sell;
 // window.save_cond_buy = save_cond_buy;
@@ -33,36 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-function value_cond(btn) {
-  const parentDiv = btn.parentElement;
-  const inputElement = parentDiv.querySelector(".value_cond");
-  var value = inputElement.value;
-  // cond.push({ val: parseFloat(value) });
-  selected_cond.add_cond({ val: parseFloat(value) });
-  // Assuming you have an element with class 'unsaved_cond'
 
-  document.querySelectorAll(".cond").forEach((cond_string) => {
-    // cond_string.textContent = `${show_string(cond)}`;
-    cond_string.textContent = `${show_string(selected_cond.get_cond())}`;
-  });
-}
-
-
-
-//
-
-function select_indicator(category, id) {
-  const dropdown = document.getElementById(id);
-  const selectedValue = dropdown.value;
-
-  // Call the load_indicator function with the selected value
-  load_indicator(selectedValue, category);
-}
-
-async function optimize() {
-  const data = strategyData.getDataObject();
-  const response = await postJsonGetData(data, "optimize");
-}
 // function unpack(cond) {
 //   return (
 //     cond
