@@ -16,7 +16,7 @@
 {% for dict_item in indicators %}
     {% for key, value in dict_item.items() %}
         {% if key == "kind" %} 
-        <button onclick="loadIndicator('{{ value }}','momentum')" >{{value}}</button>
+        <button onclick="load_indicator('{{ value }}','momentum')" >{{value}}</button>
         {% endif %}
     {% endfor %} 
 {% endfor %}

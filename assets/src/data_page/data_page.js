@@ -1,5 +1,5 @@
 // import { download_form } from "./download_data";
-import { postJsonGetData } from "../fetch.js";
+import { postJsonGetData } from ".../functions/fetch.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   download_form();

@@ -1,10 +1,10 @@
 "use strict";
-import { selected_cond_instance } from "./classes/globals.js";
+import { selected_cond_instance } from "../classes/globals.js";
 import { save_cond_buy } from "./conditions.js";
 import { save_cond_sell } from "./conditions.js";
-import { last_cond_dom } from "./classes/globals.js";
+import { last_cond_dom } from "../classes/globals.js";
 import { optimizer_params } from "./optimize.js";
-import { postJsonGetData, postJsonGetStatus, getJson } from "./fetch.js";
+import { postJsonGetData, postJsonGetStatus, getJson } from "../functions/fetch.js";
 const selected_cond = selected_cond_instance;
 
 export class CondController {
@@ -140,7 +140,6 @@ class CondManager {
   addTask() {
     //global variable for the db
     selected_cond.set(parseInt(this.TodoContent.dataset.primary_key));
-
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const txtTask = this.TodoContent.querySelector(".txtTask");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
@@ -155,7 +154,6 @@ class CondManager {
     const currentTask = this.TodoContent.querySelector(".currentTask");
     const txtTask = this.TodoContent.querySelector(".txtTask");
     const ID = parseInt(e.target.getAttribute("taskId"));
-
     this.TodoContent.querySelector(".btnOk").value = this.updateTaskText;
     txtTask.value = e.target.innerText;
     currentTask.setAttribute("currentid", ID);

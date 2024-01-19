@@ -5,9 +5,9 @@ import { strategyDataInstance } from "../../loke/static/js/classes/StrategyData.
 // import { CondController } from "./cond_list.js";
 import { condController } from "./cond_list.js";
 import { show_string } from "../../loke/static/js/functions/show_string.js";
-import { getJson } from "./fetch.js";
-import { postJsonGetData } from "./fetch.js";
-import { postJsonGetStatus } from "./fetch.js";
+import { getJson } from "../functions/fetch.js";
+import { postJsonGetData } from "../functions/fetch.js";
+import { postJsonGetStatus } from "../functions/fetch.js";
 import { build_conds } from "./conditions.js";
 window.optimize = optimize;
 window.value_cond = value_cond;
@@ -69,8 +69,8 @@ async function build_page() {
   //build buttons also build indicator strategy_dataframe related buttons
   //params: array, element_id, element, class_name
 
-  build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
+  build_indicator_inputs(strategy_data.indicators);
   build_optimization_results();
   build_condition_lists();
   build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
@@ -245,7 +245,7 @@ async function build_indicator_inputs(data, category = null) {
 
   async function load() {
     for (let i = 0; i < indicators.length; i++) {
-      const form = await loadIndicator(
+      const form = await load_indicator(
         indicators[i].indicator["kind"],
         indicators[i].category,
         indicators[i].indicator, //values
@@ -255,7 +255,7 @@ async function build_indicator_inputs(data, category = null) {
   }
 }
 
-async function loadIndicator(name, category, values = undefined, form_id) {
+async function load_indicator(name, category, values = undefined, form_id) {
   // Create a new input field element
   const data = {
     indicator: name,
@@ -367,8 +367,8 @@ function select_indicator(category, id) {
   const dropdown = document.getElementById(id);
   const selectedValue = dropdown.value;
 
-  // Call the loadIndicator function with the selected value
-  loadIndicator(selectedValue, category);
+  // Call the load_indicator function with the selected value
+  load_indicator(selectedValue, category);
 }
 
 async function input_params(key, type, value, field) {

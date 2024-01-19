@@ -1,52 +1,52 @@
-import { createChart } from "lightweight-charts";
-const chart_div = document.querySelector(".chart");
+// import { createChart } from "lightweight-charts";
+// const chart_div = document.querySelector(".chart");
 
-const chart = createChart(chart_div, {
-  width: 600,
-  height: 300,
-  layout: {
-    background: {
-      type: "solid",
-      color: "#000000",
-    },
-    textColor: "rgba(255, 255, 255, 0.9)",
-  },
-  grid: {
-    vertLines: {
-      color: "rgba(197, 203, 206, 0.5)",
-    },
-    horzLines: {
-      color: "rgba(197, 203, 206, 0.5)",
-    },
-  },
-  crosshair: {
-    mode: CrosshairMode.Normal,
-  },
-  rightPriceScale: {
-    borderColor: "rgba(197, 203, 206, 0.8)",
-  },
-  timeScale: {
-    timeVisible: true,
-    // secondsVisible: false,
-    borderColor: "rgba(197, 203, 206, 0.8)",
-  },
-});
+// const chart = createChart(chart_div, {
+//   width: 600,
+//   height: 300,
+//   layout: {
+//     background: {
+//       type: "solid",
+//       color: "#000000",
+//     },
+//     textColor: "rgba(255, 255, 255, 0.9)",
+//   },
+//   grid: {
+//     vertLines: {
+//       color: "rgba(197, 203, 206, 0.5)",
+//     },
+//     horzLines: {
+//       color: "rgba(197, 203, 206, 0.5)",
+//     },
+//   },
+//   crosshair: {
+//     mode: CrosshairMode.Normal,
+//   },
+//   rightPriceScale: {
+//     borderColor: "rgba(197, 203, 206, 0.8)",
+//   },
+//   timeScale: {
+//     timeVisible: true,
+//     // secondsVisible: false,
+//     borderColor: "rgba(197, 203, 206, 0.8)",
+//   },
+// });
 
-var candleSeries = chart.addCandlestickSeries({
-  upColor: "rgba(255, 144, 0, 1)",
-  downColor: "#000",
-  borderDownColor: "rgba(255, 144, 0, 1)",
-  borderUpColor: "rgba(155, 144, 0, 1)",
-  wickDownColor: "rgba(55, 144, 0, 1)",
-  wickUpColor: "rgba(255, 144, 0, 1)",
-});
+// var candleSeries = chart.addCandlestickSeries({
+//   upColor: "rgba(255, 144, 0, 1)",
+//   downColor: "#000",
+//   borderDownColor: "rgba(255, 144, 0, 1)",
+//   borderUpColor: "rgba(155, 144, 0, 1)",
+//   wickDownColor: "rgba(55, 144, 0, 1)",
+//   wickUpColor: "rgba(255, 144, 0, 1)",
+// });
 
-candleSeries.setData([
-  { time: Date.parse("2019-04-11 09:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
-  { time: Date.parse("2019-04-11 12:43"), open: 407.2, high: 207.3, low: 207.1, close: 207.1 },
-  { time: Date.parse("2019-04-11 13:43"), open: 307.2, high: 407.3, low: 207.1, close: 207.1 },
-  { time: Date.parse("2019-04-11 14:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
-]);
+// candleSeries.setData([
+//   { time: Date.parse("2019-04-11 09:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
+//   { time: Date.parse("2019-04-11 12:43"), open: 407.2, high: 207.3, low: 207.1, close: 207.1 },
+//   { time: Date.parse("2019-04-11 13:43"), open: 307.2, high: 407.3, low: 207.1, close: 207.1 },
+//   { time: Date.parse("2019-04-11 14:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
+// ]);
 
 // candleSeries.setData(chart_data);
 // const chart_data = [

@@ -1,2 +1,1 @@
-import { postJsonGetData } from "./fetch.js";
-
+import { postJsonGetData } from "../functions/fetch.js";
