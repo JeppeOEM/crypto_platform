@@ -6,6 +6,7 @@ import { condController } from "./cond_list.js";
 import { load_indicator } from "./load_indicator.js";
 import { selected_cond_instance } from "../classes/globals.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
+import { show_string } from "../functions/show_string.js";
 
 const strategyData = strategyDataInstance;
 const selected_cond = selected_cond_instance;
@@ -37,7 +38,7 @@ export async function build_strategy_page() {
   build_conds();
   insert_chart();
 
-  let todo_b = document.querySelector("#new_todo_buy");
+  let todo_b = document.querySelector("#new_list_buy");
 
   todo_b.addEventListener("click", () => {
     create_list("buy");
@@ -46,7 +47,7 @@ export async function build_strategy_page() {
     // build_condition_lists();
   });
 
-  let todo_s = document.querySelector("#new_todo_sell");
+  let todo_s = document.querySelector("#new_list_sell");
 
   todo_s.addEventListener("click", () => {
     create_list("sell");
@@ -57,7 +58,7 @@ export async function build_strategy_page() {
 }
 
 async function create_list(side) {
-  const status = postJsonGetStatus(data, "cond_list?side=" + side);
+  const status = postJsonGetStatus({}, "cond_list?side=" + side);
   // remove_element("cond_list");
   // build_condition_lists();
 }

@@ -10,13 +10,66 @@ import { postJsonGetData } from "./functions/fetch.js";
 import { postJsonGetStatus } from "./functions/fetch.js";
 import { build_strategy_page } from "./strategy_page/build_strategy_page.js";
 
+import { load_indicator } from "./strategy_page/load_indicator";
+
+window.optimize = optimize;
+window.value_cond = value_cond;
+window.select_indicator = select_indicator;
+window.backtest = backtest;
+const strategyData = strategyDataInstance;
+const selected_cond = selected_cond_instance;
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Your code here
+  build_strategy_page();
+});
+
+async function backtest() {
+  // let conditions_copy = [[{ ind: "AO_14_14" }, { cond: ">" }, { val: 50 }]];
+  // let conditions_sell_copy = [[{ ind: "AO_14_14" }, { cond: "<" }, { val: 11 }]];
+  let conditions_copy = conditions;
+  let conditions_sell_copy = conditions_sell;
+
+  data.conds_buy = conditions_copy;
+  data.conds_sell = conditions_sell_copy;
+  console.log(data.conds_buy);
+  console.log(data.conds_sell);
+
+  let response = await postJsonGetData(data, "backtest");
+  document.getElementById("cond").textContent = JSON.stringify(response.message);
+}
+
+function value_cond(btn) {
+  const parentDiv = btn.parentElement;
+  const inputElement = parentDiv.querySelector(".value_cond");
+  var value = inputElement.value;
+  // cond.push({ val: parseFloat(value) });
+  selected_cond.add_cond({ val: parseFloat(value) });
+  // Assuming you have an element with class 'unsaved_cond'
+
+  document.querySelectorAll(".cond").forEach((cond_string) => {
+    // cond_string.textContent = `${show_string(cond)}`;
+    cond_string.textContent = `${show_string(selected_cond.get_cond())}`;
+  });
+}
+
+function select_indicator(category, id) {
+  const dropdown = document.getElementById(id);
+  const selectedValue = dropdown.value;
+
+  // Call the load_indicator function with the selected value
+  load_indicator(selectedValue, category);
+}
+
+async function optimize() {
+  const data = strategyData.getDataObject();
+  const response = await postJsonGetData(data, "optimize");
+}
 
 // window.save_cond_sell = save_cond_sell;
 // window.save_cond_buy = save_cond_buy;
 
 //Global variables stored in private classes
-const strategyData = strategyDataInstance;
-const selected_cond = selected_cond_instance;
 
 // const condController = condController;
 
@@ -24,13 +77,6 @@ let conditions = [];
 let conditions_sell = [];
 let cond = [];
 let cond_sell = [];
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Your code here
-  build_strategy_page();
-
-});
-
 
 // function unpack(cond) {
 //   return (
