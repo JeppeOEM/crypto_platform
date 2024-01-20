@@ -67,7 +67,7 @@ def optimize(strategy_id):
     # data = request.data
     exchange = data['exchange']
     init_candles = ['init_candles']
-    symbol = data['symbol']
+    # symbol = data['symbol']
     name = data['name']
     description = data['description']
     # s = Strategy(exchange, init_candles, symbol, name, description)

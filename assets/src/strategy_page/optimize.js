@@ -31,7 +31,7 @@ export function optimizer_params(conditions, suffix, element) {
     cond = JSON.parse(cond.indicator_json);
     cond_arr.push(cond);
   });
-
+  console.log(element, "element");
   const tbody = document.querySelector(`.${element}`);
   const opti_params = document.getElementById("optimize_params");
   cond_arr.forEach((cond) => {

@@ -26,26 +26,6 @@ const data = {
   description: "description",
 };
 
-export async function build_conds() {
-  const json = await getJson("load_conditions");
-  const buy_conds = json.buy_conds;
-  const sell_conds = json.sell_conds;
-  // optimizer_params(sell_conds, "_SELL", "param_sell");
-
-  // load_cond_managers(buy_conds);
-  // load_cond_managers(sell_conds);
-  // function load_cond_managers(arr) {
-  //   arr.forEach((cond) => {
-  //     console.log(condListController.objList, "objList");
-  //     //CODE FAILS HERE
-  //     let condManager = condListController.getKey(cond.fk_list_id);
-  //     condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
-  //   });
-  // }
-}
-
-
-
 function which_row_string(string) {
   switch (string) {
     case "toDo":
@@ -91,7 +71,7 @@ export async function save_cond_buy() {
 }
 
 export async function save_cond_sell() {
-  conditions.push(selected_cond.get_cond());
+  conditions_sell.push(selected_cond.get_cond());
   // reset global cond
   selected_cond.set_string();
   selected_cond.reset_cond();
@@ -104,11 +84,12 @@ export async function save_cond_sell() {
   });
   data.sell_cond = JSON.stringify(conditions_sell);
   data.side = "sell";
+  //get primary key of the current list
   data.primary_key = selected_cond.get();
 
   let response = await postJsonGetData(data, "condition");
 
-  //assign id to last cond inserted in the dom
+  //assign id to last condition inserted in the dom
   let last_dom = last_cond_dom.get();
   last_dom.dataset.cond_key = response.id;
   last_cond_dom.set(last_dom);
@@ -118,9 +99,9 @@ export async function save_cond_sell() {
 
   // optimizer_params(sell_conds, "_SELL", "param_sell");
 
-  optimizer_params(sell_conds, "_SELL", "param_buy");
+  optimizer_params(sell_conds, "_SELL", "sell");
   // conditions_sell = [];
-  console.log(build_conds, "build_conds");
+
   selected_cond.reset_cond();
 }
 

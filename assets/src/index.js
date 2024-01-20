@@ -9,6 +9,7 @@ import { optimizer_params } from "./strategy_page/optimize.js";
 import { postJsonGetData, getJson } from "./functions/fetch.js";
 import { postJsonGetStatus } from "./functions/fetch.js";
 import { build_strategy_page } from "./strategy_page/build_strategy_page.js";
+import { build_optimization_results } from "./strategy_page/build_strategy_page.js";
 import { condListController } from "./strategy_page/cond_list.js";
 import { load_indicator } from "./strategy_page/load_indicator";
 
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_strategy_page().then(() => {
     build_conds_2();
+    build_optimization_results();
   });
 
   document.querySelector("#testbtn").addEventListener("click", () => {

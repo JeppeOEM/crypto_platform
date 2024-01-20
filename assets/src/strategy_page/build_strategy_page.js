@@ -1,4 +1,3 @@
-import { build_conds } from "./conditions.js";
 import { remove_element } from "../functions/remove_element.js";
 import { insert_chart } from "../chart/insert_chart.js";
 import { getJson, postJsonGetData, postJsonGetStatus } from "../functions/fetch.js";
@@ -34,12 +33,12 @@ export async function build_strategy_page() {
 
   await build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
-  await build_optimization_results();
+
   await build_condition_lists();
   await build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
   await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
-  build_conds();
+
   insert_chart();
 
   let todo_b = document.querySelector("#new_list_buy");
@@ -70,8 +69,10 @@ async function create_list(side) {
 export async function build_optimization_results() {
   const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimization_results");
-  const resultList = document.querySelector(".opti_results");
+  console.log(response, "response");
 
+  const resultList = document.querySelector("#optimization_results");
+  console.log(resultList, "resultList");
   response.forEach((opti) => {
     let result = JSON.parse(opti.result);
     for (let i = 0; i < result.length; i++) {
@@ -87,6 +88,7 @@ export async function build_optimization_results() {
     listItem.textContent = `PNL: ${parsed[0]["pnl"]}% max drawdown: ${
       parsed[0]["max_drawdown"]
     }% params: ${JSON.stringify(parsed[0]["params"])}`;
+    console.log(listItem.textContent);
     resultList.appendChild(listItem);
   });
 }

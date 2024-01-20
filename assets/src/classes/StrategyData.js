@@ -16,6 +16,7 @@ class StrategyData {
       exchange: "",
       init_candles: 100,
     };
+    this.stratName();
   }
   getData() {
     return this._data;
@@ -23,6 +24,11 @@ class StrategyData {
 
   setData(data) {
     this._data = data;
+  }
+
+  stratName() {
+    let name = document.querySelector("#strategy_id");
+    this._data.name = name.dataset.name;
   }
 }
 
