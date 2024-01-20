@@ -62,7 +62,7 @@ function select_indicator(category, id) {
 }
 
 async function optimize() {
-  const data = strategyData.getDataObject();
+  const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimize");
 }
 
@@ -71,7 +71,7 @@ async function optimize() {
 
 //Global variables stored in private classes
 
-// const condController = condController;
+// const condListController = condListController;
 
 let conditions = [];
 let conditions_sell = [];
@@ -157,7 +157,7 @@ let cond_sell = [];
 // ##################################################################################
 
 // async function build_optimization_results() {
-//   const data = strategyData.getDataObject();
+//   const data = strategyData.getData();
 //   const response = await postJsonGetData(data, "optimization_results");
 //   const resultList = document.querySelector(".opti_results");
 
@@ -241,7 +241,7 @@ let cond_sell = [];
 // async function createList(side, element) {
 //   const newId = await newList(side, element);
 //   console.log(newId);
-//   condController.createCondManager(newId);
+//   condListController.createCondManager(newId);
 // }
 
 // function newList(side, element) {
@@ -253,17 +253,7 @@ let cond_sell = [];
 //   return newId;
 // }
 
-// function which_side(inputString) {
-//   let str = inputString.toUpperCase().includes("BUY");
-//   let side;
-//   if (str) {
-//     side = "BUY";
-//   } else {
-//     side = "SELL";
-//   }
 
-//   return side;
-// }
 // let test = getJson("/current_df");
 
 // async function build_buttons(array, element_id, element, class_name) {

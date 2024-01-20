@@ -3,20 +3,20 @@ import { last_cond_dom } from "../classes/globals.js";
 import { postJsonGetData } from "../functions/fetch.js";
 import { getJson } from "../functions/fetch.js";
 import { show_string } from "../functions/show_string.js";
-import { condController } from "./cond_list.js";
+import { condListController } from "./cond_list.js";
 import { optimizer_params } from "./optimize.js";
 
 const selected_cond = selected_cond_instance;
 
-// const condController = condController
+// const condListController = condListController
 window.save_cond_sell = save_cond_sell;
 window.save_cond_buy = save_cond_buy;
 window.del_last_buy_cond = del_last_buy_cond;
 window.del_last_sell_cond = del_last_sell_cond;
 window.del_last = del_last;
 
-// let conditions = [];
-// let conditions_sell = [];
+let conditions = [];
+let conditions_sell = [];
 // let cond = [];
 const data = {
   exchange: "binance",
@@ -33,12 +33,14 @@ export async function build_conds() {
   // optimizer_params(sell_conds, "_SELL", "param_sell");
   optimizer_params(buy_conds, "_BUY", "param_buy");
   optimizer_params(sell_conds, "_SELL", "param_buy");
-  console.log(load_cond_managers(buy_conds));
-  console.log(load_cond_managers(sell_conds));
-
+  console.log(buy_conds, "buy_conds");
+  console.log(load_cond_managers(buy_conds), "_BUY");
+  console.log(load_cond_managers(sell_conds), "_SELL");
   function load_cond_managers(arr) {
     arr.forEach((cond) => {
-      let condManager = condController.getKey(cond.fk_list_id);
+      console.log(cond, "cond");
+      let condManager = condListController.getKey(cond.fk_list_id);
+      console.log(condManager, "COND MANAGER!!!!!!!!!!!");
       condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
     });
   }

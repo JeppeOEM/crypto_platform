@@ -2,7 +2,7 @@ import { build_conds } from "./conditions.js";
 import { remove_element } from "../functions/remove_element.js";
 import { insert_chart } from "../chart/insert_chart.js";
 import { getJson, postJsonGetData, postJsonGetStatus } from "../functions/fetch.js";
-import { condController } from "./cond_list.js";
+import { condListController } from "./cond_list.js";
 import { load_indicator } from "./load_indicator.js";
 import { selected_cond_instance } from "../classes/globals.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
@@ -13,7 +13,7 @@ const selected_cond = selected_cond_instance;
 
 export async function build_strategy_page() {
   // init strategy gets the indicators saved in indicator_strategies
-  // const data = strategyData.getDataObject();
+  // const data = strategyData.getData();
   let data = {};
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
@@ -21,6 +21,10 @@ export async function build_strategy_page() {
   console.log(dataset_pairs, "dataset_pairs");
   build_dataset_pair_selector(dataset_pairs);
   // console.log(datasets_available, "datasets_available");
+  let edited_data = strategyData.getData();
+  edited_data.cols = strategy_data.cols;
+  strategyData.setData(edited_data);
+  console.log(strategyData.getData(), "strategyData.getData()");
   remove_element("indicator_cond");
   build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
@@ -64,7 +68,7 @@ async function create_list(side) {
 }
 
 export async function build_optimization_results() {
-  const data = strategyData.getDataObject();
+  const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimization_results");
   const resultList = document.querySelector(".opti_results");
 
@@ -164,8 +168,8 @@ function remove_chart() {
 }
 
 export async function build_condition_lists() {
-  // const taskManager1 = condController.createCondManager("buy_cond_list1");
-  // const taskManager2 = condController.createCondManager("sell_cond_list2");
+  // const taskManager1 = condListController.createCondManager("buy_cond_list1");
+  // const taskManager2 = condListController.createCondManager("sell_cond_list2");
   const json_buy = await getJson("cond_list?side=buy");
   const json_sell = await getJson("cond_list?side=sell");
   const sell_clones = document.querySelector(".sell_clones");
@@ -197,11 +201,12 @@ export async function build_condition_lists() {
       // cond_wrapper.dataset.id = data.list_id;
       container.appendChild(clone);
       //cond_list.js controller
-      condController.createCondManager(element_name, primary_key);
+      condListController.createCondManager(element_name, primary_key);
     });
   }
 }
 export async function build_buttons(array, element_id, element, class_name) {
+  remove_element(class_name);
   // adds all types of buttons to frontend(also the indicators)
   document.querySelectorAll(`.${element_id}`).forEach((container) => {
     for (let i = 0; i < array.length; i++) {

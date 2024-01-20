@@ -1,11 +1,14 @@
 "use strict";
-import { selected_cond_instance } from "../classes/globals.js";
-import { save_cond_buy } from "./conditions.js";
-import { save_cond_sell } from "./conditions.js";
-import { last_cond_dom } from "../classes/globals.js";
+import { selected_cond_instance, last_cond_dom } from "../classes/globals.js";
+import { strategyDataInstance } from "../classes/StrategyData.js";
+import { save_cond_sell, save_cond_buy } from "./conditions.js";
 import { optimizer_params } from "./optimize.js";
 import { postJsonGetData, postJsonGetStatus, getJson } from "../functions/fetch.js";
+import { build_buttons } from "./build_strategy_page.js";
+import { remove_element } from "../functions/remove_element.js";
+
 const selected_cond = selected_cond_instance;
+const strategyData = strategyDataInstance;
 
 export class CondController {
   constructor() {
@@ -43,9 +46,11 @@ export class CondController {
   }
 
   getKey(key) {
+    console.log("GET KEY", this.objList);
     const result = [];
     for (let i = 0; i < this.objList.length; i++) {
       if (this.objList[i].primary_key === key) {
+        console.log(this.objList[i]);
         return this.objList[i];
       }
     }
@@ -57,8 +62,9 @@ export class CondController {
     // });
   }
 }
-const condController = new CondController();
-export { condController };
+const condListController = new CondController();
+export { condListController };
+
 class CondManager {
   constructor(identifier, primary_key) {
     this.primary_key = primary_key;
@@ -66,62 +72,62 @@ class CondManager {
     this.addTaskText = "Add";
     this.updateTaskText = "Update";
     //individual box
-    this.TodoContent = document.querySelector(`.${this.identifier}`);
-    this.toDoList = this.TodoContent.querySelector(".toDoList");
+    this.CondList = document.querySelector(`.${this.identifier}`);
+    this.toDoList = this.CondList.querySelector(".toDoList");
     this.draggedTask = {};
     this.toDoListHeight = this.toDoList.offsetHeight;
     this.ongoingListHeight = 0;
     this.doneListHeight = 0;
 
     document.addEventListener("DOMContentLoaded", () => {
-      const currentTask = this.TodoContent.querySelector(".currentTask");
+      const currentTask = this.CondList.querySelector(".currentTask");
       currentTask.setAttribute("currentid", "");
       currentTask.setAttribute("lastid", "0");
     });
 
-    this.TodoContent.querySelector(".addTask").addEventListener("click", () => this.addTask());
+    this.CondList.querySelector(".addTask").addEventListener("click", () => this.addTask());
 
-    this.TodoContent.querySelector(".btnOk").addEventListener("click", () => this.handleTaskButton());
+    this.CondList.querySelector(".btnOk").addEventListener("click", () => this.handleTaskButton());
 
-    this.TodoContent.querySelector(".btnCancel").addEventListener("click", () => this.cancelTaskEdition());
-    this.TodoContent.querySelector(".txtTask").addEventListener("keyup", (e) =>
+    this.CondList.querySelector(".btnCancel").addEventListener("click", () => this.cancelTaskEdition());
+    this.CondList.querySelector(".txtTask").addEventListener("keyup", (e) =>
       e.code === "Escape" ? this.cancelTaskEdition() : true
     );
 
-    this.TodoContent.querySelector(".showHelp").addEventListener("click", () => this.showHelp());
+    this.CondList.querySelector(".showHelp").addEventListener("click", () => this.showHelp());
 
-    const btnClose = this.TodoContent.querySelector(".btnClose");
+    const btnClose = this.CondList.querySelector(".btnClose");
     btnClose.addEventListener("click", () => this.hideHelp());
     btnClose.addEventListener("keyup", (e) => (e.code === "Escape" ? this.hideHelp() : true));
 
-    // this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
+    // this.CondList.querySelectorAll(".listColumn").forEach((list) => {
     //   list.addEventListener("dragover", (e) => console.log(e.target));
     // });
 
-    this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
+    this.CondList.querySelectorAll(".listColumn").forEach((list) => {
       list.addEventListener("dragover", (e) => e.preventDefault());
     });
 
-    this.TodoContent.querySelector(".toDoList").addEventListener("drop", (e) => this.dropTask(e, "toDo"));
-    this.TodoContent.querySelector(".ongoingList").addEventListener("drop", (e) => this.dropTask(e, "ongoing"));
-    this.TodoContent.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
+    this.CondList.querySelector(".toDoList").addEventListener("drop", (e) => this.dropTask(e, "toDo"));
+    this.CondList.querySelector(".ongoingList").addEventListener("drop", (e) => this.dropTask(e, "ongoing"));
+    this.CondList.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
   }
 
   insert_cond(text, column, id) {
     const task = document.createElement("div");
-    const newID = parseInt(this.TodoContent.querySelector(".currentTask").getAttribute("lastid")) + 1;
+    const newID = parseInt(this.CondList.querySelector(".currentTask").getAttribute("lastid")) + 1;
 
     task.classList.add("task");
     task.classList.add(column);
     task.innerText = text;
     task.setAttribute("taskId", newID);
-    this.TodoContent.querySelector(".currentTask").setAttribute("lastid", newID);
+    this.CondList.querySelector(".currentTask").setAttribute("lastid", newID);
     task.addEventListener("click", (e) => this.taskClick(e));
     task.setAttribute("draggable", "true");
     task.addEventListener("dragstart", (e) => this.dragStart(e));
     task.prepend(this.deleteButton());
     task.dataset.cond_key = id;
-    const columnList = this.TodoContent.querySelector(`.${column}List`);
+    const columnList = this.CondList.querySelector(`.${column}List`);
     columnList.prepend(task);
 
     switch (column) {
@@ -139,22 +145,28 @@ class CondManager {
 
   addTask() {
     //global variable for the db
-    selected_cond.set(parseInt(this.TodoContent.dataset.primary_key));
-    const currentTask = this.TodoContent.querySelector(".currentTask");
-    const txtTask = this.TodoContent.querySelector(".txtTask");
+    selected_cond.set(parseInt(this.CondList.dataset.primary_key));
+    const currentTask = this.CondList.querySelector(".currentTask");
+    const txtTask = this.CondList.querySelector(".txtTask");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
     // txtTask.value = "";
-    this.TodoContent.querySelector(".btnOk").value = this.addTaskText;
+    this.CondList.querySelector(".btnOk").value = this.addTaskText;
     currentTask.setAttribute("currentid", newID);
     currentTask.style.display = "block";
     txtTask.focus();
+    let saved_data = strategyData.getData();
+    saved_data.cols;
+
+    build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
+    build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
+    build_buttons(saved_data.cols, "condition_btns", "button", "indicator_cond");
   }
 
   taskClick(e) {
-    const currentTask = this.TodoContent.querySelector(".currentTask");
-    const txtTask = this.TodoContent.querySelector(".txtTask");
+    const currentTask = this.CondList.querySelector(".currentTask");
+    const txtTask = this.CondList.querySelector(".txtTask");
     const ID = parseInt(e.target.getAttribute("taskId"));
-    this.TodoContent.querySelector(".btnOk").value = this.updateTaskText;
+    this.CondList.querySelector(".btnOk").value = this.updateTaskText;
     txtTask.value = e.target.innerText;
     currentTask.setAttribute("currentid", ID);
     currentTask.style.display = "block";
@@ -197,8 +209,8 @@ class CondManager {
   }
 
   handleTaskButton() {
-    // const taskText = this.TodoContent.querySelector(".txtTask");
-    const currentTask = this.TodoContent.querySelector(".currentTask");
+    // const taskText = this.CondList.querySelector(".txtTask");
+    const currentTask = this.CondList.querySelector(".currentTask");
 
     // if (taskText.value.trim() === "") {
     //   taskText.focus();
@@ -206,15 +218,15 @@ class CondManager {
     // }
     //check if the button is the add button or the update button
 
-    if (this.TodoContent.classList.contains("buy_side")) {
+    if (this.CondList.classList.contains("buy_side")) {
       save_cond_buy();
-    } else if (this.TodoContent.classList.contains("sell_side")) {
+    } else if (this.CondList.classList.contains("sell_side")) {
       save_cond_sell();
     } else {
       console.log("classList not containing buy_side or sell_side");
     }
 
-    if (this.TodoContent.querySelector(".btnOk").value === this.addTaskText) {
+    if (this.CondList.querySelector(".btnOk").value === this.addTaskText) {
       this.addTaskToList();
     } else {
       this.updateTask();
@@ -228,8 +240,8 @@ class CondManager {
     const task = document.createElement("div");
     last_cond_dom.set(task);
 
-    // const taskText = this.TodoContent.querySelector(".currentTask.modal");
-    const currentTask = this.TodoContent.querySelector(".currentTask");
+    // const taskText = this.CondList.querySelector(".currentTask.modal");
+    const currentTask = this.CondList.querySelector(".currentTask");
     const newID = parseInt(currentTask.getAttribute("currentid")) + 1;
 
     task.classList.add("task");
@@ -255,9 +267,9 @@ class CondManager {
 
   updateTask() {
     selected_cond.reset_cond();
-    const taskText = this.TodoContent.querySelector(".txtTask");
-    const currentTask = this.TodoContent.querySelector(".currentTask");
-    const task = this.TodoContent.querySelector('div.task[taskid="' + currentTask.getAttribute("currentid") + '"]');
+    const taskText = this.CondList.querySelector(".txtTask");
+    const currentTask = this.CondList.querySelector(".currentTask");
+    const task = this.CondList.querySelector('div.task[taskid="' + currentTask.getAttribute("currentid") + '"]');
     const previousHeight = task.offsetHeight;
     const currentListName = task.parentNode.id;
 
@@ -280,18 +292,18 @@ class CondManager {
   }
 
   cancelTaskEdition() {
-    const currentTask = this.TodoContent.querySelector(".currentTask");
+    const currentTask = this.CondList.querySelector(".currentTask");
     currentTask.setAttribute("currentid", "0");
     currentTask.style.display = "none";
   }
 
   showHelp() {
-    this.TodoContent.querySelector(".help").style.display = "block";
-    this.TodoContent.querySelector(".btnClose").focus();
+    this.CondList.querySelector(".help").style.display = "block";
+    this.CondList.querySelector(".btnClose").focus();
   }
 
   hideHelp() {
-    this.TodoContent.querySelector(".help").style.display = "none";
+    this.CondList.querySelector(".help").style.display = "none";
   }
 
   async load_opti_params() {
@@ -379,7 +391,7 @@ class CondManager {
     draggedTask.classList.add(listName);
 
     // Dynamically select the correct list based on listName
-    const destinationList = this.TodoContent.querySelector(`.${listName}List`);
+    const destinationList = this.CondList.querySelector(`.${listName}List`);
     destinationList.appendChild(draggedTask);
 
     switch (listName) {
@@ -425,17 +437,17 @@ class CondManager {
   // resizeLists() {
   //   const higherListHeight = Math.max(this.toDoListHeight, this.ongoingListHeight, this.doneListHeight);
 
-  //   this.TodoContent.querySelectorAll(".listColumn").forEach((list) => {
+  //   this.CondList.querySelectorAll(".listColumn").forEach((list) => {
   //     list.style.height = higherListHeight + "px";
   //   });
 
-  //   this.TodoContent.querySelector(".listContent").style.height = higherListHeight + 20 + "px";
+  //   this.CondList.querySelector(".listContent").style.height = higherListHeight + 20 + "px";
   // }
 }
 
-// const condController = new CondController();
-// const taskManager1 = condController.createCondManager("buy_cond_list1");
-// const taskManager2 = condController.createCondManager("sell_cond_list2");
+// const condListController = new CondController();
+// const taskManager1 = condListController.createCondManager("buy_cond_list1");
+// const taskManager2 = condListController.createCondManager("sell_cond_list2");
 
 // document.querySelector("#new_todo_buy").addEventListener("click", () => {
 //   createList("buy", "insert_here");
@@ -448,7 +460,7 @@ class CondManager {
 // async function createList(side, element) {
 //   const newId = await newList();
 //   console.log(newId);
-//   condController.createCondManager(newId);
+//   condListController.createCondManager(newId);
 
 //   async function newList() {
 //     const cloneContainer = document.querySelector(`.clone_template`);
@@ -464,7 +476,7 @@ class CondManager {
 //     const cond_list_content = clone.querySelector(`.${element}`);
 
 //     console.log(cond_list_content, "cond_list");
-//     const newId = side + "_cond_list" + (condController.count() + 1);
+//     const newId = side + "_cond_list" + (condListController.count() + 1);
 //     cond_list_content.classList.add(newId);
 //     console.log(newId);
 

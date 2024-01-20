@@ -2,6 +2,9 @@ import { postJsonGetStatus, postJsonGetData } from "../functions/fetch.js";
 import { remove_element } from "../functions/remove_element.js";
 import { build_buttons } from "./build_strategy_page.js";
 import { build_indicator_inputs } from "./build_strategy_page.js";
+import { strategyDataInstance } from "../classes/StrategyData.js";
+
+const strategyData = strategyDataInstance;
 
 export async function load_indicator(name, category, values = undefined, form_id) {
   // Create a new input field element
@@ -84,6 +87,9 @@ export async function load_indicator(name, category, values = undefined, form_id
     console.log(indicators_data, "indicators_data!!!!!!!!!!!!!!!!!!!!");
     remove_element("indicator_cond");
     build_buttons(indicators_data.cols, "condition_btns", "button", "indicator_cond");
+    let edited_data = strategyData.getData();
+    edited_data.cols = indicators_data.cols;
+    strategyData.setData(edited_data);
     remove_element("indicator_form");
     build_indicator_inputs(indicators_data.indicators, category);
   }

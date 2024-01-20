@@ -45,6 +45,6 @@ function select_indicator(category, id) {
 }
 
 async function optimize() {
-  const data = strategyData.getDataObject();
+  const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimize");
 }

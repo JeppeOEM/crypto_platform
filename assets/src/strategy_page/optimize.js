@@ -1,6 +1,6 @@
 export function load_params() {
   const arr = [];
-  rows = document.querySelectorAll(".param");
+  const rows = document.querySelectorAll(".param");
   rows.forEach((row) => {
     const indi = row.querySelector(".indicator");
     side = which_side(indi.innerText);
@@ -43,4 +43,15 @@ export function optimizer_params(conditions, suffix, element) {
       tbody.appendChild(clone);
     });
   });
+}
+function which_side(inputString) {
+  let str = inputString.toUpperCase().includes("BUY");
+  let side;
+  if (str) {
+    side = "BUY";
+  } else {
+    side = "SELL";
+  }
+
+  return side;
 }
