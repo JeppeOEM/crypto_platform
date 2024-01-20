@@ -12008,3 +12008,52 @@
 2024-01-20 20:10:46,554 INFO :: 127.0.0.1 - - [20/Jan/2024 20:10:46] "GET /18/get_strategy HTTP/1.1" 200 -
 2024-01-20 20:10:46,607 INFO :: 127.0.0.1 - - [20/Jan/2024 20:10:46] "GET /18/cond_list?side=sell HTTP/1.1" 200 -
 2024-01-20 20:10:48,627 INFO :: 127.0.0.1 - - [20/Jan/2024 20:10:48] "POST /18/load_pickled_df HTTP/1.1" 200 -
+2024-01-20 20:17:45,128 INFO :: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-20 20:17:45,128 INFO :: [33mPress CTRL+C to quit[0m
+2024-01-20 20:17:45,131 INFO ::  * Restarting with stat
+2024-01-20 20:17:47,895 WARNING ::  * Debugger is active!
+2024-01-20 20:17:47,911 INFO ::  * Debugger PIN: 117-265-993
+2024-01-20 20:17:47,974 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:47] "GET / HTTP/1.1" 200 -
+2024-01-20 20:17:48,011 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:48] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:48,015 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:48] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:48,020 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:48] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:48,026 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:48] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:48,030 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:48] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:50,594 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "GET /createstrat HTTP/1.1" 200 -
+2024-01-20 20:17:50,632 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:50,637 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:50,640 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:50,643 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:50,661 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:50] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,291 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[32mPOST /createstrat HTTP/1.1[0m" 302 -
+2024-01-20 20:17:53,339 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "GET /19/stratupdate HTTP/1.1" 200 -
+2024-01-20 20:17:53,387 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,389 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,397 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,401 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,404 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,407 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "[36mGET /static/css/list.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:53,412 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-20 20:17:53,587 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "GET /19/get_strategy HTTP/1.1" 200 -
+2024-01-20 20:17:53,629 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:53] "GET /current_df HTTP/1.1" 200 -
+2024-01-20 20:17:55,898 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:55] "POST /19/load_pickled_df HTTP/1.1" 200 -
+2024-01-20 20:17:57,038 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "POST /19/init_strategy HTTP/1.1" 200 -
+2024-01-20 20:17:57,050 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "POST /19/optimization_results HTTP/1.1" 200 -
+2024-01-20 20:17:57,052 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "GET /19/strategy_pair HTTP/1.1" 200 -
+2024-01-20 20:17:57,052 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "GET /19/load_conditions HTTP/1.1" 200 -
+2024-01-20 20:17:57,054 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "GET /19/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-20 20:17:57,073 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:57] "GET /19/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-20 20:17:58,107 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/list.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:58,111 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/global.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:58,112 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/vars.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:58,117 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/strategy.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:58,117 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/buttons.css HTTP/1.1[0m" 304 -
+2024-01-20 20:17:58,121 INFO :: 127.0.0.1 - - [20/Jan/2024 20:17:58] "[36mGET /static/css/loader.css HTTP/1.1[0m" 304 -
+2024-01-20 20:18:17,613 INFO :: 127.0.0.1 - - [20/Jan/2024 20:18:17] "[35m[1mPOST /19/optimize HTTP/1.1[0m" 500 -
+2024-01-20 20:18:57,736 INFO :: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-01-20 20:18:57,736 INFO :: [33mPress CTRL+C to quit[0m
+2024-01-20 20:18:57,738 INFO ::  * Restarting with stat
+2024-01-20 20:19:00,331 WARNING ::  * Debugger is active!
+2024-01-20 20:19:00,338 INFO ::  * Debugger PIN: 117-265-993

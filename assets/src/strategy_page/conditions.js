@@ -38,7 +38,8 @@ export async function build_conds() {
   console.log(load_cond_managers(sell_conds), "_SELL");
   function load_cond_managers(arr) {
     arr.forEach((cond) => {
-      console.log(cond, "cond");
+      console.log(cond, condListController, "cond");
+
       let condManager = condListController.getKey(cond.fk_list_id);
       console.log(condManager, "COND MANAGER!!!!!!!!!!!");
       condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);

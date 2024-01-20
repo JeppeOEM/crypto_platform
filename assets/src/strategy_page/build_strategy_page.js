@@ -18,7 +18,7 @@ export async function build_strategy_page() {
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
-  console.log(dataset_pairs, "dataset_pairs");
+
   build_dataset_pair_selector(dataset_pairs);
   // console.log(datasets_available, "datasets_available");
   let edited_data = strategyData.getData();
@@ -133,7 +133,6 @@ async function build_dataset_pair_selector(dataset_pairs) {
   selectElement.id = "dataset_pair_selector";
   const data = await getJson("strategy_pair");
   const current_pair = data.pair;
-  console.log(current_pair, "current_pair");
   // Iterate through the keys of the first object to get the options
   dataset_pairs.forEach((dataset_pair) => {
     for (let key in dataset_pair) {
@@ -154,10 +153,8 @@ async function build_dataset_pair_selector(dataset_pairs) {
   document.querySelector("#dataset_pair_selector").addEventListener("change", async function (event) {
     const pair = event.target.value;
     let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
-    console.log(status, "status", pair);
     // location.reload();
     let data = await postJsonGetData({}, "init_strategy");
-    console.log(data);
     remove_chart();
     insert_chart();
   });

@@ -15,7 +15,6 @@ export function load_params() {
   data.params_class = "indicator";
 
   const status = postJsonGetStatus(data, "optimizer_params");
-  console.log(status);
 }
 
 window.load_params = load_params;
@@ -23,10 +22,9 @@ window.load_params = load_params;
 export function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
   const cond_arr = [];
-  console.log(conditions, "conditions");
+
   //global conditions arrayy
   conditions.forEach((cond) => {
-    console.log(cond, "cond eval", cond.indicator_json);
     cond = JSON.parse(cond.indicator_json);
     cond_arr.push(cond);
   });
