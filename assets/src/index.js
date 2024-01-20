@@ -5,11 +5,11 @@ import { strategyDataInstance } from "./classes/StrategyData.js";
 // import { CondController } from "./cond_list.js";
 
 import { show_string } from "./functions/show_string.js";
-
-import { postJsonGetData } from "./functions/fetch.js";
+import { optimizer_params } from "./strategy_page/optimize.js";
+import { postJsonGetData, getJson } from "./functions/fetch.js";
 import { postJsonGetStatus } from "./functions/fetch.js";
 import { build_strategy_page } from "./strategy_page/build_strategy_page.js";
-
+import { condListController } from "./strategy_page/cond_list.js";
 import { load_indicator } from "./strategy_page/load_indicator";
 
 window.optimize = optimize;
@@ -21,9 +21,46 @@ const selected_cond = selected_cond_instance;
 
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
-  build_strategy_page();
+  build_strategy_page().then(() => {
+    build_conds_2();
+  });
+
+  document.querySelector("#testbtn").addEventListener("click", () => {
+    console.log(condListController.getKey(29));
+  });
+
+  async function build_conds_2() {
+    const json = await getJson("load_conditions");
+    console.log(json, "json!!!!!!!!!!!!!!!!");
+    const buy_conds = json.buy_conds;
+    const sell_conds = json.sell_conds;
+    optimizer_params(buy_conds, "_BUY", "param_buy");
+    optimizer_params(sell_conds, "_SELL", "param_buy");
+    console.log(buy_conds, "buy_conds");
+    load_cond_managers(buy_conds);
+    load_cond_managers(sell_conds);
+    function load_cond_managers(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        console.log(arr[i], "fucking list");
+        console.log(condListController.objList, "objList");
+        //CODE FAILS HERE
+        let condManager = condListController.getKey(arr[i].fk_list_id);
+        condManager.insert_cond(arr[i].indicator_json, which_row(arr[i].list_row), arr[i].condition_id);
+      }
+    }
+  }
 });
 
+function which_row(number) {
+  switch (number) {
+    case 1:
+      return "toDo";
+    case 2:
+      return "ongoing";
+    case 3:
+      return "done";
+  }
+}
 async function backtest() {
   // let conditions_copy = [[{ ind: "AO_14_14" }, { cond: ">" }, { val: 50 }]];
   // let conditions_sell_copy = [[{ ind: "AO_14_14" }, { cond: "<" }, { val: 11 }]];
@@ -252,7 +289,6 @@ let cond_sell = [];
 //   append_here.appendChild(clone);
 //   return newId;
 // }
-
 
 // let test = getJson("/current_df");
 

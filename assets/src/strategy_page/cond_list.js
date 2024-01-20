@@ -46,24 +46,31 @@ export class CondController {
   }
 
   getKey(key) {
-    console.log("GET KEY", this.objList);
     const result = [];
+    // Lenght here is 0 in the Console
+    console.log(key, "lenght");
+    console.log(this.objList.length, "lenght");
     for (let i = 0; i < this.objList.length; i++) {
       if (this.objList[i].primary_key === key) {
         console.log(this.objList[i]);
         return this.objList[i];
       }
     }
-
-    // let arr = this.objList.forEach((obj) => {
-    //   if (obj.primary_key === key) {
-    //     return obj;
-    //   }
-    // });
   }
 }
 const condListController = new CondController();
 export { condListController };
+
+// class CondManager {
+//   constructor(identifier, primary_key) {
+//     this.primary_key = primary_key;
+//     this.identifier = identifier;
+//     this.cond = [];
+//   }
+//   insert_cond(text, column) {
+//     this.cond.push({ ind: text, cond: column });
+//   }
+// }
 
 class CondManager {
   constructor(identifier, primary_key) {

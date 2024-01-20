@@ -1,9 +1,11 @@
+import { postJsonGetStatus } from "../functions/fetch.js";
+
 export function load_params() {
   const arr = [];
   const rows = document.querySelectorAll(".param");
   rows.forEach((row) => {
     const indi = row.querySelector(".indicator");
-    side = which_side(indi.innerText);
+    let side = which_side(indi.innerText);
     const operator = row.querySelector(".operator");
     const min = row.querySelector(".min");
     const max = row.querySelector(".max");
@@ -11,6 +13,7 @@ export function load_params() {
 
     arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
   });
+  let data = {};
   data.optimizer_params = arr;
   data.params_class = "indicator";
 

@@ -31,32 +31,20 @@ export async function build_conds() {
   const buy_conds = json.buy_conds;
   const sell_conds = json.sell_conds;
   // optimizer_params(sell_conds, "_SELL", "param_sell");
-  optimizer_params(buy_conds, "_BUY", "param_buy");
-  optimizer_params(sell_conds, "_SELL", "param_buy");
-  console.log(buy_conds, "buy_conds");
-  console.log(load_cond_managers(buy_conds), "_BUY");
-  console.log(load_cond_managers(sell_conds), "_SELL");
-  function load_cond_managers(arr) {
-    arr.forEach((cond) => {
-      console.log(cond, condListController, "cond");
 
-      let condManager = condListController.getKey(cond.fk_list_id);
-      console.log(condManager, "COND MANAGER!!!!!!!!!!!");
-      condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
-    });
-  }
+  // load_cond_managers(buy_conds);
+  // load_cond_managers(sell_conds);
+  // function load_cond_managers(arr) {
+  //   arr.forEach((cond) => {
+  //     console.log(condListController.objList, "objList");
+  //     //CODE FAILS HERE
+  //     let condManager = condListController.getKey(cond.fk_list_id);
+  //     condManager.insert_cond(cond.indicator_json, which_row(cond.list_row), cond.condition_id);
+  //   });
+  // }
 }
 
-function which_row(number) {
-  switch (number) {
-    case 1:
-      return "toDo";
-    case 2:
-      return "ongoing";
-    case 3:
-      return "done";
-  }
-}
+
 
 function which_row_string(string) {
   switch (string) {

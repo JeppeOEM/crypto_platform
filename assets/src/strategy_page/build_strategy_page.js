@@ -19,26 +19,26 @@ export async function build_strategy_page() {
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
 
-  build_dataset_pair_selector(dataset_pairs);
+  await build_dataset_pair_selector(dataset_pairs);
   // console.log(datasets_available, "datasets_available");
   let edited_data = strategyData.getData();
   edited_data.cols = strategy_data.cols;
   strategyData.setData(edited_data);
   console.log(strategyData.getData(), "strategyData.getData()");
   remove_element("indicator_cond");
-  build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
+  await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
   remove_element("sell_cond2");
   //build buttons also build indicator strategy_dataframe related buttons
   //params: array, element_id, element, class_name
 
-  build_indicator_inputs(strategy_data.indicators);
+  await build_indicator_inputs(strategy_data.indicators);
   // await build_conditions();
-  build_optimization_results();
-  build_condition_lists();
-  build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
-  build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
-  build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
+  await build_optimization_results();
+  await build_condition_lists();
+  await build_buttons(["<", ">", "==", "&", "or"], "compare_btns", "button", "compare_cond");
+  await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
+  await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   build_conds();
   insert_chart();
 
