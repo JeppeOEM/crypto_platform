@@ -52,7 +52,7 @@ export async function save_cond_buy() {
 
   data.side = "buy";
   data.primary_key = selected_cond.get();
-
+  console.log(data, "buy conds data");
   let response = await postJsonGetData(data, "condition");
   //assign id to last cond inserted in the dom
   let last_dom = last_cond_dom.get();

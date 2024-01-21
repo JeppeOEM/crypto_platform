@@ -1,1 +1,1 @@
-delete button conds
+update conditions primary key, trashcan

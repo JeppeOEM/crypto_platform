@@ -373,6 +373,9 @@ class CondManager {
     }
 
     const destinationElement = e.target;
+    console.log(destinationElement.classList);
+    let destination_list = destinationElement.closest(".single_list");
+    console.log(destination_list.dataset.primary_key);
     //get the taskid of the element where the task was dropped, if it is a task
     const dropped_taskid = destinationElement.getAttribute("taskid");
     if (dropped_taskid) {
@@ -385,10 +388,10 @@ class CondManager {
     }
     //check if the the listName already matches the class stored in the element
     // if (taskList !== listName + "List") {
-    console.log("task list hit hit");
     const taskHeight = draggedTask.offsetHeight + 10;
 
-    draggedTask.parentNode.removeChild(draggedTask);
+    console.log(draggedTask, "hiiiiiiiiiit");
+    // draggedTask.parentNode.removeChild(draggedTask);
 
     switch (listName) {
       case "toDo":
@@ -402,8 +405,8 @@ class CondManager {
         break;
     }
 
-    draggedTask.classList.remove("toDo", "ongoing", "done");
-    draggedTask.classList.add(listName);
+    // draggedTask.classList.remove("toDo", "ongoing", "done");
+    // draggedTask.classList.add(listName);
 
     // Dynamically select the correct list based on listName
     const destinationList = this.CondList.querySelector(`.${listName}List`);
