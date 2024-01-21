@@ -1,12 +1,14 @@
-import { createChart, CrosshairMode } from "lightweight-charts";
+// import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
 import { getJson } from "../functions/fetch.js";
 // import { postJsonGetData } from "../../loke/static/js/fetch";
+//https://www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay
 
+//www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay
 export class Chart {
   constructor(container) {
     this.container = container;
-    this.chart = createChart(container, {
+    this.chart = LightweightCharts.createChart(container, {
       width: 1300,
       height: 500,
       layout: {
@@ -25,7 +27,7 @@ export class Chart {
         },
       },
       crosshair: {
-        mode: CrosshairMode.Normal,
+        mode: LightweightCharts.CrosshairMode.Normal,
       },
       rightPriceScale: {
         borderColor: "rgba(197, 203, 206, 0.8)",
@@ -34,6 +36,7 @@ export class Chart {
         timeVisible: true,
         borderColor: "rgba(197, 203, 206, 0.8)",
       },
+      pane: 0,
     });
     this.candleSeries = this.chart.addCandlestickSeries({
       upColor: "rgba(255, 144, 0, 1)",
@@ -67,7 +70,7 @@ export class Chart {
     histogram.setData(indicator_data);
   }
 
-  add_indicator_ontop(indicator_data, params = { color: "red", lineWidth: 1 }) {
+  add_indicator_ontop(indicator_data, params = { color: "red", lineWidth: 1, pane: 1 }) {
     let custom_series = this.chart.addLineSeries(params);
     custom_series.setData(indicator_data);
   }

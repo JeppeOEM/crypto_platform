@@ -1,9 +1,9 @@
-import { createChart, CrosshairMode } from "lightweight-charts";
+// import { createChart, CrosshairMode } from "lightweight-charts";
 
 export class BottomChart {
   constructor(container) {
     this.container = container;
-    this.chart = createChart(container, {
+    this.chart = LightweightCharts.createChart(container, {
       layout: {
         textColor: "black",
         background: { type: "solid", color: "white" },

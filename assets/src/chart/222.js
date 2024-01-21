@@ -1,4 +1,4 @@
-import { createChart, CrosshairMode } from "lightweight-charts";
+// import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
 import { getJson } from "../functions/fetch.js";
 // import { postJsonGetData } from "../../loke/static/js/fetch";
@@ -6,7 +6,7 @@ import { getJson } from "../functions/fetch.js";
 export class Chart {
   constructor(container) {
     this.container = container;
-    this.chart = createChart(container, {
+    this.chart = LightweightCharts.createChart(container, {
       width: 1300,
       height: 500,
       layout: {

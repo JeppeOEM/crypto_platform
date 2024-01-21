@@ -3,8 +3,10 @@
 <!-- <script type="module" src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
 <script type="module" src="{{ url_for('static', filename='js/strategy.js') }}"></script>
 <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script> -->
-<script type="module" src="{{ url_for('static', filename='dist/main.js') }}"></script>
+
 {% endblock %} {% block header %}
+<h2>LOOOOOOOL</h2>
+<div id="container"></div>
 <div class="flex_horizontal space_between">
   <h1 id="strategy_id" data-name="{{ strategy['strategy_name'] }}" data-id="{{strategy['strategy_id']}}">
     {% block title %} ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }} {% endblock %}
