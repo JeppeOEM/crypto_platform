@@ -59,11 +59,10 @@ export async function save_cond_buy() {
   last_dom.dataset.cond_key = response.id;
   last_cond_dom.set(last_dom);
 
-  const json = await getJson("load_conditions");
-  const buy_conds = json.buy_conds;
+  // const json = await getJson("load_conditions");
+  // const buy_conds = json.buy_conds;
 
-  // optimizer_params(sell_conds, "_SELL", "param_sell");
-  optimizer_params(buy_conds, "_BUY", "param_buy");
+  // optimizer_params(buy_conds, "_BUY", "param_buy");
 
   // conditions = [];
 }
@@ -92,12 +91,12 @@ export async function save_cond_sell() {
   last_dom.dataset.cond_key = response.id;
   last_cond_dom.set(last_dom);
 
-  const json = await getJson("load_conditions");
-  const sell_conds = json.sell_conds;
+  // const json = await getJson("load_conditions");
+  // const sell_conds = json.sell_conds;
 
+  // optimizer_params(sell_conds, "_SELL", "sell");
   // optimizer_params(sell_conds, "_SELL", "param_sell");
 
-  optimizer_params(sell_conds, "_SELL", "sell");
   // conditions_sell = [];
 
   selected_cond.reset_cond();

@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(json, "json!!!!!!!!!!!!!!!!");
     const buy_conds = json.buy_conds;
     const sell_conds = json.sell_conds;
-    optimizer_params(buy_conds, "_BUY", "param_buy");
-    optimizer_params(sell_conds, "_SELL", "param_buy");
+    optimizer_params(buy_conds, "_BUY");
+    optimizer_params(sell_conds, "_SELL");
     console.log(buy_conds, "buy_conds");
     load_cond_managers(buy_conds, "buy");
     load_cond_managers(sell_conds, "sell");

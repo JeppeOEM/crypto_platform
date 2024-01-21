@@ -315,7 +315,7 @@ class CondManager {
     const json = await getJson("load_conditions");
     const buy_conds = json.buy_conds;
     const sell_conds = json.sell_conds;
-    // optimizer_params(sell_conds, "_SELL", "param_sell");
+    remove_element("param");
     optimizer_params(buy_conds, "_BUY", "param_buy");
     optimizer_params(sell_conds, "_SELL", "param_buy");
   }

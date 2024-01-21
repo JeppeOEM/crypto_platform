@@ -25,7 +25,7 @@ export function load_params() {
 window.load_params = load_params;
 
 //creating the input fields and are NOT saved to the database
-export function optimizer_params(conditions, suffix, element) {
+export function optimizer_params(conditions, suffix) {
   const title = document.querySelector("title");
   const cond_arr = [];
 
@@ -55,7 +55,9 @@ export function optimizer_params(conditions, suffix, element) {
       let table_row = clone.querySelector(".param");
       table_row.dataset.id = list_id;
       table_row.dataset.row = list_row;
+      console.log(list_id, list_row, suffix, "APPEND HEREEEEEEEEEEEEEEE");
       let append_here = insert_opti_where(list_id, list_row, suffix);
+      console.log(append_here, "APPEND HEREEEEEEEEEEEEEEE");
       append_here.appendChild(clone);
     });
   });

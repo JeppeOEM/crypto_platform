@@ -1,1 +1,1 @@
-Update data fetching method
+delete button conds
