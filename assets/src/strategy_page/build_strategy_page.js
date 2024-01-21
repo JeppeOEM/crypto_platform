@@ -44,9 +44,9 @@ export async function build_strategy_page() {
 
   todo_b.addEventListener("click", () => {
     create_list("buy");
-    location.reload();
-    // remove_element("cond_list");
-    // build_condition_lists();
+    // location.reload();
+    remove_element("cond_list");
+    build_condition_lists();
   });
 
   let todo_s = document.querySelector("#new_list_sell");
@@ -54,8 +54,8 @@ export async function build_strategy_page() {
   todo_s.addEventListener("click", () => {
     create_list("sell");
     location.reload();
-    // remove_element("cond_list");
-    // build_condition_lists();
+    remove_element("cond_list");
+    build_condition_lists();
   });
 }
 
@@ -200,6 +200,7 @@ export async function build_condition_lists() {
       container.appendChild(clone);
       //cond_list.js controller
       condListController.createCondManager(element_name, primary_key);
+      window.scrollTo(0, document.body.scrollHeight);
     });
   }
 }
