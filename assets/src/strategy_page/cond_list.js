@@ -1,5 +1,5 @@
 "use strict";
-import { selected_cond, last_cond_dom } from "../classes/globals.js";
+import { selected_cond, last_cond_dom, dragged_cond } from "../classes/globals.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
 import { save_cond_sell, save_cond_buy } from "./conditions.js";
 import { optimizer_params } from "./optimize.js";
@@ -357,13 +357,55 @@ class CondManager {
   dragStart(e) {
     e.dataTransfer.setData("text/plain", null);
     this.draggedTask = e.target;
+    dragged_cond.setKey(this.draggedTask.dataset.cond_key);
+    dragged_cond.setStartingSide(this.draggedTask);
     console.log(this.draggedTask);
-    console.log("Drag started");
+    console.log("Drag started", this.draggedTask.classList);
+  }
+
+  dropDiffrentList(e) {
+    console.log("diffrent");
+    console.log(dragged_cond.getKey());
+    console.log(dragged_cond.getStartingSide(), "STAAAAAAAAAAAAAAAAAAAAAAAAART");
+
+    const destinationElement = e.target;
+    let row = destinationElement.classList;
+    console.log(destinationElement);
+    let destination_list = destinationElement.closest(".single_list");
+    console.log("destination primary", destination_list.dataset.primary_key);
+    console.log(row[0]);
+    let buy = destinationElement.closest(".buy_clones");
+    let sell = destinationElement.closest(".sell_clones");
+    let side;
+    let starting_side = dragged_cond.getStartingSide();
+    if (buy) {
+      side = "buy";
+    }
+    if (sell) {
+      side = "sell";
+    }
+
+    let data = {
+      fk_list_id: destination_list.dataset.primary_key,
+      list_row: which_list(row[0]), //first classname of the classList is what we are after
+      id: dragged_cond.getKey(),
+      //destination side
+      side,
+      starting_side,
+    };
+    console.log(data);
+
+    this.update_cond(data);
   }
 
   dropTask(e, listName) {
     let taskList;
     let draggedTask = this.draggedTask;
+    console.log(draggedTask, "draggedTask");
+    // check if draggedTask is empty, if it is empty, then another condition list is hit
+    if (Object.keys(this.draggedTask).length === 0) {
+      return this.dropDiffrentList(e);
+    }
 
     try {
       taskList = draggedTask.parentNode.id;
@@ -391,7 +433,7 @@ class CondManager {
     const taskHeight = draggedTask.offsetHeight + 10;
 
     console.log(draggedTask, "hiiiiiiiiiit");
-    // draggedTask.parentNode.removeChild(draggedTask);
+    draggedTask.parentNode.removeChild(draggedTask);
 
     switch (listName) {
       case "toDo":
@@ -405,8 +447,8 @@ class CondManager {
         break;
     }
 
-    // draggedTask.classList.remove("toDo", "ongoing", "done");
-    // draggedTask.classList.add(listName);
+    draggedTask.classList.remove("toDo", "ongoing", "done");
+    draggedTask.classList.add(listName);
 
     // Dynamically select the correct list based on listName
     const destinationList = this.CondList.querySelector(`.${listName}List`);
@@ -433,6 +475,7 @@ class CondManager {
     if (sell) {
       side = "sell";
     }
+
     const data = {
       id: draggedTask.dataset.cond_key,
       list_row: which_row_string(listName),
@@ -555,6 +598,16 @@ function which_row_string(string) {
     case "ongoing":
       return 2;
     case "done":
+      return 3;
+  }
+}
+function which_list(string) {
+  switch (string) {
+    case "toDoList":
+      return 1;
+    case "ongoingList":
+      return 2;
+    case "doneList":
       return 3;
   }
 }

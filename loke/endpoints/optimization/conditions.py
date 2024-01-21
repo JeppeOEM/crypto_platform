@@ -59,13 +59,25 @@ def update_row(strategy_id):
     db = get_db()
     data = request.get_json()
     print(data, "DATA")
+    if data['starting_side'] == "buy":
+        table_name = 'buy_conditions'
+    else:
+        table_name = 'sell_conditions'
+
 
     if data['side'] == "buy":
         table_name = 'buy_conditions'
     else:
         table_name = 'sell_conditions'
-    db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND condition_id = ?'.format(
-        table_name), (data['list_row'], strategy_id, g.user['id'], data['id']))
+
+    # Check if the JSON contains a value for fk_list_id
+    if 'fk_list_id' in data:
+        db.execute('UPDATE {} SET list_row = ?, fk_list_id = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND condition_id = ?'.format(
+            table_name), (data['list_row'], data['fk_list_id'], strategy_id, g.user['id'], data['id']))
+    else:
+        db.execute('UPDATE {} SET list_row = ? WHERE fk_strategy_id = ? AND fk_user_id = ? AND condition_id = ?'.format(
+            table_name), (data['list_row'], strategy_id, g.user['id'], data['id']))
+
     db.commit()
     return jsonify({'message': 'Row updated'}), 200
 

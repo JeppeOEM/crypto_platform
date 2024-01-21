@@ -1,5 +1,37 @@
 import { show_string } from "../functions/show_string.js";
 //save the last inserted condition list in the dom
+
+class DraggedCond {
+  constructor() {
+    this._dragged_cond;
+    this._starting_side;
+  }
+
+  getKey() {
+    return this._dragged_cond;
+  }
+
+  setKey(value) {
+    this._dragged_cond = value;
+  }
+  setStartingSide(element) {
+    let buy = element.closest(".buy_clones");
+    let sell = element.closest(".sell_clones");
+    let side;
+    if (buy) {
+      this._starting_side = "buy";
+    }
+    if (sell) {
+      this._starting_side = "sell";
+    }
+  }
+  getStartingSide() {
+    return this._starting_side;
+  }
+}
+const dragged_cond = new DraggedCond();
+export { dragged_cond };
+
 class LastCondDom {
   constructor() {
     this._last_cond_dom;
