@@ -262,7 +262,8 @@ class CondManager {
     });
     //Prepend: inserts nodes before first child of node
     task.prepend(this.deleteButton());
-
+    console.log("########################################### task GOOOOOOOOOOOOOO");
+    console.log(this.toDoList, "toDoList GOOOOOOOOOOOOOO");
     this.toDoList.prepend(task);
     this.toDoListHeight += task.offsetHeight + 10;
 
@@ -421,6 +422,18 @@ class CondManager {
     async function update_cond(data) {
       await postJsonGetData(data, "update_condition_row");
       console.log(data);
+      const json = await getJson("load_conditions");
+      console.log(json, "json!!!!!!!!!!!!!!!!");
+      const buy_conds = json.buy_conds;
+      const sell_conds = json.sell_conds;
+      // console.log(this.CondList, "this.CondList");
+      let elements = document.querySelectorAll(`.param`);
+      console.log(elements, "elements");
+      elements.forEach(function (ele) {
+        ele.parentNode.removeChild(ele);
+      });
+      optimizer_params(buy_conds, "_BUY", "param_buy");
+      optimizer_params(sell_conds, "_SELL", "param_buy");
     }
     // console.log(response);
     //this.resizeLists();

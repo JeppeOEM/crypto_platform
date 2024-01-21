@@ -28,7 +28,7 @@ window.load_params = load_params;
 export function optimizer_params(conditions, suffix, element) {
   const title = document.querySelector("title");
   const cond_arr = [];
-  console.log(conditions, "conditions99999999999999999999");
+
   //global conditions arrayy
 
   conditions.forEach((cond) => {
@@ -64,19 +64,15 @@ export function optimizer_params(conditions, suffix, element) {
 function insert_opti_where(list_id, list_row, side) {
   if (side === "_BUY") {
     let container = document.querySelector(".buy_clones");
-    console.log(container, "container");
     const the_list = container.querySelector(`[data-primary_key="${list_id}"]`);
-    console.log(the_list, "the_list");
-    console.log(`opti_list_${list_row}`);
-    console.log(the_list.querySelector(".opti_list_2"), "loool");
-    console.log(list_row, "list_row");
     let row = the_list.querySelector(`.opti_list_${list_row}`);
-    console.log(row, "row!!!!!!!!!!");
+
     return row;
   } else {
     let container = document.querySelector(".sell_clones");
     const the_list = container.querySelector(`[data-primary_key="${list_id}"]`);
-    return the_list.querySelector(`opti_list_${list_row}`);
+    let row = the_list.querySelector(`opti_list_${list_row}`);
+    return row;
   }
 }
 
