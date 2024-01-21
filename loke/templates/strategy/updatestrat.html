@@ -161,7 +161,7 @@
             <a class="addTask greybtn">Add</a>
           </div>
 
-          <div class="toDoList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="toDoList listColumn drop_zone"></div>
           <div class="opti_list_1"></div>
           <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
           <div class="binder">
@@ -170,7 +170,7 @@
               <option value="or">OR</option>
             </select>
           </div>
-          <div class="ongoingList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="ongoingList listColumn drop_zone"></div>
           <div class="opti_list_2"></div>
           <div class="binder">
             <select name="cond_bond" id="cond_bind">
@@ -178,7 +178,7 @@
               <option value="or">OR</option>
             </select>
           </div>
-          <div class="doneList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="doneList listColumn drop_zone"></div>
           <div class="opti_list_3"></div>
         </main>
 
@@ -186,9 +186,9 @@
           <!-- insert indicator btn's -->
 
           <!-- <form action="">
-            <input type="text" value="lol" class="txtTask" />
+            <input type="text" value="lol" class="txtCond" />
           </form> -->
-          <div class="txtTask"></div>
+          <div class="txtCond"></div>
           <div class="cond"></div>
           <!-- insert comparison buttons  -->
           <div class="compare"></div>
@@ -227,5 +227,5 @@
   </div>
 </template>
 <!-- sell -->
-
+<div id="volume_chart" class="z-index-high"></div>
 {% endblock %}

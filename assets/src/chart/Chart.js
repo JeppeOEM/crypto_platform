@@ -49,27 +49,6 @@ export class Chart {
     this.candleSeries.setData(data);
   }
 
-  async getCandlesticks(data_obj) {
-    const apiUrl = `load_pickled_df`;
-
-    console.log(data_obj);
-    await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data_obj),
-    })
-      .then((response) => response.json())
-      .then((jsonData) => {
-        jsonData = JSON.parse(jsonData);
-        this.setData(jsonData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }
-
   resizeChart() {
     new ResizeObserver((entries) => {
       if (entries.length === 0 || entries[0].target !== this.container) {
@@ -79,90 +58,34 @@ export class Chart {
       this.chart.applyOptions({ height: newRect.height, width: newRect.width });
     }).observe(this.container);
   }
-}
 
-// Example usage:
-
-// function nextBusinessDay(time) {
-//   var d = new Date();
-//   d.setUTCFullYear(time.year);
-//   d.setUTCMonth(time.month - 1);
-//   d.setUTCDate(time.day + 1);
-//   d.setUTCHours(0, 0, 0, 0);
-//   return {
-//     year: d.getUTCFullYear(),
-//     month: d.getUTCMonth() + 1,
-//     day: d.getUTCDate(),
-//   };
-// }
-// setInterval(function () {
-//   var deltaY = targetPrice - lastClose;
-//   var deltaX = targetIndex - lastIndex;
-//   var angle = deltaY / deltaX;
-//   var basePrice = lastClose + (currentIndex - lastIndex) * angle;
-//   var noise = 0.1 - Math.random() * 0.1 + 1.0;
-//   var noisedPrice = basePrice * noise;
-//   mergeTickToBar(noisedPrice);
-//   if (++ticksInCurrentBar === 5) {
-//     // move to next bar
-//     currentIndex++;
-//     currentBusinessDay = nextBusinessDay(currentBusinessDay);
-//     currentBar = {
-//       open: null,
-//       high: null,
-//       low: null,
-//       close: null,
-//       time: currentBusinessDay,
-//     };
-//     ticksInCurrentBar = 0;
-//     if (currentIndex === 5000) {
-//       reset();
-//       return;
-//     }
-//     if (currentIndex === targetIndex) {
-//       // change trend
-//       lastClose = noisedPrice;
-//       lastIndex = currentIndex;
-//       targetIndex = lastIndex + 5 + Math.round(Math.random() + 30);
-//       targetPrice = getRandomPrice();
-//     }
-//   }
-// }, 200);
-// const requestOptions = {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify(jsonData),
-// };
-
-// try {
-//   const response = await fetch(apiUrl, requestOptions);
-//   if (!response.ok) {
-//     throw new Error(`HTTP error! Status: ${response.status}`);
-//   }
-
-//   const data = await response.json();
-//   const parsedData = JSON.parse(data);
-//   console.log(parsedData);
-//   return parsedData;
-// } catch (error) {
-//   console.error("Fetch error:", error);
-// }
-export async function postJsonGetData(data, endpoint, method = "POST") {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
+  add_histogram(indicator_data, color1 = "green", color2 = "red") {
+    const histogram = this.chart.addHistogramSeries({
+      color: (bar) => (bar.close > bar.open ? color1 : color2),
+      lineWidth: 2,
+    });
+    histogram.setData(indicator_data);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  add_indicator_ontop(indicator_data, params = { color: "red", lineWidth: 1 }) {
+    let custom_series = this.chart.addLineSeries(params);
+    custom_series.setData(indicator_data);
+  }
+
+  add_volume(volume_data) {
+    const volumeSeries = this.chart.addHistogramSeries({
+      priceFormat: {
+        type: "volume",
+      },
+      priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+    });
+    volumeSeries.priceScale().applyOptions({
+      // set the positioning of the volume series
+      scaleMargins: {
+        top: 0.7, // highest point of the series will be 70% away from the top
+        bottom: 0,
+      },
+    });
+    volumeSeries.setData(volume_data);
+  }
 }

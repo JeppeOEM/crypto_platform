@@ -18,7 +18,12 @@ window.optimize = optimize;
 window.value_cond = value_cond;
 window.select_indicator = select_indicator;
 window.backtest = backtest;
+window.drop_here = drop_here;
+window.drop = drop;
+
 const strategyData = strategyDataInstance;
+let conditions = [];
+let conditions_sell = [];
 
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
@@ -74,17 +79,18 @@ async function optimize() {
   const response = await postJsonGetData(data, "optimize");
 }
 
-// window.save_cond_sell = save_cond_sell;
-// window.save_cond_buy = save_cond_buy;
+function drop_here(event) {
+  const element = event.target.closest(".dropzone");
+  console.log(element);
+  if (!element.classList.contains("expand_dropzone")) {
+    element.classList.add("expand_dropzone");
+    console.log("dropzone");
+  }
+}
 
-//Global variables stored in private classes
-
-// const condListController = condListController;
-
-let conditions = [];
-let conditions_sell = [];
-let cond = [];
-let cond_sell = [];
+function drop(event) {
+  console.log("here");
+}
 
 // function unpack(cond) {
 //   return (

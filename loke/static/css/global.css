@@ -107,6 +107,10 @@ fieldset {
   z-index: 9999 !important;
 }
 
+.z-index-high {
+  z-index: 99999 !important;
+}
+
 /* NAV */
 .global_nav {
   position: fixed;

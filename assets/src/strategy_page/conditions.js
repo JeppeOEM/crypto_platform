@@ -2,6 +2,7 @@ import { selected_cond } from "../classes/globals.js";
 import { last_cond_dom } from "../classes/globals.js";
 import { postJsonGetData } from "../functions/fetch.js";
 import { getJson } from "../functions/fetch.js";
+import { remove_element } from "../functions/remove_element.js";
 import { show_string } from "../functions/show_string.js";
 import { condListController } from "./cond_list.js";
 import { optimizer_params } from "./optimize.js";
@@ -35,9 +36,7 @@ function which_row_string(string) {
   }
 }
 
-export async function remove_conds() {
-  
-}
+export async function remove_conds() {}
 
 export async function build_conds() {
   const json = await getJson("load_conditions");
@@ -47,6 +46,7 @@ export async function build_conds() {
   optimizer_params(buy_conds, "_BUY");
   optimizer_params(sell_conds, "_SELL");
   console.log(buy_conds, "buy_conds");
+  remove_element("single_condition");
   load_cond_managers(buy_conds, "buy");
   load_cond_managers(sell_conds, "sell");
   function load_cond_managers(arr, side) {
