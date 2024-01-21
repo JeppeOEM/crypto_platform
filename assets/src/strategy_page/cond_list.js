@@ -177,7 +177,7 @@ class CondManager {
     txtTask.focus();
   }
 
-  deleteButtonClick(e) {
+  async deleteButtonClick(e) {
     //Make sure that the click event stops here and dont fire anything in the ancestors/descendants
     e.stopPropagation();
     let side;
@@ -196,8 +196,6 @@ class CondManager {
       side: side,
     };
 
-    postJsonGetStatus(data, "delete_condition");
-
     switch (currentListName) {
       case "toDoList":
         this.toDoListHeight -= taskHeight;
@@ -209,7 +207,19 @@ class CondManager {
         this.doneListHeight -= taskHeight;
         break;
     }
-    //this.resizeLists();
+
+    await postJsonGetStatus(data, "delete_condition");
+
+    console.log(data, "delete button click");
+    //load conditions again after deletion
+    const json = await getJson("load_conditions");
+    console.log(json, "json!!!!!!!!!!!!!!!!");
+    const buy_conds = json.buy_conds;
+    const sell_conds = json.sell_conds;
+    // console.log(this.CondList, "this.CondList");
+    remove_element("param");
+    optimizer_params(buy_conds, "_BUY", "param_buy");
+    optimizer_params(sell_conds, "_SELL", "param_buy");
   }
 
   handleTaskButton() {
@@ -341,6 +351,7 @@ class CondManager {
     // Remove the placeholder
     temp.parentNode.removeChild(temp);
     console.log(element1, element2);
+    this.load_opti_params();
   }
 
   dragStart(e) {
@@ -357,11 +368,10 @@ class CondManager {
     try {
       taskList = draggedTask.parentNode.id;
     } catch {
-      console.log("Cath Activated");
+      console.log("catch Activated");
       console.log(this.draggedTask);
     }
 
-    // console.log(taskList, "tasklist");
     const destinationElement = e.target;
     //get the taskid of the element where the task was dropped, if it is a task
     const dropped_taskid = destinationElement.getAttribute("taskid");
@@ -410,35 +420,44 @@ class CondManager {
         this.doneListHeight += taskHeight;
         break;
     }
-    console.log(listName);
+
+    let buy = draggedTask.closest(".buy_clones");
+    let sell = draggedTask.closest(".sell_clones");
+    let side;
+    if (buy) {
+      side = "buy";
+    }
+    if (sell) {
+      side = "sell";
+    }
     const data = {
       id: draggedTask.dataset.cond_key,
       list_row: which_row_string(listName),
-      side: "buy",
+      side,
     };
 
-    update_cond(data);
+    this.update_cond(data);
 
-    async function update_cond(data) {
-      await postJsonGetData(data, "update_condition_row");
-      console.log(data);
-      const json = await getJson("load_conditions");
-      console.log(json, "json!!!!!!!!!!!!!!!!");
-      const buy_conds = json.buy_conds;
-      const sell_conds = json.sell_conds;
-      // console.log(this.CondList, "this.CondList");
-      let elements = document.querySelectorAll(`.param`);
-      console.log(elements, "elements");
-      elements.forEach(function (ele) {
-        ele.parentNode.removeChild(ele);
-      });
-      optimizer_params(buy_conds, "_BUY", "param_buy");
-      optimizer_params(sell_conds, "_SELL", "param_buy");
-    }
     // console.log(response);
     //this.resizeLists();
     // }
     // this.load_opti_params();
+  }
+  async update_cond(data) {
+    await postJsonGetData(data, "update_condition_row");
+    console.log(data);
+    const json = await getJson("load_conditions");
+    console.log(json, "json!!!!!!!!!!!!!!!!");
+    const buy_conds = json.buy_conds;
+    const sell_conds = json.sell_conds;
+    // console.log(this.CondList, "this.CondList");
+    let elements = document.querySelectorAll(`.param`);
+    console.log(elements, "elements");
+    elements.forEach(function (ele) {
+      ele.parentNode.removeChild(ele);
+    });
+    optimizer_params(buy_conds, "_BUY", "param_buy");
+    optimizer_params(sell_conds, "_SELL", "param_buy");
   }
 
   deleteButton() {

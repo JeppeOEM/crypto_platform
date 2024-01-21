@@ -64,7 +64,7 @@ export async function save_cond_buy() {
 
   // optimizer_params(buy_conds, "_BUY", "param_buy");
 
-  // conditions = [];
+  conditions = [];
 }
 
 export async function save_cond_sell() {
@@ -97,7 +97,7 @@ export async function save_cond_sell() {
   // optimizer_params(sell_conds, "_SELL", "sell");
   // optimizer_params(sell_conds, "_SELL", "param_sell");
 
-  // conditions_sell = [];
+  conditions_sell = [];
 
   selected_cond.reset_cond();
 }
