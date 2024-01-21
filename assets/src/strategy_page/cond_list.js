@@ -6,6 +6,7 @@ import { optimizer_params } from "./optimize.js";
 import { postJsonGetData, postJsonGetStatus, getJson } from "../functions/fetch.js";
 import { build_buttons } from "./build_strategy_page.js";
 import { remove_element } from "../functions/remove_element.js";
+import { build_conds } from "./conditions.js";
 
 const strategyData = strategyDataInstance;
 
@@ -112,9 +113,9 @@ class CondManager {
       list.addEventListener("dragover", (e) => e.preventDefault());
     });
 
-    this.CondList.querySelector(".toDoList").addEventListener("drop", (e) => this.dropTask(e, "toDo"));
-    this.CondList.querySelector(".ongoingList").addEventListener("drop", (e) => this.dropTask(e, "ongoing"));
-    this.CondList.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
+    this.CondList.querySelector(".toDoList").addEventListener("drop", (e) => this.dropCond(e, "toDo"));
+    this.CondList.querySelector(".ongoingList").addEventListener("drop", (e) => this.dropCond(e, "ongoing"));
+    this.CondList.querySelector(".doneList").addEventListener("drop", (e) => this.dropCond(e, "done"));
   }
 
   insert_cond(text, column, id, side) {
@@ -124,7 +125,7 @@ class CondManager {
     task.classList.add("task");
     task.classList.add(column);
     task.innerText = text;
-    task.setAttribute("taskId", newID);
+    task.setAttribute("frontend_cond_id", newID);
     this.CondList.querySelector(".currentTask").setAttribute("lastid", newID);
     task.addEventListener("click", (e) => this.taskClick(e));
     task.setAttribute("draggable", "true");
@@ -169,7 +170,7 @@ class CondManager {
   taskClick(e) {
     const currentTask = this.CondList.querySelector(".currentTask");
     const txtTask = this.CondList.querySelector(".txtTask");
-    const ID = parseInt(e.target.getAttribute("taskId"));
+    const ID = parseInt(e.target.getAttribute("frontend_cond_id"));
     this.CondList.querySelector(".btnOk").value = this.updateTaskText;
     txtTask.value = e.target.innerText;
     currentTask.setAttribute("currentid", ID);
@@ -261,7 +262,7 @@ class CondManager {
     task.classList.add("task");
     task.classList.add("toDo");
     task.innerText = selected_cond.get_string();
-    task.setAttribute("taskId", currentTask.getAttribute("currentid"));
+    task.setAttribute("frontend_cond_id", currentTask.getAttribute("currentid"));
     currentTask.setAttribute("lastid", newID);
     task.addEventListener("click", (e) => this.taskClick(e));
     task.setAttribute("draggable", "true");
@@ -284,7 +285,9 @@ class CondManager {
     selected_cond.reset_cond();
     const taskText = this.CondList.querySelector(".txtTask");
     const currentTask = this.CondList.querySelector(".currentTask");
-    const task = this.CondList.querySelector('div.task[taskid="' + currentTask.getAttribute("currentid") + '"]');
+    const task = this.CondList.querySelector(
+      'div.task[frontend_cond_id="' + currentTask.getAttribute("currentid") + '"]'
+    );
     const previousHeight = task.offsetHeight;
     const currentListName = task.parentNode.id;
 
@@ -398,8 +401,8 @@ class CondManager {
     this.update_cond(data);
   }
 
-  dropTask(e, listName) {
-    let taskList;
+  dropCond(e, listName) {
+    let current_cond_list;
     let draggedTask = this.draggedTask;
     console.log(draggedTask, "draggedTask");
     // check if draggedTask is empty, if it is empty, then another condition list is hit
@@ -408,7 +411,7 @@ class CondManager {
     }
 
     try {
-      taskList = draggedTask.parentNode.id;
+      current_cond_list = draggedTask.parentNode.id;
     } catch {
       console.log("catch Activated");
       console.log(this.draggedTask);
@@ -418,18 +421,18 @@ class CondManager {
     console.log(destinationElement.classList);
     let destination_list = destinationElement.closest(".single_list");
     console.log(destination_list.dataset.primary_key);
-    //get the taskid of the element where the task was dropped, if it is a task
-    const dropped_taskid = destinationElement.getAttribute("taskid");
-    if (dropped_taskid) {
-      // const dragged_taskid = draggedTask.getAttribute("taskid");
-      // const element1 = document.querySelector(`.task[taskid="${dragged_taskid}"]`);
-      // const element2 = document.querySelector(`.task[taskid="${dropped_taskid}"]`);
+    //get the frontend_cond_id of the element where the task was dropped, if it is a task
+    const dropped_frontend_cond_id = destinationElement.getAttribute("frontend_cond_id");
+    if (dropped_frontend_cond_id) {
+      // const dragged_frontend_cond_id = draggedTask.getAttribute("frontend_cond_id");
+      // const element1 = document.querySelector(`.task[frontend_cond_id="${dragged_frontend_cond_id}"]`);
+      // const element2 = document.querySelector(`.task[frontend_cond_id="${dropped_frontend_cond_id}"]`);
       // console.log(element1, element2);
       console.log(draggedTask, destinationElement);
       this.swapElements(draggedTask, destinationElement);
     }
     //check if the the listName already matches the class stored in the element
-    // if (taskList !== listName + "List") {
+    // if (current_cond_list !== listName + "List") {
     const taskHeight = draggedTask.offsetHeight + 10;
 
     console.log(draggedTask, "hiiiiiiiiiit");
@@ -451,8 +454,9 @@ class CondManager {
     draggedTask.classList.add(listName);
 
     // Dynamically select the correct list based on listName
-    const destinationList = this.CondList.querySelector(`.${listName}List`);
-    destinationList.appendChild(draggedTask);
+    // const destinationList = this.CondList.querySelector(`.${listName}List`);
+    // console.log(destinationList);
+    // destinationList.appendChild(draggedTask);
 
     switch (listName) {
       case "toDo":
@@ -494,16 +498,18 @@ class CondManager {
     console.log(data);
     const json = await getJson("load_conditions");
     console.log(json, "json!!!!!!!!!!!!!!!!");
-    const buy_conds = json.buy_conds;
-    const sell_conds = json.sell_conds;
+    // const buy_conds = json.buy_conds;
+    // const sell_conds = json.sell_conds;
     // console.log(this.CondList, "this.CondList");
     let elements = document.querySelectorAll(`.param`);
     console.log(elements, "elements");
     elements.forEach(function (ele) {
       ele.parentNode.removeChild(ele);
     });
-    optimizer_params(buy_conds, "_BUY", "param_buy");
-    optimizer_params(sell_conds, "_SELL", "param_buy");
+    // optimizer_params(buy_conds, "_BUY", "param_buy");
+    // optimizer_params(sell_conds, "_SELL", "param_buy");
+
+    build_conds();
   }
 
   deleteButton() {
@@ -514,8 +520,6 @@ class CondManager {
 
     return deleteButton;
   }
-
-  insertTask() {}
 
   // resizeLists() {
   //   const higherListHeight = Math.max(this.toDoListHeight, this.ongoingListHeight, this.doneListHeight);
@@ -551,7 +555,7 @@ class CondManager {
 //     console.log(cloneContainer, "clone_container");
 //     const clone = cloneContainer.cloneNode(true);
 
-//     // const elementsToRemove = clone.querySelectorAll(`[taskid]`);
+//     // const elementsToRemove = clone.querySelectorAll(`[frontend_cond_id]`);
 //     // elementsToRemove.forEach((element) => {
 //     //   element.parentNode.removeChild(element);
 //     // });

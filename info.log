@@ -20139,3 +20139,126 @@
 2024-01-21 15:30:07,802 INFO ::  * Debugger PIN: 117-265-993
 2024-01-21 15:30:08,855 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\endpoints\\optimization\\conditions.py', reloading
 2024-01-21 15:30:09,191 INFO ::  * Restarting with stat
+2024-01-21 15:30:12,725 INFO ::  * Restarting with stat
+2024-01-21 15:30:22,241 INFO ::  * Restarting with stat
+2024-01-21 15:30:26,713 INFO ::  * Restarting with stat
+2024-01-21 15:30:29,279 INFO ::  * Restarting with stat
+2024-01-21 15:30:33,668 INFO ::  * Restarting with stat
+2024-01-21 15:30:39,089 INFO ::  * Restarting with stat
+2024-01-21 15:30:42,867 INFO ::  * Restarting with stat
+2024-01-21 15:30:45,162 WARNING ::  * Debugger is active!
+2024-01-21 15:30:45,169 INFO ::  * Debugger PIN: 117-265-993
+2024-01-21 15:31:43,390 INFO :: 127.0.0.1 - - [21/Jan/2024 15:31:43] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:31:43,396 INFO :: 127.0.0.1 - - [21/Jan/2024 15:31:43] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:31:47,374 INFO :: 127.0.0.1 - - [21/Jan/2024 15:31:47] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:31:47,380 INFO :: 127.0.0.1 - - [21/Jan/2024 15:31:47] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:32:13,857 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:13] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:32:13,866 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:13] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:32:16,776 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:16] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:32:16,782 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:16] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:32:18,567 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:18] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:32:18,576 INFO :: 127.0.0.1 - - [21/Jan/2024 15:32:18] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:33:45,542 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:45] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:33:45,551 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:45] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:33:54,187 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:54] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:33:54,195 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:54] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:33:57,661 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:57] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:33:57,669 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:57] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:33:59,508 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:59] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:33:59,518 INFO :: 127.0.0.1 - - [21/Jan/2024 15:33:59] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:01,410 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:01] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:01,418 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:01] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:07,770 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:07] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:07,778 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:07] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:09,741 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:09] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:09,749 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:09] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:13,698 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:13] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:13,707 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:13] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:15,834 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:15] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:15,842 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:15] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:19,367 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:19] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:19,377 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:19] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:24,736 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:24] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:24,745 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:24] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:27,440 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:27] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:34:27,675 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:27] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:34:35,478 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:35] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:35,486 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:35] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:34:37,551 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:37] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:34:37,560 INFO :: 127.0.0.1 - - [21/Jan/2024 15:34:37] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:36:11,152 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /13/stratupdate HTTP/1.1" 200 -
+2024-01-21 15:36:11,216 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,218 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,219 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,225 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,226 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,230 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-21 15:36:11,238 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-21 15:36:11,770 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:11] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-21 15:36:14,025 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "POST /13/init_strategy HTTP/1.1" 200 -
+2024-01-21 15:36:14,033 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "GET /13/strategy_pair HTTP/1.1" 200 -
+2024-01-21 15:36:14,041 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "POST /13/add_indicator HTTP/1.1" 200 -
+2024-01-21 15:36:14,044 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "GET /13/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-21 15:36:14,067 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "GET /13/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-21 15:36:14,113 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "GET /13/get_strategy HTTP/1.1" 200 -
+2024-01-21 15:36:14,115 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:36:14,115 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "POST /13/optimization_results HTTP/1.1" 200 -
+2024-01-21 15:36:14,176 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:14] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:36:15,369 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:15] "POST /13/load_pickled_df HTTP/1.1" 200 -
+2024-01-21 15:36:17,227 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:17] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:36:17,235 INFO :: 127.0.0.1 - - [21/Jan/2024 15:36:17] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:37:47,005 INFO :: 127.0.0.1 - - [21/Jan/2024 15:37:47] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:37:47,020 INFO :: 127.0.0.1 - - [21/Jan/2024 15:37:47] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:37:49,703 INFO :: 127.0.0.1 - - [21/Jan/2024 15:37:49] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:37:49,713 INFO :: 127.0.0.1 - - [21/Jan/2024 15:37:49] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:38:51,116 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /13/stratupdate HTTP/1.1" 200 -
+2024-01-21 15:38:51,208 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,215 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,217 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,218 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,221 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,229 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-21 15:38:51,231 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-21 15:38:51,794 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-21 15:38:54,438 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "POST /13/init_strategy HTTP/1.1" 200 -
+2024-01-21 15:38:54,448 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "GET /13/strategy_pair HTTP/1.1" 200 -
+2024-01-21 15:38:54,461 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "POST /13/add_indicator HTTP/1.1" 200 -
+2024-01-21 15:38:54,469 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "GET /13/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-21 15:38:54,480 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "GET /13/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-21 15:38:54,508 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "GET /13/get_strategy HTTP/1.1" 200 -
+2024-01-21 15:38:54,509 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:38:54,510 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "POST /13/optimization_results HTTP/1.1" 200 -
+2024-01-21 15:38:54,551 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:54] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:38:55,886 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:55] "POST /13/load_pickled_df HTTP/1.1" 200 -
+2024-01-21 15:38:56,767 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:56] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:38:56,778 INFO :: 127.0.0.1 - - [21/Jan/2024 15:38:56] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:01,260 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:01] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:39:06,910 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:06] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:39:06,917 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:06] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:09,882 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:09] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:39:09,892 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:09] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:12,535 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:12] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:39:12,544 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:12] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:24,399 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /13/stratupdate HTTP/1.1" 200 -
+2024-01-21 15:39:24,495 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/list.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,503 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/global.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,504 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/vars.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,507 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/strategy.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,510 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/buttons.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,516 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/css/loader.css HTTP/1.1" 200 -
+2024-01-21 15:39:24,519 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "GET /static/dist/main.js HTTP/1.1" 200 -
+2024-01-21 15:39:24,925 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-01-21 15:39:27,712 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "POST /13/init_strategy HTTP/1.1" 200 -
+2024-01-21 15:39:27,723 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "GET /13/strategy_pair HTTP/1.1" 200 -
+2024-01-21 15:39:27,733 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "POST /13/add_indicator HTTP/1.1" 200 -
+2024-01-21 15:39:27,736 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "GET /13/cond_list?side=buy HTTP/1.1" 200 -
+2024-01-21 15:39:27,751 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "GET /13/cond_list?side=sell HTTP/1.1" 200 -
+2024-01-21 15:39:27,781 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "GET /13/get_strategy HTTP/1.1" 200 -
+2024-01-21 15:39:27,782 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:27,782 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "POST /13/optimization_results HTTP/1.1" 200 -
+2024-01-21 15:39:27,837 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:27] "[33mGET /static/img/trash.png HTTP/1.1[0m" 404 -
+2024-01-21 15:39:29,261 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:29] "POST /13/load_pickled_df HTTP/1.1" 200 -
+2024-01-21 15:39:31,095 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:31] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:39:31,105 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:31] "GET /13/load_conditions HTTP/1.1" 200 -
+2024-01-21 15:39:34,038 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:34] "POST /13/update_condition_row HTTP/1.1" 200 -
+2024-01-21 15:39:34,048 INFO :: 127.0.0.1 - - [21/Jan/2024 15:39:34] "GET /13/load_conditions HTTP/1.1" 200 -

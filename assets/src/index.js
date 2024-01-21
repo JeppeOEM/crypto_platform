@@ -12,6 +12,7 @@ import { build_strategy_page } from "./strategy_page/build_strategy_page.js";
 import { build_optimization_results } from "./strategy_page/build_strategy_page.js";
 import { condListController } from "./strategy_page/cond_list.js";
 import { load_indicator } from "./strategy_page/load_indicator";
+import { build_conds } from "./strategy_page/conditions.js";
 
 window.optimize = optimize;
 window.value_cond = value_cond;
@@ -22,47 +23,15 @@ const strategyData = strategyDataInstance;
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
   build_strategy_page().then(() => {
-    build_conds_2();
+    build_conds();
     build_optimization_results();
   });
 
   document.querySelector("#testbtn").addEventListener("click", () => {
     console.log(condListController.getKey(29));
   });
-
-  async function build_conds_2() {
-    const json = await getJson("load_conditions");
-    console.log(json, "json!!!!!!!!!!!!!!!!");
-    const buy_conds = json.buy_conds;
-    const sell_conds = json.sell_conds;
-    optimizer_params(buy_conds, "_BUY");
-    optimizer_params(sell_conds, "_SELL");
-    console.log(buy_conds, "buy_conds");
-    load_cond_managers(buy_conds, "buy");
-    load_cond_managers(sell_conds, "sell");
-    function load_cond_managers(arr, side) {
-      for (let i = 0; i < arr.length; i++) {
-        console.log(arr[i], "fucking list");
-        console.log(condListController.objList, "objList");
-        //CODE FAILS HERE
-        let condManager = condListController.getKey(arr[i].fk_list_id);
-        //text, column, id, side;
-        condManager.insert_cond(arr[i].indicator_json, which_row(arr[i].list_row), arr[i].condition_id, side);
-      }
-    }
-  }
 });
 
-function which_row(number) {
-  switch (number) {
-    case 1:
-      return "toDo";
-    case 2:
-      return "ongoing";
-    case 3:
-      return "done";
-  }
-}
 async function backtest() {
   // let conditions_copy = [[{ ind: "AO_14_14" }, { cond: ">" }, { val: 50 }]];
   // let conditions_sell_copy = [[{ ind: "AO_14_14" }, { cond: "<" }, { val: 11 }]];
