@@ -3,12 +3,11 @@ import { insert_chart } from "../chart/insert_chart.js";
 import { getJson, postJsonGetData, postJsonGetStatus } from "../functions/fetch.js";
 import { condListController } from "./cond_list.js";
 import { load_indicator } from "./load_indicator.js";
-import { selected_cond_instance } from "../classes/globals.js";
+import { selected_cond } from "../classes/globals.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
 import { show_string } from "../functions/show_string.js";
 
 const strategyData = strategyDataInstance;
-const selected_cond = selected_cond_instance;
 
 export async function build_strategy_page() {
   // init strategy gets the indicators saved in indicator_strategies

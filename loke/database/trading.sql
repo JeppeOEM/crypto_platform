@@ -148,8 +148,11 @@ CREATE TABLE sell_optimization (
     data_type VARCHAR(5) NOT NULL,
     optimization_min FLOAT NOT NULL,
     optimization_max FLOAT NOT NULL,
+    fk_list_id INT NOT NULL,
+    list_row INT NOT NULL,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
-    FOREIGN KEY (fk_user_id) REFERENCES user(id)
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY(fk_list_id) REFERENCES sell_condition_lists(list_id) ON DELETE CASCADE
 );
 CREATE TABLE buy_optimization (
     buy_optimization_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -161,8 +164,11 @@ CREATE TABLE buy_optimization (
     data_type VARCHAR(5) NOT NULL,
     optimization_min FLOAT NOT NULL,
     optimization_max FLOAT NOT NULL,
+    fk_list_id INT NOT NULL,
+    list_row INT NOT NULL,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
-    FOREIGN KEY (fk_user_id) REFERENCES user(id)
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY(fk_list_id) REFERENCES buy_condition_lists(list_id) ON DELETE CASCADE
 );
 CREATE TABLE optimization_results (
     optimization_result_id INTEGER PRIMARY KEY AUTOINCREMENT,

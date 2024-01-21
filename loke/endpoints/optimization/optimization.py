@@ -26,7 +26,9 @@ def optimizer_params(id):
     data = request.get_json()
     params = data['optimizer_params']
     params_class = data['params_class']
-
+    fk_list_id = data['fk_list_id']
+    # list_row = data['list_row']
+    list_row = 1
     try:
         for param in params:
             name, operator, data_type, opti_min, opti_max, side = param
@@ -36,9 +38,11 @@ def optimizer_params(id):
             existing_row = db.execute(
                 'SELECT 1 FROM {} '
                 'WHERE fk_strategy_id = ? AND optimization_name = ? AND operator = ? AND '
-                'data_type = ? AND class = ? AND optimization_min = ? AND optimization_max = ?'
+                'data_type = ? AND class = ? AND optimization_min = ? AND optimization_max = ? AND '
+                'fk_list_id = ? AND list_row = ?'
                 .format(table_name),
-                (id, name, operator, data_type, params_class, opti_min, opti_max)
+                (id, name, operator, data_type, params_class,
+                 opti_min, opti_max, fk_list_id, list_row)
             ).fetchone()
 
             if existing_row:

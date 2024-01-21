@@ -1,12 +1,10 @@
-import { selected_cond_instance } from "../classes/globals.js";
+import { selected_cond } from "../classes/globals.js";
 import { last_cond_dom } from "../classes/globals.js";
 import { postJsonGetData } from "../functions/fetch.js";
 import { getJson } from "../functions/fetch.js";
 import { show_string } from "../functions/show_string.js";
 import { condListController } from "./cond_list.js";
 import { optimizer_params } from "./optimize.js";
-
-const selected_cond = selected_cond_instance;
 
 // const condListController = condListController
 window.save_cond_sell = save_cond_sell;

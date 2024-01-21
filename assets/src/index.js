@@ -1,6 +1,6 @@
 //Endpoints MUST NOT HAVE / to access URL id
 //postIndicatorData(`add_indicator`);
-import { selected_cond_instance } from "./classes/globals.js";
+import { selected_cond } from "./classes/globals.js";
 import { strategyDataInstance } from "./classes/StrategyData.js";
 // import { CondController } from "./cond_list.js";
 
@@ -18,7 +18,6 @@ window.value_cond = value_cond;
 window.select_indicator = select_indicator;
 window.backtest = backtest;
 const strategyData = strategyDataInstance;
-const selected_cond = selected_cond_instance;
 
 document.addEventListener("DOMContentLoaded", function () {
   // Your code here
@@ -39,15 +38,16 @@ document.addEventListener("DOMContentLoaded", function () {
     optimizer_params(buy_conds, "_BUY", "param_buy");
     optimizer_params(sell_conds, "_SELL", "param_buy");
     console.log(buy_conds, "buy_conds");
-    load_cond_managers(buy_conds);
-    load_cond_managers(sell_conds);
-    function load_cond_managers(arr) {
+    load_cond_managers(buy_conds, "buy");
+    load_cond_managers(sell_conds, "sell");
+    function load_cond_managers(arr, side) {
       for (let i = 0; i < arr.length; i++) {
         console.log(arr[i], "fucking list");
         console.log(condListController.objList, "objList");
         //CODE FAILS HERE
         let condManager = condListController.getKey(arr[i].fk_list_id);
-        condManager.insert_cond(arr[i].indicator_json, which_row(arr[i].list_row), arr[i].condition_id);
+        //text, column, id, side;
+        condManager.insert_cond(arr[i].indicator_json, which_row(arr[i].list_row), arr[i].condition_id, side);
       }
     }
   }

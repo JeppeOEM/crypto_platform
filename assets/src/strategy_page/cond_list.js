@@ -1,5 +1,5 @@
 "use strict";
-import { selected_cond_instance, last_cond_dom } from "../classes/globals.js";
+import { selected_cond, last_cond_dom } from "../classes/globals.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
 import { save_cond_sell, save_cond_buy } from "./conditions.js";
 import { optimizer_params } from "./optimize.js";
@@ -7,7 +7,6 @@ import { postJsonGetData, postJsonGetStatus, getJson } from "../functions/fetch.
 import { build_buttons } from "./build_strategy_page.js";
 import { remove_element } from "../functions/remove_element.js";
 
-const selected_cond = selected_cond_instance;
 const strategyData = strategyDataInstance;
 
 export class CondController {
@@ -48,11 +47,9 @@ export class CondController {
   getKey(key) {
     const result = [];
     // Lenght here is 0 in the Console
-    console.log(key, "lenght");
-    console.log(this.objList.length, "lenght");
+
     for (let i = 0; i < this.objList.length; i++) {
       if (this.objList[i].primary_key === key) {
-        console.log(this.objList[i]);
         return this.objList[i];
       }
     }
@@ -120,7 +117,7 @@ class CondManager {
     this.CondList.querySelector(".doneList").addEventListener("drop", (e) => this.dropTask(e, "done"));
   }
 
-  insert_cond(text, column, id) {
+  insert_cond(text, column, id, side) {
     const task = document.createElement("div");
     const newID = parseInt(this.CondList.querySelector(".currentTask").getAttribute("lastid")) + 1;
 
@@ -428,6 +425,7 @@ class CondManager {
     // console.log(response);
     //this.resizeLists();
     // }
+    // this.load_opti_params();
   }
 
   deleteButton() {

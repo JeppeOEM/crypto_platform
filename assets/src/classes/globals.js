@@ -59,7 +59,7 @@ class SelectedCond {
 }
 
 // Create an instance of the class
-const selected_cond_instance = new SelectedCond();
+const selected_cond = new SelectedCond();
 
 // Export both the class and its instance
-export { selected_cond_instance };
+export { selected_cond };
