@@ -16,11 +16,11 @@ export class Chart {
           type: "solid",
           color: "#000000",
         },
-        textColor: "rgba(255, 255, 255, 0.9)",
+        textColor: "rgba(13, 6, 6, 0.9)", // Set the font color to white
       },
       grid: {
         vertLines: {
-          color: "rgba(197, 203, 206, 0.5)",
+          color: "rgba(107, 203, 206, 0.5)",
         },
         horzLines: {
           color: "rgba(197, 203, 206, 0.5)",
@@ -70,7 +70,7 @@ export class Chart {
     histogram.setData(indicator_data);
   }
 
-  add_indicator_ontop(indicator_data, params = { color: "red", lineWidth: 1, pane: 1 }) {
+  add_line_series(indicator_data, params = { color: "red", lineWidth: 1, pane: 1 }) {
     let custom_series = this.chart.addLineSeries(params);
     custom_series.setData(indicator_data);
   }
@@ -80,7 +80,7 @@ export class Chart {
       priceFormat: {
         type: "volume",
       },
-      priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+      pane: 2,
     });
     volumeSeries.priceScale().applyOptions({
       // set the positioning of the volume series
