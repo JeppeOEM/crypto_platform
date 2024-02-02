@@ -70,9 +70,18 @@ export class Chart {
     histogram.setData(indicator_data);
   }
 
-  add_line_series(indicator_data, params = { color: "red", lineWidth: 1, pane: 1 }) {
-    let custom_series = this.chart.addLineSeries(params);
-    custom_series.setData(indicator_data);
+  add_line_series(indicator_data, params = { color: "red", lineWidth: 1, pane: 2 }) {
+    // let custom_series = this.chart.addLineSeries(params);
+    // custom_series.setData(indicator_data);
+    const line_series = this.chart.addLineSeries(params);
+    // line_series.priceScale().applyOptions({
+    //   // set the positioning of the volume series
+    //   scaleMargins: {
+    //     top: 0.7, // highest point of the series will be 70% away from the top
+    //     bottom: 0,
+    //   },
+    // });
+    line_series.setData(indicator_data);
   }
 
   add_volume(volume_data) {
@@ -80,7 +89,7 @@ export class Chart {
       priceFormat: {
         type: "volume",
       },
-      pane: 2,
+      pane: 1,
     });
     volumeSeries.priceScale().applyOptions({
       // set the positioning of the volume series

@@ -17,7 +17,7 @@ export async function build_strategy_page() {
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
 
-  await build_dataset_pair_selector(dataset_pairs);
+  await build_dataset_pair_selector(dataset_pairs, strategy_data.cols);
   // console.log(datasets_available, "datasets_available");
   let edited_data = strategyData.getData();
   edited_data.cols = strategy_data.cols;
@@ -38,7 +38,9 @@ export async function build_strategy_page() {
   await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
 
-  insert_chart();
+  console.log(strategy_data.cols, "COLUUUUUUUUUUUMns");
+
+  insert_chart(strategy_data.cols);
 
   let todo_b = document.querySelector("#new_list_buy");
 
@@ -128,7 +130,7 @@ export async function build_indicator_inputs(data, category = null) {
     }
   }
 }
-async function build_dataset_pair_selector(dataset_pairs) {
+async function build_dataset_pair_selector(dataset_pairs, dataframe_column_names) {
   // Create select element
   const selectElement = document.createElement("select");
   selectElement.id = "dataset_pair_selector";
@@ -157,7 +159,7 @@ async function build_dataset_pair_selector(dataset_pairs) {
     // location.reload();
     let data = await postJsonGetData({}, "init_strategy");
     remove_chart();
-    insert_chart();
+    insert_chart(dataframe_column_names);
   });
 }
 function remove_chart() {

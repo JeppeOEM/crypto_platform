@@ -3,7 +3,7 @@ import { BottomChart } from "./BottomChart.js";
 import { getJson, postJsonGetData } from "../functions/fetch.js";
 // import { createChart, CrosshairMode } from "lightweight-charts";
 import { Histogram } from "./Histogram.js";
-export async function insert_chart() {
+export async function insert_chart(dataframe_column_names) {
   const chartDiv = document.querySelector(".chart");
   const MainChart = new Chart(chartDiv);
 
@@ -28,6 +28,7 @@ export async function insert_chart() {
   candlesticks = JSON.parse(candlesticks);
 
   function filter_candles(candlesticks, key) {
+    // filter values by key
     return candlesticks.filter((d) => d[`${key}`]).map((d) => ({ time: d.time, value: d[`${key}`] }));
   }
   let indicator_data = filter_candles(candlesticks, "volume");
@@ -37,7 +38,7 @@ export async function insert_chart() {
   // MainChart.add_indicator_ontop(indicator_data);
   MainChart.add_line_series(adx);
   MainChart.add_volume(indicator_data);
-
+  console.log(dataframe_column_names);
   // volChart.setData(indicator_data);
 }
 

@@ -92,13 +92,7 @@ def strategy_pair(strategy_id):
                 return jsonify({'error': 'Missing new_pair_value in the request'}), 400
         else:
            # Handle GET request if needed
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print("GET REQUEST IN!!!!!!!!!!!!!!!!!!!!!!!!!")
+
             pair_result = db.execute(
                 'SELECT pair FROM strategies WHERE strategy_id = ?', (
                     strategy_id,)
