@@ -22,7 +22,7 @@ export async function build_strategy_page() {
   let edited_data = strategyData.getData();
   edited_data.cols = strategy_data.cols;
   strategyData.setData(edited_data);
-  console.log(strategyData.getData(), "strategyData.getData()");
+
   remove_element("indicator_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
@@ -70,10 +70,9 @@ async function create_list(side) {
 export async function build_optimization_results() {
   const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimization_results");
-  console.log(response, "response");
 
   const resultList = document.querySelector("#optimization_results");
-  console.log(resultList, "resultList");
+
   response.forEach((opti) => {
     let result = JSON.parse(opti.result);
     for (let i = 0; i < result.length; i++) {

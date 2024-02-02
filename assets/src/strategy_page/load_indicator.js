@@ -16,6 +16,7 @@ export async function load_indicator(name, category, values = undefined, form_id
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
   let indi_data = await postIndicatorData(`add_indicator`);
+  console.log(indi_data,"load indicator")
   //gets values saved in indicator_strategies otherwise default values from Indicator Classes
   if (values) {
     for (const key in values) {
@@ -84,7 +85,7 @@ export async function load_indicator(name, category, values = undefined, form_id
     await postJsonGetStatus(form_arr, `convert_indicator`);
 
     let indicators_data = await postJsonGetData(data, "init_strategy");
-    console.log(indicators_data, "indicators_data!!!!!!!!!!!!!!!!!!!!");
+
     remove_element("indicator_cond");
     build_buttons(indicators_data.cols, "condition_btns", "button", "indicator_cond");
     let edited_data = strategyData.getData();

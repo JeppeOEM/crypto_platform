@@ -1,5 +1,5 @@
 //Endpoints MUST NOT HAVE / to access URL id
-//postIndicatorData(`add_indicator`);
+
 import { selected_cond } from "./classes/globals.js";
 import { strategyDataInstance } from "./classes/StrategyData.js";
 // import { CondController } from "./cond_list.js";

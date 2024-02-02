@@ -35,11 +35,10 @@ function insert_opti_where(list_id, list_row, side) {
     return row;
   } else {
     let container = document.querySelector(".sell_clones");
-    console.log(container, "CONTAINER");
+
     console.log(container.querySelector(`[data-primary_key="${list_id}"]`));
     const the_list = container.querySelector(`[data-primary_key="${list_id}"]`);
     let row = the_list.querySelector(`.opti_list_${list_row}`);
-    console.log(row, "THE LIST");
     return row;
   }
 }
@@ -124,9 +123,8 @@ export function optimizer_params(conditions, suffix) {
       table_row.dataset.id = list_id;
       table_row.dataset.row = list_row;
 
-      console.log(list_id, list_row, suffix, "APPEND HEREEEEEEEEEEEEEEE");
       let append_here = insert_opti_where(list_id, list_row, suffix);
-      console.log(append_here, "APPEND HEREEEEEEEEEEEEEEE");
+
 
       // Append the clone to the fragment instead of the actual document
       fragment.appendChild(clone);

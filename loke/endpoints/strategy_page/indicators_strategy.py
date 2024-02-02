@@ -29,6 +29,7 @@ def add_indicator(strategy_id):
         Obj = getattr(module, f"{indicator}")
         obj = Obj()
         indicator = obj.type_dict()
+
         indicator = jsonify(indicator)
         print(indicator, "INDICATOR")
         # db = get_db()
