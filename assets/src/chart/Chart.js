@@ -62,17 +62,33 @@ export class Chart {
     }).observe(this.container);
   }
 
-  add_histogram(indicator_data, color1 = "green", color2 = "red") {
-    const histogram = this.chart.addHistogramSeries({
-      color: (bar) => (bar.close > bar.open ? color1 : color2),
-      lineWidth: 2,
-    });
-    histogram.setData(indicator_data);
-  }
+  // add_histogram(indicator_data, pane, color1 = "green", color2 = "red") {
+  //   const histogram = this.chart.addHistogramSeries({
+  //     lineWidth: 2,
+  //     pane,
+  //   });
+  //   histogram.setData(indicator_data);
+  // }
 
-  add_line_series(indicator_data, params = { color: "red", lineWidth: 1, pane: 2 }) {
+  add_histogram(indicator_data, pane, params = { color: "red", lineWidth: 1 }) {
     // let custom_series = this.chart.addLineSeries(params);
     // custom_series.setData(indicator_data);
+    params.pane = pane;
+    const line_series = this.chart.addHistogramSeries(params);
+    line_series.priceScale().applyOptions({
+      // set the positioning of the volume series
+      scaleMargins: {
+        top: 0.7, // highest point of the series will be 70% away from the top
+        bottom: 0,
+      },
+    });
+    console.log(indicator_data, "hut");
+    line_series.setData(indicator_data);
+  }
+  add_line_series(indicator_data, pane, params = { color: "red", lineWidth: 1 }) {
+    // let custom_series = this.chart.addLineSeries(params);
+    // custom_series.setData(indicator_data);
+    params.pane = pane;
     const line_series = this.chart.addLineSeries(params);
     // line_series.priceScale().applyOptions({
     //   // set the positioning of the volume series
@@ -81,23 +97,25 @@ export class Chart {
     //     bottom: 0,
     //   },
     // });
+    console.log(indicator_data, "hut");
     line_series.setData(indicator_data);
   }
 
-  add_volume(volume_data) {
-    const volumeSeries = this.chart.addHistogramSeries({
-      priceFormat: {
-        type: "volume",
-      },
-      pane: 1,
-    });
-    volumeSeries.priceScale().applyOptions({
-      // set the positioning of the volume series
-      scaleMargins: {
-        top: 0.7, // highest point of the series will be 70% away from the top
-        bottom: 0,
-      },
-    });
-    volumeSeries.setData(volume_data);
-  }
+  // add_histogram(volume_data, pane) {
+  //   const volumeSeries = this.chart.addHistogramSeries({
+  //     priceFormat: {
+  //       color: (bar) => (bar.close > bar.open ? "green" : "red"),
+  //       type: "volume",
+  //     },
+  //     pane,
+  //   });
+  //   volumeSeries.priceScale().applyOptions({
+  //     // set the positioning of the volume series
+  //     scaleMargins: {
+  //       top: 0.7, // highest point of the series will be 70% away from the top
+  //       bottom: 0,
+  //     },
+  //   });
+  //   volumeSeries.setData(volume_data);
+  // }
 }

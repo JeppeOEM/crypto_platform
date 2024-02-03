@@ -2,7 +2,10 @@ import { Chart } from "./Chart.js";
 import { BottomChart } from "./BottomChart.js";
 import { getJson, postJsonGetData } from "../functions/fetch.js";
 // import { createChart, CrosshairMode } from "lightweight-charts";
-import { Histogram } from "./Histogram.js";
+
+import { chart_indicators } from "../classes/ChartIndicators.js";
+import { chart_settings } from "./get_chart_settings.js";
+
 export async function insert_chart(dataframe_column_names) {
   const chartDiv = document.querySelector(".chart");
   const MainChart = new Chart(chartDiv);
@@ -27,19 +30,38 @@ export async function insert_chart(dataframe_column_names) {
   let candlesticks = await postJsonGetData(data_obj, "load_pickled_df");
   candlesticks = JSON.parse(candlesticks);
 
-  function filter_candles(candlesticks, key) {
-    // filter values by key
-    return candlesticks.filter((d) => d[`${key}`]).map((d) => ({ time: d.time, value: d[`${key}`] }));
-  }
-  let indicator_data = filter_candles(candlesticks, "volume");
+  let volume = filter_candles(candlesticks, "volume");
   let adx = filter_candles(candlesticks, "ADX_14");
   MainChart.setData(candlesticks);
 
-  // MainChart.add_indicator_ontop(indicator_data);
-  MainChart.add_line_series(adx);
-  MainChart.add_volume(indicator_data);
+  // MainChart.add_indicator_ontop(volume);
+  // MainChart.add_line_series(adx);
+  // MainChart.add_histogram(volume, 1);
+
+  //remove open,high,close so only cols that need to be inserted in chart remains
+  dataframe_column_names = dataframe_column_names.slice(4);
   console.log(dataframe_column_names);
-  // volChart.setData(indicator_data);
+  console.log("########################################################col_names[i]");
+  add_all_indicators(MainChart, dataframe_column_names, candlesticks);
+}
+
+function add_all_indicators(MainChart, col_names, candlesticks) {
+  for (let i = 0; i < col_names.length; i++) {
+    console.log("########################################################col_names[i]");
+    console.log(col_names[i], "col_names[i]");
+    let data = filter_candles(candlesticks, col_names[i]);
+    let setting = chart_settings(col_names[i]);
+    console.log(setting, "setting");
+    if (setting.type === "histogram") {
+      MainChart.add_histogram(data, i);
+    } else if (setting.type === "line_add_pane") {
+      MainChart.add_line_series(data, i);
+    }
+  }
+}
+function filter_candles(candlesticks, key) {
+  // filter values by key
+  return candlesticks.filter((d) => d[`${key}`]).map((d) => ({ time: d.time, value: d[`${key}`] }));
 }
 
 //DONT DELETE THIS CODE

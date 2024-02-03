@@ -16,12 +16,14 @@ export async function build_strategy_page() {
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
+  
 
   await build_dataset_pair_selector(dataset_pairs, strategy_data.cols);
   // console.log(datasets_available, "datasets_available");
   let edited_data = strategyData.getData();
   edited_data.cols = strategy_data.cols;
   strategyData.setData(edited_data);
+  console.log(strategy_data, "INIT");
 
   remove_element("indicator_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
@@ -120,7 +122,7 @@ export async function build_indicator_inputs(data, category = null) {
 
   async function load() {
     for (let i = 0; i < indicators.length; i++) {
-      const form = await load_indicator(
+      await load_indicator(
         indicators[i].indicator["kind"],
         indicators[i].category,
         indicators[i].indicator, //values

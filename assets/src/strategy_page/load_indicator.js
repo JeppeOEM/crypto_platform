@@ -3,20 +3,25 @@ import { remove_element } from "../functions/remove_element.js";
 import { build_buttons } from "./build_strategy_page.js";
 import { build_indicator_inputs } from "./build_strategy_page.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
+import { chart_indicators } from "../classes/ChartIndicators.js";
 
 const strategyData = strategyDataInstance;
 
 export async function load_indicator(name, category, values = undefined, form_id) {
   // Create a new input field element
+  console.log("LOOOOOOOOOOOADING INDICATOR");
   const data = {
     indicator: name,
     category: category,
   };
+  console.log(name, "NAMEEEEEEEEEEEEEEEEE");
   let output = [];
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
-  let indi_data = await postIndicatorData(`add_indicator`);
-  console.log(indi_data,"load indicator")
+  let indicator_data = await postIndicatorData(`add_indicator`);
+  console.log(indicator_data.indicator, "load indicator");
+  let indi_data = indicator_data.indicator;
+  console.log(indicator_data.chart_info);
   //gets values saved in indicator_strategies otherwise default values from Indicator Classes
   if (values) {
     for (const key in values) {
@@ -32,7 +37,10 @@ export async function load_indicator(name, category, values = undefined, form_id
     }
     indi_data = output;
   }
+  console.log("INDIIIIIIIIIOiiiiiiiiiiiiiiiiiiiiiiiii");
+  console.log(indi_data, "LOAD FUCKING INT");
   const name_indicator = indi_data[0][1];
+  chart_indicators.add({ chart_info: indicator_data.chart_info, name: name_indicator });
 
   //remove name of indicator
   indi_data = indi_data.slice(1);

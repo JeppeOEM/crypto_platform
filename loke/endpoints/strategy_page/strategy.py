@@ -168,7 +168,7 @@ def init_strategy(id):
 
         db = get_db()
         indicators = db.execute(
-            'SELECT settings, strategy_indicator_id, category FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
+            'SELECT settings, strategy_indicator_id, category, chart_info FROM strategy_indicators WHERE fk_strategy_id = ?', (id,)).fetchall()
         total_indicators = []
         total_indicators_id = []
         # print("teeeeest", indicators[1])
@@ -194,8 +194,10 @@ def init_strategy(id):
                 data_dict_copy = copy.deepcopy(data_dict)
                 total_indicators.append(data_dict)
                 json_object = json.dumps(data_dict_copy, indent=4)
+                # total_indicators_id.append(
+                #     {"id": row[1], "settings": json_object, "category": row[2]})
                 total_indicators_id.append(
-                    {"id": row[1], "settings": json_object, "category": row[2]})
+                    {"id": row[1], "settings": json_object, "category": row[2], "chart_info": row[3]})
 
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON: {e}")
