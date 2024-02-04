@@ -1,16 +1,14 @@
-import { createChart, ColorType, CrosshairMode } from "lightweight-charts";
-import React, { useState, useEffect, useRef } from "react";
-import { urlStringConversion } from "./urlStringConversion";
-import s from "./ticker.module.css";
+// import { createChart, CrosshairMode } from "lightweight-charts";
+import { urlStringConversion } from "./url_string_conversion.js";
+import { getJson } from "../functions/fetch.js";
+// import { postJsonGetData } from "../../loke/static/js/fetch";
 
-const Chart = ({ chart_data }) => {
-  const [chartData, setChartData] = useState([]);
-  const chartRef = useRef();
-
-  useEffect(() => {
-    var chart = createChart(chartRef.current, {
-      width: 600,
-      height: 300,
+export class Chart {
+  constructor(container) {
+    this.container = container;
+    this.chart = LightweightCharts.createChart(container, {
+      width: 1300,
+      height: 500,
       layout: {
         background: {
           type: "solid",
@@ -34,12 +32,10 @@ const Chart = ({ chart_data }) => {
       },
       timeScale: {
         timeVisible: true,
-        // secondsVisible: false,
         borderColor: "rgba(197, 203, 206, 0.8)",
       },
     });
-
-    var candleSeries = chart.addCandlestickSeries({
+    this.candleSeries = this.chart.addCandlestickSeries({
       upColor: "rgba(255, 144, 0, 1)",
       downColor: "#000",
       borderDownColor: "rgba(255, 144, 0, 1)",
@@ -47,113 +43,49 @@ const Chart = ({ chart_data }) => {
       wickDownColor: "rgba(55, 144, 0, 1)",
       wickUpColor: "rgba(255, 144, 0, 1)",
     });
+    this.resizeChart();
+  }
+  setData(data) {
+    this.candleSeries.setData(data);
+  }
 
-    // candleSeries.setData([
-    //   { time: Date.parse("2019-04-11 09:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
-    //   { time: Date.parse("2019-04-11 12:43"), open: 407.2, high: 207.3, low: 207.1, close: 207.1 },
-    //   { time: Date.parse("2019-04-11 13:43"), open: 307.2, high: 407.3, low: 207.1, close: 207.1 },
-    //   { time: Date.parse("2019-04-11 14:43"), open: 107.2, high: 207.3, low: 207.1, close: 207.1 },
-    // ]);
-    candleSeries.setData(chart_data);
-  }, []);
-
-  return (
-    <div className='chart-container'>
-      <h2>Interactive 5 Years Historical Daily Chart</h2>
-      <div ref={chartRef} />
-    </div>
-  );
-};
-export default Chart;
-
-export async function getServerSideProps(context) {
-  //const ticker = context.params.ticker;
-  const query = context.query;
-  console.log(query);
-  const apiUrl = `http://127.0.0.1:8000/loaddfs/`;
-  const { market_type, pair } = urlStringConversion(query.ticker);
-  let pair2 = pair;
-  pair2 = pair2.toUpperCase();
-  const jsonData = {
-    ticker: pair2,
-    market_type: market_type,
-    timeframes: [query.timeframe],
-    timerange_start: 159810060000,
-    timerange_end: "now",
-  };
-  let chart_data;
-  const requestOptions = {
-    method: "POST", // You can use 'GET', 'POST', 'PUT', 'DELETE', etc.
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(jsonData),
-  };
-
-  chart_data = await fetch(apiUrl, requestOptions)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+  resizeChart() {
+    new ResizeObserver((entries) => {
+      if (entries.length === 0 || entries[0].target !== this.container) {
+        return;
       }
-      return response.json();
-    })
-    .then((data) => {
-      data = JSON.parse(data);
-      console.log(data);
-      return data;
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
+      const newRect = entries[0].contentRect;
+      this.chart.applyOptions({ height: newRect.height, width: newRect.width });
+    }).observe(this.container);
+  }
+
+  add_histogram(indicator_data, color1 = "green", color2 = "red") {
+    const histogram = this.chart.addHistogramSeries({
+      color: (bar) => (bar.close > bar.open ? color1 : color2),
+      lineWidth: 2,
     });
+    histogram.setData(indicator_data);
+  }
 
-  let lol = "lol";
-  return {
-    props: { chart_data },
-  };
+  add_indicator_ontop(indicator_data, params = { color: "red", lineWidth: 1 }) {
+    let custom_series = this.chart.addLineSeries(params);
+    custom_series.setData(indicator_data);
+  }
+
+  add_volume(volume_data) {
+    const volumeSeries = this.chart.addHistogramSeries({
+      priceFormat: {
+        type: "volume",
+      },
+      priceScaleId: "", // set as an overlay by setting a blank priceScaleId
+    });
+    volumeSeries.priceScale().applyOptions({
+      // set the positioning of the volume series
+      scaleMargins: {
+        top: 0.7, // highest point of the series will be 70% away from the top
+        bottom: 0,
+      },
+    });
+    volumeSeries.setData(volume_data);
+  }
 }
-
-// function nextBusinessDay(time) {
-//   var d = new Date();
-//   d.setUTCFullYear(time.year);
-//   d.setUTCMonth(time.month - 1);
-//   d.setUTCDate(time.day + 1);
-//   d.setUTCHours(0, 0, 0, 0);
-//   return {
-//     year: d.getUTCFullYear(),
-//     month: d.getUTCMonth() + 1,
-//     day: d.getUTCDate(),
-//   };
-// }
-// setInterval(function () {
-//   var deltaY = targetPrice - lastClose;
-//   var deltaX = targetIndex - lastIndex;
-//   var angle = deltaY / deltaX;
-//   var basePrice = lastClose + (currentIndex - lastIndex) * angle;
-//   var noise = 0.1 - Math.random() * 0.1 + 1.0;
-//   var noisedPrice = basePrice * noise;
-//   mergeTickToBar(noisedPrice);
-//   if (++ticksInCurrentBar === 5) {
-//     // move to next bar
-//     currentIndex++;
-//     currentBusinessDay = nextBusinessDay(currentBusinessDay);
-//     currentBar = {
-//       open: null,
-//       high: null,
-//       low: null,
-//       close: null,
-//       time: currentBusinessDay,
-//     };
-//     ticksInCurrentBar = 0;
-//     if (currentIndex === 5000) {
-//       reset();
-//       return;
-//     }
-//     if (currentIndex === targetIndex) {
-//       // change trend
-//       lastClose = noisedPrice;
-//       lastIndex = currentIndex;
-//       targetIndex = lastIndex + 5 + Math.round(Math.random() + 30);
-//       targetPrice = getRandomPrice();
-//     }
-//   }
-// }, 200);

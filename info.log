@@ -20344,3 +20344,4 @@
 2024-02-04 17:10:36,062 INFO :: 127.0.0.1 - - [04/Feb/2024 17:10:36] "GET /6/load_conditions HTTP/1.1" 200 -
 2024-02-04 17:57:25,557 WARNING ::  * Debugger is active!
 2024-02-04 17:57:25,567 INFO ::  * Debugger PIN: 133-964-266
+2024-02-04 17:57:58,392 INFO ::  * Detected change in 'C:\\Code\\asgaard_v2\\loke\\trading_engine\\indicators\\momentum\\Rsi.py', reloading

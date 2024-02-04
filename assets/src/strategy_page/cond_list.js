@@ -95,7 +95,7 @@ class CondManager {
     this.CondList.querySelector(".btnOk").addEventListener("click", () => this.handleTaskButton());
 
     this.CondList.querySelector(".btnCancel").addEventListener("click", () => this.cancelTaskEdition());
-    this.CondList.querySelector(".txtTask").addEventListener("keyup", (e) =>
+    this.CondList.querySelector(".txtCond").addEventListener("keyup", (e) =>
       e.code === "Escape" ? this.cancelTaskEdition() : true
     );
 
@@ -122,7 +122,7 @@ class CondManager {
     const task = document.createElement("div");
     const newID = parseInt(this.CondList.querySelector(".currentTask").getAttribute("lastid")) + 1;
 
-    task.classList.add("task");
+    task.classList.add("single_condition");
     task.classList.add(column);
     task.innerText = text;
     task.setAttribute("frontend_cond_id", newID);
@@ -152,13 +152,13 @@ class CondManager {
     //global variable for the db
     selected_cond.set(parseInt(this.CondList.dataset.primary_key));
     const currentTask = this.CondList.querySelector(".currentTask");
-    const txtTask = this.CondList.querySelector(".txtTask");
+    const txtCond = this.CondList.querySelector(".txtCond");
     const newID = parseInt(currentTask.getAttribute("lastid")) + 1;
-    // txtTask.value = "";
+    // txtCond.value = "";
     this.CondList.querySelector(".btnOk").value = this.addTaskText;
     currentTask.setAttribute("currentid", newID);
     currentTask.style.display = "block";
-    txtTask.focus();
+    txtCond.focus();
     let saved_data = strategyData.getData();
     saved_data.cols;
 
@@ -169,13 +169,13 @@ class CondManager {
 
   taskClick(e) {
     const currentTask = this.CondList.querySelector(".currentTask");
-    const txtTask = this.CondList.querySelector(".txtTask");
+    const txtCond = this.CondList.querySelector(".txtCond");
     const ID = parseInt(e.target.getAttribute("frontend_cond_id"));
     this.CondList.querySelector(".btnOk").value = this.updateTaskText;
-    txtTask.value = e.target.innerText;
+    txtCond.value = e.target.innerText;
     currentTask.setAttribute("currentid", ID);
     currentTask.style.display = "block";
-    txtTask.focus();
+    txtCond.focus();
   }
 
   async deleteButtonClick(e) {
@@ -224,7 +224,7 @@ class CondManager {
   }
 
   handleTaskButton() {
-    // const taskText = this.CondList.querySelector(".txtTask");
+    // const taskText = this.CondList.querySelector(".txtCond");
     const currentTask = this.CondList.querySelector(".currentTask");
 
     // if (taskText.value.trim() === "") {
@@ -259,7 +259,7 @@ class CondManager {
     const currentTask = this.CondList.querySelector(".currentTask");
     const newID = parseInt(currentTask.getAttribute("currentid")) + 1;
 
-    task.classList.add("task");
+    task.classList.add("single_condition");
     task.classList.add("toDo");
     task.innerText = selected_cond.get_string();
     task.setAttribute("frontend_cond_id", currentTask.getAttribute("currentid"));
@@ -283,7 +283,7 @@ class CondManager {
 
   updateTask() {
     selected_cond.reset_cond();
-    const taskText = this.CondList.querySelector(".txtTask");
+    const taskText = this.CondList.querySelector(".txtCond");
     const currentTask = this.CondList.querySelector(".currentTask");
     const task = this.CondList.querySelector(
       'div.task[frontend_cond_id="' + currentTask.getAttribute("currentid") + '"]'

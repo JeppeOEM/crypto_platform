@@ -42,6 +42,9 @@ class Adx:
     def default_values(self):
         return [("kind", self.__class__.__name__.lower()), ("fast", 14), ("lensig", 14), ("scalar", 100), ("mamode", "rma"), ("drift", 1), ("offset", 0),]
 
+    
+    def chart_info(self):
+        return "line_add_pane"
     def __repr__(self):
         description = """
     Average Directional Movement (ADX)

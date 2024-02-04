@@ -4,7 +4,7 @@ from flask import (
 from werkzeug.exceptions import abort
 from loke.endpoints.auth import login_required
 from loke.database.db import get_db
-
+from loke.trading_engine.indicators.chart_settings import chart_settings
 
 import importlib
 import os
@@ -29,7 +29,13 @@ def add_indicator(strategy_id):
         Obj = getattr(module, f"{indicator}")
         obj = Obj()
         indicator = obj.type_dict()
-        indicator = jsonify(indicator)
+        chart_info = obj.chart_info()
+        print(chart_info, "CHHHHHHHHHHHHAAAAAAAAAAART INFOOOOOOOOOOOOOOOOOOO")
+        response_data = {
+            'indicator': indicator,
+            'chart_info': chart_info,  # You can include other data in the response
+        }
+        indicator = jsonify(response_data)
         print(indicator, "INDICATOR")
         # db = get_db()
 
@@ -92,10 +98,14 @@ def convert_indicator(strategy_id):
                 return jsonify({'message': 'Indicator successfully updated'}), 200
             else:
                 # If the row doesn't exist, insert a new one
+
+                chart_info = chart_settings(indicator['kind'])
+                chart_info = json.dumps(chart_info)
+                print(chart_info)
                 db.execute(
-                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name, category) VALUES (?, ?, ?, ?, ?)',
+                    'INSERT INTO strategy_indicators (fk_strategy_id, fk_user_id, settings, indicator_name, category, chart_info) VALUES (?, ?, ?, ?, ?, ?)',
                     (strategy_id, g.user['id'], json_dict,
-                     indicator['kind'], category)
+                     indicator['kind'], category, chart_info)
                 )
                 db.commit()
                 return jsonify({'message': 'Indicator successfully inserted'})

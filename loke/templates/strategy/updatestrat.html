@@ -3,8 +3,10 @@
 <!-- <script type="module" src="{{ url_for('static', filename='js/cond_list.js') }}"></script>
 <script type="module" src="{{ url_for('static', filename='js/strategy.js') }}"></script>
 <script defer src="{{ url_for('static', filename='js/updatestrat_selectors.js') }}"></script> -->
-<script type="module" src="{{ url_for('static', filename='dist/main.js') }}"></script>
+
 {% endblock %} {% block header %}
+<h2>LOOOOOOOL</h2>
+<div id="container"></div>
 <div class="flex_horizontal space_between">
   <h1 id="strategy_id" data-name="{{ strategy['strategy_name'] }}" data-id="{{strategy['strategy_id']}}">
     {% block title %} ID: {{strategy['strategy_id']}} {{ strategy['strategy_name'] }} {% endblock %}
@@ -161,7 +163,7 @@
             <a class="addTask greybtn">Add</a>
           </div>
 
-          <div class="toDoList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="toDoList listColumn drop_zone"></div>
           <div class="opti_list_1"></div>
           <!-- <div class="task toDo" taskid="1" draggable="true"><a class="deleteButton"></a>xxxxx</div> -->
           <div class="binder">
@@ -170,7 +172,7 @@
               <option value="or">OR</option>
             </select>
           </div>
-          <div class="ongoingList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="ongoingList listColumn drop_zone"></div>
           <div class="opti_list_2"></div>
           <div class="binder">
             <select name="cond_bond" id="cond_bind">
@@ -178,7 +180,7 @@
               <option value="or">OR</option>
             </select>
           </div>
-          <div class="doneList listColumn"></div>
+          <div ondragover="drop_here(event)" ondrop="drop(event)" class="doneList listColumn drop_zone"></div>
           <div class="opti_list_3"></div>
         </main>
 
@@ -186,9 +188,9 @@
           <!-- insert indicator btn's -->
 
           <!-- <form action="">
-            <input type="text" value="lol" class="txtTask" />
+            <input type="text" value="lol" class="txtCond" />
           </form> -->
-          <div class="txtTask"></div>
+          <div class="txtCond"></div>
           <div class="cond"></div>
           <!-- insert comparison buttons  -->
           <div class="compare"></div>
@@ -227,5 +229,5 @@
   </div>
 </template>
 <!-- sell -->
-
+<div id="volume_chart" class="z-index-high"></div>
 {% endblock %}

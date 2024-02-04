@@ -58,6 +58,8 @@ CREATE TABLE strategy_indicators (
     indicator_name VARCHAR(55) NOT NULL,
     settings VARCHAR(255) NOT NULL,
     category VARCHAR(55) NOT NULL,
+    chart_info VARCHAR(55) NOT NULL,
+    chart_visible TINYINT(1) NOT NULL DEFAULT 1,
     FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id),
     FOREIGN KEY (fk_user_id) REFERENCES user(id)
 );

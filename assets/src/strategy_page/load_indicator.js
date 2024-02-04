@@ -3,19 +3,25 @@ import { remove_element } from "../functions/remove_element.js";
 import { build_buttons } from "./build_strategy_page.js";
 import { build_indicator_inputs } from "./build_strategy_page.js";
 import { strategyDataInstance } from "../classes/StrategyData.js";
+import { chart_indicators } from "../classes/ChartIndicators.js";
 
 const strategyData = strategyDataInstance;
 
 export async function load_indicator(name, category, values = undefined, form_id) {
   // Create a new input field element
+
   const data = {
     indicator: name,
     category: category,
   };
+
   let output = [];
   const strat_id = document.getElementById("strategy_id");
   const id = strat_id.dataset.info;
-  let indi_data = await postIndicatorData(`add_indicator`);
+  let indicator_data = await postIndicatorData(`add_indicator`);
+
+  let indi_data = indicator_data.indicator;
+
   //gets values saved in indicator_strategies otherwise default values from Indicator Classes
   if (values) {
     for (const key in values) {
@@ -32,6 +38,7 @@ export async function load_indicator(name, category, values = undefined, form_id
     indi_data = output;
   }
   const name_indicator = indi_data[0][1];
+  chart_indicators.add({ chart_info: indicator_data.chart_info, name: name_indicator });
 
   //remove name of indicator
   indi_data = indi_data.slice(1);
@@ -63,6 +70,23 @@ export async function load_indicator(name, category, values = undefined, form_id
   submitButton.type = "submit";
   submitButton.classList = "smallbtn ml10";
   submitButton.innerText = "Submit";
+
+  // Create a checkbox
+
+  const label = document.createElement("label");
+  label.textContent = "Tick the box:";
+  const checkbox = document.createElement("input");
+  field.appendChild(label);
+  checkbox.type = "checkbox";
+  checkbox.value = "1";
+  checkbox.classList = "checkbox";
+
+  checkbox.addEventListener("change", function () {
+    checkbox.value = checkbox.checked ? "1" : "0";
+    console.log(checkbox.value);
+  });
+
+  field.appendChild(checkbox);
   field.appendChild(submitButton);
 
   //build input fields of indicator on click
@@ -73,18 +97,25 @@ export async function load_indicator(name, category, values = undefined, form_id
     form_id = form_id.slice(4);
     // let formdata = event.currentTarget.customParam;
     const formData = new FormData(form);
+    for (const pair of formData.entries()) {
+      const [key, value] = pair;
+      console.log(`${key}: ${value}`);
+    }
+    console.log(formData, "FORM DATA!!!!!!!!!!!!!!!!!!");
     let form_arr = [["kind", legend.innerText]];
     formData.forEach((value, key) => {
+      console.log(key, value, "KEY VALUE");
       form_arr.push([key, value]);
     });
     form_arr.push(form_id);
+    console.log(form_arr, "FORM ARR3333333333333333333333333333333333333333333333333");
     form_arr.unshift(event.target.dataset.category);
 
     //strategy_id = document.querySelector("#strategy_id");
     await postJsonGetStatus(form_arr, `convert_indicator`);
 
     let indicators_data = await postJsonGetData(data, "init_strategy");
-    console.log(indicators_data, "indicators_data!!!!!!!!!!!!!!!!!!!!");
+
     remove_element("indicator_cond");
     build_buttons(indicators_data.cols, "condition_btns", "button", "indicator_cond");
     let edited_data = strategyData.getData();

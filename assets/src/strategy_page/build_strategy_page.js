@@ -16,13 +16,15 @@ export async function build_strategy_page() {
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
+  
 
-  await build_dataset_pair_selector(dataset_pairs);
+  await build_dataset_pair_selector(dataset_pairs, strategy_data.cols);
   // console.log(datasets_available, "datasets_available");
   let edited_data = strategyData.getData();
   edited_data.cols = strategy_data.cols;
   strategyData.setData(edited_data);
-  console.log(strategyData.getData(), "strategyData.getData()");
+  console.log(strategy_data, "INIT");
+
   remove_element("indicator_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
   remove_element("buy_cond2");
@@ -38,7 +40,13 @@ export async function build_strategy_page() {
   await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
 
+<<<<<<< HEAD
   // insert_chart();
+=======
+  console.log(strategy_data.cols, "COLUUUUUUUUUUUMns");
+
+  insert_chart(strategy_data.cols);
+>>>>>>> level4
 
   let todo_b = document.querySelector("#new_list_buy");
 
@@ -68,10 +76,9 @@ async function create_list(side) {
 export async function build_optimization_results() {
   const data = strategyData.getData();
   const response = await postJsonGetData(data, "optimization_results");
-  console.log(response, "response");
 
   const resultList = document.querySelector("#optimization_results");
-  console.log(resultList, "resultList");
+
   response.forEach((opti) => {
     let result = JSON.parse(opti.result);
     for (let i = 0; i < result.length; i++) {
@@ -119,7 +126,7 @@ export async function build_indicator_inputs(data, category = null) {
 
   async function load() {
     for (let i = 0; i < indicators.length; i++) {
-      const form = await load_indicator(
+      await load_indicator(
         indicators[i].indicator["kind"],
         indicators[i].category,
         indicators[i].indicator, //values
@@ -128,7 +135,7 @@ export async function build_indicator_inputs(data, category = null) {
     }
   }
 }
-async function build_dataset_pair_selector(dataset_pairs) {
+async function build_dataset_pair_selector(dataset_pairs, dataframe_column_names) {
   // Create select element
   const selectElement = document.createElement("select");
   selectElement.id = "dataset_pair_selector";
@@ -156,8 +163,13 @@ async function build_dataset_pair_selector(dataset_pairs) {
     let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
     // location.reload();
     let data = await postJsonGetData({}, "init_strategy");
+<<<<<<< HEAD
     // remove_chart();
     // insert_chart();
+=======
+    remove_chart();
+    insert_chart(dataframe_column_names);
+>>>>>>> level4
   });
 }
 function remove_chart() {

@@ -2,30 +2,35 @@
 import { urlStringConversion } from "./url_string_conversion.js";
 import { getJson } from "../functions/fetch.js";
 // import { postJsonGetData } from "../../loke/static/js/fetch";
+//https://www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay
 
+//www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay
 export class Chart {
-  constructor(container) {
-    this.container = container;
-    this.chart = createChart(container, {
-      width: 1300,
-      height: 500,
+  constructor(container, dataframe_column_names) {
+    // this.dataframe_column_names = dataframe_column_names;
+    // this.container = container;
+    this.width = 1300;
+    this.height = this.add_to_height(dataframe_column_names);
+    this.chart = LightweightCharts.createChart(container, {
+      width: this.width,
+      height: this.height,
       layout: {
         background: {
           type: "solid",
           color: "#000000",
         },
-        textColor: "rgba(255, 255, 255, 0.9)",
+        textColor: "rgba(13, 6, 6, 0.9)", // Set the font color to white
       },
       grid: {
         vertLines: {
-          color: "rgba(197, 203, 206, 0.5)",
+          color: "rgba(107, 203, 206, 0.5)",
         },
         horzLines: {
           color: "rgba(197, 203, 206, 0.5)",
         },
       },
       crosshair: {
-        mode: CrosshairMode.Normal,
+        mode: LightweightCharts.CrosshairMode.Normal,
       },
       rightPriceScale: {
         borderColor: "rgba(197, 203, 206, 0.8)",
@@ -34,6 +39,7 @@ export class Chart {
         timeVisible: true,
         borderColor: "rgba(197, 203, 206, 0.8)",
       },
+      pane: 0,
     });
     this.candleSeries = this.chart.addCandlestickSeries({
       upColor: "rgba(255, 144, 0, 1)",
@@ -43,126 +49,98 @@ export class Chart {
       wickDownColor: "rgba(55, 144, 0, 1)",
       wickUpColor: "rgba(255, 144, 0, 1)",
     });
-    this.resizeChart();
+    // this.resizeChart();
   }
   setData(data) {
     this.candleSeries.setData(data);
   }
 
-  async getCandlesticks(data_obj) {
-    const apiUrl = `load_pickled_df`;
-
-    console.log(data_obj);
-    await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data_obj),
-    })
-      .then((response) => response.json())
-      .then((jsonData) => {
-        jsonData = JSON.parse(jsonData);
-        this.setData(jsonData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+  add_to_height(dataframe_column_names) {
+    const hei = dataframe_column_names.length;
+    const new_height = 50 * hei;
+    return new_height + 500;
   }
 
-  resizeChart() {
-    new ResizeObserver((entries) => {
-      if (entries.length === 0 || entries[0].target !== this.container) {
-        return;
-      }
-      const newRect = entries[0].contentRect;
-      this.chart.applyOptions({ height: newRect.height, width: newRect.width });
-    }).observe(this.container);
+  // resizeChart() {
+  //   new ResizeObserver((entries) => {
+  //     if (entries.length === 0 || entries[0].target !== this.container) {
+  //       return;
+  //     }
+  //     const newRect = entries[0].contentRect;
+  //     this.chart.applyOptions({ height: newRect.height, width: newRect.width });
+  //   }).observe(this.container);
+  // }
+
+  // add_histogram(indicator_data, pane, color1 = "green", color2 = "red") {
+  //   const histogram = this.chart.addHistogramSeries({
+  //     lineWidth: 2,
+  //     pane,
+  //   });
+  //   histogram.setData(indicator_data);
+  // }
+  // add_histogram(volume_data, pane) {
+  //   const volumeSeries = this.chart.addHistogramSeries({
+  //     priceFormat: {
+  //       type: "volume",
+  //     },
+  //     pane,
+  //   });
+  //   volumeSeries.priceScale().applyOptions({
+  //     // set the positioning of the volume series
+  //     scaleMargins: {
+  //       top: 0.7, // highest point of the series will be 70% away from the top
+  //       bottom: 0,
+  //     },
+  //   });
+  //   volumeSeries.setData(volume_data);
+  // }
+
+  add_histogram(indicator_data, pane, params = { color: "red", lineWidth: 1 }) {
+    // let custom_series = this.chart.addLineSeries(params);
+    // custom_series.setData(indicator_data);
+    params.pane = pane;
+    const line_series = this.chart.addHistogramSeries(params);
+    // line_series.priceScale().applyOptions({
+    //   // set the positioning of the volume series
+    //   scaleMargins: {
+    //     top: 0.9, // highest point of the series will be 70% away from the top
+    //     bottom: 0,
+    //   },
+    // });
+    console.log(indicator_data, "hut");
+    line_series.setData(indicator_data);
   }
-}
-
-// Example usage:
-
-// function nextBusinessDay(time) {
-//   var d = new Date();
-//   d.setUTCFullYear(time.year);
-//   d.setUTCMonth(time.month - 1);
-//   d.setUTCDate(time.day + 1);
-//   d.setUTCHours(0, 0, 0, 0);
-//   return {
-//     year: d.getUTCFullYear(),
-//     month: d.getUTCMonth() + 1,
-//     day: d.getUTCDate(),
-//   };
-// }
-// setInterval(function () {
-//   var deltaY = targetPrice - lastClose;
-//   var deltaX = targetIndex - lastIndex;
-//   var angle = deltaY / deltaX;
-//   var basePrice = lastClose + (currentIndex - lastIndex) * angle;
-//   var noise = 0.1 - Math.random() * 0.1 + 1.0;
-//   var noisedPrice = basePrice * noise;
-//   mergeTickToBar(noisedPrice);
-//   if (++ticksInCurrentBar === 5) {
-//     // move to next bar
-//     currentIndex++;
-//     currentBusinessDay = nextBusinessDay(currentBusinessDay);
-//     currentBar = {
-//       open: null,
-//       high: null,
-//       low: null,
-//       close: null,
-//       time: currentBusinessDay,
-//     };
-//     ticksInCurrentBar = 0;
-//     if (currentIndex === 5000) {
-//       reset();
-//       return;
-//     }
-//     if (currentIndex === targetIndex) {
-//       // change trend
-//       lastClose = noisedPrice;
-//       lastIndex = currentIndex;
-//       targetIndex = lastIndex + 5 + Math.round(Math.random() + 30);
-//       targetPrice = getRandomPrice();
-//     }
-//   }
-// }, 200);
-// const requestOptions = {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   body: JSON.stringify(jsonData),
-// };
-
-// try {
-//   const response = await fetch(apiUrl, requestOptions);
-//   if (!response.ok) {
-//     throw new Error(`HTTP error! Status: ${response.status}`);
-//   }
-
-//   const data = await response.json();
-//   const parsedData = JSON.parse(data);
-//   console.log(parsedData);
-//   return parsedData;
-// } catch (error) {
-//   console.error("Fetch error:", error);
-// }
-export async function postJsonGetData(data, endpoint, method = "POST") {
-  const options = {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  let response = await fetch(endpoint, options);
-
-  if (!response.ok) {
-    throw new Error("Request failed");
+  add_line_series(indicator_data, pane, params = { color: "red", lineWidth: 1 }) {
+    // let custom_series = this.chart.addLineSeries(params);
+    // custom_series.setData(indicator_data);
+    params.pane = pane;
+    const line_series = this.chart.addLineSeries(params);
+    // line_series.priceScale().applyOptions({
+    //   // set the positioning of the volume series
+    //   scaleMargins: {
+    //     top: 0.7, // highest point of the series will be 70% away from the top
+    //     bottom: 0,
+    //   },
+    // });
+    console.log(indicator_data, "hut");
+    line_series.setData(indicator_data);
   }
 
-  const responseData = await response.json();
-  return responseData;
+  // add_histogram(volume_data, pane) {
+  //   const volumeSeries = this.chart.addHistogramSeries({
+  //     priceFormat: {
+  //       color: (bar) => (bar.close > bar.open ? "green" : "red"),
+  //       type: "volume",
+  //     },
+  //     pane,
+  //   });
+  //   volumeSeries.priceScale().applyOptions({
+  //     // set the positioning of the volume series
+  //     scaleMargins: {
+  //       top: 0.7, // highest point of the series will be 70% away from the top
+  //       bottom: 0,
+  //     },
+  //   });
+  //   volumeSeries.setData(volume_data);
+  // }
 }

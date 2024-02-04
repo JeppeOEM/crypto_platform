@@ -29,6 +29,9 @@ class Ao:
     def default_values(self):
         return [("kind", self.__class__.__name__.lower()), ("fast", 5), ("slow", 34), ("offset", 0),]
 
+    def chart_info(self):
+        return "histogram"
+
     def __repr__(self):
         description = """Awesome Oscillator (AO)
 

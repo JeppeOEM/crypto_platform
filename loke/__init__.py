@@ -26,14 +26,15 @@ stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 stream_handler.setLevel(logging.INFO)
 
-file_handler = logging.FileHandler("info.log")
-file_handler.setFormatter(formatter)
-file_handler.setLevel(logging.DEBUG)
+# file_handler = logging.FileHandler("info.log")
+# file_handler.setFormatter(formatter)
+# file_handler.setLevel(logging.DEBUG)
 
-logger.addHandler(stream_handler)
-logger.addHandler(file_handler)
-## 
-## enables the frontend to recognize the js/css modules
+# logger.addHandler(file_handler)
+
+# logger.addHandler(stream_handler)
+##
+# enables the frontend to recognize the js/css modules
 mimetypes.add_type('application/javascript', '.js')
 mimetypes.add_type('text/css', '.css')
 ###

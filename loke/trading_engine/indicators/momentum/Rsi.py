@@ -35,6 +35,9 @@ class Rsi:
     def type_only(self):
         return [{"kind": self.__class__.__name__.lower(), "length": "int", "scalar": "float", "talib": "bool", "drift": "int", "offset": "int"}]
 
+    def chart_info(self):
+        return "line_add_pane"
+
     def __repr__(self):
         description = """Relative Strength Index (RSI)
 
