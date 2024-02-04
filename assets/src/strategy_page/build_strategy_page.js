@@ -38,7 +38,7 @@ export async function build_strategy_page() {
   await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
 
-  insert_chart();
+  // insert_chart();
 
   let todo_b = document.querySelector("#new_list_buy");
 
@@ -156,8 +156,8 @@ async function build_dataset_pair_selector(dataset_pairs) {
     let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
     // location.reload();
     let data = await postJsonGetData({}, "init_strategy");
-    remove_chart();
-    insert_chart();
+    // remove_chart();
+    // insert_chart();
   });
 }
 function remove_chart() {
