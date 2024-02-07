@@ -130,44 +130,43 @@ function which_side(inputString) {
 //   });
 // }
 
-export function optimizer_params(conditions, suffix) {
-  const cond_arr = [];
+// export function optimizer_params(conditions, suffix) {
+//   const cond_arr = [];
 
-  conditions.forEach((cond) => {
-    let placement = {
-      list_id: cond.fk_list_id,
-      list_row: cond.list_row,
-    };
-    cond = JSON.parse(cond.indicator_json);
-    cond_arr.push([cond, placement]);
-  });
+//   conditions.forEach((cond) => {
+//     let placement = {
+//       list_id: cond.fk_list_id,
+//       list_row: cond.list_row,
+//     };
+//     cond = JSON.parse(cond.indicator_json);
+//     cond_arr.push([cond, placement]);
+//   });
 
-  const opti_params = document.getElementById("optimize_params");
-  //fragment kills the flicker
-  const fragment = document.createDocumentFragment();
+//   const opti_params = document.getElementById("optimize_params");
+//   //fragment kills the flicker
+//   const fragment = document.createDocumentFragment();
 
-  cond_arr.forEach((cond) => {
-    cond[0].forEach((val) => {
-      let list_id = cond[1].list_id;
-      let list_row = cond[1].list_row;
+//   cond_arr.forEach((cond) => {
+//     cond[0].forEach((val) => {
+//       let list_id = cond[1].list_id;
+//       let list_row = cond[1].list_row;
 
-      const clone = opti_params.content.cloneNode(true);
-      clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
-      clone.querySelector(".operator").textContent = val[1]["cond"];
-      clone.querySelector(".min").value = "1";
-      clone.querySelector(".max").value = "1";
-      let table_row = clone.querySelector(".param");
-      table_row.dataset.id = list_id;
-      table_row.dataset.row = list_row;
+//       const clone = opti_params.content.cloneNode(true);
+//       clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
+//       clone.querySelector(".operator").textContent = val[1]["cond"];
+//       clone.querySelector(".min").value = "1";
+//       clone.querySelector(".max").value = "1";
+//       let table_row = clone.querySelector(".param");
+//       table_row.dataset.id = list_id;
+//       table_row.dataset.row = list_row;
 
-      let append_here = insert_opti_where(list_id, list_row, suffix);
+//       let append_here = insert_opti_where(list_id, list_row, suffix);
 
+//       // Append the clone to the fragment instead of the actual document
+//       fragment.appendChild(clone);
+//     });
+//   });
 
-      // Append the clone to the fragment instead of the actual document
-      fragment.appendChild(clone);
-    });
-  });
-
-  // Append the fragment to the actual document in one go
-  opti_params.appendChild(fragment);
-}
+//   // Append the fragment to the actual document in one go
+//   opti_params.appendChild(fragment);
+// }

@@ -12,7 +12,7 @@ export async function insert_chart(dataframe_column_names) {
   const MainChart = new Chart(chartDiv, dataframe_column_names);
 
   const current_strategy = await getJson("get_strategy");
-  console.log(current_strategy, "current_strategy!!!!!!!!!!!");
+
   const coin_pair = current_strategy.pair;
   const market_type = "spot";
   const timeframe = "1m";
@@ -39,16 +39,13 @@ export async function insert_chart(dataframe_column_names) {
 
   //remove open,high,close so only cols that need to be inserted in chart remains
 
-  console.log(dataframe_column_names);
-  console.log("########################################################col_names[i]");
   add_all_indicators(MainChart, dataframe_column_names, candlesticks);
 }
 
 function add_all_indicators(MainChart, col_names, candlesticks) {
   for (let i = 0; i < col_names.length; i++) {
-    console.log("########################################################col_names[i]");
     let pane_level = i + 1;
-    console.log(col_names[i], "col_names[i]");
+
     let data = filter_candles(candlesticks, col_names[i]);
     let setting = chart_settings(col_names[i]);
     console.log(setting, "setting");
