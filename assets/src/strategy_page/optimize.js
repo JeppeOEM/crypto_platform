@@ -6,6 +6,8 @@ export function load_params() {
   const arr = [];
   const rows = document.querySelectorAll(".param");
   rows.forEach((row) => {
+    let list_id = row.dataset.id;
+    console.log(list_id, "LIST ID");
     const indi = row.querySelector(".indicator");
     let side = which_side(indi.innerText);
     const operator = row.querySelector(".operator");
@@ -13,7 +15,7 @@ export function load_params() {
     const max = row.querySelector(".max");
     const type = "int";
 
-    arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side]);
+    arr.push([indi.innerText, operator.innerText, type, min.value, max.value, side, list_id]);
   });
   let data = {};
   data.optimizer_params = arr;

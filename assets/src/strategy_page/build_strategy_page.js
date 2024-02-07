@@ -16,7 +16,6 @@ export async function build_strategy_page() {
   const strategy_data = await postJsonGetData(data, "init_strategy");
   // const datasets_available = strategyData.dataset_pairs;
   let dataset_pairs = await strategy_data.dataset_pairs;
-  
 
   await build_dataset_pair_selector(dataset_pairs, strategy_data.cols);
   // console.log(datasets_available, "datasets_available");
@@ -40,13 +39,9 @@ export async function build_strategy_page() {
   await build_buttons(["or", "&"], "or_and_btns", "button", "or_and_cond");
   await build_buttons(strategy_data.cols, "condition_btns", "button", "indicator_cond");
 
-<<<<<<< HEAD
-  // insert_chart();
-=======
   console.log(strategy_data.cols, "COLUUUUUUUUUUUMns");
 
   insert_chart(strategy_data.cols);
->>>>>>> level4
 
   let todo_b = document.querySelector("#new_list_buy");
 
@@ -66,12 +61,13 @@ export async function build_strategy_page() {
     build_condition_lists();
   });
 }
-
 async function create_list(side) {
   const status = postJsonGetStatus({}, "cond_list?side=" + side);
-  // remove_element("cond_list");
-  // build_condition_lists();
 }
+// async function create_list(side) {
+//   const status = postJsonGetStatus({}, "cond_list?side=" + side);
+
+// }
 
 export async function build_optimization_results() {
   const data = strategyData.getData();
@@ -163,13 +159,8 @@ async function build_dataset_pair_selector(dataset_pairs, dataframe_column_names
     let status = await postJsonGetStatus({ pair: pair }, "strategy_pair");
     // location.reload();
     let data = await postJsonGetData({}, "init_strategy");
-<<<<<<< HEAD
-    // remove_chart();
-    // insert_chart();
-=======
     remove_chart();
     insert_chart(dataframe_column_names);
->>>>>>> level4
   });
 }
 function remove_chart() {
@@ -178,15 +169,13 @@ function remove_chart() {
 }
 
 export async function build_condition_lists() {
-  // const taskManager1 = condListController.createCondManager("buy_cond_list1");
-  // const taskManager2 = condListController.createCondManager("sell_cond_list2");
-  const json_buy = await getJson("cond_list?side=buy");
-  const json_sell = await getJson("cond_list?side=sell");
+  const json = await getJson("condition_list");
+  console.log(json, "JSON");
   const sell_clones = document.querySelector(".sell_clones");
   const buy_clones = document.querySelector(".buy_clones");
   const clone_template = document.querySelector(".clone_template");
-  await clone_list(json_buy, buy_clones, "buy");
-  await clone_list(json_sell, sell_clones, "sell");
+  await clone_list(json.buy, buy_clones, "buy");
+  await clone_list(json.sell, sell_clones, "sell");
 
   async function clone_list(json, container, side) {
     let primary_key;
@@ -216,6 +205,46 @@ export async function build_condition_lists() {
     });
   }
 }
+
+// export async function build_condition_lists() {
+
+//   const json_buy = await getJson("cond_list?side=buy");
+//   const json_sell = await getJson("cond_list?side=sell");
+//   const json = await getJson("cond_list?side=sell");
+//   const sell_clones = document.querySelector(".sell_clones");
+//   const buy_clones = document.querySelector(".buy_clones");
+//   const clone_template = document.querySelector(".clone_template");
+//   await clone_list(json_buy, buy_clones, "buy");
+//   await clone_list(json_sell, sell_clones, "sell");
+
+//   async function clone_list(json, container, side) {
+//     let primary_key;
+//     json.forEach((data) => {
+//       let element_name = `${side}_cond_list_${data.frontend_id}`;
+//       const clone = clone_template.content.cloneNode(true);
+//       let insert_name = clone.querySelector(".single_list");
+//       let cond_modal = clone.querySelector(".currentTask");
+//       cond_modal.dataset.side = "buy";
+//       insert_name.classList.add(element_name);
+//       insert_name.classList.add(`${side}_side`);
+//       if (side == "buy") {
+//         insert_name.dataset.primary_key = data.list_id;
+//         primary_key = data.list_id;
+//       } else {
+//         insert_name.dataset.primary_key = data.list_id;
+//         primary_key = data.list_id;
+//       }
+
+//       insert_name.dataset.frontend_id = data.frontend_id;
+//       // const cond_wrapper = clone.querySelector(`.clone_${side}`);
+//       // cond_wrapper.dataset.id = data.list_id;
+//       container.appendChild(clone);
+//       //cond_list.js controller
+//       condListController.createCondManager(element_name, primary_key);
+//       window.scrollTo(0, document.body.scrollHeight);
+//     });
+//   }
+// }
 export async function build_buttons(array, element_id, element, class_name) {
   remove_element(class_name);
   // adds all types of buttons to frontend(also the indicators)

@@ -64,7 +64,6 @@ def update_row(strategy_id):
     else:
         table_name = 'sell_conditions'
 
-
     if data['side'] == "buy":
         table_name = 'buy_conditions'
     else:
@@ -80,6 +79,34 @@ def update_row(strategy_id):
 
     db.commit()
     return jsonify({'message': 'Row updated'}), 200
+
+
+@bp.route('/<int:strategy_id>/condition_list', methods=('POST', 'GET'))
+# #@login_required
+def condition_list(strategy_id):
+
+    db = get_db()
+    if request.method == 'POST':
+        side = request.args.get('side', None)
+        print(side, "SIDE")
+        side = side.lower()
+        cur = db.cursor()
+        cur.execute(
+            'INSERT INTO condition_lists (fk_user_id, fk_strategy_id,side) VALUES (?, ?, ?)' (g.user['id'], strategy_id, side))
+        db.commit()
+
+        return jsonify({'message': 'Condition list successfully created'}), 200
+
+    if request.method == 'GET':
+
+        cond_lists = db.execute(
+            'SELECT * FROM condition_lists '
+            'WHERE fk_user_id = ? AND fk_strategy_id = ?', (g.user['id'], strategy_id)).fetchall()
+
+        buy_dict = [dict(row) for row in cond_lists if row['side'] == 'buy']
+        sell_dict = [dict(row) for row in cond_lists if row['side'] == 'sell']
+
+        return jsonify({'buy': buy_dict, 'sell': sell_dict})
 
 
 @bp.route('/<int:strategy_id>/cond_list', methods=('POST', 'GET'))

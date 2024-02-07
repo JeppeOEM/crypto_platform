@@ -293,6 +293,17 @@ def createstrat():
                     (g.user['id'], strategy_id)
                 )
 
+                cur.execute(
+                    'INSERT INTO condition_lists (fk_user_id, fk_strategy_id, side)'
+                    ' VALUES (?, ?, ?)',
+                    (g.user['id'], strategy_id, "buy")
+                )
+                cur.execute(
+                    'INSERT INTO condition_lists (fk_user_id, fk_strategy_id, side)'
+                    ' VALUES (?, ?, ?)',
+                    (g.user['id'], strategy_id, "sell")
+                )
+
                 db.commit()
 
             except Exception as e:

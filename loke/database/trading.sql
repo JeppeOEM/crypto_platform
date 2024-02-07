@@ -130,6 +130,27 @@ SET frontend_id = (
     )
 WHERE list_id = NEW.list_id;
 END;
+CREATE TABLE condition_lists (
+    list_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_user_id INT NOT NULL,
+    fk_strategy_id INT NOT NULL,
+    frontend_id INT,
+    side VARCHAR(4) NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_user_id) REFERENCES user(id),
+    FOREIGN KEY (fk_strategy_id) REFERENCES strategies(strategy_id)
+);
+CREATE TRIGGER update_id
+AFTER
+INSERT ON condition_lists BEGIN
+UPDATE condition_lists
+SET frontend_id = (
+        SELECT COUNT(DISTINCT frontend_id) + 1
+        FROM buy_condition_lists
+        WHERE fk_strategy_id = NEW.fk_strategy_id
+    )
+WHERE list_id = NEW.list_id;
+END;
 CREATE TABLE backtest (
     backtest_id INTEGER PRIMARY KEY AUTOINCREMENT,
     fk_user_id INT NOT NULL,

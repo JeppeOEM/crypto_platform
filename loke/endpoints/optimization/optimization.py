@@ -25,14 +25,17 @@ def optimizer_params(id):
     db = get_db()
     data = request.get_json()
     params = data['optimizer_params']
+    print(params, "PARAMS")
     params_class = data['params_class']
-    fk_list_id = data['fk_list_id']
+    # fk_list_id = data['fk_list_id']
     # list_row = data['list_row']
     list_row = 1
     try:
         for param in params:
-            name, operator, data_type, opti_min, opti_max, side = param
-
+            name, operator, data_type, opti_min, opti_max, side, fk_list_id = param
+            fk_list_id = int(fk_list_id)
+            print(param, "PARAzzzzzzzzzzzzzzzzM")
+            print(fk_list_id, "FK LIST ID")
             # Check if a row with the same values already exists
             table_name = 'buy_optimization' if side == 'BUY' else 'sell_optimization'
             existing_row = db.execute(
@@ -51,10 +54,10 @@ def optimizer_params(id):
                 db.execute(
                     'INSERT INTO {} '
                     '(fk_strategy_id, fk_user_id, optimization_name, data_type, class, operator, '
-                    'optimization_min, optimization_max) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+                    'optimization_min, optimization_max, fk_list_id, list_row) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
                     .format(table_name),
-                    (id, g.user['id'], name, data_type,
-                     params_class, operator, opti_min, opti_max)
+                    (id, g.user['id'], name, data_type, params_class,
+                     operator, opti_min, opti_max, fk_list_id, list_row)
                 )
 
         db.commit()
