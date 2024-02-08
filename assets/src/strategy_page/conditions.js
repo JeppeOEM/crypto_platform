@@ -50,7 +50,6 @@ export async function build_conds() {
   load_cond_managers(sell_conds, "sell");
   function load_cond_managers(arr, side) {
     for (let i = 0; i < arr.length; i++) {
-
       //CODE FAILS HERE
       let condManager = condListController.getKey(arr[i].fk_list_id);
       //text, column, id, side;
@@ -98,6 +97,7 @@ export async function save_cond_buy() {
   // optimizer_params(buy_conds, "_BUY", "param_buy");
 
   conditions = [];
+  load_params();
 }
 
 export async function save_cond_sell() {
@@ -133,6 +133,16 @@ export async function save_cond_sell() {
   conditions_sell = [];
 
   selected_cond.reset_cond();
+  load_params();
+}
+
+async function load_params() {
+  const json = await getJson("load_conditions");
+  const buy_conds = json.buy_conds;
+  const sell_conds = json.sell_conds;
+  remove_element("param");
+  optimizer_params(buy_conds, "_BUY", "param_buy");
+  optimizer_params(sell_conds, "_SELL", "param_buy");
 }
 
 function del_last() {

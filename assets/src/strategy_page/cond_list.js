@@ -305,7 +305,7 @@ class CondManager {
         this.doneListHeight = this.doneListHeight - previousHeight + task.offsetHeight;
     }
 
-    this.load_opti_params();
+    // this.load_opti_params();
     //this.resizeLists();
   }
 

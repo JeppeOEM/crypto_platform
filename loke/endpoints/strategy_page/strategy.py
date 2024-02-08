@@ -281,17 +281,6 @@ def createstrat():
                 last_row = cur.execute('SELECT last_insert_rowid()').fetchone()
                 strategy_id = last_row[0]
                 # strategy starts with 2 list allways
-                cur.execute(
-                    'INSERT INTO sell_condition_lists (fk_user_id, fk_strategy_id)'
-                    ' VALUES (?, ?)',
-                    (g.user['id'], strategy_id)
-                )
-
-                cur.execute(
-                    'INSERT INTO buy_condition_lists (fk_user_id, fk_strategy_id)'
-                    ' VALUES (?, ?)',
-                    (g.user['id'], strategy_id)
-                )
 
                 cur.execute(
                     'INSERT INTO condition_lists (fk_user_id, fk_strategy_id, side)'

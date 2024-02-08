@@ -1,1 +1,1 @@
-update conditions primary key, trashcan
+optimization dont get updated

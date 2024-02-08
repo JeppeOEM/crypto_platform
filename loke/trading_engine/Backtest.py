@@ -55,6 +55,7 @@ class Backtest:
             df['pnl'] = df.close.pct_change()
         except:
             print("EMPTY DATAFRAME ERROR")
+            print("Possible uncorrect number of optimization conds")
             print(df.tail(110))
             exit()
         df['cond1'] = np.where(df['open_trade'] == 1, 1, 0)

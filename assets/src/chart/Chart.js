@@ -107,7 +107,7 @@ export class Chart {
     //     bottom: 0,
     //   },
     // });
-    console.log(indicator_data, "hut");
+
     line_series.setData(indicator_data);
   }
   add_line_series(indicator_data, pane, params = { color: "red", lineWidth: 1 }) {
@@ -122,7 +122,7 @@ export class Chart {
     //     bottom: 0,
     //   },
     // });
-    console.log(indicator_data, "hut");
+
     line_series.setData(indicator_data);
   }
 

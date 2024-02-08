@@ -48,7 +48,7 @@ function add_all_indicators(MainChart, col_names, candlesticks) {
 
     let data = filter_candles(candlesticks, col_names[i]);
     let setting = chart_settings(col_names[i]);
-    console.log(setting, "setting");
+
     if (setting.type === "histogram") {
       MainChart.add_histogram(data, pane_level);
     } else if (setting.type === "line_add_pane") {
