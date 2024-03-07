@@ -1,5 +1,5 @@
-from loke.trading_engine.process_conds import process_conds
-from loke.trading_engine.Backtest import Backtest
+from main_app.trading_engine.process_conds import process_conds
+from main_app.trading_engine.Backtest import Backtest
 
 
 def are_nested_arrays_equal(arr1, arr2):

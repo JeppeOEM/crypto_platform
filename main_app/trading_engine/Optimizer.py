@@ -1,16 +1,16 @@
 import random
 import typing
 import copy
-from loke.models.BacktestResult import BacktestResult
-from loke.trading_engine.process_conds import create_conds
-from loke.trading_engine.optimize_backtest import optimize_backtest
+from main_app.models.BacktestResult import BacktestResult
+from main_app.trading_engine.process_conds import create_conds
+from main_app.trading_engine.optimize_backtest import optimize_backtest
 
-from loke.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
+from main_app.functions.utilities.backtesting_utils import STRAT_PARAMS, CONDITIONS, resample_timeframe
 # import strategies.obv
 # import strategies.ichimoku
 # import strategies.support_resistance
-from loke.database.db import get_db
-from loke.data_download.Hdf5 import Hdf5Client
+from main_app.database.db import get_db
+from main_app.data_download.Hdf5 import Hdf5Client
 
 
 def set_contraints(bool: bool, params: typing.Dict) -> bool:

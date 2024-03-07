@@ -1,7 +1,7 @@
 // import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
 import { getJson } from "../functions/fetch.js";
-// import { postJsonGetData } from "../../loke/static/js/fetch";
+// import { postJsonGetData } from "../../main_app/static/js/fetch";
 
 export class Histogram {
   constructor(container) {

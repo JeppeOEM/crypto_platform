@@ -5,7 +5,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from loke.database.db import get_db
+from main_app.database.db import get_db
 # use url_prefix/route to render html
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 # When using a blueprint, the name of the blueprint is prepended to the name of the function,

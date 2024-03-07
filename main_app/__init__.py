@@ -4,7 +4,7 @@ import pandas_ta as ta
 from flask import Flask
 from flask_caching import Cache
 from flask import Flask, request, jsonify
-from loke.database import db
+from main_app.database import db
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from .controllers.StrategyController import StrategyController
@@ -98,7 +98,7 @@ def create_app(test_config=None):
 
     @app.route("/")
     def index():
-        return render_template("loke/templates/index.html")
+        return render_template("main_app/templates/index.html")
 
     db.init_app(app)
 

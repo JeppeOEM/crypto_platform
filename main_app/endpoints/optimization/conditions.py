@@ -3,9 +3,9 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from loke.endpoints.auth import login_required
-from loke.database.db import get_db
-from loke.endpoints.strategy_page.strategy import get_strategy
+from main_app.endpoints.auth import login_required
+from main_app.database.db import get_db
+from main_app.endpoints.strategy_page.strategy import get_strategy
 
 import pandas as pd
 

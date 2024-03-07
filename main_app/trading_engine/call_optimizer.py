@@ -1,5 +1,5 @@
-from loke.trading_engine.Optimizer import Nsga2
-from loke.trading_engine.process_conds import create_conds
+from main_app.trading_engine.Optimizer import Nsga2
+from main_app.trading_engine.process_conds import create_conds
 
 
 

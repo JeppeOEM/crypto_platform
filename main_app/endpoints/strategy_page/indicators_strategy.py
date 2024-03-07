@@ -2,9 +2,9 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, jsonify
 )
 from werkzeug.exceptions import abort
-from loke.endpoints.auth import login_required
-from loke.database.db import get_db
-from loke.trading_engine.indicators.chart_settings import chart_settings
+from main_app.endpoints.auth import login_required
+from main_app.database.db import get_db
+from main_app.trading_engine.indicators.chart_settings import chart_settings
 
 import importlib
 import os
@@ -24,7 +24,7 @@ def add_indicator(strategy_id):
         indicator = data.get('indicator')  # Extract the 'indicator' name
         category = data.get('category')
         indicator = indicator.capitalize()
-        module_path = f"loke.trading_engine.indicators.{category}.{indicator}"
+        module_path = f"main_app.trading_engine.indicators.{category}.{indicator}"
         module = importlib.import_module(f"{module_path}")
         Obj = getattr(module, f"{indicator}")
         obj = Obj()

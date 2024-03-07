@@ -3,9 +3,9 @@ from flask import (
 )
 import json
 import pandas as pd
-from loke.database.db import get_db
-# from loke.functions.getDataframe import getDataframe
-from loke.functions.getDataframe import getDataframe
+from main_app.database.db import get_db
+# from main_app.functions.getDataframe import getDataframe
+from main_app.functions.getDataframe import getDataframe
 import json
 
 

@@ -2,12 +2,12 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, jsonify
 )
 from werkzeug.exceptions import abort
-from loke.endpoints.auth import login_required
-from loke.database.db import get_db
-from loke.data_download.Hdf5 import Hdf5Client
-from loke.data_download.BinanceClient import BinanceClient
-from loke.data_download.data_collector import collect_all
-from loke.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
+from main_app.endpoints.auth import login_required
+from main_app.database.db import get_db
+from main_app.data_download.Hdf5 import Hdf5Client
+from main_app.data_download.BinanceClient import BinanceClient
+from main_app.data_download.data_collector import collect_all
+from main_app.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
 import importlib
 import os
 import json

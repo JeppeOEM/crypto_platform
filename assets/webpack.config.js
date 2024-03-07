@@ -4,7 +4,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "main.js",
-    path: path.resolve(__dirname, "..", "loke", "static", "dist"),
+    path: path.resolve(__dirname, "..", "main_app", "static", "dist"),
     clean: true,
   },
 };

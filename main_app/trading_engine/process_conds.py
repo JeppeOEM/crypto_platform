@@ -1,6 +1,6 @@
-from loke.trading_engine.Condition import Condition
+from main_app.trading_engine.Condition import Condition
 import json
-from loke.database.db import get_db
+from main_app.database.db import get_db
 import numpy as np
 
 

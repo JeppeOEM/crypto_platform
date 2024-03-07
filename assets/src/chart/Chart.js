@@ -1,7 +1,7 @@
 // import { createChart, CrosshairMode } from "lightweight-charts";
 import { urlStringConversion } from "./url_string_conversion.js";
 import { getJson } from "../functions/fetch.js";
-// import { postJsonGetData } from "../../loke/static/js/fetch";
+// import { postJsonGetData } from "../../main_app/static/js/fetch";
 //https://www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay
 
 //www.youtube.com/watch?v=NlHjhmIe1EI&t=424s&ab_channel=DeKay

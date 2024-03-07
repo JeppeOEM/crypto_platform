@@ -2,15 +2,15 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exceptions import abort
-from loke.endpoints.auth import login_required
-from loke.database.db import get_db
-from loke.trading_engine.Backtest import Backtest
-from loke.trading_engine.Strategy import Strategy
-from loke.trading_engine.call_optimizer import call_optimizer
-from loke.trading_engine.process_conds import process_conds
-from loke.controllers.StrategyController import get_strategy_controller
+from main_app.endpoints.auth import login_required
+from main_app.database.db import get_db
+from main_app.trading_engine.Backtest import Backtest
+from main_app.trading_engine.Strategy import Strategy
+from main_app.trading_engine.call_optimizer import call_optimizer
+from main_app.trading_engine.process_conds import process_conds
+from main_app.controllers.StrategyController import get_strategy_controller
 from .func_get_indicators import get_indicators
-from loke.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
+from main_app.endpoints.data_page.get_hdf5_pairs import get_hdf5_pairs
 
 import json
 import pandas as pd

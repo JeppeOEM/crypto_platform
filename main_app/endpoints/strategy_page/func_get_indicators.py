@@ -8,8 +8,8 @@ def get_indicators(category):
     print("GET INDICATORS", category)
     indicators = []
     # __init__ must import all classes from the folder
-    module_path = f'loke.trading_engine.indicators.{category}'
-    folder_path = f'loke/trading_engine/indicators/{category}'
+    module_path = f'main_app.trading_engine.indicators.{category}'
+    folder_path = f'main_app/trading_engine/indicators/{category}'
 
     class_files = [file for file in os.listdir(
         folder_path) if file.endswith(".py") and file != "__init__.py"]

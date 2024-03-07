@@ -3,15 +3,15 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from loke.endpoints.auth import login_required
-from loke.database.db import get_db
+from main_app.endpoints.auth import login_required
+from main_app.database.db import get_db
 import importlib
 import os
 import json
-from loke.trading_engine.Backtest import Backtest
-from loke.trading_engine.Strategy import Strategy
-from loke.trading_engine.call_optimizer import call_optimizer
-from loke.trading_engine.process_conds import process_conds
+from main_app.trading_engine.Backtest import Backtest
+from main_app.trading_engine.Strategy import Strategy
+from main_app.trading_engine.call_optimizer import call_optimizer
+from main_app.trading_engine.process_conds import process_conds
 import pickle
 import pandas as pd
 import copy
