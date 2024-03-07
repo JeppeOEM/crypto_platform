@@ -10,11 +10,11 @@ Have been a way for me to learn so needs to be totally refactored, needs mongoDB
 
 ## Features
 
-Login
-Markov Model image generation
-Price chart
-Backtesting and Genetic Optimization algorithms - not connected to frontend yet
-Frontend configurations is saved in Sqlite database
+- Login
+- Markov Model image generation
+- Price chart
+- Backtesting and Genetic Optimization algorithms - not connected to frontend yet
+- Frontend configurations is saved in Sqlite database
 
 ```
 flask --app main_app run --debug
