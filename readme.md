@@ -2,7 +2,7 @@
 
 Work in progress.
 
-Started out as a small project that grow way to big for vanilla javascript.
+Started out as a small project that grow way too big for vanilla javascript.
 
 Experimenting with using a genetic algorithm to find the best parameters for a trading strategy.
 
