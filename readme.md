@@ -14,5 +14,6 @@ init database:
 ```
 flask --app main_app init-db
 ```
+INFO:
 webpack tutorial:
 https://digitalhedgehog.org/articles/how-to-use-flask-with-webpack
