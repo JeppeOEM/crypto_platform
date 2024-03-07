@@ -1,6 +1,10 @@
 ##Experimental Cryptocurrency Trading strategy optimizer
 
-Needs to be refactored, needs mongoDB and frontend needs to be rewritten in Typescript.
+Work in progress.
+
+Experimenting with using a genetic algorithm to find the best parameters for a trading strategy.
+
+Needs to be refactored, needs mongoDB, TimescaleDB and frontend needs to be rewritten in Typescript.
 
 flask --app main_app run --debug
 init database:
