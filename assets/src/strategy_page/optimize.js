@@ -2,7 +2,7 @@ import { postJsonGetData, postJsonGetStatus } from "../functions/fetch.js";
 import { selected_cond } from "../classes/globals.js";
 
 //save the optimization params to the database
-export function load_params() {
+export async function load_params() {
   const arr = [];
   const rows = document.querySelectorAll(".param");
   rows.forEach((row) => {
@@ -22,7 +22,7 @@ export function load_params() {
   data.optimizer_params = arr;
   data.params_class = "indicator";
 
-  const status = postJsonGetStatus(data, "optimizer_params");
+  const status = await postJsonGetStatus(data, "optimizer_params");
   console.log(status);
 }
 
@@ -50,16 +50,19 @@ export function optimizer_params(conditions, suffix) {
   // const tbody = document.querySelector(`.${element}`);
   const opti_params = document.getElementById("optimize_params");
   cond_arr.forEach((cond) => {
-    cond[0].forEach((val) => {
+    cond[0].forEach(async (val) => {
       let list_id = cond[1].list_id;
       let list_row = cond[1].list_row;
       let condition_id = cond[2];
-      // let opti_data = postJsonGetData({ condition_id: condition_id }, "get_opti_params");
+      let opti_data = await postJsonGetData({ condition_id: condition_id, side: suffix }, "get_optimizer_param");
+      console.log(opti_data, "OPTI DATA");
+      let max = opti_data.optimization_max;
+      let min = opti_data.optimization_min;
       const clone = opti_params.content.cloneNode(true);
       clone.querySelector(".indicator").textContent = val[0]["ind"] + suffix;
       clone.querySelector(".operator").textContent = val[1]["cond"];
-      clone.querySelector(".min").value = "1";
-      clone.querySelector(".max").value = "1";
+      clone.querySelector(".min").value = min;
+      clone.querySelector(".max").value = max;
       let table_row = clone.querySelector(".param");
       table_row.dataset.condition_id = condition_id;
       table_row.dataset.id = list_id;

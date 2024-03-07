@@ -16,57 +16,41 @@ import pickle
 import pandas as pd
 import copy
 import uuid
+import json
 
 bp = Blueprint('optimization', __name__)
 
 
-@bp.route('/<int:id>/optimizer_params', methods=['GET'])
-def get_optimizer_params(id):
-    db = get_db()
-    data = request.get_json()
-    if data.side == "buy":
-        table = 'buy_optimization'
-    else:
-        table = 'sell_optimization'
-
-    params = db.execute(
-        'UPDATE {} SET  WHERE id = ?'.format(table),
-        (id,)
-    ).fetchone()
-
-    if params is None:
-        abort(404, "Optimizer params not found")
-
-    return jsonify(params), 200
-
-    # print(param, "PARAzzzzzzzzzzzzzzzzM")
-    # print(fk_list_id, "FK LIST ID")
-    # # Check if a row with the same values already exists
-    # table_name = 'buy_optimization' if side == 'BUY' else 'sell_optimization'
-    # existing_row = db.execute(
-    #     'SELECT 1 FROM {} '
-    #     'WHERE fk_strategy_id = ? AND optimization_name = ? AND operator = ? AND '
-    #     'data_type = ? AND class = ? AND optimization_min = ? AND optimization_max = ? AND '
-    #     'fk_list_id = ? AND list_row = ?'
-    #     .format(table_name),
-    #     (id, name, operator, data_type, params_class,
-    #      opti_min, opti_max, fk_list_id, list_row)
-    # ).fetchone()
-
-    # if existing_row:
-    #     print("Row with the same values already exists. Skipping insertion.")
-    # else:
+@bp.route('/<int:id>/get_optimizer_param', methods=['POST'])
+def get_optimizer_param(id):
+    try:
+        db = get_db()
+        data = request.get_json()
+        condition_id = data['condition_id']
+        side = data['side'][1:].lower()
+        print(side, "SIDE")
+        if side == "buy":
+            table = 'buy_optimization'
+        else:
+            table = 'sell_optimization'
+        params = db.execute(
+            'SELECT * FROM {} WHERE fk_strategy_id = ? AND fk_user_id = ? AND fk_condition_id = ?'.format(
+                table),
+            (id, g.user['id'], condition_id)
+        ).fetchone()
+        print(dict(params), "PARAMS")
+        return jsonify(dict(params)), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'error': str(e)}), 500
 
 
 @bp.route('/<int:id>/optimizer_params', methods=['POST'])
 def optimizer_params(id):
     db = get_db()
+
     data = request.get_json()
     params = data['optimizer_params']
-    print(params, "PARAMS WHAT DID I GET?")
-    print(params, "PARAMS WHAT DID I GET888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888?")
-    print(params, "PARAMS WHAT DID I GET888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888?")
-    print(params, "PARAMS WHAT DID I GET888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888?")
     params_class = data['params_class']
     # fk_list_id = data['fk_list_id']
     # list_row = data['list_row']
@@ -77,11 +61,14 @@ def optimizer_params(id):
             fk_list_id = int(fk_list_id)
             table_name = 'buy_optimization' if side == 'BUY' else 'sell_optimization'
 
-            exist = db.execute(
+            exist_query = db.execute(
                 'SELECT 1 FROM {} WHERE fk_strategy_id = ? AND fk_condition_id = ? AND fk_user_id = ?'.format(
                     table_name),
                 (id, fk_condition_id, g.user['id'])
             )
+
+            exist = exist_query.fetchone()
+
             if exist:
                 db.execute(
                     'UPDATE {} SET optimization_name = ?, operator = ?, data_type = ?, optimization_min = ?, optimization_max = ?, fk_list_id = ?, list_row = ? '
@@ -91,7 +78,6 @@ def optimizer_params(id):
                      fk_list_id, list_row, id, fk_condition_id, g.user['id'])
                 )
             else:
-
                 db.execute(
                     'INSERT INTO {} '
                     '(fk_strategy_id, fk_user_id, optimization_name, data_type, class, operator, '
@@ -102,7 +88,7 @@ def optimizer_params(id):
                 )
 
         db.commit()
-        return jsonify({'message': 'optimization saved to the database'})
+        return jsonify({'message': 'optimization saved/updated'})
     except Exception as e:
         db.rollback()
         print(e)
