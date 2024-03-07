@@ -52,5 +52,4 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     enable_fk()
-    print("what the fuck")
     click.echo('Initialized the database. with FK constraint')
