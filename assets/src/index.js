@@ -81,10 +81,8 @@ async function optimize() {
 
 function drop_here(event) {
   const element = event.target.closest(".dropzone");
-  console.log(element);
   if (!element.classList.contains("expand_dropzone")) {
     element.classList.add("expand_dropzone");
-    console.log("dropzone");
   }
 }
 

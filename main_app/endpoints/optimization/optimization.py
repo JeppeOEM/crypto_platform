@@ -26,6 +26,7 @@ def get_optimizer_param(id):
     try:
         db = get_db()
         data = request.get_json()
+        print(data)
         condition_id = data['condition_id']
         side = data['side'][1:].lower()
         print(side, "SIDE")
