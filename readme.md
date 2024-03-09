@@ -1,10 +1,11 @@
 ## Experimental Cryptocurrency Trading strategy optimizer
 
 **Work in progress**. 
-**DISCLAIMER: This is a code sketch book where my main goal was to create a flask API that would connect a Genetic Algorithm to a trading strategy and then backtest on old market data.
-It ended up including all kind of other things, as Markov Model image generation, and drang n drop functionality.
+**DISCLAIMER**: This is a form of code "sketch book", where i experiment. 
+My main goal was to create a flask API that would connect a Genetic Algorithm to a trading strategy, and then backtest that strategy on old market data.
+It ended up including all kind of other things as Markov Model image plot generation and drag n drop functionality.
 
-The code is NOT clean, and frontend is NOT pretty this is first an formost a way of rapid prototyping, as i quickly moved from one subject to the next, trying not get lost in details and therefore leaving parts of the code unpolished and unoptimized. 
+The code is NOT clean, and frontend is NOT pretty this is first and formost a way of rapid prototyping, as i quickly moved from one subject to the next, trying not get lost in details and therefore leaving parts of the code unpolished and unoptimized. 
 I gained alot of insights in the project that i will bring with me into the new version of the project, that i am embarking on as a semester project.
 
 The new project will include
@@ -13,7 +14,7 @@ The new project will include
 - MongoDB for making the frontend persistent
 - TimescaleDB for working with timeseries data
 - .NET for a maintainable OOP backend
-- Python microservice for Algorithms/data manipulation
+- Python microservice for ML/algorithms/data manipulation
 
 ## Features
 Current features
