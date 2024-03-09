@@ -6,6 +6,7 @@ It ended up including all kind of other things, as Markov Model, Frontend Chart,
 
 The code is NOT clean, and frontend is NOT pretty as it was first an formost a way of rapid prototyping, as i quickly moved from one subject to the next, trying not get lost in details and therefore leaving parts of the code unpolished and unoptimized.
 I gained alot of insight in the project that i will bring with me into the new version of the project, that i am embarking on as a semester project.
+
 The new project will include
 
 - Typescript frontend with drag n drop
@@ -15,17 +16,13 @@ The new project will include
 - Python microservice for Algorithms/data manipulation
 
 ## Features
-
+Current features
 - Login
 - Markov Model image generation
 - Price chart
-- Backtesting and Genetic Optimization algorithms - not connected to frontend yet
+- Calculation of techinal indicators on Dataframe
+- Backtesting with Genetic Optimization algorithm - not connected to frontend yet
 - Frontend configurations is saved in Sqlite database
-
-```
-flask --app main_app run --debug
-
-```
 
 init database:
 
@@ -33,6 +30,12 @@ init database:
 flask --app main_app init-db
 ```
 
-INFO:
-webpack tutorial:
-https://digitalhedgehog.org/articles/how-to-use-flask-with-webpack
+run flask app
+
+```
+flask --app main_app run --debug
+
+```
+
+
+
