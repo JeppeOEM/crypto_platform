@@ -12,7 +12,7 @@ Current features
 - Login
 - Markov Model image generation
 - Price chart
-- Calculation of techinal indicators on Dataframe
+- Calculation of techinal indicators
 - Backtesting with Genetic Optimization algorithm - not connected to frontend yet
 - Frontend configurations is saved in Sqlite database
 
